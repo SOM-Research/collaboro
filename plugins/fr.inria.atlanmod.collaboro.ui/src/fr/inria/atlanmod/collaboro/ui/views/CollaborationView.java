@@ -32,10 +32,12 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.internal.actions.ModifyWorkingSetDelegate;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.inria.atlanmod.collaboro.history.Add;
@@ -62,6 +64,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 	private Composite parent = null;
 	private Group collaborationGroup = null;
 	private Group solutionGroup = null;
+	private Composite mainGroup = null;
 	private TableViewer tableCreation = null;
 
 
@@ -160,6 +163,47 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 			viewer.refresh();
 		}
 	}
+	
+	class RationaleModifyListener implements ModifyListener {
+		private Collaboration collaboration;
+		
+		public RationaleModifyListener(Collaboration collaboration) {
+			this.collaboration = collaboration;
+		}
+		@Override
+		public void modifyText(ModifyEvent e) {
+			Text text = (Text) e.getSource();
+			collaboration.setRationale(text.getText());
+		}
+		
+	}
+	
+	class ComboSelectionListener implements SelectionListener {
+		private Solution solution;
+		
+		public ComboSelectionListener(Solution solution) {
+			this.solution = solution;
+		}
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			Combo combo = (Combo) e.getSource();
+			if(combo.getSelectionIndex() == 0) {
+				Controller.INSTANCE.createAdd(solution);
+			} else if(combo.getSelectionIndex() == 1) {
+				Controller.INSTANCE.createUpdate(solution);
+			} else if(combo.getSelectionIndex() == 2) {
+				Controller.INSTANCE.createDelete(solution);
+			}
+			tableCreation.setInput(solution.getChanges());
+			tableCreation.refresh();						
+		}
+		
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	}
 
 	/**
 	 * 
@@ -185,10 +229,18 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 	}
 
 	private void addCollaborationInfo(Composite parent) {
+//		Composite mainGroup = new Composite(parent, SWT.NONE);
+//		FillLayout fillLayout = new FillLayout(SWT.VERTICAL);
+//		mainGroup.setLayout(fillLayout);
+		
 		FillLayout parentLayout = new FillLayout(SWT.VERTICAL);
 		parent.setLayout(parentLayout);
 		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
+		
+		createCollaborationPart(parent);
+	}
+	
+	public void createCollaborationPart(Composite parent) {
 		collaborationGroup = new Group(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout();
 		collaborationGroup.setLayout(gridLayout);
@@ -219,6 +271,8 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		votesDisagreeLabel.setText("Votes Disagree");
 		votesDisagreeText = new Text(collaborationGroup, SWT.BORDER | SWT.READ_ONLY);
 		votesDisagreeText.setLayoutData(gridData1);
+		
+		parent.layout(true);
 	}
 
 	@Override
@@ -232,6 +286,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		//		System.out.println("Se detecto un cambio en la vista principal  desde " + this.ID + "\n" + part.getSite().getId() + " - " + selection);
 
 		resetFields();
+//		createCollaborationPart(parent);
 		Object objectSelected = null;
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
@@ -239,20 +294,16 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		}
 
 		if(objectSelected != null && objectSelected instanceof Collaboration) {
-			final Collaboration collaboration = (Collaboration) objectSelected;
+			Collaboration collaboration = (Collaboration) objectSelected;
 			if(proposedByText != null) {
 				proposedByText.setText(collaboration.getProposedBy().getId());
 			}
 
 			if(rationaleText != null && collaboration.getRationale() != null) {
 				rationaleText.setText(collaboration.getRationale());
-				rationaleText.addModifyListener(new ModifyListener() {
-					@Override
-					public void modifyText(ModifyEvent e) {
-						Text text = (Text) e.getSource();
-						collaboration.setRationale(text.getText());
-					}
-				});
+				Listener[] listeners = rationaleText.getListeners(SWT.Modify);
+				for(Listener listener : listeners) rationaleText.removeListener(SWT.Modify, listener);
+				rationaleText.addModifyListener(new RationaleModifyListener(collaboration));
 			}
 
 			if(votesAgreeText != null && votesDisagreeText != null) {
@@ -270,7 +321,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 			}
 
 			if (collaboration instanceof Solution) {
-				final Solution solution = (Solution) collaboration;
+				Solution solution = (Solution) collaboration;
 
 				solutionGroup = new Group(parent, SWT.NONE);
 				GridLayout gridLayout = new GridLayout();
@@ -281,28 +332,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 				Combo comboCreation = new Combo(solutionGroup, SWT.BORDER);
 				comboCreation.setText("Testinggg");
 				comboCreation.setItems(new String[] { "Create ADD", "Create UDPATE", "Create DELETE"});
-				comboCreation.addSelectionListener(new SelectionListener() {
-					
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						Combo combo = (Combo) e.getSource();
-						if(combo.getSelectionIndex() == 0) {
-							Controller.INSTANCE.createAdd(solution);
-						} else if(combo.getSelectionIndex() == 1) {
-							Controller.INSTANCE.createUpdate(solution);
-						} else if(combo.getSelectionIndex() == 2) {
-							Controller.INSTANCE.createDelete(solution);
-						}
-						tableCreation.setInput(solution.getChanges());
-						tableCreation.refresh();						
-					}
-					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
+				comboCreation.addSelectionListener(new ComboSelectionListener(solution));
 
 				tableCreation = new TableViewer(solutionGroup, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 
@@ -367,7 +397,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 				tableCreation.setInput(solution.getChanges());
 				tableCreation.refresh();
 
-				final Table table = tableCreation.getTable();
+				Table table = tableCreation.getTable();
 				table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				table.setHeaderVisible(true);
 				table.setLinesVisible(true);
@@ -379,6 +409,11 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 	}
 
 	public void resetFields() {
+//		if(collaborationGroup != null) {
+//			collaborationGroup.dispose();
+//			collaborationGroup = null;
+//			parent.layout(true);			
+//		}
 		if(solutionGroup != null) {
 			solutionGroup.dispose();
 			solutionGroup = null;
@@ -388,5 +423,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 	}
 
 }
+
+
 
 

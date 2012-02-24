@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <category
             id="atlanmod.collaboro.ui"
-            name="Collaboration">
+            name="Collaboro">
       </category>
       <view
             category="atlanmod.collaboro.ui"

@@ -28,9 +28,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.internal.EditorReference;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.inria.atlanmod.collaboro.ui.CollaboroPlugin;
@@ -41,7 +44,7 @@ import fr.inria.atlanmod.collaboro.ui.Controller;
  *
  */
 @SuppressWarnings("restriction")
-public class VersionView extends ViewPart implements ISelectionListener {
+public class VersionView extends ViewPart implements ISelectionListener, IPartListener2 {
 	public static final String ID = "atlanmod.collaboro.ui.versionView";
 
 	public static final String LOGIN_ACTION_ICON  = "icons/loginAction.png";
@@ -152,6 +155,8 @@ public class VersionView extends ViewPart implements ISelectionListener {
 		getSite().getPage().addSelectionListener(this); 
 		//		getSite().getPage().addSelectionListener("org.eclipse.jdt.ui.PackageExplorer", this); 
 		//		getSite().getPage().addSelectionListener("org.eclipse.emf.ecore.presentation.EcoreEditorID", this); 
+
+		getSite().getPage().addPartListener(this);
 		
 		Controller.INSTANCE.setView(viewer);
 	}
@@ -196,6 +201,53 @@ public class VersionView extends ViewPart implements ISelectionListener {
 			Controller.INSTANCE.loadHistory(ioFile);
 
 		}
+	}
+
+	@Override
+	public void partActivated(IWorkbenchPartReference partRef) {
+//		System.out.println("partActivated " + partRef);
+		
+	}
+
+	@Override
+	public void partBroughtToTop(IWorkbenchPartReference partRef) {
+//		System.out.println("partBroughtToTop " + partRef);
+		
+	}
+
+	@Override
+	public void partClosed(IWorkbenchPartReference partRef) {
+		Controller.INSTANCE.saveHistory();		
+	}
+
+	@Override
+	public void partDeactivated(IWorkbenchPartReference partRef) {
+//		System.out.println("partDeactivated " + partRef);
+		
+	}
+
+	@Override
+	public void partOpened(IWorkbenchPartReference partRef) {
+//		System.out.println("partOpened " + partRef);
+		
+	}
+
+	@Override
+	public void partHidden(IWorkbenchPartReference partRef) {
+//		System.out.println("partHidden " + partRef);
+		
+	}
+
+	@Override
+	public void partVisible(IWorkbenchPartReference partRef) {
+//		System.out.println("partVisible " + partRef);
+		
+	}
+
+	@Override
+	public void partInputChanged(IWorkbenchPartReference partRef) {
+//		System.out.println("partInputChanged " + partRef);
+		
 	}
 
 }
