@@ -432,7 +432,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getProposal_Decision() {
+	public EReference getProposal_Selected() {
 		return (EReference)proposalEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -727,7 +727,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 
 		proposalEClass = createEClass(PROPOSAL);
 		createEReference(proposalEClass, PROPOSAL__SOLS);
-		createEReference(proposalEClass, PROPOSAL__DECISION);
+		createEReference(proposalEClass, PROPOSAL__SELECTED);
 		createEReference(proposalEClass, PROPOSAL__VERSION);
 		createEAttribute(proposalEClass, PROPOSAL__ACCEPTED);
 		createEReference(proposalEClass, PROPOSAL__META);
@@ -836,7 +836,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 
 		initEClass(proposalEClass, Proposal.class, "Proposal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProposal_Sols(), this.getSolution(), this.getSolution_Proposal(), "sols", null, 0, -1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getProposal_Decision(), this.getSolution(), null, "decision", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProposal_Selected(), this.getSolution(), null, "selected", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProposal_Version(), this.getVersion(), this.getVersion_Proposals(), "version", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProposal_Accepted(), ecorePackage.getEBoolean(), "accepted", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProposal_Meta(), this.getMetaInfo(), this.getMetaInfo_Proposal(), "meta", null, 0, -1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
