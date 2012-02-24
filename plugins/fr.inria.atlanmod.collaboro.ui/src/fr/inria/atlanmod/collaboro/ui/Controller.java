@@ -47,15 +47,17 @@ public class Controller {
 	private List<Proposal> proposals = new ArrayList<Proposal>();
 
 	private User loggedUser = null;
-	
+
 	private int lastIndexProposal = 0;
+
+	private File historyModel;
 
 	/**
 	 * The controller knows the view, this is temporal, I have to discover 
 	 * how to use better the event control in Eclipse
 	 */
 	private TreeViewer view;
-	
+
 	private Controller() {
 
 	}
@@ -73,7 +75,7 @@ public class Controller {
 	public History getHistory() {
 		return history;
 	}
-	
+
 	public void loadHistory(File modelBeingTracked) {
 		proposals.clear();
 
@@ -81,7 +83,7 @@ public class Controller {
 			return;
 		}
 
-		File historyModel = inferHistoryModel(modelBeingTracked);		
+		historyModel = inferHistoryModel(modelBeingTracked);		
 		ResourceSet rset = new ResourceSetImpl();
 		rset.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new EcoreResourceFactoryImpl());
 		rset.getPackageRegistry().put(HistoryPackage.eNS_URI, HistoryPackage.eINSTANCE);
@@ -134,7 +136,7 @@ public class Controller {
 
 		return found;
 	}
-	
+
 	/**
 	 * Indicates if the user is logged
 	 * @return
@@ -146,19 +148,19 @@ public class Controller {
 	public void createVoteNegative(Collaboration collaboration) {
 		if(collaboration.getProposedBy().getId().equals(loggedUser.getId()))
 			return;
-		
+
 		Vote newVote = null;
-		
+
 		for(Vote vote : collaboration.getVotes()) {
 			if(vote.getUser().getId().equals(loggedUser.getId())) {
 				newVote = vote;
 				break;
 			}
 		}
-		
+
 		if(newVote == null) {
 			newVote = HistoryFactory.eINSTANCE.createVote();
-			
+
 			Comment newComment = HistoryFactory.eINSTANCE.createComment();
 			newComment.setProposedBy(loggedUser);
 			newComment.setId("n" + lastIndexProposal++);
@@ -166,31 +168,31 @@ public class Controller {
 			newVote.setComment(newComment);
 			collaboration.getVotes().add(newVote);
 		}
-					
+
 		newVote.setAgreement(false);
 		newVote.setUser(loggedUser); 
 
 		refreshView();
 	}
-	
+
 	public void createVotePositive(Collaboration collaboration) {
 		if(collaboration.getProposedBy().getId().equals(loggedUser.getId()))
 			return;
-		
+
 		Vote newVote = null;
-		
+
 		for(Vote vote : collaboration.getVotes()) {
 			if(vote.getUser().getId().equals(loggedUser.getId())) {
 				newVote = vote;
 				break;
 			}
 		}
-		
+
 		if(newVote == null) {
 			newVote = HistoryFactory.eINSTANCE.createVote();
 			collaboration.getVotes().add(newVote);
 		}
-					
+
 		newVote.setAgreement(true);
 		newVote.setUser(loggedUser);
 
@@ -204,7 +206,7 @@ public class Controller {
 		proposal.getSols().add(newSolution);	
 		refreshView();
 	}
-	
+
 
 	public void createProposal() {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
@@ -223,7 +225,7 @@ public class Controller {
 		collaboration.getComments().add(newComment);
 		refreshView();
 	}
-	
+
 	public void createAdd(Solution solution) {
 		Add newAdd = HistoryFactory.eINSTANCE.createAdd();
 		solution.getChanges().add(newAdd);
@@ -242,8 +244,26 @@ public class Controller {
 	public void setView(TreeViewer viewer) {
 		this.view = viewer;		
 	}
-	
+
 	public void refreshView() {
 		this.view.refresh();
+	}
+
+	public void saveHistory() {
+		if(historyModel != null) {
+			ResourceSet rset = new ResourceSetImpl();
+			rset.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new EcoreResourceFactoryImpl());
+			rset.getPackageRegistry().put(HistoryPackage.eNS_URI, HistoryPackage.eINSTANCE);
+
+			Resource res = rset.getResource(URI.createFileURI(historyModel.getAbsolutePath()), true);
+
+			try {
+				res.getContents().clear();
+				res.getContents().add(history);
+				res.save(null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
