@@ -53,6 +53,7 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 
 	public static final String ECORE_PLUGIN_ID = "org.eclipse.emf.ecore.presentation.EcoreEditorID";
 	public static final String PACKAGE_EXPLORER_PLUGIN_ID = "org.eclipse.jdt.ui.PackageExplorer";
+	public static final String PROJECT_EXPLORER_PLUGIN_ID = "org.eclipse.ui.navigator.ProjectExplorer";
 
 	private TreeViewer viewer;
 
@@ -172,7 +173,7 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		//		System.out.println("\nSe detecto un cambio en la vista principal desde " + this.ID + "\n" + part.getSite().getId() + " - " + selection);
+//				System.out.println("\nSe detecto un cambio en la vista principal desde " + this.ID + "\n" + part.getSite().getId() + " - " + selection);
 
 		if(part.getSite().getId().equals(ECORE_PLUGIN_ID)) {
 			//			System.out.println(selection.getClass().getCanonicalName());
@@ -187,7 +188,7 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 
 		}
 
-		if(part.getSite().getId().equals(PACKAGE_EXPLORER_PLUGIN_ID)) {
+		if(part.getSite().getId().equals(PACKAGE_EXPLORER_PLUGIN_ID) || part.getSite().getId().equals(PROJECT_EXPLORER_PLUGIN_ID)) {
 			selectionOpenFile(part, selection);
 		}		
 	}
