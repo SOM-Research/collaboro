@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="system"
+    nsURI="http://atlanmod.fr/collaboro/productionsystem" nsPrefix="system">
+  <eClassifiers xsi:type="ecore:EClass" name="System">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
+        eType="#//Part" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operators" upperBound="-1"
+        eType="#//Operator" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pieces" eType="#//Piece"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IdElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Operator" eSuperTypes="#//IdElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Part" abstract="true" eSuperTypes="#//IdElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Machine" abstract="true" eSuperTypes="#//Part"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Assembler" eSuperTypes="#//Machine"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Packer" eSuperTypes="#//Machine"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Conveyor">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="capacity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="#//Condition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Piece">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="in" eType="#//Part"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Condition">
+    <eLiterals name="SUPERB"/>
+    <eLiterals name="GOOD" value="1"/>
+    <eLiterals name="FINE" value="2"/>
+    <eLiterals name="OLD" value="3"/>
+  </eClassifiers>
+</ecore:EPackage>
