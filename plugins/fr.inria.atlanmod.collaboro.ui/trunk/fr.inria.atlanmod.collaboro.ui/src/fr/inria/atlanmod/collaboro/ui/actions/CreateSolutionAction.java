@@ -25,7 +25,7 @@ public class CreateSolutionAction extends CreateCollaborationAction implements I
 
 	@Override
 	public void run(IAction action) {
-		System.out.println("CreateSolutionAction run");
+//		System.out.println("CreateSolutionAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createSolution((Proposal) this.collaboration);
 		} else {
@@ -35,7 +35,7 @@ public class CreateSolutionAction extends CreateCollaborationAction implements I
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-		System.out.println("CreateSolutionAction selectionChanged");
+//		System.out.println("CreateSolutionAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
@@ -48,7 +48,7 @@ public class CreateSolutionAction extends CreateCollaborationAction implements I
 
 	@Override
 	public void init(IViewPart view) {
-		System.out.println("CreateSolutionAction init");
+//		System.out.println("CreateSolutionAction init");
 		shell = view.getViewSite().getShell();
 
 	}

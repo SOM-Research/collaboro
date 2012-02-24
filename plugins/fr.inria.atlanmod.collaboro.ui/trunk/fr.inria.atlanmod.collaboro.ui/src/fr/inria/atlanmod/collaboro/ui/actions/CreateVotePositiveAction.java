@@ -25,7 +25,7 @@ public class CreateVotePositiveAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void run(IAction action) {
-		System.out.println("CreateVotePositiveAction run");
+//		System.out.println("CreateVotePositiveAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createVotePositive(this.collaboration);
 		} else {
@@ -36,7 +36,7 @@ public class CreateVotePositiveAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-		System.out.println("CreateVotePositiveAction selectionChanged");
+//		System.out.println("CreateVotePositiveAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
@@ -50,7 +50,7 @@ public class CreateVotePositiveAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void init(IViewPart view) {
-		System.out.println("CreateVotePositiveAction init");
+//		System.out.println("CreateVotePositiveAction init");
 		shell = view.getViewSite().getShell();
 	}
 

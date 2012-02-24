@@ -78,17 +78,22 @@
    </extension>
    <extension
          point="org.eclipse.ui.commands">
+      <category
+            id="fr.inria.atlanmod.collaboro.ui.commandCategory"
+            name="CollaboroCommands">
+      </category>
       <command
+            categoryId="fr.inria.atlanmod.collaboro.ui.commandCategory"
             id="fr.inria.atlanmod.collaboro.ui.executeDecisionEngineCommand"
-            name="Execute Decision Engine">
-         <defaultHandler
-               class="fr.inria.atlanmod.collaboro.ui.commands.ExecuteDecisionEngineCommand">
-            <parameter
-                  name="fr.inria.atlanmod.collaboro.ui.parameter2"
-                  value="fr.inria.atlanmod.collaboro.ui.parameter2">
-            </parameter>
-         </defaultHandler>
+            name="ExecuteDecisionEngine">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="fr.inria.atlanmod.collaboro.ui.commands.ExecuteDecisionEngineCommand"
+            commandId="fr.inria.atlanmod.collaboro.ui.executeDecisionEngineCommand">
+      </handler>
    </extension>
 
 </plugin>
