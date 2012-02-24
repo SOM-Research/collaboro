@@ -400,13 +400,13 @@ public interface HistoryPackage extends EPackage {
 	int PROPOSAL__SOLS = COLLABORATION_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Decision</b></em>' reference.
+	 * The feature id for the '<em><b>Selected</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPOSAL__DECISION = COLLABORATION_FEATURE_COUNT + 1;
+	int PROPOSAL__SELECTED = COLLABORATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' container reference.
@@ -1188,15 +1188,15 @@ public interface HistoryPackage extends EPackage {
 	EReference getProposal_Sols();
 
 	/**
-	 * Returns the meta object for the reference '{@link fr.inria.atlanmod.collaboro.history.Proposal#getDecision <em>Decision</em>}'.
+	 * Returns the meta object for the reference '{@link fr.inria.atlanmod.collaboro.history.Proposal#getSelected <em>Selected</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Decision</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.Proposal#getDecision()
+	 * @return the meta object for the reference '<em>Selected</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Proposal#getSelected()
 	 * @see #getProposal()
 	 * @generated
 	 */
-	EReference getProposal_Decision();
+	EReference getProposal_Selected();
 
 	/**
 	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.Proposal#getVersion <em>Version</em>}'.
@@ -1695,12 +1695,12 @@ public interface HistoryPackage extends EPackage {
 		EReference PROPOSAL__SOLS = eINSTANCE.getProposal_Sols();
 
 		/**
-		 * The meta object literal for the '<em><b>Decision</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Selected</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PROPOSAL__DECISION = eINSTANCE.getProposal_Decision();
+		EReference PROPOSAL__SELECTED = eINSTANCE.getProposal_Selected();
 
 		/**
 		 * The meta object literal for the '<em><b>Version</b></em>' container reference feature.

@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getSols <em>Sols</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getDecision <em>Decision</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getSelected <em>Selected</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getVersion <em>Version</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#isAccepted <em>Accepted</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getMeta <em>Meta</em>}</li>
@@ -48,30 +48,30 @@ public interface Proposal extends Collaboration {
 	EList<Solution> getSols();
 
 	/**
-	 * Returns the value of the '<em><b>Decision</b></em>' reference.
+	 * Returns the value of the '<em><b>Selected</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Decision</em>' reference isn't clear,
+	 * If the meaning of the '<em>Selected</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Decision</em>' reference.
-	 * @see #setDecision(Solution)
-	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getProposal_Decision()
+	 * @return the value of the '<em>Selected</em>' reference.
+	 * @see #setSelected(Solution)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getProposal_Selected()
 	 * @model
 	 * @generated
 	 */
-	Solution getDecision();
+	Solution getSelected();
 
 	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Proposal#getDecision <em>Decision</em>}' reference.
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Proposal#getSelected <em>Selected</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Decision</em>' reference.
-	 * @see #getDecision()
+	 * @param value the new value of the '<em>Selected</em>' reference.
+	 * @see #getSelected()
 	 * @generated
 	 */
-	void setDecision(Solution value);
+	void setSelected(Solution value);
 
 	/**
 	 * Returns the value of the '<em><b>Version</b></em>' container reference.
@@ -145,4 +145,7 @@ public interface Proposal extends Collaboration {
 	 */
 	EList<MetaInfo> getMeta();
 
+
+	String getStringState();
+	
 } // Proposal

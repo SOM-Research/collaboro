@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getSols <em>Sols</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getDecision <em>Decision</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getSelected <em>Selected</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#isAccepted <em>Accepted</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getMeta <em>Meta</em>}</li>
@@ -58,14 +58,14 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	protected EList<Solution> sols;
 
 	/**
-	 * The cached value of the '{@link #getDecision() <em>Decision</em>}' reference.
+	 * The cached value of the '{@link #getSelected() <em>Selected</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getDecision()
+	 * @see #getSelected()
 	 * @generated
 	 * @ordered
 	 */
-	protected Solution decision;
+	protected Solution selected;
 
 	/**
 	 * The default value of the '{@link #isAccepted() <em>Accepted</em>}' attribute.
@@ -133,16 +133,16 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Solution getDecision() {
-		if (decision != null && decision.eIsProxy()) {
-			InternalEObject oldDecision = (InternalEObject)decision;
-			decision = (Solution)eResolveProxy(oldDecision);
-			if (decision != oldDecision) {
+	public Solution getSelected() {
+		if (selected != null && selected.eIsProxy()) {
+			InternalEObject oldSelected = (InternalEObject)selected;
+			selected = (Solution)eResolveProxy(oldSelected);
+			if (selected != oldSelected) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, HistoryPackage.PROPOSAL__DECISION, oldDecision, decision));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, HistoryPackage.PROPOSAL__SELECTED, oldSelected, selected));
 			}
 		}
-		return decision;
+		return selected;
 	}
 
 	/**
@@ -150,8 +150,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Solution basicGetDecision() {
-		return decision;
+	public Solution basicGetSelected() {
+		return selected;
 	}
 
 	/**
@@ -159,11 +159,11 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setDecision(Solution newDecision) {
-		Solution oldDecision = decision;
-		decision = newDecision;
+	public void setSelected(Solution newSelected) {
+		Solution oldSelected = selected;
+		selected = newSelected;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.PROPOSAL__DECISION, oldDecision, decision));
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.PROPOSAL__SELECTED, oldSelected, selected));
 	}
 
 	/**
@@ -303,9 +303,9 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 		switch (featureID) {
 			case HistoryPackage.PROPOSAL__SOLS:
 				return getSols();
-			case HistoryPackage.PROPOSAL__DECISION:
-				if (resolve) return getDecision();
-				return basicGetDecision();
+			case HistoryPackage.PROPOSAL__SELECTED:
+				if (resolve) return getSelected();
+				return basicGetSelected();
 			case HistoryPackage.PROPOSAL__VERSION:
 				return getVersion();
 			case HistoryPackage.PROPOSAL__ACCEPTED:
@@ -329,8 +329,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 				getSols().clear();
 				getSols().addAll((Collection<? extends Solution>)newValue);
 				return;
-			case HistoryPackage.PROPOSAL__DECISION:
-				setDecision((Solution)newValue);
+			case HistoryPackage.PROPOSAL__SELECTED:
+				setSelected((Solution)newValue);
 				return;
 			case HistoryPackage.PROPOSAL__VERSION:
 				setVersion((Version)newValue);
@@ -357,8 +357,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 			case HistoryPackage.PROPOSAL__SOLS:
 				getSols().clear();
 				return;
-			case HistoryPackage.PROPOSAL__DECISION:
-				setDecision((Solution)null);
+			case HistoryPackage.PROPOSAL__SELECTED:
+				setSelected((Solution)null);
 				return;
 			case HistoryPackage.PROPOSAL__VERSION:
 				setVersion((Version)null);
@@ -383,8 +383,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 		switch (featureID) {
 			case HistoryPackage.PROPOSAL__SOLS:
 				return sols != null && !sols.isEmpty();
-			case HistoryPackage.PROPOSAL__DECISION:
-				return decision != null;
+			case HistoryPackage.PROPOSAL__SELECTED:
+				return selected != null;
 			case HistoryPackage.PROPOSAL__VERSION:
 				return getVersion() != null;
 			case HistoryPackage.PROPOSAL__ACCEPTED:
@@ -409,6 +409,11 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 		result.append(accepted);
 		result.append(')');
 		return result.toString();
+	}
+	
+
+	public String getStringState() {
+		return "Proposal " + getId() + ((isAccepted()) ? " accepted " : " not accepted " ) + "\n  " + getSols().size() + " solutions proposed\n  " + ((getSelected() == null) ? "No solution selected": "Solution " + getSelected().getId() + " selected");
 	}
 
 } //ProposalImpl

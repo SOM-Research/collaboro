@@ -42,7 +42,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Proposal" eSuperTypes="#//Collaboration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sols" upperBound="-1" eType="#//Solution"
         containment="true" eOpposite="#//Solution/proposal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="decision" eType="#//Solution"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selected" eType="#//Solution"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="#//Version"
         eOpposite="#//Version/proposals"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accepted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
