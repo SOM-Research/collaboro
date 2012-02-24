@@ -25,7 +25,7 @@ public class CreateVoteNegativeAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void run(IAction action) {
-		System.out.println("CreateVoteNegativeAction run");
+//		System.out.println("CreateVoteNegativeAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createVoteNegative(this.collaboration);
 		} else {
@@ -36,7 +36,7 @@ public class CreateVoteNegativeAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-		System.out.println("CreateVoteNegativeAction selectionChanged");
+//		System.out.println("CreateVoteNegativeAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
@@ -50,7 +50,7 @@ public class CreateVoteNegativeAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void init(IViewPart view) {
-		System.out.println("CreateVoteNegativeAction init");
+//		System.out.println("CreateVoteNegativeAction init");
 		shell = view.getViewSite().getShell();
 	}
 }

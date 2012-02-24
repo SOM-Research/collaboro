@@ -25,7 +25,7 @@ public class CreateCommentAction extends CreateCollaborationAction implements IV
 
 	@Override
 	public void run(IAction action) {
-		System.out.println("CreateCommentAction run");
+//		System.out.println("CreateCommentAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createComment(this.collaboration);
 		} else {
@@ -36,7 +36,7 @@ public class CreateCommentAction extends CreateCollaborationAction implements IV
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-		System.out.println("CreateCommentAction selectionChanged");
+//		System.out.println("CreateCommentAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
@@ -50,7 +50,7 @@ public class CreateCommentAction extends CreateCollaborationAction implements IV
 
 	@Override
 	public void init(IViewPart view) {
-		System.out.println("CreateCommentAction init");
+//		System.out.println("CreateCommentAction init");
 		shell = view.getViewSite().getShell();
 	}
 

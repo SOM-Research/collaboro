@@ -66,6 +66,11 @@ public class Controller {
 		return proposals;
 	}
 
+
+	public History getHistory() {
+		return history;
+	}
+	
 	public void loadHistory(File modelBeingTracked) {
 		proposals.clear();
 
@@ -160,10 +165,9 @@ public class Controller {
 		}
 					
 		newVote.setAgreement(false);
-		newVote.setUser(loggedUser);
-		newVote.setCollaboration(collaboration);	 
-		
-		view.refresh();
+		newVote.setUser(loggedUser); 
+
+		refreshView();
 	}
 	
 	public void createVotePositive(Collaboration collaboration) {
@@ -181,13 +185,13 @@ public class Controller {
 		
 		if(newVote == null) {
 			newVote = HistoryFactory.eINSTANCE.createVote();
+			collaboration.getVotes().add(newVote);
 		}
 					
 		newVote.setAgreement(true);
 		newVote.setUser(loggedUser);
-		newVote.setCollaboration(collaboration);	 
-		
-		view.refresh();		
+
+		refreshView();
 	}
 
 	public void createSolution(Proposal proposal) {
@@ -195,7 +199,7 @@ public class Controller {
 		newSolution.setProposedBy(loggedUser);
 		newSolution.setId("n" + lastIndexProposal++);
 		proposal.getSols().add(newSolution);	
-		view.refresh();	
+		refreshView();
 	}
 	
 
@@ -204,7 +208,9 @@ public class Controller {
 		newProposal.setId("n" + lastIndexProposal++);
 		newProposal.setProposedBy(loggedUser);
 		proposals.add(newProposal);
-		view.refresh();
+		Version version = history.getVersions().get(0);
+		version.getProposals().add(newProposal);
+		refreshView();
 	}
 
 	public void createComment(Collaboration collaboration) {
@@ -212,10 +218,14 @@ public class Controller {
 		newComment.setProposedBy(loggedUser);
 		newComment.setId("n" + lastIndexProposal++);
 		collaboration.getComments().add(newComment);
-		view.refresh();
+		refreshView();
 	}
 
 	public void setView(TreeViewer viewer) {
 		this.view = viewer;		
+	}
+	
+	public void refreshView() {
+		this.view.refresh();
 	}
 }
