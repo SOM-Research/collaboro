@@ -22,13 +22,16 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jface.viewers.TreeViewer;
 
+import fr.inria.atlanmod.collaboro.history.Add;
 import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.history.Comment;
+import fr.inria.atlanmod.collaboro.history.Delete;
 import fr.inria.atlanmod.collaboro.history.History;
 import fr.inria.atlanmod.collaboro.history.HistoryFactory;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.Proposal;
 import fr.inria.atlanmod.collaboro.history.Solution;
+import fr.inria.atlanmod.collaboro.history.Update;
 import fr.inria.atlanmod.collaboro.history.User;
 import fr.inria.atlanmod.collaboro.history.Version;
 import fr.inria.atlanmod.collaboro.history.Vote;
@@ -219,6 +222,21 @@ public class Controller {
 		newComment.setId("n" + lastIndexProposal++);
 		collaboration.getComments().add(newComment);
 		refreshView();
+	}
+	
+	public void createAdd(Solution solution) {
+		Add newAdd = HistoryFactory.eINSTANCE.createAdd();
+		solution.getChanges().add(newAdd);
+	}
+
+	public void createUpdate(Solution solution) {
+		Update newUpdate = HistoryFactory.eINSTANCE.createUpdate();
+		solution.getChanges().add(newUpdate);
+	}
+
+	public void createDelete(Solution solution) {
+		Delete newDelete = HistoryFactory.eINSTANCE.createDelete();
+		solution.getChanges().add(newDelete);
 	}
 
 	public void setView(TreeViewer viewer) {
