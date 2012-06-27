@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="ASCII"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history" xmlns:notation="http://atlanmod.fr/collaboro/notation" xsi:schemaLocation="http://www.eclipse.org/emf/2002/Ecore ../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore" language="transport">
+<history:History xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
+    xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
   <users id="hugo"/>
   <users id="salva"/>
   <users id="valerio"/>
   <users id="elena"/>
-  <users id="javi"/>
+  <users id="javi" collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0"/>
   <histories>
-  <versions id="0.1">
-  </versions>
+    <versions id="0.1">
+      <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
+        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks"
+            proposedBy="#//@users.4">
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.0"/>
+          </changes>
+        </sols>
+      </proposals>
+    </versions>
   </histories>
 </history:History>
