@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="ASCII"?>
-<notation:Definition xmi:version="2.0" 
-xmlns:xmi="http://www.omg.org/XMI" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xmlns:notation="http://atlanmod.fr/collaboro/notation"
-xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-xsi:schemaLocation="http://www.eclipse.org/emf/2002/Ecore ../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore">
+<notation:Definition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://atlanmod.fr/collaboro/notation">
+  <elements xsi:type="notation:Composite" id="workflowNotation">
+    <subElements xsi:type="notation:Keyword" id="workflow"/>
+    <subElements xsi:type="notation:AttributeValue" id="workflowName">
+      <attribute href="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Element/name"/>
+    </subElements>
+    <subElements xsi:type="notation:SyntaxOf" id="workflowElements">
+      <reference href="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Workflow/elements"/>
+    </subElements>
+  </elements>
 </notation:Definition>
