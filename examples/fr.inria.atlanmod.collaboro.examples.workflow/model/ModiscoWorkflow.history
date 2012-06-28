@@ -21,6 +21,10 @@
             <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
             <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.1"/>
           </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//WorkParameter"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.2"/>
+          </changes>
         </sols>
       </proposals>
     </versions>
