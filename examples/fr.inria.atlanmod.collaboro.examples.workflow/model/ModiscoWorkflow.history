@@ -8,7 +8,8 @@
   <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0" collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0"/>
   <users id="valerio"/>
   <users id="elena"/>
-  <users id="javi" collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0"/>
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
@@ -37,9 +38,14 @@
         <comments id="n5" rationale="I 'd rather use the term &quot;Activity&quot; instead of &quot;Task&quot; or &quot;Work&quot;"
             proposedBy="#//@users.1"/>
         <votes user="#//@users.1" comment="#//@histories.0/@versions.0/@proposals.1/@comments.0"/>
+        <votes agreement="true" user="#//@users.4"/>
       </proposals>
       <proposals id="n4" rationale="I 'd rather use the term &quot;Activity&quot; instead of &quot;Task&quot; or &quot;Work&quot;&#xA;"
-          proposedBy="#//@users.1"/>
+          proposedBy="#//@users.1">
+        <comments id="n6" rationale="I wouldn't use &quot;Activity&quot; for a simple work, I'de prefer to user to use Task. Maybe we can create a kind of &quot;composed task&quot; which would be &quot;Activity&quot;"
+            proposedBy="#//@users.4"/>
+        <votes user="#//@users.4" comment="#//@histories.0/@versions.0/@proposals.2/@comments.0"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>
