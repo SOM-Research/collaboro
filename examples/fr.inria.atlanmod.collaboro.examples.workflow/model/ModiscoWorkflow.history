@@ -5,7 +5,7 @@
     xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
   <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.1 #//@histories.0/@versions.0/@proposals.2/@comments.1 #//@histories.0/@versions.0/@proposals.3"/>
-  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.0"
+  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.4/@votes.2 #//@histories.0/@versions.0/@proposals.5/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.2"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.3/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
@@ -77,9 +77,12 @@
             proposedBy="#//@users.3"/>
         <votes agreement="true" user="#//@users.2"/>
         <votes agreement="true" user="#//@users.3"/>
+        <votes agreement="true" user="#//@users.1"/>
       </proposals>
       <proposals id="n15" rationale="Most attributes of all classes have lower multiplicity equal to 0. If the attributes are mandatory - I think most of them are - the lower multiplicity should be equal to 1. So I suggest replacing the minimum multiplicity 0 to 1. "
-          proposedBy="#//@users.3"/>
+          proposedBy="#//@users.3">
+        <votes agreement="true" user="#//@users.1"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>
