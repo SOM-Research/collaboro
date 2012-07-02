@@ -4,23 +4,23 @@
     xmlns:notation="http://atlanmod.fr/collaboro/notation">
   <elements xsi:type="notation:Composite" id="workflowNotation">
     <subElements xsi:type="notation:Keyword" id="workflow"/>
-    <subElements xsi:type="notation:AttributeValue" id="workflowName" attribute="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Element/name"/>
+    <subElements xsi:type="notation:AttributeValue" id="workflowName" attribute="ModiscoWorkflow.ecore#//Element/name"/>
     <subElements xsi:type="notation:Composite" id="elementsComposite">
-      <subElements xsi:type="notation:SyntaxOf" id="workflowElements" reference="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Workflow/elements"/>
+      <subElements xsi:type="notation:SyntaxOf" id="workflowElements" reference="ModiscoWorkflow.ecore#//Workflow/elements"/>
     </subElements>
   </elements>
   <elements xsi:type="notation:Composite" id="workNotation">
     <subElements xsi:type="notation:Keyword" id="work"/>
-    <subElements xsi:type="notation:AttributeValue" id="workName" attribute="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Element/name"/>
+    <subElements xsi:type="notation:AttributeValue" id="workName" attribute="ModiscoWorkflow.ecore#//Element/name"/>
     <subElements xsi:type="notation:Composite" id="paramsComposite">
-      <subElements xsi:type="notation:SyntaxOf" id="paramsWork" reference="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//Work/parameters"/>
+      <subElements xsi:type="notation:SyntaxOf" id="paramsWork" reference="ModiscoWorkflow.ecore#//Work/parameters"/>
     </subElements>
   </elements>
   <elements xsi:type="notation:Composite" id="workParameterNotation">
     <subElements xsi:type="notation:Keyword" id="param"/>
-    <subElements xsi:type="notation:AttributeValue" id="paramName" attribute="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//WorkParameter/name"/>
+    <subElements xsi:type="notation:AttributeValue" id="paramName" attribute="ModiscoWorkflow.ecore#//WorkParameter/name"/>
     <subElements xsi:type="notation:Keyword" id="value"/>
-    <subElements xsi:type="notation:ReferenceValue" id="paramValue" attribute="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//WorkParameterBooleanValue/value"
-        reference="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//WorkParameter/value"/>
+    <subElements xsi:type="notation:ReferenceValue" id="paramValue" attribute="ModiscoWorkflow.ecore#//WorkParameterBooleanValue/value"
+        reference="ModiscoWorkflow.ecore#//WorkParameter/value"/>
   </elements>
 </notation:Definition>
