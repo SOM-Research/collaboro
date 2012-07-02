@@ -7,7 +7,8 @@
       collaborations="#//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.1 #//@histories.0/@versions.0/@proposals.2/@comments.1 #//@histories.0/@versions.0/@proposals.3"/>
   <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.2"/>
-  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1" collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
+  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.3/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
   <users id="elena"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.3 #//@histories.0/@versions.0/@proposals.4"/>
@@ -62,9 +63,12 @@
           proposedBy="#//@users.0">
         <votes agreement="true" user="#//@users.1"/>
         <votes agreement="true" user="#//@users.4"/>
+        <votes agreement="true" user="#//@users.2"/>
       </proposals>
       <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless"
-          proposedBy="#//@users.4"/>
+          proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.2"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>
