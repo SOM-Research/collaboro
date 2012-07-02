@@ -9,7 +9,7 @@
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1" collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
   <users id="elena"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0"
-      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0"/>
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.3"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
@@ -41,6 +41,7 @@
             proposedBy="#//@users.0"/>
         <comments id="n9" rationale="I agree with using &quot;Activity&quot; instead of &quot;Task&quot; or &quot;Work&quot;.&#xD;&#xA;In order to deal with the granularity level, I'd say that we might add a new concept &quot;Process&quot; that contains several activities"
             proposedBy="#//@users.2"/>
+        <comments id="n11" proposedBy="#//@users.4"/>
         <votes user="#//@users.1" comment="#//@histories.0/@versions.0/@proposals.1/@comments.0"/>
         <votes agreement="true" user="#//@users.4"/>
       </proposals>
