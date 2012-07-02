@@ -57,7 +57,8 @@
         <votes user="#//@users.4" comment="#//@histories.0/@versions.0/@proposals.2/@comments.0"/>
         <votes agreement="true" user="#//@users.2"/>
       </proposals>
-      <proposals id="n12" proposedBy="#//@users.4"/>
+      <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;"
+          proposedBy="#//@users.4"/>
     </versions>
   </histories>
 </history:History>
