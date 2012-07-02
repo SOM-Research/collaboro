@@ -6,7 +6,7 @@
   <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.1 #//@histories.0/@versions.0/@proposals.2/@comments.1"/>
   <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0" collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0"/>
-  <users id="valerio"/>
+  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1" collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
   <users id="elena"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0"/>
@@ -39,6 +39,7 @@
             proposedBy="#//@users.1"/>
         <comments id="n7" rationale="Could we be able to represent both Tasks and Activities?&#xD;&#xA;Which granularity level do we need to address here?&#xD;&#xA;The DSL is about an MDE workflow, so we could first focus on the particularities of base MDE operations..."
             proposedBy="#//@users.0"/>
+        <comments id="n9" proposedBy="#//@users.2"/>
         <votes user="#//@users.1" comment="#//@histories.0/@versions.0/@proposals.1/@comments.0"/>
         <votes agreement="true" user="#//@users.4"/>
       </proposals>
@@ -49,6 +50,7 @@
         <comments id="n8" rationale="Could we be able to represent both Tasks and Activities?&#xD;&#xA;Which granularity level do we need to address here?&#xD;&#xA;The DSL is about an MDE workflow, so we could first focus on the particularities of base MDE operations..."
             proposedBy="#//@users.0"/>
         <votes user="#//@users.4" comment="#//@histories.0/@versions.0/@proposals.2/@comments.0"/>
+        <votes agreement="true" user="#//@users.2"/>
       </proposals>
     </versions>
   </histories>
