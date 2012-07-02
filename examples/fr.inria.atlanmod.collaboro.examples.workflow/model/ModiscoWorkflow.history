@@ -9,18 +9,23 @@
       collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.2"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.3/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
-  <users id="elena"/>
+  <users id="elena" votes="#//@histories.0/@versions.0/@proposals.3/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.4/@votes.1"
+      collaborations="#//@histories.0/@versions.0/@proposals.4/@comments.0 #//@histories.0/@versions.0/@proposals.5"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.3 #//@histories.0/@versions.0/@proposals.4"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
         <votes agreement="true" user="#//@users.0"/>
+        <votes agreement="true" user="#//@users.3"/>
         <sols id="n1" rationale="The simplest one is the one based on keywords and blocks"
             proposedBy="#//@users.4">
           <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later."
-              proposedBy="#//@users.0"/>
+              proposedBy="#//@users.0">
+            <votes agreement="true" user="#//@users.3"/>
+          </comments>
           <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.3"/>
           <changes xsi:type="history:Add">
             <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
             <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.0"/>
@@ -60,15 +65,21 @@
         <votes agreement="true" user="#//@users.2"/>
       </proposals>
       <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;"
-          proposedBy="#//@users.0">
+          proposedBy="#//@users.0" accepted="true">
         <votes agreement="true" user="#//@users.1"/>
         <votes agreement="true" user="#//@users.4"/>
         <votes agreement="true" user="#//@users.2"/>
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
       <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless"
           proposedBy="#//@users.4">
+        <comments id="n14" rationale="Note that if this metaclass is removed, the generalization between &quot;Workflow&quot; and &quot;ExportInfos&quot; should also be removed."
+            proposedBy="#//@users.3"/>
         <votes agreement="true" user="#//@users.2"/>
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
+      <proposals id="n15" rationale="Most attributes of all classes have lower multiplicity equal to 0. If the attributes are mandatory - I think most of them are - the lower multiplicity should be equal to 1. So I suggest replacing the minimum multiplicity 0 to 1. "
+          proposedBy="#//@users.3"/>
     </versions>
   </histories>
 </history:History>
