@@ -5,7 +5,8 @@
     xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
   <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.1 #//@histories.0/@versions.0/@proposals.2/@comments.1"/>
-  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0" collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.2"/>
+  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.2"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.2/@votes.1" collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
   <users id="elena"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0"
@@ -58,7 +59,9 @@
         <votes agreement="true" user="#//@users.2"/>
       </proposals>
       <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;"
-          proposedBy="#//@users.4"/>
+          proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.1"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>
