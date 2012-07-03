@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.gmt.modisco.workflow.modiscoworkflow:Workflow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.gmt.modisco.workflow.modiscoworkflow="http://www.eclipse.org/gmt/modisco/workflow" xsi:schemaLocation="http://www.eclipse.org/gmt/modisco/workflow ../model/ModiscoWorkflow.ecore" name="myWorkflow">
+  <elements xsi:type="org.eclipse.gmt.modisco.workflow.modiscoworkflow:Work" name="work1">
+    <parameters name="param1work1">
+      <value xsi:type="org.eclipse.gmt.modisco.workflow.modiscoworkflow:WorkParameterStringValue" value="stringValue"/>
+    </parameters>
+  </elements>
+  <elements xsi:type="org.eclipse.gmt.modisco.workflow.modiscoworkflow:Work" name="work2"/>
+  <elements xsi:type="org.eclipse.gmt.modisco.workflow.modiscoworkflow:Workflow" name="inner-workflow">
+    <elements xsi:type="org.eclipse.gmt.modisco.workflow.modiscoworkflow:Work" name="work3"/>
+  </elements>
+</org.eclipse.gmt.modisco.workflow.modiscoworkflow:Workflow>
