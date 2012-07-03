@@ -9,8 +9,8 @@
       collaborations="#//@histories.0/@versions.0/@proposals.5"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.6"/>
-  <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1"
-      collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3"/>
+  <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3 #//@histories.0/@versions.0/@proposals.2/@sols.1"/>
   <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0"/>
   <histories>
@@ -63,9 +63,16 @@
         <votes agreement="true" user="#//@users.3"/>
         <votes agreement="true" user="#//@users.1"/>
         <sols id="n16" rationale="Removing &quot;ExportInfos&quot; metaclasss " proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.3"/>
           <changes xsi:type="history:Delete">
             <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EPackage ModiscoWorkflow.ecore#/"/>
             <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//ExportInfos"/>
+          </changes>
+        </sols>
+        <sols id="n23" rationale="Updating the &quot;Workflow&quot; metaclass in order to remove the inheritance relationship with the recently  removed metaclass &quot;ExportInfos&quot;.&#xD;&#xA;&#xD;&#xA;@javi: I'm not sure how I should indicate this solution."
+            proposedBy="#//@users.3">
+          <changes xsi:type="history:Update">
+            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
           </changes>
         </sols>
       </proposals>
@@ -75,11 +82,14 @@
             proposedBy="#//@users.4">
           <votes agreement="true" user="#//@users.0"/>
           <votes agreement="true" user="#//@users.2"/>
+          <votes agreement="true" user="#//@users.3"/>
         </comments>
         <votes agreement="true" user="#//@users.1"/>
       </proposals>
       <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;"
-          proposedBy="#//@users.4"/>
+          proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.3"/>
+      </proposals>
       <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element."
           proposedBy="#//@users.1">
         <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it"
@@ -93,6 +103,7 @@
           proposedBy="#//@users.2">
         <votes agreement="true" user="#//@users.4"/>
         <votes agreement="true" user="#//@users.1"/>
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
     </versions>
   </histories>
