@@ -7,7 +7,7 @@
       collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0"/>
   <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.5"/>
-  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0"
+  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.6"/>
   <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3"/>
@@ -82,7 +82,9 @@
       <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element."
           proposedBy="#//@users.1">
         <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it"
-            proposedBy="#//@users.4"/>
+            proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.2"/>
+        </comments>
         <votes agreement="true" user="#//@users.2"/>
         <votes user="#//@users.4"/>
       </proposals>
