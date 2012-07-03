@@ -7,7 +7,7 @@
       collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0"/>
   <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.5"/>
-  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0"
+  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.6"/>
   <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3"/>
@@ -74,6 +74,7 @@
         <comments id="n17" rationale="I agree except for the &quot;description&quot; attribute in &quot;WorkParameter&quot;, do we need to force to specify it?"
             proposedBy="#//@users.4">
           <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.2"/>
         </comments>
         <votes agreement="true" user="#//@users.1"/>
       </proposals>
