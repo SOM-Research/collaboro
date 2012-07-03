@@ -11,8 +11,8 @@
       collaborations="#//@histories.0/@versions.0/@proposals.1/@comments.2"/>
   <users id="elena" votes="#//@histories.0/@versions.0/@proposals.3/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.4/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.4/@comments.0 #//@histories.0/@versions.0/@proposals.5"/>
-  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1"
-      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.3 #//@histories.0/@versions.0/@proposals.4"/>
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.0/@proposals.4/@comments.0/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.3 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.4/@sols.0 #//@histories.0/@versions.0/@proposals.5/@comments.0"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
@@ -74,13 +74,23 @@
       <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless"
           proposedBy="#//@users.4">
         <comments id="n14" rationale="Note that if this metaclass is removed, the generalization between &quot;Workflow&quot; and &quot;ExportInfos&quot; should also be removed."
-            proposedBy="#//@users.3"/>
+            proposedBy="#//@users.3">
+          <votes agreement="true" user="#//@users.4"/>
+        </comments>
         <votes agreement="true" user="#//@users.2"/>
         <votes agreement="true" user="#//@users.3"/>
         <votes agreement="true" user="#//@users.1"/>
+        <sols id="n16" rationale="Removing &quot;ExportInfos&quot; metaclasss " proposedBy="#//@users.4">
+          <changes xsi:type="history:Delete">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EPackage ModiscoWorkflow.ecore#/"/>
+            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//ExportInfos"/>
+          </changes>
+        </sols>
       </proposals>
       <proposals id="n15" rationale="Most attributes of all classes have lower multiplicity equal to 0. If the attributes are mandatory - I think most of them are - the lower multiplicity should be equal to 1. So I suggest replacing the minimum multiplicity 0 to 1. "
           proposedBy="#//@users.3">
+        <comments id="n17" rationale="I agree except for the &quot;description&quot; attribute in &quot;WorkParameter&quot;, do we need to force to specify it?"
+            proposedBy="#//@users.4"/>
         <votes agreement="true" user="#//@users.1"/>
       </proposals>
     </versions>
