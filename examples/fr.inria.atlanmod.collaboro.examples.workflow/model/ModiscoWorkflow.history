@@ -5,7 +5,7 @@
     xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
   <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.1 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0"/>
-  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2"
+  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.5"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.6"/>
@@ -89,6 +89,7 @@
       <proposals id="n21" rationale="I think each 'Work' should have a reference to the previous/next 'Element' preceding/following it in the workflow"
           proposedBy="#//@users.2">
         <votes agreement="true" user="#//@users.4"/>
+        <votes agreement="true" user="#//@users.1"/>
       </proposals>
     </versions>
   </histories>
