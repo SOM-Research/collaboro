@@ -11,8 +11,8 @@
       collaborations="#//@histories.0/@versions.0/@proposals.6 #//@histories.0/@versions.1/@proposals.3"/>
   <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0"
       collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3 #//@histories.0/@versions.0/@proposals.2/@sols.1"/>
-  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0"
-      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0"/>
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
@@ -162,7 +162,11 @@
         <votes user="#//@users.4"/>
       </proposals>
       <proposals id="n24" rationale="In my opinion, &quot;workflow&quot;, &quot;work&quot; and &quot;workParameter&quot; should appear with 3 different colors in the concrete syntax"
-          proposedBy="#//@users.2"/>
+          proposedBy="#//@users.2">
+        <comments id="n24" rationale="I would prefer to have one single color for each &quot;keyword&quot; in the language (as normal GPLs)."
+            proposedBy="#//@users.4"/>
+        <votes user="#//@users.4" comment="#//@histories.0/@versions.1/@proposals.3/@comments.0"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>
