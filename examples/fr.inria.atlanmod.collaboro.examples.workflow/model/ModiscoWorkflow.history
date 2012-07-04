@@ -121,7 +121,7 @@
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
         <votes agreement="true" user="#//@users.0"/>
         <votes agreement="true" user="#//@users.3"/>
-        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks"
+        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks&#xA;&#xA;I've modified the syntax of &quot;Workparameter&quot; according to comment n23"
             proposedBy="#//@users.4">
           <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later."
               proposedBy="#//@users.0">
