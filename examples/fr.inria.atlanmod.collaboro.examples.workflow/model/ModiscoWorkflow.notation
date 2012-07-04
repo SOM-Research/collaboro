@@ -18,6 +18,7 @@
   </elements>
   <elements xsi:type="notation:Composite" id="workParameterNotation">
     <subElements xsi:type="notation:Keyword" id="param"/>
+    <subElements xsi:type="notation:AttributeValue" id="paramDirection" attribute="platform:/resource/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.ecore#//WorkParameter/direction"/>
     <subElements xsi:type="notation:AttributeValue" id="paramName" attribute="ModiscoWorkflow.ecore#//WorkParameter/name"/>
     <subElements xsi:type="notation:Keyword" id="value"/>
     <subElements xsi:type="notation:ReferenceValue" id="paramValue" attribute="ModiscoWorkflow.ecore#//WorkParameterBooleanValue/value"
