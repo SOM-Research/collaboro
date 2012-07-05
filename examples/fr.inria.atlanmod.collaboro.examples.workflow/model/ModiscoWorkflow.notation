@@ -3,27 +3,25 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:notation="http://atlanmod.fr/collaboro/notation">
   <elements xsi:type="notation:Composite" id="workflowNotation">
-    <subElements xsi:type="notation:Keyword" id="workflow" fill="green"/>
-    <subElements xsi:type="notation:AttributeValue" id="workflowName" fill="orange"
-        attribute="ModiscoWorkflow.ecore#//Element/name"/>
+    <subElements xsi:type="notation:Keyword" id="workflow" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="workflowName" attribute="ModiscoWorkflow.ecore#//Element/name"/>
     <subElements xsi:type="notation:Composite" id="elementsComposite">
       <subElements xsi:type="notation:SyntaxOf" id="workflowElements" reference="ModiscoWorkflow.ecore#//Workflow/elements"/>
     </subElements>
   </elements>
   <elements xsi:type="notation:Composite" id="workNotation">
-    <subElements xsi:type="notation:Keyword" id="work" fill="green"/>
-    <subElements xsi:type="notation:AttributeValue" id="workName" fill="orange" attribute="ModiscoWorkflow.ecore#//Element/name"/>
+    <subElements xsi:type="notation:Keyword" id="work" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="workName" attribute="ModiscoWorkflow.ecore#//Element/name"/>
     <subElements xsi:type="notation:Composite" id="paramsComposite">
       <subElements xsi:type="notation:SyntaxOf" id="paramsWork" reference="ModiscoWorkflow.ecore#//Work/parameters"/>
     </subElements>
   </elements>
   <elements xsi:type="notation:Composite" id="workParameterNotation">
-    <subElements xsi:type="notation:Keyword" id="param" fill="green"/>
-    <subElements xsi:type="notation:AttributeValue" id="paramDirection" fill="orange"
-        attribute="ModiscoWorkflow.ecore#//WorkParameter/direction"/>
-    <subElements xsi:type="notation:AttributeValue" id="paramName" fill="orange" attribute="ModiscoWorkflow.ecore#//WorkParameter/name"/>
-    <subElements xsi:type="notation:Keyword" id="value" fill="green"/>
-    <subElements xsi:type="notation:ReferenceValue" id="paramValue" fill="orange"
-        attribute="ModiscoWorkflow.ecore#//WorkParameterBooleanValue/value" reference="ModiscoWorkflow.ecore#//WorkParameter/value"/>
+    <subElements xsi:type="notation:Keyword" id="param" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="paramDirection" attribute="ModiscoWorkflow.ecore#//WorkParameter/direction"/>
+    <subElements xsi:type="notation:AttributeValue" id="paramName" attribute="ModiscoWorkflow.ecore#//WorkParameter/name"/>
+    <subElements xsi:type="notation:Keyword" id="value" fill="red"/>
+    <subElements xsi:type="notation:ReferenceValue" id="paramValue" attribute="ModiscoWorkflow.ecore#//WorkParameterBooleanValue/value"
+        reference="ModiscoWorkflow.ecore#//WorkParameter/value"/>
   </elements>
 </notation:Definition>
