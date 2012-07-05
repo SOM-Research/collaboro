@@ -5,7 +5,7 @@
     xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
   <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.1 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.3 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.3/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.3 #//@histories.0/@versions.1/@proposals.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.1/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.1/@proposals.2/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.2"/>
-  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.2 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.3 #//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0"
+  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.2 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.3 #//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2"
       collaborations="#//@histories.0/@versions.0/@proposals.5 #//@histories.0/@versions.1/@proposals.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.0"/>
   <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.3 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.3 #//@histories.0/@versions.0/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.2/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1"
       collaborations="#//@histories.0/@versions.0/@proposals.6 #//@histories.0/@versions.1/@proposals.3"/>
@@ -170,6 +170,7 @@
         <comments id="n24" rationale="I would prefer to have one single color for each &quot;keyword&quot; in the language (as normal GPLs)."
             proposedBy="#//@users.4">
           <votes agreement="true" user="#//@users.3"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
         <comments id="n24" rationale="As Javi, I prefer to have a single color for all the keywords"
             proposedBy="#//@users.1">
@@ -194,11 +195,13 @@
             proposedBy="#//@users.3">
           <votes agreement="true" user="#//@users.4"/>
           <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
         <comments id="n27" rationale="If comment n24 from salva is applied, I suggest use red or purple instead of green for the keywords (because green and black may not be so obvious to distinguish)."
             proposedBy="#//@users.3">
           <votes agreement="true" user="#//@users.4"/>
           <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
         <votes user="#//@users.1" comment="#//@histories.0/@versions.1/@proposals.4/@comments.0"/>
       </proposals>
