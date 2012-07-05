@@ -11,8 +11,8 @@
       collaborations="#//@histories.0/@versions.0/@proposals.6 #//@histories.0/@versions.1/@proposals.3"/>
   <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2"
       collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3 #//@histories.0/@versions.0/@proposals.2/@sols.1 #//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2"/>
-  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0"
-      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0"/>
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.6/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.0"/>
   <histories>
     <versions id="0.1">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
@@ -218,7 +218,26 @@
         <votes user="#//@users.1" comment="#//@histories.0/@versions.1/@proposals.5/@comments.1"/>
       </proposals>
       <proposals id="n25" rationale="For the Work element I propose to add two boolean attributes to mark is a given work constitutes the initial, the final or a middle work of the workflow."
-          proposedBy="#//@users.1"/>
+          proposedBy="#//@users.1">
+        <comments id="n24" rationale="I've proposed the solution but I'm still thinking that everything would be easier if the order of works/workflow is established implictly by the way they are defined in the textual definition"
+            proposedBy="#//@users.4"/>
+        <votes user="#//@users.4"/>
+        <sols id="n28" rationale="Two boolean attributes could be added to specify if the work is initial/final"
+            proposedBy="#//@users.4">
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
+            <target xsi:type="history:NewAbstractSyntaxElement">
+              <element xsi:type="ecore:EAttribute" name="initial"/>
+            </target>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
+            <target xsi:type="history:NewAbstractSyntaxElement">
+              <element xsi:type="ecore:EAttribute" name="final"/>
+            </target>
+          </changes>
+        </sols>
+      </proposals>
     </versions>
   </histories>
 </history:History>
