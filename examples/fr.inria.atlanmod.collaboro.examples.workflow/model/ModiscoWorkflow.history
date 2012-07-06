@@ -1,231 +1,238 @@
 <?xml version="1.0" encoding="ASCII"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history" xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
-  <users id="hugo" votes="//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 //@histories.0/@versions.0/@proposals.0/@votes.0 //@histories.0/@versions.0/@proposals.2/@comments.0/@votes.1 //@histories.0/@versions.0/@proposals.3/@comments.0/@votes.0 //@histories.0/@versions.0/@proposals.2/@votes.3 //@histories.0/@versions.0/@proposals.2/@sols.0/@votes.1 //@histories.0/@versions.0/@proposals.3/@votes.2 //@histories.0/@versions.0/@proposals.6/@votes.3 //@histories.0/@versions.1/@proposals.0/@votes.0 //@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 //@histories.0/@versions.1/@proposals.1/@votes.1 //@histories.0/@versions.1/@proposals.2/@votes.2 //@histories.0/@versions.1/@proposals.3/@votes.3 //@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 //@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 //@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1" collaborations="//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 //@histories.0/@versions.0/@proposals.1 //@histories.0/@versions.0/@proposals.1/@comments.0 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 //@histories.0/@versions.1/@proposals.2/@comments.1 //@histories.0/@versions.1/@proposals.3/@comments.2"/>
-  <users id="salva" votes="//@histories.0/@versions.0/@proposals.1/@votes.0 //@histories.0/@versions.0/@proposals.2/@votes.2 //@histories.0/@versions.0/@proposals.3/@votes.0 //@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 //@histories.0/@versions.0/@proposals.6/@votes.1 //@histories.0/@versions.0/@proposals.2/@sols.0/@votes.2 //@histories.0/@versions.0/@proposals.3/@comments.0/@votes.3 //@histories.0/@versions.1/@proposals.3/@votes.1 //@histories.0/@versions.1/@proposals.4/@votes.0 //@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 //@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 //@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2" collaborations="//@histories.0/@versions.0/@proposals.5 //@histories.0/@versions.1/@proposals.2 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1 //@histories.0/@versions.1/@proposals.3/@comments.1 //@histories.0/@versions.1/@proposals.4/@comments.0 //@histories.0/@versions.1/@proposals.6"/>
-  <users id="valerio" votes="//@histories.0/@versions.0/@proposals.1/@votes.2 //@histories.0/@versions.0/@proposals.2/@votes.0 //@histories.0/@versions.0/@proposals.5/@votes.0 //@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0 //@histories.0/@versions.0/@proposals.3/@comments.0/@votes.1 //@histories.0/@versions.0/@proposals.2/@sols.0/@votes.3 //@histories.0/@versions.0/@proposals.2/@comments.0/@votes.3 //@histories.0/@versions.0/@proposals.3/@votes.3 //@histories.0/@versions.1/@proposals.2/@votes.0 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1 //@histories.0/@versions.1/@proposals.4/@comments.2/@votes.3 //@histories.0/@versions.1/@proposals.5/@comments.0/@votes.0 //@histories.0/@versions.1/@proposals.0/@votes.2 //@histories.0/@versions.1/@proposals.6/@votes.0" collaborations="//@histories.0/@versions.0/@proposals.6 //@histories.0/@versions.1/@proposals.3"/>
-  <users id="elena" votes="//@histories.0/@versions.0/@proposals.1/@votes.3 //@histories.0/@versions.0/@proposals.0/@votes.1 //@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 //@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 //@histories.0/@versions.0/@proposals.2/@votes.1 //@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 //@histories.0/@versions.0/@proposals.3/@comments.0/@votes.2 //@histories.0/@versions.0/@proposals.6/@votes.2 //@histories.0/@versions.0/@proposals.4/@votes.0 //@histories.0/@versions.1/@proposals.0/@votes.1 //@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 //@histories.0/@versions.1/@proposals.1/@votes.0 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 //@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 //@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 //@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 //@histories.0/@versions.1/@proposals.3/@votes.2 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 //@histories.0/@versions.1/@proposals.4/@votes.1" collaborations="//@histories.0/@versions.0/@proposals.2/@comments.0 //@histories.0/@versions.0/@proposals.3 //@histories.0/@versions.0/@proposals.2/@sols.1 //@histories.0/@versions.1/@proposals.5 //@histories.0/@versions.1/@proposals.4/@comments.1 //@histories.0/@versions.1/@proposals.4/@comments.2 //@histories.0/@versions.1/@proposals.5/@comments.1"/>
-  <users id="javi" votes="//@histories.0/@versions.0/@proposals.1/@votes.1 //@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 //@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 //@histories.0/@versions.0/@proposals.5/@votes.1 //@histories.0/@versions.0/@proposals.6/@votes.0 //@histories.0/@versions.0/@proposals.3/@votes.1 //@histories.0/@versions.1/@proposals.2/@votes.1 //@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 //@histories.0/@versions.1/@proposals.3/@votes.0 //@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 //@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 //@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 //@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0" collaborations="//@histories.0/@versions.0/@proposals.0 //@histories.0/@versions.0/@proposals.0/@sols.0 //@histories.0/@versions.0/@proposals.2 //@histories.0/@versions.0/@proposals.2/@sols.0 //@histories.0/@versions.0/@proposals.3/@comments.0 //@histories.0/@versions.0/@proposals.4 //@histories.0/@versions.0/@proposals.5/@comments.0 //@histories.0/@versions.1/@proposals.0 //@histories.0/@versions.1/@proposals.0/@sols.0 //@histories.0/@versions.1/@proposals.1 //@histories.0/@versions.1/@proposals.2/@comments.0 //@histories.0/@versions.1/@proposals.3/@comments.0 //@histories.0/@versions.1/@proposals.4 //@histories.0/@versions.1/@proposals.5/@comments.0 //@histories.0/@versions.1/@proposals.6/@comments.0 //@histories.0/@versions.1/@proposals.6/@sols.0 //@histories.0/@versions.1/@proposals.6/@comments.1"/>
+<history:History xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
+    xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
+  <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.1 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.3 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.3/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.3 #//@histories.0/@versions.1/@proposals.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.1/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1"
+      collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.1/@proposals.2/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.2"/>
+  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.3/@votes.0 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.2 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.3 #//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2"
+      collaborations="#//@histories.0/@versions.0/@proposals.5 #//@histories.0/@versions.1/@proposals.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.0 #//@histories.0/@versions.1/@proposals.6"/>
+  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.0 #//@histories.0/@versions.0/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.3 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.3 #//@histories.0/@versions.0/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.2/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.3 #//@histories.0/@versions.1/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.2 #//@histories.0/@versions.1/@proposals.6/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.6 #//@histories.0/@versions.1/@proposals.3"/>
+  <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.0/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.3/@comments.0/@votes.2 #//@histories.0/@versions.0/@proposals.6/@votes.2 #//@histories.0/@versions.0/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.4/@votes.1"
+      collaborations="#//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.3 #//@histories.0/@versions.0/@proposals.2/@sols.1 #//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1"/>
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.5/@votes.1 #//@histories.0/@versions.0/@proposals.6/@votes.0 #//@histories.0/@versions.0/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.3/@comments.0 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.1"/>
   <histories>
     <versions id="0.1">
-      <proposals id="n0" rationale="giving a textual syntax" proposedBy="//@users.4">
-        <votes agreement="true" user="//@users.0"/>
-        <votes agreement="true" user="//@users.3"/>
-        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks" proposedBy="//@users.4">
-          <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later." proposedBy="//@users.0">
-            <votes agreement="true" user="//@users.3"/>
+      <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.0"/>
+        <votes agreement="true" user="#//@users.3"/>
+        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks"
+            proposedBy="#//@users.4">
+          <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later."
+              proposedBy="#//@users.0">
+            <votes agreement="true" user="#//@users.3"/>
           </comments>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.3"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.3"/>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Workflow"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.0"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.0"/>
           </changes>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Work"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.1"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.1"/>
           </changes>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//WorkParameter"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.2"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//WorkParameter"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.2"/>
           </changes>
         </sols>
       </proposals>
-      <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;" proposedBy="//@users.0" accepted="true">
-        <comments id="n18" rationale="Summary of past discussions:&#xD;&#xA;&#xD;&#xA; - How to name the base element of a Workflow instead of &quot;Work&quot;?&#xD;&#xA;&#x9;&#x9;&quot;Task&quot;, &quot;Action&quot;, etc&#xD;&#xA;- Which granularity level do we need to address?&#xD;&#xA;&#x9;&#x9;&quot;Process&quot;, &quot;Activity&quot;, etc&#xD;&#xA;&#xD;&#xA;" proposedBy="//@users.0">
-          <votes agreement="true" user="//@users.4"/>
+      <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;"
+          proposedBy="#//@users.0" accepted="true">
+        <comments id="n18" rationale="Summary of past discussions:&#xD;&#xA;&#xD;&#xA; - How to name the base element of a Workflow instead of &quot;Work&quot;?&#xD;&#xA;&#x9;&#x9;&quot;Task&quot;, &quot;Action&quot;, etc&#xD;&#xA;- Which granularity level do we need to address?&#xD;&#xA;&#x9;&#x9;&quot;Process&quot;, &quot;Activity&quot;, etc&#xD;&#xA;&#xD;&#xA;"
+            proposedBy="#//@users.0">
+          <votes agreement="true" user="#//@users.4"/>
         </comments>
-        <votes agreement="true" user="//@users.1"/>
-        <votes agreement="true" user="//@users.4"/>
-        <votes agreement="true" user="//@users.2"/>
-        <votes agreement="true" user="//@users.3"/>
+        <votes agreement="true" user="#//@users.1"/>
+        <votes agreement="true" user="#//@users.4"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
-      <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless" proposedBy="//@users.4" selected="//@histories.0/@versions.0/@proposals.2/@sols.0" accepted="true">
-        <comments id="n14" rationale="Note that if this metaclass is removed, the generalization between &quot;Workflow&quot; and &quot;ExportInfos&quot; should also be removed." proposedBy="//@users.3">
-          <votes agreement="true" user="//@users.4"/>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.1"/>
-          <votes agreement="true" user="//@users.2"/>
+      <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless"
+          proposedBy="#//@users.4" selected="#//@histories.0/@versions.0/@proposals.2/@sols.0"
+          accepted="true">
+        <comments id="n14" rationale="Note that if this metaclass is removed, the generalization between &quot;Workflow&quot; and &quot;ExportInfos&quot; should also be removed."
+            proposedBy="#//@users.3">
+          <votes agreement="true" user="#//@users.4"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
+          <votes agreement="true" user="#//@users.2"/>
         </comments>
-        <votes agreement="true" user="//@users.2"/>
-        <votes agreement="true" user="//@users.3"/>
-        <votes agreement="true" user="//@users.1"/>
-        <votes agreement="true" user="//@users.0"/>
-        <sols id="n16" rationale="Removing &quot;ExportInfos&quot; metaclasss " proposedBy="//@users.4">
-          <votes agreement="true" user="//@users.3"/>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.1"/>
-          <votes agreement="true" user="//@users.2"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <votes agreement="true" user="#//@users.3"/>
+        <votes agreement="true" user="#//@users.1"/>
+        <votes agreement="true" user="#//@users.0"/>
+        <sols id="n16" rationale="Removing &quot;ExportInfos&quot; metaclasss " proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.3"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
+          <votes agreement="true" user="#//@users.2"/>
           <changes xsi:type="history:Delete">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EPackage" href="ModiscoWorkflow.ecore#/"/>
-            </referredElement>
-            <target xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//ExportInfos"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EPackage ModiscoWorkflow.ecore#/"/>
+            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//ExportInfos"/>
           </changes>
         </sols>
-        <sols id="n23" rationale="Updating the &quot;Workflow&quot; metaclass in order to remove the inheritance relationship with the recently  removed metaclass &quot;ExportInfos&quot;.&#xD;&#xA;&#xD;&#xA;@javi: I'm not sure how I should indicate this solution." proposedBy="//@users.3">
+        <sols id="n23" rationale="Updating the &quot;Workflow&quot; metaclass in order to remove the inheritance relationship with the recently  removed metaclass &quot;ExportInfos&quot;.&#xD;&#xA;&#xD;&#xA;@javi: I'm not sure how I should indicate this solution."
+            proposedBy="#//@users.3">
           <changes xsi:type="history:Update">
-            <target xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Workflow"/>
-            </target>
+            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
           </changes>
         </sols>
       </proposals>
-      <proposals id="n15" rationale="Most attributes of all classes have lower multiplicity equal to 0. If the attributes are mandatory - I think most of them are - the lower multiplicity should be equal to 1. So I suggest replacing the minimum multiplicity 0 to 1. " proposedBy="//@users.3" accepted="true">
-        <comments id="n17" rationale="I agree except for the &quot;description&quot; attribute in &quot;WorkParameter&quot;, do we need to force to specify it?" proposedBy="//@users.4">
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.2"/>
-          <votes agreement="true" user="//@users.3"/>
-          <votes agreement="true" user="//@users.1"/>
+      <proposals id="n15" rationale="Most attributes of all classes have lower multiplicity equal to 0. If the attributes are mandatory - I think most of them are - the lower multiplicity should be equal to 1. So I suggest replacing the minimum multiplicity 0 to 1. "
+          proposedBy="#//@users.3" accepted="true">
+        <comments id="n17" rationale="I agree except for the &quot;description&quot; attribute in &quot;WorkParameter&quot;, do we need to force to specify it?"
+            proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.2"/>
+          <votes agreement="true" user="#//@users.3"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
-        <votes agreement="true" user="//@users.1"/>
-        <votes agreement="true" user="//@users.4"/>
-        <votes agreement="true" user="//@users.0"/>
-        <votes agreement="true" user="//@users.2"/>
+        <votes agreement="true" user="#//@users.1"/>
+        <votes agreement="true" user="#//@users.4"/>
+        <votes agreement="true" user="#//@users.0"/>
+        <votes agreement="true" user="#//@users.2"/>
       </proposals>
-      <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;" proposedBy="//@users.4">
-        <votes agreement="true" user="//@users.3"/>
+      <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;"
+          proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
-      <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element." proposedBy="//@users.1">
-        <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it" proposedBy="//@users.4">
-          <votes agreement="true" user="//@users.2"/>
+      <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element."
+          proposedBy="#//@users.1">
+        <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it"
+            proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.2"/>
         </comments>
-        <votes agreement="true" user="//@users.2"/>
-        <votes user="//@users.4"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <votes user="#//@users.4"/>
       </proposals>
-      <proposals id="n21" rationale="I think each 'Work' should have a reference to the previous/next 'Element' preceding/following it in the workflow" proposedBy="//@users.2" accepted="true">
-        <votes agreement="true" user="//@users.4"/>
-        <votes agreement="true" user="//@users.1"/>
-        <votes agreement="true" user="//@users.3"/>
-        <votes agreement="true" user="//@users.0"/>
+      <proposals id="n21" rationale="I think each 'Work' should have a reference to the previous/next 'Element' preceding/following it in the workflow"
+          proposedBy="#//@users.2" accepted="true">
+        <votes agreement="true" user="#//@users.4"/>
+        <votes agreement="true" user="#//@users.1"/>
+        <votes agreement="true" user="#//@users.3"/>
+        <votes agreement="true" user="#//@users.0"/>
       </proposals>
     </versions>
-    <versions id="0.2" previous="//@histories.0/@versions.0">
-      <proposals id="n0" rationale="giving a textual syntax" proposedBy="//@users.4">
-        <votes agreement="true" user="//@users.0"/>
-        <votes agreement="true" user="//@users.3"/>
-        <votes agreement="true" user="//@users.2"/>
-        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks&#xA;&#xA;I've modified the syntax of &quot;Workparameter&quot; according to comment n23" proposedBy="//@users.4">
-          <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later." proposedBy="//@users.0">
-            <votes agreement="true" user="//@users.3"/>
+    <versions id="0.2" previous="#//@histories.0/@versions.0">
+      <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.0"/>
+        <votes agreement="true" user="#//@users.3"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <sols id="n1" rationale="The simplest one is the one based on keywords and blocks&#xA;&#xA;I've modified the syntax of &quot;Workparameter&quot; according to comment n23"
+            proposedBy="#//@users.4">
+          <comments id="n3" rationale="OK for a first proposition.&#xD;&#xA;I guess the syntax will have to be upgraded later."
+              proposedBy="#//@users.0">
+            <votes agreement="true" user="#//@users.3"/>
           </comments>
-          <comments id="n23" rationale="For work parameter, I will add more information, notably the direction of the parameter preceeding its name: e.g.,  in param p1, out param p2, inout param p3" proposedBy="//@users.1">
-            <votes agreement="true" user="//@users.4"/>
-            <votes agreement="true" user="//@users.2"/>
-            <votes agreement="true" user="//@users.3"/>
+          <comments id="n23" rationale="For work parameter, I will add more information, notably the direction of the parameter preceeding its name: e.g.,  in param p1, out param p2, inout param p3"
+              proposedBy="#//@users.1">
+            <votes agreement="true" user="#//@users.4"/>
+            <votes agreement="true" user="#//@users.2"/>
+            <votes agreement="true" user="#//@users.3"/>
           </comments>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.3"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.3"/>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Workflow"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.0"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.0"/>
           </changes>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Work"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.1"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.1"/>
           </changes>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//WorkParameter"/>
-            </referredElement>
-            <target xsi:type="history:ConcreteSyntaxElement">
-              <element xsi:type="notation:Composite" href="ModiscoWorkflow.notation#//@elements.2"/>
-            </target>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//WorkParameter"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.2"/>
           </changes>
         </sols>
       </proposals>
-      <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;" proposedBy="//@users.4">
-        <votes agreement="true" user="//@users.3"/>
-        <votes agreement="true" user="//@users.0"/>
+      <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;"
+          proposedBy="#//@users.4">
+        <votes agreement="true" user="#//@users.3"/>
+        <votes agreement="true" user="#//@users.0"/>
       </proposals>
-      <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element." proposedBy="//@users.1">
-        <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it" proposedBy="//@users.4">
+      <proposals id="n20" rationale="We could need fork and joins. The can be introduced as a subclass of Element."
+          proposedBy="#//@users.1">
+        <comments id="n22" rationale="I really like this feature but I think that it would overcomplicate the language since we would need a &quot;condition language&quot; to set when forking and merging.&#xA;&#xA;To limite the collaboration and discussion, I've voted against it"
+            proposedBy="#//@users.4">
           <votes agreement="true"/>
         </comments>
-        <comments id="n24" proposedBy="//@users.0"/>
-        <votes agreement="true" user="//@users.2"/>
-        <votes user="//@users.4"/>
-        <votes user="//@users.0" comment="//@histories.0/@versions.1/@proposals.2/@comments.1"/>
+        <comments id="n24" proposedBy="#//@users.0"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <votes user="#//@users.4"/>
+        <votes user="#//@users.0" comment="#//@histories.0/@versions.1/@proposals.2/@comments.1"/>
       </proposals>
-      <proposals id="n24" rationale="In my opinion, &quot;workflow&quot;, &quot;work&quot; and &quot;workParameter&quot; should appear with 3 different colors in the concrete syntax" proposedBy="//@users.2">
-        <comments id="n24" rationale="I would prefer to have one single color for each &quot;keyword&quot; in the language (as normal GPLs)." proposedBy="//@users.4">
-          <votes agreement="true" user="//@users.3"/>
-          <votes agreement="true" user="//@users.1"/>
+      <proposals id="n24" rationale="In my opinion, &quot;workflow&quot;, &quot;work&quot; and &quot;workParameter&quot; should appear with 3 different colors in the concrete syntax"
+          proposedBy="#//@users.2">
+        <comments id="n24" rationale="I would prefer to have one single color for each &quot;keyword&quot; in the language (as normal GPLs)."
+            proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.3"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
-        <comments id="n24" rationale="As Javi, I prefer to have a single color for all the keywords" proposedBy="//@users.1">
-          <votes agreement="true" user="//@users.4"/>
-          <votes agreement="true" user="//@users.3"/>
+        <comments id="n24" rationale="As Javi, I prefer to have a single color for all the keywords"
+            proposedBy="#//@users.1">
+          <votes agreement="true" user="#//@users.4"/>
+          <votes agreement="true" user="#//@users.3"/>
         </comments>
-        <comments id="n25" proposedBy="//@users.0"/>
-        <votes user="//@users.4" comment="//@histories.0/@versions.1/@proposals.3/@comments.0"/>
-        <votes user="//@users.1" comment="//@histories.0/@versions.1/@proposals.3/@comments.1"/>
-        <votes user="//@users.3"/>
-        <votes user="//@users.0" comment="//@histories.0/@versions.1/@proposals.3/@comments.2"/>
+        <comments id="n25" proposedBy="#//@users.0"/>
+        <votes user="#//@users.4" comment="#//@histories.0/@versions.1/@proposals.3/@comments.0"/>
+        <votes user="#//@users.1" comment="#//@histories.0/@versions.1/@proposals.3/@comments.1"/>
+        <votes user="#//@users.3"/>
+        <votes user="#//@users.0" comment="#//@histories.0/@versions.1/@proposals.3/@comments.2"/>
       </proposals>
-      <proposals id="n24" rationale="Color: red for keywords and black for the rest of elements.&#xA;&#xA;This proposal has been incorportaed into the proposal n0. Please vote the n0 proposal for final agreement." proposedBy="//@users.4">
-        <comments id="n24" rationale="The yellow color is not very easy to see in the screen. I would suggest black for the actual values" proposedBy="//@users.1">
-          <votes agreement="true" user="//@users.4"/>
-          <votes agreement="true" user="//@users.3"/>
-          <votes agreement="true" user="//@users.0"/>
+      <proposals id="n24" rationale="Color: red for keywords and black for the rest of elements.&#xA;&#xA;This proposal has been incorportaed into the proposal n0. Please vote the n0 proposal for final agreement."
+          proposedBy="#//@users.4">
+        <comments id="n24" rationale="The yellow color is not very easy to see in the screen. I would suggest black for the actual values"
+            proposedBy="#//@users.1">
+          <votes agreement="true" user="#//@users.4"/>
+          <votes agreement="true" user="#//@users.3"/>
+          <votes agreement="true" user="#//@users.0"/>
         </comments>
-        <comments id="n26" rationale="Then, maybe the references should also appear in black instead of blue." proposedBy="//@users.3">
-          <votes agreement="true" user="//@users.4"/>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.1"/>
+        <comments id="n26" rationale="Then, maybe the references should also appear in black instead of blue."
+            proposedBy="#//@users.3">
+          <votes agreement="true" user="#//@users.4"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
         </comments>
-        <comments id="n27" rationale="If comment n24 from salva is applied, I suggest to use red or purple instead of green for the keywords (because green and black may not be so obvious to distinguish)." proposedBy="//@users.3">
-          <votes agreement="true" user="//@users.4"/>
-          <votes agreement="true" user="//@users.0"/>
-          <votes agreement="true" user="//@users.1"/>
-          <votes agreement="true" user="//@users.2"/>
+        <comments id="n27" rationale="If comment n24 from salva is applied, I suggest to use red or purple instead of green for the keywords (because green and black may not be so obvious to distinguish)."
+            proposedBy="#//@users.3">
+          <votes agreement="true" user="#//@users.4"/>
+          <votes agreement="true" user="#//@users.0"/>
+          <votes agreement="true" user="#//@users.1"/>
+          <votes agreement="true" user="#//@users.2"/>
         </comments>
-        <votes user="//@users.1" comment="//@histories.0/@versions.1/@proposals.4/@comments.0"/>
-        <votes agreement="true" user="//@users.3"/>
+        <votes user="#//@users.1" comment="#//@histories.0/@versions.1/@proposals.4/@comments.0"/>
+        <votes agreement="true" user="#//@users.3"/>
       </proposals>
-      <proposals id="n25" rationale="I think the concrete syntax of &quot;Work&quot; should include the information about the previous and next works.&#xD;&#xA;&#xD;&#xA;I suggest a concrete syntax like: work &lt;name> from &lt;previous> to &lt;next> &lt;parameters>" proposedBy="//@users.3">
-        <comments id="n24" rationale="I agree with the proposal, it would allow us to define work in any order. However, the problem that appears is: what happens if two (o more) &quot;Works&quot; have the same previous &quot;Work&quot;? We are creating forks/merges, which was a proposal rejected by the community.&#xA;&#xA;Maybe the incorporation of previous/next references was not totally a good idea. Anyway, the solution could be to restrict the value of previous/next references in such a way that forks/merges cannot appear. The definition of this restriction is out of the scope of Collaboro :( " proposedBy="//@users.4">
-          <votes agreement="true" user="//@users.2"/>
+      <proposals id="n25" rationale="I think the concrete syntax of &quot;Work&quot; should include the information about the previous and next works.&#xD;&#xA;&#xD;&#xA;I suggest a concrete syntax like: work &lt;name> from &lt;previous> to &lt;next> &lt;parameters>"
+          proposedBy="#//@users.3">
+        <comments id="n24" rationale="I agree with the proposal, it would allow us to define work in any order. However, the problem that appears is: what happens if two (o more) &quot;Works&quot; have the same previous &quot;Work&quot;? We are creating forks/merges, which was a proposal rejected by the community.&#xA;&#xA;Maybe the incorporation of previous/next references was not totally a good idea. Anyway, the solution could be to restrict the value of previous/next references in such a way that forks/merges cannot appear. The definition of this restriction is out of the scope of Collaboro :( "
+            proposedBy="#//@users.4">
+          <votes agreement="true" user="#//@users.2"/>
         </comments>
-        <comments id="n24" proposedBy="//@users.3"/>
+        <comments id="n24" rationale="Then, I think the simplest solution is to remove the references previous/next from &quot;Work&quot;. I guess the order of works is already known by its attribute &quot;index&quot;."
+            proposedBy="#//@users.3"/>
       </proposals>
-      <proposals id="n25" rationale="For the Work element I propose to add two boolean attributes to mark is a given work constitutes the initial, the final or a middle work of the workflow." proposedBy="//@users.1">
-        <comments id="n24" rationale="I've proposed the solution but I'm still thinking that everything would be easier if the order of works/workflow is established implictly by the way they are defined in the textual definition" proposedBy="//@users.4"/>
-        <comments id="n24" proposedBy="//@users.4"/>
-        <votes agreement="true" user="//@users.2"/>
-        <sols id="n28" rationale="Two boolean attributes could be added to specify if the work is initial/final" proposedBy="//@users.4">
+      <proposals id="n25" rationale="For the Work element I propose to add two boolean attributes to mark is a given work constitutes the initial, the final or a middle work of the workflow."
+          proposedBy="#//@users.1">
+        <comments id="n24" rationale="I've proposed the solution but I'm still thinking that everything would be easier if the order of works/workflow is established implictly by the way they are defined in the textual definition"
+            proposedBy="#//@users.4"/>
+        <comments id="n24" proposedBy="#//@users.4"/>
+        <votes agreement="true" user="#//@users.2"/>
+        <sols id="n28" rationale="Two boolean attributes could be added to specify if the work is initial/final"
+            proposedBy="#//@users.4">
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Work"/>
-            </referredElement>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
             <target xsi:type="history:NewAbstractSyntaxElement">
               <element xsi:type="ecore:EAttribute" name="initial"/>
             </target>
           </changes>
           <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement">
-              <element xsi:type="ecore:EClass" href="ModiscoWorkflow.ecore#//Work"/>
-            </referredElement>
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
             <target xsi:type="history:NewAbstractSyntaxElement">
               <element xsi:type="ecore:EAttribute" name="final"/>
             </target>
