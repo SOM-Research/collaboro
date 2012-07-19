@@ -16,19 +16,15 @@
     <subElements xsi:type="notation:AttributeValue" id="workName">
       <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
     </subElements>
-    <subElements xsi:type="notation:Composite" id="prevComposite">
-      <subElements xsi:type="notation:Keyword" id="prev" fill="red"/>
-      <subElements xsi:type="notation:ReferenceValue">
-        <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
-        <reference href="ModiscoWorkflow.ecore#//Work/previous"/>
-      </subElements>
+    <subElements xsi:type="notation:Keyword" id="prev" fill="red"/>
+    <subElements xsi:type="notation:ReferenceValue">
+      <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+      <reference href="ModiscoWorkflow.ecore#//Work/previous"/>
     </subElements>
-    <subElements xsi:type="notation:Composite" id="nextComposite">
-      <subElements xsi:type="notation:Keyword" id="next" fill="red"/>
-      <subElements xsi:type="notation:ReferenceValue">
-        <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
-        <reference href="ModiscoWorkflow.ecore#//Work/next"/>
-      </subElements>
+    <subElements xsi:type="notation:Keyword" id="next" fill="red"/>
+    <subElements xsi:type="notation:ReferenceValue">
+      <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+      <reference href="ModiscoWorkflow.ecore#//Work/next"/>
     </subElements>
     <subElements xsi:type="notation:Composite" id="paramsComposite">
       <subElements xsi:type="notation:SyntaxOf" id="paramsWork">
