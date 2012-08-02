@@ -18,14 +18,13 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
-import fr.inria.atlanmod.collaboro.history.Proposal;
+import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.ui.Controller;
 
 public class CreateVotePositiveAction extends CreateCollaborationAction implements IViewActionDelegate {
 
 	@Override
 	public void run(IAction action) {
-//		System.out.println("CreateVotePositiveAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createVotePositive(this.collaboration);
 		} else {
@@ -36,13 +35,12 @@ public class CreateVotePositiveAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-//		System.out.println("CreateVotePositiveAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
-			if (element instanceof Proposal) {
-				Proposal proposal = (Proposal) element;
-				this.collaboration = proposal;
+			if (element instanceof Collaboration) {
+				Collaboration collaboration = (Collaboration) element;
+				this.collaboration = collaboration;
 			}
 		}
 
@@ -50,7 +48,6 @@ public class CreateVotePositiveAction extends CreateCollaborationAction implemen
 
 	@Override
 	public void init(IViewPart view) {
-//		System.out.println("CreateVotePositiveAction init");
 		shell = view.getViewSite().getShell();
 	}
 

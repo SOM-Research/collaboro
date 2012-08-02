@@ -18,39 +18,35 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 
-import fr.inria.atlanmod.collaboro.history.Proposal;
+import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.ui.Controller;
 
 public class CreateVoteNegativeAction extends CreateCollaborationAction implements IViewActionDelegate {
-
+	
 	@Override
 	public void run(IAction action) {
-//		System.out.println("CreateVoteNegativeAction run");
 		if(Controller.INSTANCE.isLogged()) {
 			Controller.INSTANCE.createVoteNegative(this.collaboration);
 		} else {
 			MessageDialog.openInformation(this.shell, "Not looged in", "You are not logged in");
 		}
-
 	}
 
 	@Override
 	public void selectionChanged(IAction action, ISelection selection) {
-//		System.out.println("CreateVoteNegativeAction selectionChanged");
 		if (selection instanceof TreeSelection) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
-			if (element instanceof Proposal) {
-				Proposal proposal = (Proposal) element;
-				this.collaboration = proposal;
+			if (element instanceof Collaboration) {
+				Collaboration collaboration = (Collaboration) element;
+				this.collaboration = collaboration;
 			}
 		}
-
+		
 	}
 
 	@Override
 	public void init(IViewPart view) {
-//		System.out.println("CreateVoteNegativeAction init");
 		shell = view.getViewSite().getShell();
 	}
 }

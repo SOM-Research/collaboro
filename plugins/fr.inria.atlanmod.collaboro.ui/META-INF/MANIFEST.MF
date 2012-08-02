@@ -1,15 +1,42 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ui
+Bundle-Name: Collaboro Plugin
 Bundle-SymbolicName: fr.inria.atlanmod.collaboro.ui;singleton:=true
-Bundle-Version: 0.1
+Bundle-Version: 0.2.1.qualifier
 Bundle-Activator: fr.inria.atlanmod.collaboro.ui.CollaboroPlugin
 Require-Bundle: org.eclipse.ui,
+ org.eclipse.ui.ide;bundle-version="3.7.0",
  org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.emf.edit.ui;bundle-version="2.7.0",
  org.eclipse.emf.ecore.xmi,
- fr.inria.atlanmod.collaboro.history,
- org.eclipse.core.resources;bundle-version="3.7.100"
+ fr.inria.atlanmod.collaboro.notation.editor;bundle-version="0.1.0",
+ fr.inria.atlanmod.collaboro.history.editor;bundle-version="0.1.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Atlanmod
+Bundle-ClassPath: lib/batik-awt-util.jar,
+ lib/batik-svg-dom.jar,
+ lib/batik-svggen.jar,
+ lib/batik-swing.jar,
+ lib/xml-apis-ext.jar,
+ lib/batik-dom.jar,
+ lib/batik-util.jar,
+ .,
+ lib/batik-css.jar,
+ lib/batik-anim.jar,
+ lib/batik-bridge.jar,
+ lib/batik-codec.jar,
+ lib/batik-ext.jar,
+ lib/batik-extension.jar,
+ lib/batik-gui-util.jar,
+ lib/batik-gvt.jar,
+ lib/batik-parser.jar,
+ lib/batik-script.jar,
+ lib/batik-transcoder.jar,
+ lib/batik-xml.jar,
+ lib/js.jar,
+ lib/pdf-transcoder.jar,
+ lib/xalan-2.6.0.jar,
+ lib/xerces_2_5_0.jar,
+ lib/xml-apis.jar

@@ -52,5 +52,7 @@ public class CreateSolutionAction extends CreateCollaborationAction implements I
 		shell = view.getViewSite().getShell();
 
 	}
+	
+	
 
 }

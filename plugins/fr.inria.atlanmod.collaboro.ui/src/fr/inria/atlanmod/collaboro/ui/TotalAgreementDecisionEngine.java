@@ -27,6 +27,7 @@ public class TotalAgreementDecisionEngine extends DecisionEngine {
 		for(User user : history.getUsers()) {
 			userNames.add(user.getId());
 		}
+		userNames.remove(proposal.getProposedBy().getId());
 		
 		boolean accepted = true;
 		
@@ -38,7 +39,7 @@ public class TotalAgreementDecisionEngine extends DecisionEngine {
 			}
 		}
 		
-		if((proposal.getVotes().size() == 0) || !accepted || (accepted && userNames.isEmpty())) {
+		if((proposal.getVotes().size() == 0) || !accepted || userNames.size() > 0) {
 			proposal.setAccepted(false);
 //			System.out.println("Proposal " + proposal.getId() + " not accepted");
 			return false;
@@ -56,6 +57,7 @@ public class TotalAgreementDecisionEngine extends DecisionEngine {
 			for(User user : history.getUsers()) {
 				userNames.add(user.getId());
 			}
+			userNames.remove(solution.getProposedBy().getId());
 			
 			boolean accepted = true;
 			
@@ -67,7 +69,7 @@ public class TotalAgreementDecisionEngine extends DecisionEngine {
 				}
 			}
 			
-			if((proposal.getVotes().size() == 0) || !accepted || (accepted && userNames.isEmpty())) {
+			if(!((proposal.getVotes().size() == 0) || !accepted || userNames.size() > 0)) {
 				proposal.setSelected(solution);
 //				System.out.println("Solution " + solution.getId() + " found");
 				break;

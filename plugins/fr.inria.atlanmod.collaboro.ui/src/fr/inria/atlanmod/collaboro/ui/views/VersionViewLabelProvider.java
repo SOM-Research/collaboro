@@ -59,7 +59,6 @@ public class VersionViewLabelProvider extends LabelProvider {
 	}
 
 	@Override
-
 	public Image getImage(Object element) {
 		return CollaboroPlugin.getImage(imagePath(element)).createImage();
 	}
@@ -68,13 +67,13 @@ public class VersionViewLabelProvider extends LabelProvider {
 	public String getText(Object element) {
 		if (element instanceof Proposal) {
 			Proposal proposal = (Proposal) element;
-			return "Proposal " + proposal.getId() + " from " + proposal.getProposedBy().getId();
+			return "Proposal " + proposal.getId() + " from " + ((proposal.getProposedBy() != null) ? proposal.getProposedBy().getId() : "?");
 		} else if (element instanceof Solution) {
 			Solution solution = (Solution) element;
-			return "Solution " + solution.getId() + " from " + solution.getProposedBy().getId();
+			return "Solution " + solution.getId() + " from " + ((solution.getProposedBy() != null) ? solution.getProposedBy().getId() : "?");
 		} else if (element instanceof Comment) {
-			Comment solution = (Comment) element;
-			return "Comment " + solution.getId() + " from " + solution.getProposedBy().getId();
+			Comment comment = (Comment) element;
+			return "Comment " + comment.getId() + " from " + ((comment.getProposedBy() != null) ? comment.getProposedBy().getId() : "?");
 		}
 		return super.getText(element);
 	}
