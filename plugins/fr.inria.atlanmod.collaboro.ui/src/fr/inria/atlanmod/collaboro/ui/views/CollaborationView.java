@@ -11,15 +11,18 @@
 package fr.inria.atlanmod.collaboro.ui.views;
 
 
-import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -28,28 +31,32 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.TypedListener;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.internal.actions.ModifyWorkingSetDelegate;
+import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.ui.part.ViewPart;
 
-import fr.inria.atlanmod.collaboro.history.Add;
 import fr.inria.atlanmod.collaboro.history.Collaboration;
-import fr.inria.atlanmod.collaboro.history.Delete;
 import fr.inria.atlanmod.collaboro.history.ModelChange;
 import fr.inria.atlanmod.collaboro.history.Solution;
 import fr.inria.atlanmod.collaboro.history.Update;
 import fr.inria.atlanmod.collaboro.history.Vote;
+import fr.inria.atlanmod.collaboro.notation.NotationElement;
+import fr.inria.atlanmod.collaboro.ui.CollaboroPlugin;
 import fr.inria.atlanmod.collaboro.ui.Controller;
 
 /**
+ * This is the view for the details of the collaborations
+ * 
  * @author Javier Canovas (javier.canovas@inria.fr)
  *
  */
@@ -66,150 +73,181 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 	private Group solutionGroup = null;
 	private Composite mainGroup = null;
 	private TableViewer tableCreation = null;
+	private TreeViewer solutionViewer = null;
+	private VoteUpdater voteUpdater = null;
+	private Button saveButton = null;
 
 
-	class ReferredEditingSupport extends EditingSupport {
+	public class VoteUpdater {
+		Text agree, disagree;
+		Collaboration collaboration;
 
-		private final TableViewer viewer;
-
-		public ReferredEditingSupport(TableViewer viewer) {
-			super(viewer);
-			this.viewer = viewer;
+		public VoteUpdater(Collaboration collaboration, Text agree, Text disagree) {
+			this.collaboration = collaboration;
+			this.agree = agree;
+			this.disagree = disagree;
 		}
 
-		@Override
-		protected CellEditor getCellEditor(Object element) {
-			return new TextCellEditor(viewer.getTable());
-		}
 
-		@Override
-		protected boolean canEdit(Object element) {
-			return true;
-		}
-
-		@Override
-		protected Object getValue(Object element) {
-			return ((ModelChange) element).getReferredElement();
-		}
-
-		@Override
-		protected void setValue(Object element, Object value) {
-			((ModelChange) element).setReferredElement(String.valueOf(value));
-			viewer.refresh();
-		}
-	}
-	
-	class TargetEditingSupport extends EditingSupport {
-
-		private final TableViewer viewer;
-
-		public TargetEditingSupport(TableViewer viewer) {
-			super(viewer);
-			this.viewer = viewer;
-		}
-
-		@Override
-		protected CellEditor getCellEditor(Object element) {
-			return new TextCellEditor(viewer.getTable());
-		}
-
-		@Override
-		protected boolean canEdit(Object element) {
-			return true;
-		}
-
-		@Override
-		protected Object getValue(Object element) {
-			return ((ModelChange) element).getTarget();
-		}
-
-		@Override
-		protected void setValue(Object element, Object value) {
-			((ModelChange) element).setTarget(String.valueOf(value));
-			viewer.refresh();
-		}
-	}
-	
-	class SourceEditingSupport extends EditingSupport {
-
-		private final TableViewer viewer;
-
-		public SourceEditingSupport(TableViewer viewer) {
-			super(viewer);
-			this.viewer = viewer;
-		}
-
-		@Override
-		protected CellEditor getCellEditor(Object element) {
-			return new TextCellEditor(viewer.getTable());
-		}
-
-		@Override
-		protected boolean canEdit(Object element) {
-			if (element instanceof Update) {
-				return true;
+		public void update() {
+			String votesAgreeString = "";
+			String votesDisagreeString = "";			
+			for(Vote vote : collaboration.getVotes()) {
+				if(vote.isAgreement()) {
+					votesAgreeString += vote.getUser().getId() + ", ";
+				} else {
+					votesDisagreeString += vote.getUser().getId() + ", ";
+				}
 			}
-			return false;
-		}
-
-		@Override
-		protected Object getValue(Object element) {
-			return ((Update) element).getSource();
-		}
-
-		@Override
-		protected void setValue(Object element, Object value) {
-			((Update) element).setSource(String.valueOf(value));
-			viewer.refresh();
+			agree.setText((votesAgreeString.length() == 0) ? "" : votesAgreeString.substring(0, votesAgreeString.length()-2));
+			disagree.setText((votesDisagreeString.length() == 0) ? "" : votesDisagreeString.substring(0, votesDisagreeString.length()-2));
 		}
 	}
+
+	/**
+	 * Implements the double click listener for syntax elements. When the user double clicks
+	 * on the referred, target or source elements, a new editor is shown
+	 * 
+	 * @author Javier Canovas (javier.canovas@inria.fr)
+	 *
+	 */
+	public class ChangesDoubleClickListener implements IDoubleClickListener {
+		TreeViewer viewer = null;
+
+		public ChangesDoubleClickListener(TreeViewer viewer) {
+			this.viewer = viewer;
+		}
+
+		@Override
+		public void doubleClick(DoubleClickEvent event) {
+			IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+			Object selectedElement = selection.getFirstElement();
+			if (selectedElement instanceof SyntaxElementPropertySource) {
+				SyntaxElementPropertySource propertySource = (SyntaxElementPropertySource) selectedElement;
+				Object object = propertySource.getObject();
+
+				if (object instanceof NotationElement) {
+					NotationElement notationElement = (NotationElement) object;
+					Controller.INSTANCE.openNotationEditor(notationElement);
+				} else if (object instanceof EClass) {
+					EClass eClass = (EClass) object;
+					Controller.INSTANCE.openAbstractSyntaxEditor(eClass);
+				}
+
+			}
+		}
+
+	}
 	
-	class RationaleModifyListener implements ModifyListener {
+	public class SaveButtonListener implements SelectionListener {
 		private Collaboration collaboration;
+
+		public SaveButtonListener(Collaboration collaboration) {
+			this.collaboration = collaboration;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			collaboration.setRationale(rationaleText.getText());
+			Controller.INSTANCE.saveHistory();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) { }
+
+		public void setCollaboration(Collaboration collaboration) {
+			this.collaboration = collaboration;
+		}
 		
+	}
+
+	public class RationaleModifyListener implements ModifyListener {
+		private Collaboration collaboration;
+
 		public RationaleModifyListener(Collaboration collaboration) {
 			this.collaboration = collaboration;
 		}
 		@Override
 		public void modifyText(ModifyEvent e) {
+			if(collaboration == null) return;
 			Text text = (Text) e.getSource();
 			collaboration.setRationale(text.getText());
 		}
-		
-	}
-	
-	class ComboSelectionListener implements SelectionListener {
-		private Solution solution;
-		
-		public ComboSelectionListener(Solution solution) {
-			this.solution = solution;
-		}
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			Combo combo = (Combo) e.getSource();
-			if(combo.getSelectionIndex() == 0) {
-				Controller.INSTANCE.createAdd(solution);
-			} else if(combo.getSelectionIndex() == 1) {
-				Controller.INSTANCE.createUpdate(solution);
-			} else if(combo.getSelectionIndex() == 2) {
-				Controller.INSTANCE.createDelete(solution);
-			}
-			tableCreation.setInput(solution.getChanges());
-			tableCreation.refresh();						
-		}
-		
-		@Override
-		public void widgetDefaultSelected(SelectionEvent e) {
-			// TODO Auto-generated method stub
-			
+		public void setCollaboration(Collaboration collaboration) {
+			this.collaboration = collaboration;
 		}
 	}
 
 	/**
+	 * Creates a new ADD model change
 	 * 
+	 * @author Javier Canovas (javier.canovas@inria.fr)
+	 *
 	 */
-	public CollaborationView() {
-		// TODO Auto-generated constructor stub
+	class AddListener implements SelectionListener {
+		private Solution solution;
+
+		public AddListener(Solution solution) {
+			this.solution = solution;
+		}
+
+		public void widgetSelected(SelectionEvent e) {
+			Controller.INSTANCE.createAdd(solution);
+			solutionViewer.refresh();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+
+		}
+	}
+
+	/**
+	 * Creates a new update model change
+	 * 
+	 * @author Javier Canovas (javier.canovas@inria.fr)
+	 *
+	 */
+	class UpdateListener implements SelectionListener {
+		private Solution solution;
+
+		public UpdateListener(Solution solution) {
+			this.solution = solution;
+		}
+
+		public void widgetSelected(SelectionEvent e) {
+			Controller.INSTANCE.createUpdate(solution);
+			solutionViewer.refresh();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+
+		}
+	}
+
+	/**
+	 * Creates a new delete model change
+	 * 
+	 * @author Javier Canovas (javier.canovas@inria.fr)
+	 *
+	 */
+	class DeleteListener implements SelectionListener {
+		private Solution solution;
+
+		public DeleteListener(Solution solution) {
+			this.solution = solution;
+		}
+
+		public void widgetSelected(SelectionEvent e) {
+			Controller.INSTANCE.createDelete(solution);
+			solutionViewer.refresh();
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+
+		}
 	}
 
 	@Override
@@ -222,24 +260,17 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		layout.numColumns = 1;
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		addCollaborationInfo(composite);
+		FillLayout parentLayout = new FillLayout(SWT.VERTICAL);
+		composite.setLayout(parentLayout);
+		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		createCollaborationPart(composite);
 
 		// Listening events
-		getSite().getPage().addSelectionListener(VersionView.ID, this);
+		getSite().getPage().addSelectionListener(this);
 	}
 
-	private void addCollaborationInfo(Composite parent) {
-//		Composite mainGroup = new Composite(parent, SWT.NONE);
-//		FillLayout fillLayout = new FillLayout(SWT.VERTICAL);
-//		mainGroup.setLayout(fillLayout);
-		
-		FillLayout parentLayout = new FillLayout(SWT.VERTICAL);
-		parent.setLayout(parentLayout);
-		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		createCollaborationPart(parent);
-	}
-	
+
 	public void createCollaborationPart(Composite parent) {
 		collaborationGroup = new Group(parent, SWT.NONE);
 		GridLayout gridLayout = new GridLayout();
@@ -250,15 +281,26 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 
 		Label proposedByLabel = new Label(collaborationGroup, SWT.NONE);
 		proposedByLabel.setText("Proposed by");
-		proposedByText = new Text(collaborationGroup, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
+
+		Composite proposedAndButton = new Composite(collaborationGroup, SWT.NONE);
+		GridLayout gridLayout2 = new GridLayout();
+		proposedAndButton.setLayout(gridLayout2);
+		gridLayout2.numColumns = 2;
+		proposedAndButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		
+		proposedByText = new Text(proposedAndButton, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 		proposedByText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		proposedByText.setText("");
-
+		
+		saveButton = new Button(proposedAndButton, SWT.BORDER | SWT.PUSH);
+		saveButton.setText("");
+		saveButton.setImage(WorkbenchImages.getImage(ISharedImages.IMG_ETOOL_SAVE_EDIT));
+		
 		Label rationaleLabel = new Label(collaborationGroup, SWT.NONE);
-		rationaleLabel.setText("Rationale");
+		rationaleLabel.setText("Rationale");				
 		rationaleText = new Text(collaborationGroup, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI | SWT.WRAP);
 		rationaleText.setText("");
-		rationaleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		rationaleText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));		
 
 		Label votesAgreeLabel = new Label(collaborationGroup, SWT.NONE);
 		votesAgreeLabel.setText("Votes Agree:");
@@ -271,157 +313,135 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		votesDisagreeLabel.setText("Votes Disagree");
 		votesDisagreeText = new Text(collaborationGroup, SWT.BORDER | SWT.READ_ONLY);
 		votesDisagreeText.setLayoutData(gridData1);
-		
+
 		parent.layout(true);
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		//		System.out.println("Se detecto un cambio en la vista principal  desde " + this.ID + "\n" + part.getSite().getId() + " - " + selection);
-
-		resetFields();
-//		createCollaborationPart(parent);
-		Object objectSelected = null;
-		if (selection instanceof TreeSelection) {
+		// System.out.println("Se detecto un cambio en la vista principal  desde " + this.ID + "\n" + part.getSite().getId() + " - " + selection);
+		if(part.getSite().getId().equals(VersionView.ID)) {	
 			TreeSelection treeSelection = (TreeSelection) selection;
-			objectSelected = treeSelection.getFirstElement();
-		}
+			Object objectSelected = treeSelection.getFirstElement();
 
-		if(objectSelected != null && objectSelected instanceof Collaboration) {
-			Collaboration collaboration = (Collaboration) objectSelected;
-			if(proposedByText != null) {
-				proposedByText.setText(collaboration.getProposedBy().getId());
-			}
+			if(objectSelected != null && objectSelected instanceof Collaboration) { 
+				resetFields();
 
-			if(rationaleText != null && collaboration.getRationale() != null) {
-				rationaleText.setText(collaboration.getRationale());
-				Listener[] listeners = rationaleText.getListeners(SWT.Modify);
-				for(Listener listener : listeners) rationaleText.removeListener(SWT.Modify, listener);
-				rationaleText.addModifyListener(new RationaleModifyListener(collaboration));
-			}
-
-			if(votesAgreeText != null && votesDisagreeText != null) {
-				String votesAgreeString = "";
-				String votesDisagreeString = "";
-				for(Vote vote : collaboration.getVotes()) {
-					if(vote.isAgreement()) {
-						votesAgreeString += vote.getUser().getId() + ", ";
-					} else {
-						votesDisagreeString += vote.getUser().getId() + ", ";
-					}
+				Collaboration collaboration = (Collaboration) objectSelected;
+				if(proposedByText != null) {
+					proposedByText.setText((collaboration.getProposedBy() != null) ? collaboration.getProposedBy().getId() : "?");
 				}
-				votesAgreeText.setText((votesAgreeString.length() == 0) ? "" : votesAgreeString.substring(0, votesAgreeString.length()-2));
-				votesDisagreeText.setText((votesDisagreeString.length() == 0) ? "" : votesDisagreeString.substring(0, votesDisagreeString.length()-2));
+
+				if(rationaleText != null) {
+					rationaleText.setText((collaboration.getRationale() == null) ? "" : collaboration.getRationale());
+					rationaleText.addModifyListener(new RationaleModifyListener(collaboration));
+					saveButton.addSelectionListener(new SaveButtonListener(collaboration));
+				}
+
+				if(votesAgreeText != null && votesDisagreeText != null) {
+					voteUpdater = new VoteUpdater(collaboration, votesAgreeText, votesDisagreeText);
+					Controller.INSTANCE.setVoteUpdater(voteUpdater);
+					voteUpdater.update();
+				}
+
+				if (collaboration instanceof Solution) {
+					Solution solution = (Solution) collaboration;
+
+					solutionGroup = new Group(parent, SWT.NONE);
+					GridLayout gridLayout = new GridLayout();
+					gridLayout.numColumns = 3;
+					solutionGroup.setLayout(gridLayout);
+					solutionGroup.setText("Solution");			
+
+					Button buttonAdd = new Button(solutionGroup, SWT.PUSH);
+					GridData gridDataAddButton = new GridData(GridData.FILL, GridData.CENTER, true, false);
+					buttonAdd.setLayoutData(gridDataAddButton);
+					buttonAdd.setText("Add");
+					buttonAdd.addSelectionListener(new AddListener(solution));
+
+					Button buttonUpdate = new Button(solutionGroup, SWT.PUSH);
+					GridData gridDataUpdateButton = new GridData(GridData.FILL, GridData.CENTER, true, false);
+					buttonUpdate.setLayoutData(gridDataUpdateButton);
+					buttonUpdate.setText("Update");
+					buttonUpdate.addSelectionListener(new UpdateListener(solution));
+
+					Button buttonDelete = new Button(solutionGroup, SWT.PUSH);
+					GridData gridDataDeleteButton = new GridData(GridData.FILL, GridData.CENTER, true, false);
+					buttonDelete.setLayoutData(gridDataDeleteButton);
+					buttonDelete.setText("Delete");
+					buttonDelete.addSelectionListener(new DeleteListener(solution));
+
+					solutionViewer = new TreeViewer(solutionGroup, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.FILL);
+					Controller.INSTANCE.setChanges(solutionViewer);
+					GridData gridDataViewer = new GridData(GridData.FILL_BOTH);
+					gridDataViewer.horizontalSpan = 3;
+					solutionViewer.getTree().setLayoutData(gridDataViewer);
+
+					solutionViewer.setContentProvider(new ChangesContentProvider(solution));
+					solutionViewer.setLabelProvider(new ChangesLabelProvider());
+					solutionViewer.setInput("caca");
+
+					solutionViewer.addDoubleClickListener(new ChangesDoubleClickListener(solutionViewer));
+
+					MenuManager contextMenu = new MenuManager("#ViewerPopupMenu");
+					Menu menu = contextMenu.createContextMenu(solutionViewer.getControl());
+
+					solutionViewer.getControl().setMenu(menu);
+					getSite().registerContextMenu(contextMenu, solutionViewer); 
+
+					parent.layout(true);		
+
+					getSite().setSelectionProvider(solutionViewer);
+				} 
 			}
-
-			if (collaboration instanceof Solution) {
-				Solution solution = (Solution) collaboration;
-
-				solutionGroup = new Group(parent, SWT.NONE);
-				GridLayout gridLayout = new GridLayout();
-				solutionGroup.setLayout(gridLayout);
-				gridLayout.numColumns = 1; 
-				solutionGroup.setText("Solution");			
-
-				Combo comboCreation = new Combo(solutionGroup, SWT.BORDER);
-				comboCreation.setText("Testinggg");
-				comboCreation.setItems(new String[] { "Create ADD", "Create UDPATE", "Create DELETE"});
-				comboCreation.addSelectionListener(new ComboSelectionListener(solution));
-
-				tableCreation = new TableViewer(solutionGroup, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-
-				TableViewerColumn tableColumn1 = new TableViewerColumn(tableCreation, SWT.NONE);
-				tableColumn1.getColumn().setWidth(50);
-				tableColumn1.getColumn().setText("Type");
-				tableColumn1.setLabelProvider(new ColumnLabelProvider() {
-					@Override
-					public String getText(Object element) {
-						if (element instanceof Add) {
-							return "ADD";
-						} else if (element instanceof Update) {
-							return "UPDATE";							
-						} else if (element instanceof Delete) {
-							return "DELETE";
-						} else {
-							return "NAN";
-						}
-					}
-				});
-
-				TableViewerColumn tableColumn2 = new TableViewerColumn(tableCreation, SWT.NONE);
-				tableColumn2.getColumn().setWidth(80);
-				tableColumn2.getColumn().setText("Referred");
-				tableColumn2.setEditingSupport(new ReferredEditingSupport(tableCreation));
-				tableColumn2.setLabelProvider(new ColumnLabelProvider() {
-					@Override
-					public String getText(Object element) {
-						ModelChange p = (ModelChange) element; 
-						return p.getReferredElement();
-					}
-				});
-
-				TableViewerColumn tableColumn3 = new TableViewerColumn(tableCreation, SWT.NONE);
-				tableColumn3.getColumn().setWidth(80);
-				tableColumn3.getColumn().setText("Target");
-				tableColumn3.setEditingSupport(new TargetEditingSupport(tableCreation));
-				tableColumn3.setLabelProvider(new ColumnLabelProvider() {
-					@Override
-					public String getText(Object element) {
-						ModelChange p = (ModelChange) element; 
-						return p.getTarget();
-					}
-				});
-
-				TableViewerColumn tableColumn4 = new TableViewerColumn(tableCreation, SWT.NONE);
-				tableColumn4.getColumn().setWidth(80);
-				tableColumn4.getColumn().setText("Source");
-				tableColumn4.setEditingSupport(new SourceEditingSupport(tableCreation));
-				tableColumn4.setLabelProvider(new ColumnLabelProvider() {
-					@Override
-					public String getText(Object element) {
-						if (element instanceof Update) {
-							Update update = (Update) element;
-							return update.getSource();
-						}
-						return "";
-					}
-				});
-
-				tableCreation.setContentProvider(ArrayContentProvider.getInstance());
-				tableCreation.setInput(solution.getChanges());
-				tableCreation.refresh();
-
-				Table table = tableCreation.getTable();
-				table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-				table.setHeaderVisible(true);
-				table.setLinesVisible(true);
-
-				parent.layout(true);		
-			} 
+		} else {
+//			resetFields();
 		}
-
 	}
 
 	public void resetFields() {
-//		if(collaborationGroup != null) {
-//			collaborationGroup.dispose();
-//			collaborationGroup = null;
-//			parent.layout(true);			
-//		}
 		if(solutionGroup != null) {
+			Controller.INSTANCE.setChanges(null);
 			solutionGroup.dispose();
 			solutionGroup = null;
 			parent.layout(true);			
+			solutionViewer = null;
+			getSite().setSelectionProvider(null);
 		}
+		proposedByText.setText("");
+		votesAgreeText.setText("");
+		votesDisagreeText.setText("");
 
+		Listener[] listeners = rationaleText.getListeners(SWT.Modify);
+		for(Listener listener : listeners) {
+			if (listener instanceof TypedListener) {
+				TypedListener typedListener = (TypedListener) listener;
+				if (typedListener.getEventListener() instanceof CollaborationView.RationaleModifyListener) {
+					CollaborationView.RationaleModifyListener modifyListener = (CollaborationView.RationaleModifyListener) typedListener.getEventListener();
+					modifyListener.setCollaboration(null);
+					rationaleText.removeListener(SWT.Modify, typedListener);
+				}
+			}
+		}
+		
+
+		listeners = saveButton.getListeners(SWT.Selection);
+		for(Listener listener : listeners) {
+			if (listener instanceof TypedListener) {
+				TypedListener typedListener = (TypedListener) listener;
+				if (typedListener.getEventListener() instanceof CollaborationView.SaveButtonListener) {
+					CollaborationView.SaveButtonListener selectionListener = (CollaborationView.SaveButtonListener) typedListener.getEventListener();
+					selectionListener.setCollaboration(null);
+					saveButton.removeListener(SWT.Selection, typedListener);
+				}
+			}
+		}
 	}
-
 }
 
 

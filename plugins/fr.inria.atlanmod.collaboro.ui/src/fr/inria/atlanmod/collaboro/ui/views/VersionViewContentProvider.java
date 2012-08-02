@@ -10,6 +10,8 @@
  *******************************************************************************/
 package fr.inria.atlanmod.collaboro.ui.views;
 
+import java.util.ArrayList;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -40,7 +42,12 @@ IStructuredContentProvider, ITreeContentProvider {
 	public Object[] getChildren(Object parentElement) {
 		if (parentElement instanceof Proposal) {
 			Proposal proposal = (Proposal) parentElement;
-			return proposal.getSols().toArray();
+			
+			ArrayList<Object> result = new ArrayList<Object>();
+			result.addAll(proposal.getSols());
+			result.addAll(proposal.getComments());
+			
+			return result.toArray();
 		} else if (parentElement instanceof Solution) {
 			Solution solution = (Solution) parentElement;
 			return solution.getComments().toArray();
@@ -61,7 +68,7 @@ IStructuredContentProvider, ITreeContentProvider {
 	public boolean hasChildren(Object element) {
 		if (element instanceof Proposal) {
 			Proposal proposal = (Proposal) element;
-			return !proposal.getSols().isEmpty();
+			return !proposal.getSols().isEmpty() || !proposal.getComments().isEmpty();
 		} else if (element instanceof Solution) {
 			Solution solution = (Solution) element;
 			return !solution.getComments().isEmpty();

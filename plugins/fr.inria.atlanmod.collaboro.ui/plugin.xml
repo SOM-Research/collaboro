@@ -23,6 +23,14 @@
             name="Collaboration View"
             restorable="true">
       </view>
+      <view
+            category="atlanmod.collaboro.ui"
+            class="fr.inria.atlanmod.collaboro.ui.views.NotationView"
+            icon="icons/notation.png"
+            id="atlanmod.collaboro.ui.notationView"
+            name="Notation View"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -32,8 +40,27 @@
          <menu
                label="Collaboro">
             <command
+                  commandId="fr.inria.atlanmod.collaboro.ui.saveHistoryCommand"
+                  label="Save History Model"
+                  style="push">
+            </command>
+            <command
+                  commandId="fr.inria.atlanmod.collaboro.ui.resetEngineCommand"
+                  label="Reset Collaboro Engine"
+                  style="push">
+            </command>
+            <separator
+                  name="fr.inria.atlanmod.collaboro.ui.separator"
+                  visible="true">
+            </separator>
+            <command
                   commandId="fr.inria.atlanmod.collaboro.ui.executeDecisionEngineCommand"
                   label="Execute Decision Engine"
+                  style="push">
+            </command>
+            <command
+                  commandId="fr.inria.atlanmod.collaboro.ui.applyChangesCommand"
+                  label="Apply accepted proposals"
                   style="push">
             </command>
          </menu>
@@ -45,12 +72,6 @@
             adaptable="false"
             id="fr.inria.atlanmod.collaboro.ui.voting"
             objectClass="fr.inria.atlanmod.collaboro.history.Collaboration">
-         <action
-               class="fr.inria.atlanmod.collaboro.ui.actions.CreateCommentAction"
-               icon="icons/comment.png"
-               id="fr.inria.atlanmod.collaboro.ui.versionView.createComment"
-               label="Add a comment">
-         </action>
          <action
                class="fr.inria.atlanmod.collaboro.ui.actions.CreateVotePositiveAction"
                icon="icons/positiveVote.png"
@@ -66,13 +87,60 @@
       </objectContribution>
       <objectContribution
             adaptable="false"
-            id="fr.inria.atlanmod.collaboro.ui.solutionProposal"
+            id="fr.inria.atlanmod.collaboro.ui.solution"
+            objectClass="fr.inria.atlanmod.collaboro.history.Solution">
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateCommentAction"
+               icon="icons/comment.png"
+               id="fr.inria.atlanmod.collaboro.ui.versionView.createComment"
+               label="Add a comment">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="fr.inria.atlanmod.collaboro.ui.proposal"
             objectClass="fr.inria.atlanmod.collaboro.history.Proposal">
          <action
                class="fr.inria.atlanmod.collaboro.ui.actions.CreateSolutionAction"
                icon="icons/solution.png"
                id="fr.inria.atlanmod.collaboro.ui.versionView.solutionProposal"
                label="Propose Solution">
+         </action>
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateCommentAction"
+               icon="icons/comment.png"
+               id="fr.inria.atlanmod.collaboro.ui.versionView.createComment"
+               label="Add a comment">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="fr.inria.atlanmod.collaboro.ui.modelChange"
+            objectClass="fr.inria.atlanmod.collaboro.history.ModelChange">
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateReferredSyntaxElement"
+               id="fr.inria.atlanmod.collaboro.ui.referredElementWizard"
+               label="Configure Referred Element">
+         </action>
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateTargetSyntaxElement"
+               id="fr.inria.atlanmod.collaboro.ui.targetElementWizard"
+               label="Configure Target Element">
+         </action>
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.DeleteModelChangeAction"
+               id="fr.inria.atlanmod.collaboro.ui.deleteModelChange"
+               label="Delete">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="fr.inria.atlanmod.collaboro.ui.update"
+            objectClass="fr.inria.atlanmod.collaboro.history.Update">
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateSourceSyntaxElement"
+               id="fr.inria.atlanmod.collaboro.ui.update"
+               label="Configure Source Element">
          </action>
       </objectContribution>
    </extension>
@@ -87,6 +155,21 @@
             id="fr.inria.atlanmod.collaboro.ui.executeDecisionEngineCommand"
             name="ExecuteDecisionEngine">
       </command>
+      <command
+            categoryId="fr.inria.atlanmod.collaboro.ui.commandCategory"
+            id="fr.inria.atlanmod.collaboro.ui.saveHistoryCommand"
+            name="SaveHistory">
+      </command>
+      <command
+            categoryId="fr.inria.atlanmod.collaboro.ui.commandCategory"
+            id="fr.inria.atlanmod.collaboro.ui.applyChangesCommand"
+            name="ApplyChanges">
+      </command>
+      <command
+            categoryId="fr.inria.atlanmod.collaboro.ui.commandCategory"
+            id="fr.inria.atlanmod.collaboro.ui.resetEngineCommand"
+            name="ResetEngine">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -94,6 +177,52 @@
             class="fr.inria.atlanmod.collaboro.ui.commands.ExecuteDecisionEngineCommand"
             commandId="fr.inria.atlanmod.collaboro.ui.executeDecisionEngineCommand">
       </handler>
+      <handler
+            class="fr.inria.atlanmod.collaboro.ui.commands.SaveHistoryCommand"
+            commandId="fr.inria.atlanmod.collaboro.ui.saveHistoryCommand">
+      </handler>
+      <handler
+            class="fr.inria.atlanmod.collaboro.ui.commands.ApplyChangesCommand"
+            commandId="fr.inria.atlanmod.collaboro.ui.applyChangesCommand">
+      </handler>
+      <handler
+            class="fr.inria.atlanmod.collaboro.ui.commands.ResetEngineCommand"
+            commandId="fr.inria.atlanmod.collaboro.ui.resetEngineCommand">
+      </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            name="Collaboro">
+      </category>
+      <wizard
+            category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            class="fr.inria.atlanmod.collaboro.ui.wizards.NewHistoryWizard"
+            icon="icons/collaborationView.png"
+            id="fr.inria.atlanmod.collaboro.ui.newHistoryWizard"
+            name="New Collaboro Model">
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+      <wizard
+            category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            class="fr.inria.atlanmod.collaboro.ui.editors.DawnHistoryModelWizard"
+            id="fr.inria.atlanmod.collaboro.ui.dawnWizard"
+            name="History remote model">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="fr.inria.atlanmod.collaboro.ui.editors.DawnHistoryEditor"
+            default="false"
+            extensions="history"
+            id="fr.inria.atlanmod.collaboro.ui.historyEditor"
+            name="History editor">
+      </editor>
+   </extension>
+
 
 </plugin>
