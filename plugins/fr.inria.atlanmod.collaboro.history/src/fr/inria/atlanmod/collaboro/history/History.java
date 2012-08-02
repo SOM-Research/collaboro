@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.History#getUsers <em>Users</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.History#getVersions <em>Versions</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.History#getHistories <em>Histories</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.History#getLanguage <em>Language</em>}</li>
  * </ul>
  * </p>
@@ -46,20 +46,20 @@ public interface History extends EObject {
 	EList<User> getUsers();
 
 	/**
-	 * Returns the value of the '<em><b>Versions</b></em>' containment reference list.
-	 * The list contents are of type {@link fr.inria.atlanmod.collaboro.history.Version}.
+	 * Returns the value of the '<em><b>Histories</b></em>' containment reference list.
+	 * The list contents are of type {@link fr.inria.atlanmod.collaboro.history.VersionHistory}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Versions</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Histories</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Versions</em>' containment reference list.
-	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getHistory_Versions()
+	 * @return the value of the '<em>Histories</em>' containment reference list.
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getHistory_Histories()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Version> getVersions();
+	EList<VersionHistory> getHistories();
 
 	/**
 	 * Returns the value of the '<em><b>Language</b></em>' attribute.

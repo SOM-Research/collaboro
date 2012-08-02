@@ -6,9 +6,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="History">
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
         eType="#//User" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="histories" upperBound="-1"
+        eType="#//VersionHistory" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VersionHistory">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//VersionHistoryType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versions" upperBound="-1"
         eType="#//Version" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VersionHistoryType">
+    <eLiterals name="TRUNK"/>
+    <eLiterals name="BRANCH" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IdElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -22,6 +31,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Version" eSuperTypes="#//IdElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="proposals" upperBound="-1"
         eType="#//Proposal" containment="true" eOpposite="#//Proposal/version"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="previous" upperBound="-1"
+        eType="#//Version"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Vote">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="agreement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -48,6 +59,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accepted" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="meta" upperBound="-1" eType="#//MetaInfo"
         containment="true" eOpposite="#//MetaInfo/proposal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conflictWith" upperBound="-1"
+        eType="#//Proposal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Solution" eSuperTypes="#//Collaboration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="changes" upperBound="-1"
@@ -61,16 +74,35 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="included" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelChange" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="solution" eType="#//Solution"
         eOpposite="#//Solution/changes"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredElement" lowerBound="1"
+        eType="#//SyntaxElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
+        eType="#//SyntaxElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Add" eSuperTypes="#//ModelChange"/>
   <eClassifiers xsi:type="ecore:EClass" name="Update" eSuperTypes="#//ModelChange">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//SyntaxElement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//ModelChange"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SyntaxElement" abstract="true" eSuperTypes="#//IdElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractSyntaxElement" abstract="true"
+      eSuperTypes="#//SyntaxElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExistingAbstractSyntaxElement" eSuperTypes="#//AbstractSyntaxElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewAbstractSyntaxElement" eSuperTypes="#//AbstractSyntaxElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConcreteSyntaxElement" eSuperTypes="#//SyntaxElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
+        eType="ecore:EClass ../../fr.inria.atlanmod.collaboro.notation/model/notation.ecore#//NotationElement"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MetaInfo" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="proposal" eType="#//Proposal"
         eOpposite="#//Proposal/meta"/>

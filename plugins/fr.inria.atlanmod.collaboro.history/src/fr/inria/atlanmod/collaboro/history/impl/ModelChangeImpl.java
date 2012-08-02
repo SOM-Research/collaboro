@@ -6,10 +6,12 @@
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
+import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.ModelChange;
 
 import fr.inria.atlanmod.collaboro.history.Solution;
+import fr.inria.atlanmod.collaboro.history.SyntaxElement;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -27,9 +29,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl#getSolution <em>Solution</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl#getReferredElement <em>Referred Element</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,44 +39,24 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange {
 	/**
-	 * The default value of the '{@link #getTarget() <em>Target</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTarget()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TARGET_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTarget()
-	 * @generated
-	 * @ordered
-	 */
-	protected String target = TARGET_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getReferredElement() <em>Referred Element</em>}' attribute.
+	 * The cached value of the '{@link #getReferredElement() <em>Referred Element</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getReferredElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String REFERRED_ELEMENT_EDEFAULT = null;
+	protected SyntaxElement referredElement;
 
 	/**
-	 * The cached value of the '{@link #getReferredElement() <em>Referred Element</em>}' attribute.
+	 * The cached value of the '{@link #getTarget() <em>Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getReferredElement()
+	 * @see #getTarget()
 	 * @generated
 	 * @ordered
 	 */
-	protected String referredElement = REFERRED_ELEMENT_EDEFAULT;
+	protected SyntaxElement target;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -100,28 +82,7 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getTarget() {
-		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTarget(String newTarget) {
-		String oldTarget = target;
-		target = newTarget;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__TARGET, oldTarget, target));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getReferredElement() {
+	public SyntaxElement getReferredElement() {
 		return referredElement;
 	}
 
@@ -130,11 +91,76 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setReferredElement(String newReferredElement) {
-		String oldReferredElement = referredElement;
+	public NotificationChain basicSetReferredElement(SyntaxElement newReferredElement, NotificationChain msgs) {
+		SyntaxElement oldReferredElement = referredElement;
 		referredElement = newReferredElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT, oldReferredElement, referredElement));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT, oldReferredElement, newReferredElement);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReferredElement(SyntaxElement newReferredElement) {
+		if (newReferredElement != referredElement) {
+			NotificationChain msgs = null;
+			if (referredElement != null)
+				msgs = ((InternalEObject)referredElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT, null, msgs);
+			if (newReferredElement != null)
+				msgs = ((InternalEObject)newReferredElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT, null, msgs);
+			msgs = basicSetReferredElement(newReferredElement, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT, newReferredElement, newReferredElement));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SyntaxElement getTarget() {
+		return target;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetTarget(SyntaxElement newTarget, NotificationChain msgs) {
+		SyntaxElement oldTarget = target;
+		target = newTarget;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__TARGET, oldTarget, newTarget);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTarget(SyntaxElement newTarget) {
+		if (newTarget != target) {
+			NotificationChain msgs = null;
+			if (target != null)
+				msgs = ((InternalEObject)target).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.MODEL_CHANGE__TARGET, null, msgs);
+			if (newTarget != null)
+				msgs = ((InternalEObject)newTarget).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.MODEL_CHANGE__TARGET, null, msgs);
+			msgs = basicSetTarget(newTarget, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.MODEL_CHANGE__TARGET, newTarget, newTarget));
 	}
 
 	/**
@@ -204,6 +230,10 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 		switch (featureID) {
 			case HistoryPackage.MODEL_CHANGE__SOLUTION:
 				return basicSetSolution(null, msgs);
+			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
+				return basicSetReferredElement(null, msgs);
+			case HistoryPackage.MODEL_CHANGE__TARGET:
+				return basicSetTarget(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -230,12 +260,12 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HistoryPackage.MODEL_CHANGE__TARGET:
-				return getTarget();
-			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
-				return getReferredElement();
 			case HistoryPackage.MODEL_CHANGE__SOLUTION:
 				return getSolution();
+			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
+				return getReferredElement();
+			case HistoryPackage.MODEL_CHANGE__TARGET:
+				return getTarget();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -248,14 +278,14 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HistoryPackage.MODEL_CHANGE__TARGET:
-				setTarget((String)newValue);
-				return;
-			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
-				setReferredElement((String)newValue);
-				return;
 			case HistoryPackage.MODEL_CHANGE__SOLUTION:
 				setSolution((Solution)newValue);
+				return;
+			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
+				setReferredElement((SyntaxElement)newValue);
+				return;
+			case HistoryPackage.MODEL_CHANGE__TARGET:
+				setTarget((SyntaxElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -269,14 +299,14 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HistoryPackage.MODEL_CHANGE__TARGET:
-				setTarget(TARGET_EDEFAULT);
-				return;
-			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
-				setReferredElement(REFERRED_ELEMENT_EDEFAULT);
-				return;
 			case HistoryPackage.MODEL_CHANGE__SOLUTION:
 				setSolution((Solution)null);
+				return;
+			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
+				setReferredElement((SyntaxElement)null);
+				return;
+			case HistoryPackage.MODEL_CHANGE__TARGET:
+				setTarget((SyntaxElement)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -290,32 +320,14 @@ public abstract class ModelChangeImpl extends EObjectImpl implements ModelChange
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HistoryPackage.MODEL_CHANGE__TARGET:
-				return TARGET_EDEFAULT == null ? target != null : !TARGET_EDEFAULT.equals(target);
-			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
-				return REFERRED_ELEMENT_EDEFAULT == null ? referredElement != null : !REFERRED_ELEMENT_EDEFAULT.equals(referredElement);
 			case HistoryPackage.MODEL_CHANGE__SOLUTION:
 				return getSolution() != null;
+			case HistoryPackage.MODEL_CHANGE__REFERRED_ELEMENT:
+				return referredElement != null;
+			case HistoryPackage.MODEL_CHANGE__TARGET:
+				return target != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (target: ");
-		result.append(target);
-		result.append(", referredElement: ");
-		result.append(referredElement);
-		result.append(')');
-		return result.toString();
 	}
 
 } //ModelChangeImpl

@@ -35,6 +35,15 @@ public interface HistoryFactory extends EFactory {
 	History createHistory();
 
 	/**
+	 * Returns a new object of class '<em>Version History</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Version History</em>'.
+	 * @generated
+	 */
+	VersionHistory createVersionHistory();
+
+	/**
 	 * Returns a new object of class '<em>User</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -123,6 +132,33 @@ public interface HistoryFactory extends EFactory {
 	 * @generated
 	 */
 	Delete createDelete();
+
+	/**
+	 * Returns a new object of class '<em>Existing Abstract Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Existing Abstract Syntax Element</em>'.
+	 * @generated
+	 */
+	ExistingAbstractSyntaxElement createExistingAbstractSyntaxElement();
+
+	/**
+	 * Returns a new object of class '<em>New Abstract Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>New Abstract Syntax Element</em>'.
+	 * @generated
+	 */
+	NewAbstractSyntaxElement createNewAbstractSyntaxElement();
+
+	/**
+	 * Returns a new object of class '<em>Concrete Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Concrete Syntax Element</em>'.
+	 * @generated
+	 */
+	ConcreteSyntaxElement createConcreteSyntaxElement();
 
 	/**
 	 * Returns a new object of class '<em>Priority</em>'.

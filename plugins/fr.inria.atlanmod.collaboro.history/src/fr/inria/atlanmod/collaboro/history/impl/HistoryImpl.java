@@ -9,6 +9,7 @@ package fr.inria.atlanmod.collaboro.history.impl;
 import fr.inria.atlanmod.collaboro.history.History;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.User;
+import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.history.Version;
 
 import java.util.Collection;
@@ -35,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.HistoryImpl#getUsers <em>Users</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.HistoryImpl#getVersions <em>Versions</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.HistoryImpl#getHistories <em>Histories</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.HistoryImpl#getLanguage <em>Language</em>}</li>
  * </ul>
  * </p>
@@ -54,14 +55,14 @@ public class HistoryImpl extends EObjectImpl implements History {
 	protected EList<User> users;
 
 	/**
-	 * The cached value of the '{@link #getVersions() <em>Versions</em>}' containment reference list.
+	 * The cached value of the '{@link #getHistories() <em>Histories</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVersions()
+	 * @see #getHistories()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Version> versions;
+	protected EList<VersionHistory> histories;
 
 	/**
 	 * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
@@ -119,11 +120,11 @@ public class HistoryImpl extends EObjectImpl implements History {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Version> getVersions() {
-		if (versions == null) {
-			versions = new EObjectContainmentEList<Version>(Version.class, this, HistoryPackage.HISTORY__VERSIONS);
+	public EList<VersionHistory> getHistories() {
+		if (histories == null) {
+			histories = new EObjectContainmentEList<VersionHistory>(VersionHistory.class, this, HistoryPackage.HISTORY__HISTORIES);
 		}
-		return versions;
+		return histories;
 	}
 
 	/**
@@ -157,8 +158,8 @@ public class HistoryImpl extends EObjectImpl implements History {
 		switch (featureID) {
 			case HistoryPackage.HISTORY__USERS:
 				return ((InternalEList<?>)getUsers()).basicRemove(otherEnd, msgs);
-			case HistoryPackage.HISTORY__VERSIONS:
-				return ((InternalEList<?>)getVersions()).basicRemove(otherEnd, msgs);
+			case HistoryPackage.HISTORY__HISTORIES:
+				return ((InternalEList<?>)getHistories()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -173,8 +174,8 @@ public class HistoryImpl extends EObjectImpl implements History {
 		switch (featureID) {
 			case HistoryPackage.HISTORY__USERS:
 				return getUsers();
-			case HistoryPackage.HISTORY__VERSIONS:
-				return getVersions();
+			case HistoryPackage.HISTORY__HISTORIES:
+				return getHistories();
 			case HistoryPackage.HISTORY__LANGUAGE:
 				return getLanguage();
 		}
@@ -194,9 +195,9 @@ public class HistoryImpl extends EObjectImpl implements History {
 				getUsers().clear();
 				getUsers().addAll((Collection<? extends User>)newValue);
 				return;
-			case HistoryPackage.HISTORY__VERSIONS:
-				getVersions().clear();
-				getVersions().addAll((Collection<? extends Version>)newValue);
+			case HistoryPackage.HISTORY__HISTORIES:
+				getHistories().clear();
+				getHistories().addAll((Collection<? extends VersionHistory>)newValue);
 				return;
 			case HistoryPackage.HISTORY__LANGUAGE:
 				setLanguage((String)newValue);
@@ -216,8 +217,8 @@ public class HistoryImpl extends EObjectImpl implements History {
 			case HistoryPackage.HISTORY__USERS:
 				getUsers().clear();
 				return;
-			case HistoryPackage.HISTORY__VERSIONS:
-				getVersions().clear();
+			case HistoryPackage.HISTORY__HISTORIES:
+				getHistories().clear();
 				return;
 			case HistoryPackage.HISTORY__LANGUAGE:
 				setLanguage(LANGUAGE_EDEFAULT);
@@ -236,8 +237,8 @@ public class HistoryImpl extends EObjectImpl implements History {
 		switch (featureID) {
 			case HistoryPackage.HISTORY__USERS:
 				return users != null && !users.isEmpty();
-			case HistoryPackage.HISTORY__VERSIONS:
-				return versions != null && !versions.isEmpty();
+			case HistoryPackage.HISTORY__HISTORIES:
+				return histories != null && !histories.isEmpty();
 			case HistoryPackage.HISTORY__LANGUAGE:
 				return LANGUAGE_EDEFAULT == null ? language != null : !LANGUAGE_EDEFAULT.equals(language);
 		}

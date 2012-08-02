@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Version#getProposals <em>Proposals</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Version#getPrevious <em>Previous</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,5 +43,21 @@ public interface Version extends IdElement {
 	 * @generated
 	 */
 	EList<Proposal> getProposals();
+
+	/**
+	 * Returns the value of the '<em><b>Previous</b></em>' reference list.
+	 * The list contents are of type {@link fr.inria.atlanmod.collaboro.history.Version}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Previous</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Previous</em>' reference list.
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getVersion_Previous()
+	 * @model
+	 * @generated
+	 */
+	EList<Version> getPrevious();
 
 } // Version

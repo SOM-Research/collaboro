@@ -76,6 +76,10 @@ public class HistoryAdapterFactory extends AdapterFactoryImpl {
 				return createHistoryAdapter();
 			}
 			@Override
+			public Adapter caseVersionHistory(VersionHistory object) {
+				return createVersionHistoryAdapter();
+			}
+			@Override
 			public Adapter caseIdElement(IdElement object) {
 				return createIdElementAdapter();
 			}
@@ -124,6 +128,26 @@ public class HistoryAdapterFactory extends AdapterFactoryImpl {
 				return createDeleteAdapter();
 			}
 			@Override
+			public Adapter caseSyntaxElement(SyntaxElement object) {
+				return createSyntaxElementAdapter();
+			}
+			@Override
+			public Adapter caseAbstractSyntaxElement(AbstractSyntaxElement object) {
+				return createAbstractSyntaxElementAdapter();
+			}
+			@Override
+			public Adapter caseExistingAbstractSyntaxElement(ExistingAbstractSyntaxElement object) {
+				return createExistingAbstractSyntaxElementAdapter();
+			}
+			@Override
+			public Adapter caseNewAbstractSyntaxElement(NewAbstractSyntaxElement object) {
+				return createNewAbstractSyntaxElementAdapter();
+			}
+			@Override
+			public Adapter caseConcreteSyntaxElement(ConcreteSyntaxElement object) {
+				return createConcreteSyntaxElementAdapter();
+			}
+			@Override
 			public Adapter caseMetaInfo(MetaInfo object) {
 				return createMetaInfoAdapter();
 			}
@@ -170,6 +194,20 @@ public class HistoryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createHistoryAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.VersionHistory <em>Version History</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistory
+	 * @generated
+	 */
+	public Adapter createVersionHistoryAdapter() {
 		return null;
 	}
 
@@ -338,6 +376,76 @@ public class HistoryAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDeleteAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.SyntaxElement <em>Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.SyntaxElement
+	 * @generated
+	 */
+	public Adapter createSyntaxElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement <em>Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement
+	 * @generated
+	 */
+	public Adapter createAbstractSyntaxElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement <em>Existing Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement
+	 * @generated
+	 */
+	public Adapter createExistingAbstractSyntaxElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement <em>New Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement
+	 * @generated
+	 */
+	public Adapter createNewAbstractSyntaxElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement <em>Concrete Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement
+	 * @generated
+	 */
+	public Adapter createConcreteSyntaxElementAdapter() {
 		return null;
 	}
 

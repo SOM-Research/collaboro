@@ -16,9 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,56 +28,56 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ModelChange extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Target</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Target</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target</em>' attribute.
-	 * @see #setTarget(String)
-	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getModelChange_Target()
-	 * @model
-	 * @generated
-	 */
-	String getTarget();
-
-	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Target</em>' attribute.
-	 * @see #getTarget()
-	 * @generated
-	 */
-	void setTarget(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Referred Element</b></em>' attribute.
+	 * Returns the value of the '<em><b>Referred Element</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Referred Element</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Referred Element</em>' attribute.
-	 * @see #setReferredElement(String)
+	 * @return the value of the '<em>Referred Element</em>' containment reference.
+	 * @see #setReferredElement(SyntaxElement)
 	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getModelChange_ReferredElement()
-	 * @model
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	String getReferredElement();
+	SyntaxElement getReferredElement();
 
 	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}' attribute.
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Referred Element</em>' attribute.
+	 * @param value the new value of the '<em>Referred Element</em>' containment reference.
 	 * @see #getReferredElement()
 	 * @generated
 	 */
-	void setReferredElement(String value);
+	void setReferredElement(SyntaxElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Target</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Target</em>' containment reference.
+	 * @see #setTarget(SyntaxElement)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getModelChange_Target()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	SyntaxElement getTarget();
+
+	/**
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Target</em>' containment reference.
+	 * @see #getTarget()
+	 * @generated
+	 */
+	void setTarget(SyntaxElement value);
 
 	/**
 	 * Returns the value of the '<em><b>Solution</b></em>' container reference.

@@ -6,50 +6,48 @@
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
-import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement;
-import fr.inria.atlanmod.collaboro.history.SyntaxElement;
-import fr.inria.atlanmod.collaboro.history.Update;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Update</b></em>'.
+ * An implementation of the model object '<em><b>New Abstract Syntax Element</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UpdateImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class UpdateImpl extends ModelChangeImpl implements Update {
+public class NewAbstractSyntaxElementImpl extends AbstractSyntaxElementImpl implements NewAbstractSyntaxElement {
 	/**
-	 * The cached value of the '{@link #getSource() <em>Source</em>}' containment reference.
+	 * The cached value of the '{@link #getElement() <em>Element</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getSource()
+	 * @see #getElement()
 	 * @generated
 	 * @ordered
 	 */
-	protected SyntaxElement source;
+	protected EModelElement element;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected UpdateImpl() {
+	protected NewAbstractSyntaxElementImpl() {
 		super();
 	}
 
@@ -60,7 +58,7 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return HistoryPackage.Literals.UPDATE;
+		return HistoryPackage.Literals.NEW_ABSTRACT_SYNTAX_ELEMENT;
 	}
 
 	/**
@@ -68,8 +66,8 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SyntaxElement getSource() {
-		return source;
+	public EModelElement getElement() {
+		return element;
 	}
 
 	/**
@@ -77,11 +75,11 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSource(SyntaxElement newSource, NotificationChain msgs) {
-		SyntaxElement oldSource = source;
-		source = newSource;
+	public NotificationChain basicSetElement(EModelElement newElement, NotificationChain msgs) {
+		EModelElement oldElement = element;
+		element = newElement;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, HistoryPackage.UPDATE__SOURCE, oldSource, newSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT, oldElement, newElement);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -92,18 +90,18 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSource(SyntaxElement newSource) {
-		if (newSource != source) {
+	public void setElement(EModelElement newElement) {
+		if (newElement != element) {
 			NotificationChain msgs = null;
-			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.UPDATE__SOURCE, null, msgs);
-			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.UPDATE__SOURCE, null, msgs);
-			msgs = basicSetSource(newSource, msgs);
+			if (element != null)
+				msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT, null, msgs);
+			if (newElement != null)
+				msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT, null, msgs);
+			msgs = basicSetElement(newElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.UPDATE__SOURCE, newSource, newSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT, newElement, newElement));
 	}
 
 	/**
@@ -114,8 +112,8 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case HistoryPackage.UPDATE__SOURCE:
-				return basicSetSource(null, msgs);
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT:
+				return basicSetElement(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -128,8 +126,8 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case HistoryPackage.UPDATE__SOURCE:
-				return getSource();
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT:
+				return getElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -142,8 +140,8 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case HistoryPackage.UPDATE__SOURCE:
-				setSource((SyntaxElement)newValue);
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT:
+				setElement((EModelElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -157,8 +155,8 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case HistoryPackage.UPDATE__SOURCE:
-				setSource((SyntaxElement)null);
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT:
+				setElement((EModelElement)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -172,10 +170,10 @@ public class UpdateImpl extends ModelChangeImpl implements Update {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case HistoryPackage.UPDATE__SOURCE:
-				return source != null;
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT:
+				return element != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //UpdateImpl
+} //NewAbstractSyntaxElementImpl
