@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl#getProposals <em>Proposals</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl#getPrevious <em>Previous</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +47,16 @@ public class VersionImpl extends IdElementImpl implements Version {
 	 * @ordered
 	 */
 	protected EList<Proposal> proposals;
+
+	/**
+	 * The cached value of the '{@link #getPrevious() <em>Previous</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPrevious()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Version> previous;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,6 +87,18 @@ public class VersionImpl extends IdElementImpl implements Version {
 			proposals = new EObjectContainmentWithInverseEList<Proposal>(Proposal.class, this, HistoryPackage.VERSION__PROPOSALS, HistoryPackage.PROPOSAL__VERSION);
 		}
 		return proposals;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Version> getPrevious() {
+		if (previous == null) {
+			previous = new EObjectResolvingEList<Version>(Version.class, this, HistoryPackage.VERSION__PREVIOUS);
+		}
+		return previous;
 	}
 
 	/**
@@ -116,6 +140,8 @@ public class VersionImpl extends IdElementImpl implements Version {
 		switch (featureID) {
 			case HistoryPackage.VERSION__PROPOSALS:
 				return getProposals();
+			case HistoryPackage.VERSION__PREVIOUS:
+				return getPrevious();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -133,6 +159,10 @@ public class VersionImpl extends IdElementImpl implements Version {
 				getProposals().clear();
 				getProposals().addAll((Collection<? extends Proposal>)newValue);
 				return;
+			case HistoryPackage.VERSION__PREVIOUS:
+				getPrevious().clear();
+				getPrevious().addAll((Collection<? extends Version>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -148,6 +178,9 @@ public class VersionImpl extends IdElementImpl implements Version {
 			case HistoryPackage.VERSION__PROPOSALS:
 				getProposals().clear();
 				return;
+			case HistoryPackage.VERSION__PREVIOUS:
+				getPrevious().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -162,6 +195,8 @@ public class VersionImpl extends IdElementImpl implements Version {
 		switch (featureID) {
 			case HistoryPackage.VERSION__PROPOSALS:
 				return proposals != null && !proposals.isEmpty();
+			case HistoryPackage.VERSION__PREVIOUS:
+				return previous != null && !previous.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

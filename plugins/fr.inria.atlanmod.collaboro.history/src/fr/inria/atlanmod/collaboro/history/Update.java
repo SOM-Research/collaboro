@@ -25,29 +25,29 @@ package fr.inria.atlanmod.collaboro.history;
  */
 public interface Update extends ModelChange {
 	/**
-	 * Returns the value of the '<em><b>Source</b></em>' attribute.
+	 * Returns the value of the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Source</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Source</em>' attribute.
-	 * @see #setSource(String)
+	 * @return the value of the '<em>Source</em>' containment reference.
+	 * @see #setSource(SyntaxElement)
 	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getUpdate_Source()
-	 * @model
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	String getSource();
+	SyntaxElement getSource();
 
 	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Update#getSource <em>Source</em>}' attribute.
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Update#getSource <em>Source</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Source</em>' attribute.
+	 * @param value the new value of the '<em>Source</em>' containment reference.
 	 * @see #getSource()
 	 * @generated
 	 */
-	void setSource(String value);
+	void setSource(SyntaxElement value);
 
 } // Update

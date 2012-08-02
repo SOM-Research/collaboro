@@ -9,6 +9,7 @@ package fr.inria.atlanmod.collaboro.history.impl;
 import fr.inria.atlanmod.collaboro.history.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -61,6 +62,7 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case HistoryPackage.HISTORY: return createHistory();
+			case HistoryPackage.VERSION_HISTORY: return createVersionHistory();
 			case HistoryPackage.USER: return createUser();
 			case HistoryPackage.VERSION: return createVersion();
 			case HistoryPackage.VOTE: return createVote();
@@ -71,6 +73,9 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 			case HistoryPackage.ADD: return createAdd();
 			case HistoryPackage.UPDATE: return createUpdate();
 			case HistoryPackage.DELETE: return createDelete();
+			case HistoryPackage.EXISTING_ABSTRACT_SYNTAX_ELEMENT: return createExistingAbstractSyntaxElement();
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT: return createNewAbstractSyntaxElement();
+			case HistoryPackage.CONCRETE_SYNTAX_ELEMENT: return createConcreteSyntaxElement();
 			case HistoryPackage.PRIORITY: return createPriority();
 			case HistoryPackage.TAG_BASED: return createTagBased();
 			case HistoryPackage.TAG: return createTag();
@@ -84,9 +89,49 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case HistoryPackage.VERSION_HISTORY_TYPE:
+				return createVersionHistoryTypeFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case HistoryPackage.VERSION_HISTORY_TYPE:
+				return convertVersionHistoryTypeToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public History createHistory() {
 		HistoryImpl history = new HistoryImpl();
 		return history;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VersionHistory createVersionHistory() {
+		VersionHistoryImpl versionHistory = new VersionHistoryImpl();
+		return versionHistory;
 	}
 
 	/**
@@ -194,6 +239,36 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ExistingAbstractSyntaxElement createExistingAbstractSyntaxElement() {
+		ExistingAbstractSyntaxElementImpl existingAbstractSyntaxElement = new ExistingAbstractSyntaxElementImpl();
+		return existingAbstractSyntaxElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NewAbstractSyntaxElement createNewAbstractSyntaxElement() {
+		NewAbstractSyntaxElementImpl newAbstractSyntaxElement = new NewAbstractSyntaxElementImpl();
+		return newAbstractSyntaxElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ConcreteSyntaxElement createConcreteSyntaxElement() {
+		ConcreteSyntaxElementImpl concreteSyntaxElement = new ConcreteSyntaxElementImpl();
+		return concreteSyntaxElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Priority createPriority() {
 		PriorityImpl priority = new PriorityImpl();
 		return priority;
@@ -217,6 +292,26 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	public Tag createTag() {
 		TagImpl tag = new TagImpl();
 		return tag;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VersionHistoryType createVersionHistoryTypeFromString(EDataType eDataType, String initialValue) {
+		VersionHistoryType result = VersionHistoryType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertVersionHistoryTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

@@ -8,6 +8,7 @@ package fr.inria.atlanmod.collaboro.history;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -79,13 +80,13 @@ public interface HistoryPackage extends EPackage {
 	int HISTORY__USERS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Versions</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Histories</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HISTORY__VERSIONS = 1;
+	int HISTORY__HISTORIES = 1;
 
 	/**
 	 * The feature id for the '<em><b>Language</b></em>' attribute.
@@ -106,6 +107,43 @@ public interface HistoryPackage extends EPackage {
 	int HISTORY_FEATURE_COUNT = 3;
 
 	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionHistoryImpl <em>Version History</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.VersionHistoryImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVersionHistory()
+	 * @generated
+	 */
+	int VERSION_HISTORY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_HISTORY__TYPE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Versions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_HISTORY__VERSIONS = 1;
+
+	/**
+	 * The number of structural features of the '<em>Version History</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_HISTORY_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.IdElementImpl <em>Id Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,7 +151,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getIdElement()
 	 * @generated
 	 */
-	int ID_ELEMENT = 1;
+	int ID_ELEMENT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -141,7 +179,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getUser()
 	 * @generated
 	 */
-	int USER = 2;
+	int USER = 3;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -187,7 +225,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVersion()
 	 * @generated
 	 */
-	int VERSION = 3;
+	int VERSION = 4;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -208,13 +246,22 @@ public interface HistoryPackage extends EPackage {
 	int VERSION__PROPOSALS = ID_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Previous</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION__PREVIOUS = ID_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Version</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 1;
+	int VERSION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VoteImpl <em>Vote</em>}' class.
@@ -224,7 +271,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVote()
 	 * @generated
 	 */
-	int VOTE = 4;
+	int VOTE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Agreement</b></em>' attribute.
@@ -279,7 +326,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getCollaboration()
 	 * @generated
 	 */
-	int COLLABORATION = 5;
+	int COLLABORATION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -343,7 +390,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getProposal()
 	 * @generated
 	 */
-	int PROPOSAL = 6;
+	int PROPOSAL = 7;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -452,7 +499,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getSolution()
 	 * @generated
 	 */
-	int SOLUTION = 7;
+	int SOLUTION = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -534,7 +581,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getComment()
 	 * @generated
 	 */
-	int COMMENT = 8;
+	int COMMENT = 9;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -616,25 +663,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getModelChange()
 	 * @generated
 	 */
-	int MODEL_CHANGE = 9;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_CHANGE__TARGET = 0;
-
-	/**
-	 * The feature id for the '<em><b>Referred Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_CHANGE__REFERRED_ELEMENT = 1;
+	int MODEL_CHANGE = 10;
 
 	/**
 	 * The feature id for the '<em><b>Solution</b></em>' container reference.
@@ -643,7 +672,25 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_CHANGE__SOLUTION = 2;
+	int MODEL_CHANGE__SOLUTION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Referred Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_CHANGE__REFERRED_ELEMENT = 1;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_CHANGE__TARGET = 2;
 
 	/**
 	 * The number of structural features of the '<em>Model Change</em>' class.
@@ -662,25 +709,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getAdd()
 	 * @generated
 	 */
-	int ADD = 10;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ADD__TARGET = MODEL_CHANGE__TARGET;
-
-	/**
-	 * The feature id for the '<em><b>Referred Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ADD__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+	int ADD = 11;
 
 	/**
 	 * The feature id for the '<em><b>Solution</b></em>' container reference.
@@ -690,6 +719,24 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ADD__SOLUTION = MODEL_CHANGE__SOLUTION;
+
+	/**
+	 * The feature id for the '<em><b>Referred Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADD__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADD__TARGET = MODEL_CHANGE__TARGET;
 
 	/**
 	 * The number of structural features of the '<em>Add</em>' class.
@@ -708,25 +755,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getUpdate()
 	 * @generated
 	 */
-	int UPDATE = 11;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UPDATE__TARGET = MODEL_CHANGE__TARGET;
-
-	/**
-	 * The feature id for the '<em><b>Referred Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int UPDATE__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+	int UPDATE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Solution</b></em>' container reference.
@@ -738,7 +767,25 @@ public interface HistoryPackage extends EPackage {
 	int UPDATE__SOLUTION = MODEL_CHANGE__SOLUTION;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' attribute.
+	 * The feature id for the '<em><b>Referred Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UPDATE__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UPDATE__TARGET = MODEL_CHANGE__TARGET;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -763,25 +810,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getDelete()
 	 * @generated
 	 */
-	int DELETE = 12;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE__TARGET = MODEL_CHANGE__TARGET;
-
-	/**
-	 * The feature id for the '<em><b>Referred Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DELETE__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+	int DELETE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Solution</b></em>' container reference.
@@ -793,6 +822,24 @@ public interface HistoryPackage extends EPackage {
 	int DELETE__SOLUTION = MODEL_CHANGE__SOLUTION;
 
 	/**
+	 * The feature id for the '<em><b>Referred Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELETE__REFERRED_ELEMENT = MODEL_CHANGE__REFERRED_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELETE__TARGET = MODEL_CHANGE__TARGET;
+
+	/**
 	 * The number of structural features of the '<em>Delete</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -802,6 +849,173 @@ public interface HistoryPackage extends EPackage {
 	int DELETE_FEATURE_COUNT = MODEL_CHANGE_FEATURE_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.SyntaxElementImpl <em>Syntax Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.SyntaxElementImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getSyntaxElement()
+	 * @generated
+	 */
+	int SYNTAX_ELEMENT = 14;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNTAX_ELEMENT__ID = ID_ELEMENT__ID;
+
+	/**
+	 * The number of structural features of the '<em>Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNTAX_ELEMENT_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.AbstractSyntaxElementImpl <em>Abstract Syntax Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.AbstractSyntaxElementImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getAbstractSyntaxElement()
+	 * @generated
+	 */
+	int ABSTRACT_SYNTAX_ELEMENT = 15;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SYNTAX_ELEMENT__ID = SYNTAX_ELEMENT__ID;
+
+	/**
+	 * The number of structural features of the '<em>Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = SYNTAX_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ExistingAbstractSyntaxElementImpl <em>Existing Abstract Syntax Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.ExistingAbstractSyntaxElementImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getExistingAbstractSyntaxElement()
+	 * @generated
+	 */
+	int EXISTING_ABSTRACT_SYNTAX_ELEMENT = 16;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTING_ABSTRACT_SYNTAX_ELEMENT__ID = ABSTRACT_SYNTAX_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTING_ABSTRACT_SYNTAX_ELEMENT__ELEMENT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Existing Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTING_ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl <em>New Abstract Syntax Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getNewAbstractSyntaxElement()
+	 * @generated
+	 */
+	int NEW_ABSTRACT_SYNTAX_ELEMENT = 17;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_ABSTRACT_SYNTAX_ELEMENT__ID = ABSTRACT_SYNTAX_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>New Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ConcreteSyntaxElementImpl <em>Concrete Syntax Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.impl.ConcreteSyntaxElementImpl
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getConcreteSyntaxElement()
+	 * @generated
+	 */
+	int CONCRETE_SYNTAX_ELEMENT = 18;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCRETE_SYNTAX_ELEMENT__ID = SYNTAX_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCRETE_SYNTAX_ELEMENT__ELEMENT = SYNTAX_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Concrete Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCRETE_SYNTAX_ELEMENT_FEATURE_COUNT = SYNTAX_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.MetaInfoImpl <em>Meta Info</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -809,7 +1023,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getMetaInfo()
 	 * @generated
 	 */
-	int META_INFO = 13;
+	int META_INFO = 19;
 
 	/**
 	 * The feature id for the '<em><b>Proposal</b></em>' container reference.
@@ -837,7 +1051,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getPriority()
 	 * @generated
 	 */
-	int PRIORITY = 14;
+	int PRIORITY = 20;
 
 	/**
 	 * The feature id for the '<em><b>Proposal</b></em>' container reference.
@@ -874,7 +1088,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getTagBased()
 	 * @generated
 	 */
-	int TAG_BASED = 15;
+	int TAG_BASED = 21;
 
 	/**
 	 * The feature id for the '<em><b>Proposal</b></em>' container reference.
@@ -911,7 +1125,7 @@ public interface HistoryPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getTag()
 	 * @generated
 	 */
-	int TAG = 16;
+	int TAG = 22;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -942,6 +1156,17 @@ public interface HistoryPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistoryType
+	 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVersionHistoryType()
+	 * @generated
+	 */
+	int VERSION_HISTORY_TYPE = 23;
+
+
+	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.History <em>History</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -963,15 +1188,15 @@ public interface HistoryPackage extends EPackage {
 	EReference getHistory_Users();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link fr.inria.atlanmod.collaboro.history.History#getVersions <em>Versions</em>}'.
+	 * Returns the meta object for the containment reference list '{@link fr.inria.atlanmod.collaboro.history.History#getHistories <em>Histories</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Versions</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.History#getVersions()
+	 * @return the meta object for the containment reference list '<em>Histories</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.History#getHistories()
 	 * @see #getHistory()
 	 * @generated
 	 */
-	EReference getHistory_Versions();
+	EReference getHistory_Histories();
 
 	/**
 	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.History#getLanguage <em>Language</em>}'.
@@ -983,6 +1208,38 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getHistory_Language();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.VersionHistory <em>Version History</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version History</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistory
+	 * @generated
+	 */
+	EClass getVersionHistory();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.VersionHistory#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistory#getType()
+	 * @see #getVersionHistory()
+	 * @generated
+	 */
+	EAttribute getVersionHistory_Type();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link fr.inria.atlanmod.collaboro.history.VersionHistory#getVersions <em>Versions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Versions</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistory#getVersions()
+	 * @see #getVersionHistory()
+	 * @generated
+	 */
+	EReference getVersionHistory_Versions();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.IdElement <em>Id Element</em>}'.
@@ -1057,6 +1314,17 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getVersion_Proposals();
+
+	/**
+	 * Returns the meta object for the reference list '{@link fr.inria.atlanmod.collaboro.history.Version#getPrevious <em>Previous</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Previous</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Version#getPrevious()
+	 * @see #getVersion()
+	 * @generated
+	 */
+	EReference getVersion_Previous();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Vote <em>Vote</em>}'.
@@ -1306,26 +1574,26 @@ public interface HistoryPackage extends EPackage {
 	EClass getModelChange();
 
 	/**
-	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}'.
+	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Target</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getTarget()
-	 * @see #getModelChange()
-	 * @generated
-	 */
-	EAttribute getModelChange_Target();
-
-	/**
-	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Referred Element</em>'.
+	 * @return the meta object for the containment reference '<em>Referred Element</em>'.
 	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement()
 	 * @see #getModelChange()
 	 * @generated
 	 */
-	EAttribute getModelChange_ReferredElement();
+	EReference getModelChange_ReferredElement();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Target</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getTarget()
+	 * @see #getModelChange()
+	 * @generated
+	 */
+	EReference getModelChange_Target();
 
 	/**
 	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}'.
@@ -1359,15 +1627,15 @@ public interface HistoryPackage extends EPackage {
 	EClass getUpdate();
 
 	/**
-	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Update#getSource <em>Source</em>}'.
+	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.Update#getSource <em>Source</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Source</em>'.
+	 * @return the meta object for the containment reference '<em>Source</em>'.
 	 * @see fr.inria.atlanmod.collaboro.history.Update#getSource()
 	 * @see #getUpdate()
 	 * @generated
 	 */
-	EAttribute getUpdate_Source();
+	EReference getUpdate_Source();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Delete <em>Delete</em>}'.
@@ -1378,6 +1646,89 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getDelete();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.SyntaxElement <em>Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Syntax Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.SyntaxElement
+	 * @generated
+	 */
+	EClass getSyntaxElement();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement <em>Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Abstract Syntax Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement
+	 * @generated
+	 */
+	EClass getAbstractSyntaxElement();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement <em>Existing Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Existing Abstract Syntax Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement
+	 * @generated
+	 */
+	EClass getExistingAbstractSyntaxElement();
+
+	/**
+	 * Returns the meta object for the reference '{@link fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement#getElement <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement#getElement()
+	 * @see #getExistingAbstractSyntaxElement()
+	 * @generated
+	 */
+	EReference getExistingAbstractSyntaxElement_Element();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement <em>New Abstract Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>New Abstract Syntax Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement
+	 * @generated
+	 */
+	EClass getNewAbstractSyntaxElement();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement#getElement <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement#getElement()
+	 * @see #getNewAbstractSyntaxElement()
+	 * @generated
+	 */
+	EReference getNewAbstractSyntaxElement_Element();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement <em>Concrete Syntax Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Concrete Syntax Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement
+	 * @generated
+	 */
+	EClass getConcreteSyntaxElement();
+
+	/**
+	 * Returns the meta object for the reference '{@link fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement#getElement <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Element</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement#getElement()
+	 * @see #getConcreteSyntaxElement()
+	 * @generated
+	 */
+	EReference getConcreteSyntaxElement_Element();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.MetaInfo <em>Meta Info</em>}'.
@@ -1475,6 +1826,16 @@ public interface HistoryPackage extends EPackage {
 	EReference getTag_TagCollection();
 
 	/**
+	 * Returns the meta object for enum '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Version History Type</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.VersionHistoryType
+	 * @generated
+	 */
+	EEnum getVersionHistoryType();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1515,12 +1876,12 @@ public interface HistoryPackage extends EPackage {
 		EReference HISTORY__USERS = eINSTANCE.getHistory_Users();
 
 		/**
-		 * The meta object literal for the '<em><b>Versions</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Histories</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference HISTORY__VERSIONS = eINSTANCE.getHistory_Versions();
+		EReference HISTORY__HISTORIES = eINSTANCE.getHistory_Histories();
 
 		/**
 		 * The meta object literal for the '<em><b>Language</b></em>' attribute feature.
@@ -1529,6 +1890,32 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute HISTORY__LANGUAGE = eINSTANCE.getHistory_Language();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionHistoryImpl <em>Version History</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.VersionHistoryImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVersionHistory()
+		 * @generated
+		 */
+		EClass VERSION_HISTORY = eINSTANCE.getVersionHistory();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_HISTORY__TYPE = eINSTANCE.getVersionHistory_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Versions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERSION_HISTORY__VERSIONS = eINSTANCE.getVersionHistory_Versions();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.IdElementImpl <em>Id Element</em>}' class.
@@ -1591,6 +1978,14 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VERSION__PROPOSALS = eINSTANCE.getVersion_Proposals();
+
+		/**
+		 * The meta object literal for the '<em><b>Previous</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERSION__PREVIOUS = eINSTANCE.getVersion_Previous();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.VoteImpl <em>Vote</em>}' class.
@@ -1789,20 +2184,20 @@ public interface HistoryPackage extends EPackage {
 		EClass MODEL_CHANGE = eINSTANCE.getModelChange();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Referred Element</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_CHANGE__TARGET = eINSTANCE.getModelChange_Target();
+		EReference MODEL_CHANGE__REFERRED_ELEMENT = eINSTANCE.getModelChange_ReferredElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Referred Element</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_CHANGE__REFERRED_ELEMENT = eINSTANCE.getModelChange_ReferredElement();
+		EReference MODEL_CHANGE__TARGET = eINSTANCE.getModelChange_Target();
 
 		/**
 		 * The meta object literal for the '<em><b>Solution</b></em>' container reference feature.
@@ -1833,12 +2228,12 @@ public interface HistoryPackage extends EPackage {
 		EClass UPDATE = eINSTANCE.getUpdate();
 
 		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Source</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute UPDATE__SOURCE = eINSTANCE.getUpdate_Source();
+		EReference UPDATE__SOURCE = eINSTANCE.getUpdate_Source();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.DeleteImpl <em>Delete</em>}' class.
@@ -1849,6 +2244,80 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass DELETE = eINSTANCE.getDelete();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.SyntaxElementImpl <em>Syntax Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.SyntaxElementImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getSyntaxElement()
+		 * @generated
+		 */
+		EClass SYNTAX_ELEMENT = eINSTANCE.getSyntaxElement();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.AbstractSyntaxElementImpl <em>Abstract Syntax Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.AbstractSyntaxElementImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getAbstractSyntaxElement()
+		 * @generated
+		 */
+		EClass ABSTRACT_SYNTAX_ELEMENT = eINSTANCE.getAbstractSyntaxElement();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.ExistingAbstractSyntaxElementImpl <em>Existing Abstract Syntax Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.ExistingAbstractSyntaxElementImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getExistingAbstractSyntaxElement()
+		 * @generated
+		 */
+		EClass EXISTING_ABSTRACT_SYNTAX_ELEMENT = eINSTANCE.getExistingAbstractSyntaxElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Element</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EXISTING_ABSTRACT_SYNTAX_ELEMENT__ELEMENT = eINSTANCE.getExistingAbstractSyntaxElement_Element();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl <em>New Abstract Syntax Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getNewAbstractSyntaxElement()
+		 * @generated
+		 */
+		EClass NEW_ABSTRACT_SYNTAX_ELEMENT = eINSTANCE.getNewAbstractSyntaxElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Element</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NEW_ABSTRACT_SYNTAX_ELEMENT__ELEMENT = eINSTANCE.getNewAbstractSyntaxElement_Element();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.ConcreteSyntaxElementImpl <em>Concrete Syntax Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.impl.ConcreteSyntaxElementImpl
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getConcreteSyntaxElement()
+		 * @generated
+		 */
+		EClass CONCRETE_SYNTAX_ELEMENT = eINSTANCE.getConcreteSyntaxElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Element</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CONCRETE_SYNTAX_ELEMENT__ELEMENT = eINSTANCE.getConcreteSyntaxElement_Element();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.MetaInfoImpl <em>Meta Info</em>}' class.
@@ -1929,6 +2398,16 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TAG__TAG_COLLECTION = eINSTANCE.getTag_TagCollection();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.history.VersionHistoryType
+		 * @see fr.inria.atlanmod.collaboro.history.impl.HistoryPackageImpl#getVersionHistoryType()
+		 * @generated
+		 */
+		EEnum VERSION_HISTORY_TYPE = eINSTANCE.getVersionHistoryType();
 
 	}
 

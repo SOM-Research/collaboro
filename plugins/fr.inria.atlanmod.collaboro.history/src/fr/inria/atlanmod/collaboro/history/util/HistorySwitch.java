@@ -76,6 +76,12 @@ public class HistorySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case HistoryPackage.VERSION_HISTORY: {
+				VersionHistory versionHistory = (VersionHistory)theEObject;
+				T result = caseVersionHistory(versionHistory);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case HistoryPackage.ID_ELEMENT: {
 				IdElement idElement = (IdElement)theEObject;
 				T result = caseIdElement(idElement);
@@ -160,6 +166,47 @@ public class HistorySwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case HistoryPackage.SYNTAX_ELEMENT: {
+				SyntaxElement syntaxElement = (SyntaxElement)theEObject;
+				T result = caseSyntaxElement(syntaxElement);
+				if (result == null) result = caseIdElement(syntaxElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HistoryPackage.ABSTRACT_SYNTAX_ELEMENT: {
+				AbstractSyntaxElement abstractSyntaxElement = (AbstractSyntaxElement)theEObject;
+				T result = caseAbstractSyntaxElement(abstractSyntaxElement);
+				if (result == null) result = caseSyntaxElement(abstractSyntaxElement);
+				if (result == null) result = caseIdElement(abstractSyntaxElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HistoryPackage.EXISTING_ABSTRACT_SYNTAX_ELEMENT: {
+				ExistingAbstractSyntaxElement existingAbstractSyntaxElement = (ExistingAbstractSyntaxElement)theEObject;
+				T result = caseExistingAbstractSyntaxElement(existingAbstractSyntaxElement);
+				if (result == null) result = caseAbstractSyntaxElement(existingAbstractSyntaxElement);
+				if (result == null) result = caseSyntaxElement(existingAbstractSyntaxElement);
+				if (result == null) result = caseIdElement(existingAbstractSyntaxElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HistoryPackage.NEW_ABSTRACT_SYNTAX_ELEMENT: {
+				NewAbstractSyntaxElement newAbstractSyntaxElement = (NewAbstractSyntaxElement)theEObject;
+				T result = caseNewAbstractSyntaxElement(newAbstractSyntaxElement);
+				if (result == null) result = caseAbstractSyntaxElement(newAbstractSyntaxElement);
+				if (result == null) result = caseSyntaxElement(newAbstractSyntaxElement);
+				if (result == null) result = caseIdElement(newAbstractSyntaxElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case HistoryPackage.CONCRETE_SYNTAX_ELEMENT: {
+				ConcreteSyntaxElement concreteSyntaxElement = (ConcreteSyntaxElement)theEObject;
+				T result = caseConcreteSyntaxElement(concreteSyntaxElement);
+				if (result == null) result = caseSyntaxElement(concreteSyntaxElement);
+				if (result == null) result = caseIdElement(concreteSyntaxElement);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case HistoryPackage.META_INFO: {
 				MetaInfo metaInfo = (MetaInfo)theEObject;
 				T result = caseMetaInfo(metaInfo);
@@ -202,6 +249,21 @@ public class HistorySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseHistory(History object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Version History</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Version History</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionHistory(VersionHistory object) {
 		return null;
 	}
 
@@ -382,6 +444,81 @@ public class HistorySwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDelete(Delete object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Syntax Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSyntaxElement(SyntaxElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Abstract Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Abstract Syntax Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAbstractSyntaxElement(AbstractSyntaxElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Existing Abstract Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Existing Abstract Syntax Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseExistingAbstractSyntaxElement(ExistingAbstractSyntaxElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>New Abstract Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>New Abstract Syntax Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNewAbstractSyntaxElement(NewAbstractSyntaxElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Concrete Syntax Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Concrete Syntax Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConcreteSyntaxElement(ConcreteSyntaxElement object) {
 		return null;
 	}
 
