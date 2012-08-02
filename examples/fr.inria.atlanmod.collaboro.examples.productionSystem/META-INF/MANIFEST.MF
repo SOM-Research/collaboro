@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: fr.inria.atlanmod.collaboro.examples.productionSystem;singleton:=true
+Bundle-Version: 0.1
+Bundle-ClassPath: .
+Bundle-Vendor: Atlanmod
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: 
+ fr.inria.atlanmod.collaboro.examples.productionSystem
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ fr.inria.atlanmod.collaboro.history,
+ fr.inria.atlanmod.collaboro.notation
+Bundle-ActivationPolicy: lazy
