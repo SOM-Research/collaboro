@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.atlanmod.collaboro.notation.cdo/src" modelPluginID="fr.inria.atlanmod.collaboro.notation.cdo" modelName="Notation" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic" complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>../../fr.inria.atlanmod.collaboro.notation/model/notation.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Notation" basePackage="fr.inria.atlanmod.collaboro" disposableProviderFactory="true">
+    <ecorePackage href="notation.ecore#/"/>
+    <genClasses image="false">
+      <ecoreClass href="notation.ecore#//IdElement"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//IdElement/id"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="notation.ecore#//NotationElement"/>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="notation.ecore#//GraphicalElement"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//GraphicalElement/x"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//GraphicalElement/y"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//GraphicalElement/height"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//GraphicalElement/width"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="notation.ecore#//Figure"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Rectangle"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Line"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Label"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//Label/text"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//TextualElement"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Token"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Keyword"/>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="notation.ecore#//Value"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="notation.ecore#//Value/separator"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//Value/attribute"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//AttributeValue"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//ReferenceValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//ReferenceValue/reference"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//SyntaxOf"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//SyntaxOf/reference"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//SyntaxOf/separator"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Composite"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//Composite/subElements"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="notation.ecore#//Definition"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="notation.ecore#//Definition/elements"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+  <usedGenPackages href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"/>
+</genmodel:GenModel>
