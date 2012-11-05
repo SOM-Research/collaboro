@@ -19,8 +19,12 @@ import org.eclipse.emf.ecore.EPackage;
 import fr.inria.atlanmod.collaboro.history.History;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 
-public abstract class ModelManager {
-	public abstract boolean initialize(File modelBeingTracked);
+public abstract class ModelManager {	
+	// Extensions for the models supported
+	public static final String HISTORY_EXTENSION = "history";
+	public static final String NOTATION_EXTENSION = "notation";
+	public static final String ECORE_EXTENSION = "ecore";
+	public static final String MODEL_EXTENSION = "xmi";
 	
 	// getters
 	public abstract Definition getNotation();
@@ -41,7 +45,7 @@ public abstract class ModelManager {
 	/**
 	 * Saves the current notation model
 	 */
-	public abstract void saveNotationModel();
+	public abstract void saveNotation();
 	
 	/**
 	 * Saves the current ecore model (abstract syntax metamodel)

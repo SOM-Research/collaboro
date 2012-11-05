@@ -406,17 +406,17 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			if (textualElement instanceof Keyword) {
 				Keyword keyword = (Keyword) notationElement; 
 				text.setAttributeNS(null, "font-weight", "bold");
-				text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
+//				text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
 				text.setAttributeNS(null, "stroke", "none");
 				value = keyword.getId();
 			} else if (textualElement instanceof Token) {
 				Token token = (Token) notationElement;
-				text.setAttributeNS(null, "fill", token.getFill().getLiteral());
+//				text.setAttributeNS(null, "fill", token.getFill().getLiteral());
 				text.setAttributeNS(null, "stroke", "none");
 				value = token.getId();
 			} else if (textualElement instanceof AttributeValue) {
 				AttributeValue attributeValue = (AttributeValue) notationElement;
-				text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
+//				text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
 
 				EAttribute eAttribute = attributeValue.getAttribute();
 				
@@ -424,7 +424,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 //				value = convert(eObject.eGet(eAttribute));
 			} else if (textualElement instanceof ReferenceValue) {
 				ReferenceValue referenceValue = (ReferenceValue) notationElement;
-				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
+//				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
 
 				EReference eReference = referenceValue.getReference();
 				EAttribute eAttribute = referenceValue.getAttribute();

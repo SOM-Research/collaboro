@@ -56,7 +56,7 @@ public class ExecuteDecisionEngineCommand extends AbstractHandler {
 
 		MessageDialog.openInformation(null, "Decision state", result);
 
-		Controller.INSTANCE.refreshView();
+		Controller.INSTANCE.refreshVersionView();
 		Controller.INSTANCE.saveHistory();
 		return null;
 	}

@@ -29,11 +29,6 @@ import fr.inria.atlanmod.collaboro.notation.NotationFactory;
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
 
 public class LocalModelManager extends ModelManager {
-	// Extensions for the models supported
-	public static final String HISTORY_EXTENSION = "history";
-	public static final String NOTATION_EXTENSION = "notation";
-	public static final String ECORE_EXTENSION = "ecore";
-	public static final String MODEL_EXTENSION = "xmi";
 
 	// Track of history model
 	private File historyModelFile;
@@ -238,7 +233,7 @@ public class LocalModelManager extends ModelManager {
 		}
 	}
 	
-	public void saveNotationModel() {
+	public void saveNotation() {
 		if(notationModelFile != null && rset != null) {
 			Resource res = null;
 

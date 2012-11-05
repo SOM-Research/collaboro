@@ -212,6 +212,13 @@
             id="fr.inria.atlanmod.collaboro.ui.dawnWizard"
             name="History remote model">
       </wizard>
+      <wizard
+            category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            class="fr.inria.atlanmod.collaboro.ui.wizards.NewRemoteHistoryWizard"
+            icon="icons/collaborationView.png"
+            id="fr.inria.atlanmod.collaboro.ui.newRemoteHistoryWizard"
+            name="New Remote Collaboro Model">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.editors">

@@ -11,12 +11,10 @@
 package fr.inria.atlanmod.collaboro.ui;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -25,16 +23,9 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.ide.IDE;
 
 import fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.Add;
@@ -58,8 +49,8 @@ import fr.inria.atlanmod.collaboro.history.Vote;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.NotationFactory;
-import fr.inria.atlanmod.collaboro.notation.presentation.NotationEditor;
 import fr.inria.atlanmod.collaboro.ui.views.CollaborationView;
+import fr.inria.atlanmod.collaboro.ui.views.VersionView;
 
 /**
  * Main class controlling the Collaborto Plugin
@@ -97,15 +88,15 @@ public class Controller {
 	 * The controller knows some views, this is temporal, I have to discover 
 	 * how to use better the event control in Eclipse
 	 */
-	private TreeViewer view;
+	private VersionView versionView;
 	private TreeViewer changes;
 	private CollaborationView.VoteUpdater voteUpdater;
 
-	LocalModelManager modelManager = new LocalModelManager();
-	
-	private Controller () {
-	}
-	
+	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
+	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
+
+	private Controller () { }
+
 	/**
 	 * Testing method to reset the information
 	 */
@@ -114,8 +105,6 @@ public class Controller {
 		lastIndex = 0;
 		historyTracked = 0;
 		versionTracked = 0;
-		
-		modelManager = new LocalModelManager();
 	}
 
 
@@ -126,51 +115,55 @@ public class Controller {
 	public EPackage getEcoreModel() {
 		return modelManager.getEcoreModel();
 	}
-	
+
 	public Definition getNotation() {
 		return modelManager.getNotation();
 	}
-	
+
 	/**
 	 * Loads a new History model
 	 * 
-	 * @param modelBeingTracked
+	 * @param resource to be tracked
 	 */
-	public void loadHistory(File modelBeingTracked) {
+	public void loadHistory(Object resource) { 
 		reset();
-		modelManager.initialize(modelBeingTracked);	
+		modelManager = modelManagerFactory.createModelManager(resource);
 		calculateLastIndexProposal();
-		versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
+		if(getHistory() != null) 
+			versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
 	}
-	
+
 	private void calculateLastIndexProposal() {
 		lastIndex = 0;
-		for(Proposal proposal : getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals()) {
-			String idProposal = proposal.getId();
-			int valueProposal = Integer.valueOf(idProposal.substring(1, idProposal.length()));
-			if(valueProposal > lastIndex) 
-				lastIndex = valueProposal;
-			for(Comment comment : proposal.getComments()) { 
-				String idComment = comment.getId();
-				int valueComment = Integer.valueOf(idComment.substring(1, idComment.length()));
-				if(valueComment > lastIndex) 
-					lastIndex = valueComment;
-			}
-			for(Solution solution : proposal.getSols()) {
-				String idSolution = solution.getId();
-				int valueSolution = Integer.valueOf(idSolution.substring(1, idSolution.length()));
-				if(valueSolution > lastIndex) 
-					lastIndex = valueSolution;
-				for(Comment comment : solution.getComments()) {
-					String idCommentSol = comment.getId();
-					int valueCommentSol = Integer.valueOf(idCommentSol.substring(1, idCommentSol.length()));
-					if(valueCommentSol > lastIndex) 
-						lastIndex = valueCommentSol;
+
+		if(getHistory() != null) {
+			for(Proposal proposal : getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals()) {
+				String idProposal = proposal.getId();
+				int valueProposal = Integer.valueOf(idProposal.substring(1, idProposal.length()));
+				if(valueProposal > lastIndex) 
+					lastIndex = valueProposal;
+				for(Comment comment : proposal.getComments()) { 
+					String idComment = comment.getId();
+					int valueComment = Integer.valueOf(idComment.substring(1, idComment.length()));
+					if(valueComment > lastIndex) 
+						lastIndex = valueComment;
+				}
+				for(Solution solution : proposal.getSols()) {
+					String idSolution = solution.getId();
+					int valueSolution = Integer.valueOf(idSolution.substring(1, idSolution.length()));
+					if(valueSolution > lastIndex) 
+						lastIndex = valueSolution;
+					for(Comment comment : solution.getComments()) {
+						String idCommentSol = comment.getId();
+						int valueCommentSol = Integer.valueOf(idCommentSol.substring(1, idCommentSol.length()));
+						if(valueCommentSol > lastIndex) 
+							lastIndex = valueCommentSol;
+					}
 				}
 			}
 		}
 	}
-	
+
 	/**
 	 * Loads an ecore model. Normally the model conforms to the metamodel being tracked.
 	 * 
@@ -239,9 +232,9 @@ public class Controller {
 		newVote.setAgreement(false);
 		newVote.setUser(loggedUser); 
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 
-		refreshView();
+		refreshVersionView();
 		refreshVoteUpdater();
 	}
 
@@ -266,9 +259,9 @@ public class Controller {
 		newVote.setAgreement(true);
 		newVote.setUser(loggedUser);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 
-		refreshView();
+		refreshVersionView();
 		refreshVoteUpdater();
 	}
 
@@ -278,8 +271,8 @@ public class Controller {
 		newSolution.setId("n" + ++lastIndex);
 		proposal.getSols().add(newSolution);	
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
-		refreshView();
+		modelManager.saveNotation();
+		refreshVersionView();
 	}
 
 
@@ -291,8 +284,8 @@ public class Controller {
 		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
 		version.getProposals().add(newProposal);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
-		refreshView();
+		modelManager.saveNotation();
+		refreshVersionView();
 	}
 
 	public void createComment(Collaboration collaboration) {
@@ -301,15 +294,15 @@ public class Controller {
 		newComment.setId("n" + ++lastIndex);
 		collaboration.getComments().add(newComment);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
-		refreshView();
+		modelManager.saveNotation();
+		refreshVersionView();
 	}
 
 	public void createAdd(Solution solution) {
 		Add newAdd = HistoryFactory.eINSTANCE.createAdd();
 		solution.getChanges().add(newAdd);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 		refreshChanges();
 	}
 
@@ -317,7 +310,7 @@ public class Controller {
 		Update newUpdate = HistoryFactory.eINSTANCE.createUpdate();
 		solution.getChanges().add(newUpdate);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 		refreshChanges();
 	}
 
@@ -325,17 +318,17 @@ public class Controller {
 		Delete newDelete = HistoryFactory.eINSTANCE.createDelete();
 		solution.getChanges().add(newDelete);
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 		refreshChanges();
 	}
 
-	public void setView(TreeViewer viewer) {
-		this.view = viewer;		
+	public void setVersionView(VersionView viewer) {
+		this.versionView = viewer;		
 	}
 
-	public void refreshView() {
-		if(this.view != null)
-			this.view.refresh();
+	public void refreshVersionView() {
+		if(this.versionView != null)
+			this.versionView.refresh();
 	}
 
 	public void setChanges(TreeViewer changes) {
@@ -357,7 +350,7 @@ public class Controller {
 			this.voteUpdater.update();
 	}
 
-	
+
 
 	public int getHistoryTracked() {
 		return historyTracked;
@@ -410,7 +403,7 @@ public class Controller {
 
 	public List<Proposal> getProposals() {
 		List<Proposal> result = new ArrayList<Proposal>();
-		
+
 		if(getHistory() != null && getHistory().getHistories() != null) {
 			VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
 			if(versionHistory != null && getHistory().getHistories().get(getHistoryTracked()).getVersions() != null) {
@@ -420,10 +413,10 @@ public class Controller {
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 
 
 	public List<NotationElement> getAllNotationElements() {
@@ -477,44 +470,46 @@ public class Controller {
 	}
 
 	public void openNotationEditor(NotationElement notationElement) {
-		if (modelManager.getNotation() != null && modelManager.getNotationFile().exists() && modelManager.getNotationFile().isFile()) {
-			String path = modelManager.getNotationFile().getAbsolutePath();
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			try {
-				java.net.URI fromString = org.eclipse.core.runtime.URIUtil.fromString("file://" + path);
-				NotationEditor openEditor = (NotationEditor) IDE.openEditor(page, fromString, NOTATION_EDITOR_PLUGIN_ID, true);
-				IEditorInput editorInput = openEditor.getEditorInput();
-
-				EditingDomain editingDomain = openEditor.getEditingDomain();
-				URI uri = EcoreUtil.getURI(notationElement);
-				EObject editObject = editingDomain.getResourceSet().getEObject(uri, true);
-				if(editObject != null) {
-					openEditor.setSelectionToViewer(Collections.singleton(editObject));
-				}
-
-			} catch ( PartInitException e ) {
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-		}
+		//		if (modelManager.getNotation() != null && modelManager.getNotationFile().exists() && modelManager.getNotationFile().isFile()) {
+		//			String path = modelManager.getNotationFile().getAbsolutePath();
+		//			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		//			try {
+		//				java.net.URI fromString = org.eclipse.core.runtime.URIUtil.fromString("file://" + path);
+		//				NotationEditor openEditor = (NotationEditor) IDE.openEditor(page, fromString, NOTATION_EDITOR_PLUGIN_ID, true);
+		//				IEditorInput editorInput = openEditor.getEditorInput();
+		//
+		//				EditingDomain editingDomain = openEditor.getEditingDomain();
+		//				URI uri = EcoreUtil.getURI(notationElement);
+		//				EObject editObject = editingDomain.getResourceSet().getEObject(uri, true);
+		//				if(editObject != null) {
+		//					openEditor.setSelectionToViewer(Collections.singleton(editObject));
+		//				}
+		//
+		//			} catch ( PartInitException e ) {
+		//				e.printStackTrace();
+		//			} catch (URISyntaxException e) {
+		//				e.printStackTrace();
+		//			}
+		//		}
 	}
 
 	public void openAbstractSyntaxEditor(EClass eClass) {
 
-		if (modelManager.getEcoreModel() != null && modelManager.getEcoreModelFile().exists() && modelManager.getEcoreModelFile().isFile()) {
-			String path = modelManager.getEcoreModelFile().getAbsolutePath();
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			try {
-				java.net.URI fromString = org.eclipse.core.runtime.URIUtil.fromString("file://" + path);
-				IEditorPart openEditor = IDE.openEditor(page, fromString, ECORE_PLUGIN_ID, true);
-				IEditorInput editorInput = openEditor.getEditorInput();
-			} catch ( PartInitException e ) {
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-		}
+		//		if (modelManager.getEcoreModel() != null && modelManager.getEcoreModelFile().exists() && modelManager.getEcoreModelFile().isFile()) {
+		//			String path = modelManager.getEcoreModelFile().getAbsolutePath();
+		//			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+		//			try {
+		//				java.net.URI fromString = org.eclipse.core.runtime.URIUtil.fromString("file://" + path);
+		//				IEditorPart openEditor = IDE.openEditor(page, fromString, ECORE_PLUGIN_ID, true);
+		//				IEditorInput editorInput = openEditor.getEditorInput();
+		//			} catch ( PartInitException e ) {
+		//				e.printStackTrace();
+		//			} catch (URISyntaxException e) {
+		//				e.printStackTrace();
+		//			}
+		//		}
+
+
 		//		String abstractModelFileName = ecoreModel.getName();
 		//		IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(abstractModelFileName);
 		//
@@ -543,7 +538,7 @@ public class Controller {
 	public void addNotationElement(NotationElement selectedElement) {
 		if(getNotation() != null & selectedElement != null) {
 			getNotation().getElements().add(selectedElement);
-			modelManager.saveNotationModel();
+			modelManager.saveNotation();
 		}
 
 	}
@@ -575,12 +570,14 @@ public class Controller {
 			deleteComment(comment);
 		}
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 		calculateLastIndexProposal();
 	}
 
 	private void deleteProposal(Proposal proposalToDelete) {
 		getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals().remove(proposalToDelete);
+		proposalToDelete.setVersion(null);
+		proposalToDelete.setProposedBy(null);
 	}
 
 	private void deleteSolution(Solution solutionToDelete) {
@@ -606,14 +603,14 @@ public class Controller {
 			solution.getChanges().remove(modelChange);
 		}
 		modelManager.saveHistory();
-		modelManager.saveNotationModel();
+		modelManager.saveNotation();
 	}
 
 	public List<ModelChange> applyChanges() {
 		List<ModelChange> appliedChanges = new ArrayList<ModelChange>();
 
 		if(getHistory() == null) return appliedChanges;
-		
+
 		for(Proposal proposal : getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals()) {
 			if(proposal.isAccepted()) {
 				Solution solution = proposal.getSelected();
@@ -725,10 +722,10 @@ public class Controller {
 
 	public void changeVersion(Version version) {
 		if(getHistory() == null) return;
-		
+
 		List<Version> versions = getHistory().getHistories().get(getHistoryTracked()).getVersions();
 		int indexOfVersion = versions.indexOf(version);
 		versionTracked = indexOfVersion;
-		view.refresh();		
+		versionView.refresh();		
 	}
 }
