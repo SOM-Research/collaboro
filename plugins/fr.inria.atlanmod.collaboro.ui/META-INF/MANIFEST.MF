@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.edit.ui;bundle-version="2.7.0",
  org.eclipse.emf.ecore.xmi,
  fr.inria.atlanmod.collaboro.notation.editor;bundle-version="0.1.0",
- fr.inria.atlanmod.collaboro.history.editor;bundle-version="0.1.2"
+ fr.inria.atlanmod.collaboro.history.editor;bundle-version="0.1.2",
+ org.eclipse.emf.cdo.ui;bundle-version="4.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Atlanmod

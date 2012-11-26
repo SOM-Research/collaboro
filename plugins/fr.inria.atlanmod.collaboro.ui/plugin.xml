@@ -223,6 +223,15 @@
             name="History editor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="fr.inria.atlanmod.collaboro.ui.PerspectiveFactory"
+            icon="icons/collaboro.png"
+            id="fr.inria.atlanmod.collaboro.ui.collaboroperspective"
+            name="Collaboro">
+      </perspective>
+   </extension>
 
 
 </plugin>
