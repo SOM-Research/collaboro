@@ -154,6 +154,11 @@ public class CompositeItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(NotationPackage.Literals.COMPOSITE__SUB_ELEMENTS,
+				 NotationFactory.eINSTANCE.createImage()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NotationPackage.Literals.COMPOSITE__SUB_ELEMENTS,
 				 NotationFactory.eINSTANCE.createRectangle()));
 
 		newChildDescriptors.add
