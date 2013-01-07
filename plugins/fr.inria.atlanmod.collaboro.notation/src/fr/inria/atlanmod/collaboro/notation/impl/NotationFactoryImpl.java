@@ -61,6 +61,7 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case NotationPackage.IMAGE: return createImage();
 			case NotationPackage.RECTANGLE: return createRectangle();
 			case NotationPackage.LINE: return createLine();
 			case NotationPackage.LABEL: return createLabel();
@@ -105,6 +106,16 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Image createImage() {
+		ImageImpl image = new ImageImpl();
+		return image;
 	}
 
 	/**

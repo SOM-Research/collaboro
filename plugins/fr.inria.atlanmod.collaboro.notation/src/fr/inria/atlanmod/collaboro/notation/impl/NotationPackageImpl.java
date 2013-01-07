@@ -13,6 +13,7 @@ import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.Figure;
 import fr.inria.atlanmod.collaboro.notation.GraphicalElement;
 import fr.inria.atlanmod.collaboro.notation.IdElement;
+import fr.inria.atlanmod.collaboro.notation.Image;
 import fr.inria.atlanmod.collaboro.notation.Keyword;
 import fr.inria.atlanmod.collaboro.notation.Label;
 import fr.inria.atlanmod.collaboro.notation.Line;
@@ -62,6 +63,13 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * @generated
 	 */
 	private EClass graphicalElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass imageEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -320,6 +328,24 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getImage() {
+		return imageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getImage_Path() {
+		return (EAttribute)imageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getFigure() {
 		return figureEClass;
 	}
@@ -563,6 +589,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		createEAttribute(graphicalElementEClass, GRAPHICAL_ELEMENT__FILL);
 		createEAttribute(graphicalElementEClass, GRAPHICAL_ELEMENT__STROKE);
 
+		imageEClass = createEClass(IMAGE);
+		createEAttribute(imageEClass, IMAGE__PATH);
+
 		figureEClass = createEClass(FIGURE);
 
 		rectangleEClass = createEClass(RECTANGLE);
@@ -635,6 +664,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		// Add supertypes to classes
 		notationElementEClass.getESuperTypes().add(this.getIdElement());
 		graphicalElementEClass.getESuperTypes().add(this.getNotationElement());
+		imageEClass.getESuperTypes().add(this.getGraphicalElement());
 		figureEClass.getESuperTypes().add(this.getGraphicalElement());
 		rectangleEClass.getESuperTypes().add(this.getFigure());
 		lineEClass.getESuperTypes().add(this.getGraphicalElement());
@@ -661,6 +691,9 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		initEAttribute(getGraphicalElement_Width(), ecorePackage.getEInt(), "width", null, 0, 1, GraphicalElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGraphicalElement_Fill(), this.getColor(), "fill", "white", 0, 1, GraphicalElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGraphicalElement_Stroke(), this.getColor(), "stroke", "black", 0, 1, GraphicalElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(imageEClass, Image.class, "Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getImage_Path(), ecorePackage.getEString(), "path", null, 0, 1, Image.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(figureEClass, Figure.class, "Figure", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="notation"
-    nsURI="http://atlanmod.fr/collaboro/notation" nsPrefix="notation">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="notation" nsURI="http://atlanmod.fr/collaboro/notation" nsPrefix="notation">
   <eClassifiers xsi:type="ecore:EClass" name="IdElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -16,6 +14,9 @@
         defaultValueLiteral="white"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke" eType="#//Color"
         defaultValueLiteral="black"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//GraphicalElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Figure" abstract="true" eSuperTypes="#//GraphicalElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Rectangle" eSuperTypes="#//Figure"/>
