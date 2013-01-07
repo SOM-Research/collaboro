@@ -138,9 +138,11 @@ public class Controller {
 	 */
 	public void loadHistory(File modelBeingTracked) {
 		reset();
-		modelManager.initialize(modelBeingTracked);	
-		calculateLastIndexProposal();
-		versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
+		modelManager.initialize(modelBeingTracked);
+		if (modelBeingTracked.getName().endsWith(".ecore")){
+			calculateLastIndexProposal();
+			versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
+		}
 	}
 	
 	private void calculateLastIndexProposal() {

@@ -13,9 +13,7 @@ package fr.inria.atlanmod.collaboro.ui.views;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.Panel;
-import java.awt.Rectangle;
 
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
@@ -30,14 +28,14 @@ public class NotationComposite extends Composite {
 
 	private JSVGCanvas canvas;
 	private Frame frame;
+
 	
 	public NotationComposite(Composite parent, SVGDocument initImage) {
 		super(parent, SWT.EMBEDDED);
 
 		canvas = new JSVGCanvas();
-        canvas.setSVGDocument(initImage);
-        canvas.setLayout(new BorderLayout());
-
+		canvas.setSVGDocument(initImage);
+		canvas.setLayout(new BorderLayout());
         frame = SWT_AWT.new_Frame(this);
         
         Panel panel = new Panel();
@@ -55,6 +53,7 @@ public class NotationComposite extends Composite {
 	public void setSVGDocument(SVGDocument svgImage) {
         canvas.setSVGDocument(svgImage);
         canvas.setLayout(new BorderLayout());
+
 	}
 
 }

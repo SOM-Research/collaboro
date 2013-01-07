@@ -11,10 +11,25 @@
 
 package fr.inria.atlanmod.collaboro.ui.views;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
@@ -30,11 +45,22 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
+import com.abstratt.graphviz.GraphViz;
+import com.abstratt.graphviz.GraphVizActivator;
+
+import fr.inria.atlanmod.collaboro.history.Add;
+import fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement;
+import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
+import fr.inria.atlanmod.collaboro.history.History;
+import fr.inria.atlanmod.collaboro.history.ModelChange;
+import fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.notation.AttributeValue;
 import fr.inria.atlanmod.collaboro.notation.Composite;
+import fr.inria.atlanmod.collaboro.notation.GraphicalElement;
 import fr.inria.atlanmod.collaboro.notation.Keyword;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
@@ -42,6 +68,7 @@ import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
 import fr.inria.atlanmod.collaboro.notation.TextualElement;
 import fr.inria.atlanmod.collaboro.notation.Token;
 import fr.inria.atlanmod.collaboro.ui.Controller;
+import fr.inria.atlanmod.collaboro.ui.views.notation.builder.DotNotationBuilder;
 
 
 /**
@@ -65,9 +92,12 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	private static String DEFAULT_FONT_FAMILY = "monospace";
 
 	// The composite showing the notation
-	private NotationComposite notation;
+	protected NotationComposite notation;
 
+	
 
+	
+	
 	/**
 	 * Inner class to represent shown boxes.
 	 * 
@@ -158,7 +188,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 				}
 			}
 		}
-		
+
 		if(part.getSite().getId().equals(Controller.NOTATION_EDITOR_PLUGIN_ID)) {
 			Controller.INSTANCE.inNotation();
 		} else {
@@ -194,6 +224,20 @@ public class NotationView extends ViewPart implements ISelectionListener {
 
 	}
 
+	private boolean checkGraphical(NotationElement notationElement) {
+		boolean toReturn = false;
+		if (notationElement instanceof GraphicalElement) {
+			toReturn = true;
+		} else if (notationElement instanceof Composite) {
+			for (NotationElement element : ((Composite)notationElement).getSubElements()) {
+				toReturn = toReturn || this.checkGraphical(element);
+			} 
+		}else {
+			toReturn = false;
+		}
+		return toReturn;
+	}
+	
 	/**
 	 * Updates the vied with the notation of the modelElement (abstract syntax element).
 	 * 
@@ -205,357 +249,486 @@ public class NotationView extends ViewPart implements ISelectionListener {
 		if(notationElement == null) {
 			svgImage = createNoSyntaxImage();
 		} else {
-			svgImage = buildSVG(notationElement);		
+			if (this.checkGraphical(notationElement)) {
+				svgImage = buildSVGFromDot(notationElement);
+			} else {
+				svgImage = buildSVG(notationElement);
+			}	
 		}
 		notation.setSVGDocument(svgImage);
 		notation.layout(true);
 	}
 
 
-	/**
-	 * Updates the view with the notation of the modelElement instance (instance of 
-	 * the abstract syntax element).
-	 * 
-	 * @param instanceModelElement
-	 */
-	public void updateView(EObject instanceModelElement) {
-		EClassifier modelElement = instanceModelElement.eClass();
-		NotationElement notationElement = Controller.INSTANCE.getNotation(modelElement);
-		SVGDocument svgImage = null;
-		if(notationElement == null) {
-			svgImage = createNoSyntaxImage();
+/**
+ * Updates the view with the notation of the modelElement instance (instance of 
+ * the abstract syntax element).
+ * 
+ * @param instanceModelElement
+ */
+public void updateView(EObject instanceModelElement) {
+	EClassifier modelElement = instanceModelElement.eClass();
+	NotationElement notationElement = Controller.INSTANCE.getNotation(modelElement);
+	SVGDocument svgImage = null;
+	if(notationElement == null) {
+		svgImage = createNoSyntaxImage();
+	} else {
+		if (this.checkGraphical(notationElement)) {
+			svgImage = buildSVGFromDot(instanceModelElement, notationElement);
 		} else {
-			svgImage = buildSVG(instanceModelElement, notationElement);		
+			svgImage = buildSVG(instanceModelElement, notationElement);
 		}
-		notation.setSVGDocument(svgImage);
-		notation.layout(true);
 	}
+	notation.setSVGDocument(svgImage);
+	notation.layout(true);
+}
 
-	/**
-	 * Builds the SVG for the corresponding notationElement. The representation is for
-	 * the abstract syntax element.
-	 * 
-	 * @param notationElement
-	 * @return
-	 */
-	public SVGDocument buildSVG(NotationElement notationElement) {
-		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
-		buildSVG(notationElement, doc, START_X, START_Y);
-		return doc;
-	}
+/**
+ * Builds the SVG for the corresponding notationElement. The representation is for
+ * the abstract syntax element.
+ * 
+ * @param notationElement
+ * @return
+ */
+public SVGDocument buildSVG(NotationElement notationElement) {
+	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+	SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	buildSVG(notationElement, doc, START_X, START_Y);
+	return doc;
+}
 
-	/**
-	 * Builds the SVG for the corresponding notationElement and particularizes the 
-	 * representation with the model element instance.
-	 * 
-	 * @param instanceModelElement
-	 * @param notationElement
-	 * @return
-	 */
-	public SVGDocument buildSVG(EObject instanceModelElement, NotationElement notationElement) {
-		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
-		buildSVG(instanceModelElement, notationElement, doc, START_X, START_Y);
-		return doc;
-	}
+/**
+ * Builds the SVG for the corresponding notationElement and particularizes the 
+ * representation with the model element instance.
+ * 
+ * @param instanceModelElement
+ * @param notationElement
+ * @return
+ */
+public SVGDocument buildSVG(EObject instanceModelElement, NotationElement notationElement) {
+	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+	SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	buildSVG(instanceModelElement, notationElement, doc, START_X, START_Y);
+	return doc;
+}
 
-	/**
-	 * Builds the SVG for the corresponding notationElement. The representation is for
-	 * the abstract syntax element.
-	 * 
-	 * @param notationElement
-	 * @param doc
-	 * @param x
-	 * @param y
-	 */
-	private Box buildSVG(NotationElement notationElement, SVGDocument doc, int x, int y) {
-		Element svgRoot = doc.getDocumentElement();
+/**
+ * Builds the SVG for the corresponding notationElement. The representation is for
+ * the abstract syntax element.
+ * 
+ * @param notationElement
+ * @param doc
+ * @param x
+ * @param y
+ */
+private Box buildSVG(NotationElement notationElement, SVGDocument doc, int x, int y) {
+	Element svgRoot = doc.getDocumentElement();
 
-		Box result = new Box(0, 0, x, y);
-		if (notationElement instanceof Composite) {
-			Composite composite = (Composite) notationElement;
-			result.setX(x);
-			int oldX = x;
-			for(NotationElement subElement : composite.getSubElements()) {
-				if (subElement instanceof Composite) {
-					x = oldX + TAB;
-					y = y + VERTICAL_SEP; 
-				}
-
-				Box subBox = buildSVG(subElement, doc, x, y);
-
-				if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
-					x = oldX;
-					y = y + subBox.getHeight(); 
-					if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
-					result.setHeight(result.getHeight() + subBox.getHeight());
-				} else {
-					x = x + subBox.getWidth();
-					result.setWidth(result.getWidth() + subBox.getWidth());
-					if(result.getHeight() < subBox.getHeight()) result.setHeight(subBox.getHeight());
-				}
+	Box result = new Box(0, 0, x, y);
+	if (notationElement instanceof Composite) {
+		Composite composite = (Composite) notationElement;
+		result.setX(x);
+		int oldX = x;
+		for(NotationElement subElement : composite.getSubElements()) {
+			if (subElement instanceof Composite) {
+				x = oldX + TAB;
+				y = y + VERTICAL_SEP; 
 			}
-		} else if (notationElement instanceof TextualElement) {
-			TextualElement textualElement = (TextualElement) notationElement;
 
-			Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
-			text.setAttributeNS(null, "x", String.valueOf(x));
-			text.setAttributeNS(null, "y", String.valueOf(y));
-			text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
-			text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+			Box subBox = buildSVG(subElement, doc, x, y);
 
-			String value = "";
-			if (textualElement instanceof Keyword) {
-				Keyword keyword = (Keyword) notationElement; 
-				text.setAttributeNS(null, "font-weight", "bold");
-				text.setAttributeNS(null, "fill", "green");
-				text.setAttributeNS(null, "stroke", "none");
-				value = keyword.getId();
-			} else if (textualElement instanceof Token) {
-				Token token = (Token) notationElement;
-				text.setAttributeNS(null, "fill", "black");
-				text.setAttributeNS(null, "stroke", "none");
-				value =  token.getId();
-			} else if (textualElement instanceof AttributeValue) {
-				AttributeValue attributeValue = (AttributeValue) notationElement;
-				text.setAttributeNS(null, "fill", "orange");
-				value = "<value of '" + attributeValue.getAttribute().getName() + "' attribute>";				
-			} else if (textualElement instanceof ReferenceValue) {
-				ReferenceValue referenceValue = (ReferenceValue) notationElement;
-				text.setAttributeNS(null, "fill", "orange");
-				value = "<value of '" + referenceValue.getReference().getName() + "' reference>";				
+			if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
+				x = oldX;
+				y = y + subBox.getHeight(); 
+				if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
+				result.setHeight(result.getHeight() + subBox.getHeight());
+			} else {
+				x = x + subBox.getWidth();
+				result.setWidth(result.getWidth() + subBox.getWidth());
+				if(result.getHeight() < subBox.getHeight()) result.setHeight(subBox.getHeight());
 			}
-			result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
-			result.setHeight(VERTICAL_SEP);
-
-			text.setTextContent(value);		
-			svgRoot.appendChild(text);
-		} else if (notationElement instanceof SyntaxOf) {
-			SyntaxOf syntaxOf = (SyntaxOf) notationElement;
-
-			Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
-			text.setAttributeNS(null, "x", String.valueOf(x));
-			text.setAttributeNS(null, "y", String.valueOf(y));
-			text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
-			text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
-			text.setAttributeNS(null, "fill", "blue");
-
-			String value = "<syntax of '" + syntaxOf.getReference().getName() + "' reference>";
-			text.setTextContent(value);	
-
-			result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
-			result.setHeight(VERTICAL_SEP);
-			svgRoot.appendChild(text);
 		}
+	} else if (notationElement instanceof TextualElement) {
+		TextualElement textualElement = (TextualElement) notationElement;
 
-		return result;
+		Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
+		text.setAttributeNS(null, "x", String.valueOf(x));
+		text.setAttributeNS(null, "y", String.valueOf(y));
+		text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
+		text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+
+		String value = "";
+		if (textualElement instanceof Keyword) {
+			Keyword keyword = (Keyword) notationElement; 
+			text.setAttributeNS(null, "font-weight", "bold");
+			text.setAttributeNS(null, "fill", "green");
+			text.setAttributeNS(null, "stroke", "none");
+			value = keyword.getId();
+		} else if (textualElement instanceof Token) {
+			Token token = (Token) notationElement;
+			text.setAttributeNS(null, "fill", "black");
+			text.setAttributeNS(null, "stroke", "none");
+			value =  token.getId();
+		} else if (textualElement instanceof AttributeValue) {
+			AttributeValue attributeValue = (AttributeValue) notationElement;
+			text.setAttributeNS(null, "fill", "orange");
+			value = "<value of '" + attributeValue.getAttribute().getName() + "' attribute>";				
+		} else if (textualElement instanceof ReferenceValue) {
+			ReferenceValue referenceValue = (ReferenceValue) notationElement;
+			text.setAttributeNS(null, "fill", "orange");
+			value = "<value of '" + referenceValue.getReference().getName() + "' reference>";				
+		}
+		result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
+		result.setHeight(VERTICAL_SEP);
+
+		text.setTextContent(value);		
+		svgRoot.appendChild(text);
+	} else if (notationElement instanceof SyntaxOf) {
+		SyntaxOf syntaxOf = (SyntaxOf) notationElement;
+
+		Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
+		text.setAttributeNS(null, "x", String.valueOf(x));
+		text.setAttributeNS(null, "y", String.valueOf(y));
+		text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
+		text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+		text.setAttributeNS(null, "fill", "blue");
+
+		String value = "<syntax of '" + syntaxOf.getReference().getName() + "' reference>";
+		text.setTextContent(value);	
+
+		result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
+		result.setHeight(VERTICAL_SEP);
+		svgRoot.appendChild(text);
 	}
 
-	/**
-	 * Builds the SVG for the corresponding notationElement and particularizes the 
-	 * representation with the model element instance.
-	 * 
-	 * @param eObject
-	 * @param notationElement
-	 * @param doc
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public Box buildSVG(EObject eObject, NotationElement notationElement, SVGDocument doc, int x, int y) {
-		Element svgRoot = doc.getDocumentElement();
-		Box result = new Box(0, 0, x, y);
+	return result;
+}
 
-		if (notationElement instanceof Composite) {
-			Composite composite = (Composite) notationElement;
-			result.setX(x);
-			int oldX = x;
-			for(NotationElement subElement : composite.getSubElements()) {
-				if (subElement instanceof Composite) {
-					x = oldX + TAB;
-					y = y + VERTICAL_SEP; 
-				}
+/**
+ * Builds the SVG for the corresponding notationElement and particularizes the 
+ * representation with the model element instance.
+ * 
+ * @param eObject
+ * @param notationElement
+ * @param doc
+ * @param x
+ * @param y
+ * @return
+ */
+public Box buildSVG(EObject eObject, NotationElement notationElement, SVGDocument doc, int x, int y) {
+	Element svgRoot = doc.getDocumentElement();
+	Box result = new Box(0, 0, x, y);
 
-				Box subBox = buildSVG(eObject, subElement, doc, x, y);
-
-				if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
-					x = oldX;
-					y = y + subBox.getHeight(); 
-					if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
-					result.setHeight(result.getHeight() + subBox.getHeight());
-				} else {
-					x = x + subBox.getWidth();
-					result.setWidth(result.getWidth() + subBox.getWidth());
-					if(result.getHeight() < subBox.getHeight()) result.setHeight(subBox.getHeight());
-				}
-			}
-		} else if (notationElement instanceof TextualElement) {
-			TextualElement textualElement = (TextualElement) notationElement;
-
-			Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
-			text.setAttributeNS(null, "x", String.valueOf(x));
-			text.setAttributeNS(null, "y", String.valueOf(y));
-			text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
-			text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
-
-			String value = "";
-
-			if (textualElement instanceof Keyword) {
-				Keyword keyword = (Keyword) notationElement; 
-				text.setAttributeNS(null, "font-weight", "bold");
-				text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
-				text.setAttributeNS(null, "stroke", "none");
-				value = keyword.getId();
-			} else if (textualElement instanceof Token) {
-				Token token = (Token) notationElement;
-				text.setAttributeNS(null, "fill", token.getFill().getLiteral());
-				text.setAttributeNS(null, "stroke", "none");
-				value = token.getId();
-			} else if (textualElement instanceof AttributeValue) {
-				AttributeValue attributeValue = (AttributeValue) notationElement;
-				text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
-
-				EAttribute eAttribute = attributeValue.getAttribute();
-				
-				value = convert(eObject.eGet(eObject.eClass().getEStructuralFeature(eAttribute.getName())));
-//				value = convert(eObject.eGet(eAttribute));
-			} else if (textualElement instanceof ReferenceValue) {
-				ReferenceValue referenceValue = (ReferenceValue) notationElement;
-				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
-
-				EReference eReference = referenceValue.getReference();
-				EAttribute eAttribute = referenceValue.getAttribute();
-				String separator = referenceValue.getSeparator();
-
-				Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-//				Object referredObjs = eObject.eGet(eReference);
-				if (referredObjs instanceof EList) {
-					EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
-					for(EObject elementList : eReferenceList) {
-//						Object attributeValue = elementList.eGet(eAttribute);
-						Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
-						value += convert(attributeValue);
-						if(eReferenceList.indexOf(elementList) != eReferenceList.size() - 1) {
-							value += separator;
-						}
-					}
-				} else if (referredObjs instanceof EObject) {
-					EObject elementList = (EObject) referredObjs;
-//					Object attributeValue = elementList.eGet(eAttribute);
-					Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
-					value += convert(attributeValue);					
-				}			
+	if (notationElement instanceof Composite) {
+		Composite composite = (Composite) notationElement;
+		result.setX(x);
+		int oldX = x;
+		for(NotationElement subElement : composite.getSubElements()) {
+			if (subElement instanceof Composite) {
+				x = oldX + TAB;
+				y = y + VERTICAL_SEP; 
 			}
 
-			result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
-			result.setHeight(VERTICAL_SEP);
+			Box subBox = buildSVG(eObject, subElement, doc, x, y);
 
-			text.setTextContent(value);		
-			svgRoot.appendChild(text);
-		} else if (notationElement instanceof SyntaxOf) {
-			SyntaxOf syntaxOf = (SyntaxOf) notationElement;
+			if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
+				x = oldX;
+				y = y + subBox.getHeight(); 
+				if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
+				result.setHeight(result.getHeight() + subBox.getHeight());
+			} else {
+				x = x + subBox.getWidth();
+				result.setWidth(result.getWidth() + subBox.getWidth());
+				if(result.getHeight() < subBox.getHeight()) result.setHeight(subBox.getHeight());
+			}
+		}
+	} else if (notationElement instanceof TextualElement) {
+		TextualElement textualElement = (TextualElement) notationElement;
 
-			EReference eReference = syntaxOf.getReference();
-			
+		Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
+		text.setAttributeNS(null, "x", String.valueOf(x));
+		text.setAttributeNS(null, "y", String.valueOf(y));
+		text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
+		text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+
+		String value = "";
+
+		if (textualElement instanceof Keyword) {
+			Keyword keyword = (Keyword) notationElement; 
+			text.setAttributeNS(null, "font-weight", "bold");
+			text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
+			text.setAttributeNS(null, "stroke", "none");
+			value = keyword.getId();
+		} else if (textualElement instanceof Token) {
+			Token token = (Token) notationElement;
+			text.setAttributeNS(null, "fill", token.getFill().getLiteral());
+			text.setAttributeNS(null, "stroke", "none");
+			value = token.getId();
+		} else if (textualElement instanceof AttributeValue) {
+			AttributeValue attributeValue = (AttributeValue) notationElement;
+			text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
+
+			EAttribute eAttribute = attributeValue.getAttribute();
+
+			value = convert(eObject.eGet(eObject.eClass().getEStructuralFeature(eAttribute.getName())));
+			//				value = convert(eObject.eGet(eAttribute));
+		} else if (textualElement instanceof ReferenceValue) {
+			ReferenceValue referenceValue = (ReferenceValue) notationElement;
+			text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
+
+			EReference eReference = referenceValue.getReference();
+			EAttribute eAttribute = referenceValue.getAttribute();
+			String separator = referenceValue.getSeparator();
+
 			Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-//			Object referredObjs = eObject.eGet(eReference);
+			//				Object referredObjs = eObject.eGet(eReference);
 			if (referredObjs instanceof EList) {
 				EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
-				if(eReferenceList.size() > 0) {
-					int oldX = x;
-					for(EObject elementList : eReferenceList) {
-						NotationElement subNotationElement = Controller.INSTANCE.getNotation(elementList.eClass());
-						if(subNotationElement != null) {
-							Box subBox = buildSVG(elementList, subNotationElement, doc, x, y);
-							x = oldX;
-							y = y + subBox.getHeight(); 
+				for(EObject elementList : eReferenceList) {
+					//						Object attributeValue = elementList.eGet(eAttribute);
+					Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
+					value += convert(attributeValue);
+					if(eReferenceList.indexOf(elementList) != eReferenceList.size() - 1) {
+						value += separator;
+					}
+				}
+			} else if (referredObjs instanceof EObject) {
+				EObject elementList = (EObject) referredObjs;
+				//					Object attributeValue = elementList.eGet(eAttribute);
+				Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
+				value += convert(attributeValue);					
+			}			
+		}
 
-							if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
-							result.setHeight(result.getHeight() + subBox.getHeight());
-						}
+		result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
+		result.setHeight(VERTICAL_SEP);
+
+		text.setTextContent(value);		
+		svgRoot.appendChild(text);
+	} else if (notationElement instanceof SyntaxOf) {
+		SyntaxOf syntaxOf = (SyntaxOf) notationElement;
+
+		EReference eReference = syntaxOf.getReference();
+
+		Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
+		//			Object referredObjs = eObject.eGet(eReference);
+		if (referredObjs instanceof EList) {
+			EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
+			if(eReferenceList.size() > 0) {
+				int oldX = x;
+				for(EObject elementList : eReferenceList) {
+					NotationElement subNotationElement = Controller.INSTANCE.getNotation(elementList.eClass());
+					if(subNotationElement != null) {
+						Box subBox = buildSVG(elementList, subNotationElement, doc, x, y);
+						x = oldX;
+						y = y + subBox.getHeight(); 
+
+						if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
+						result.setHeight(result.getHeight() + subBox.getHeight());
 					}
 				}
 			}
 		}
-		return result;
 	}
+	return result;
+}
 
-	/**
-	 * Obtains the string representation of the value
-	 * 
-	 * @param value
-	 * @return
-	 */
-	private String convert(Object value) {
-		String result = "ND";
+private SVGDocument buildSVGFromDot(EObject instanceModelElement,
+		NotationElement notationElement) {
 
-		if (value instanceof String) {
-			result = (String) value;
-		} else if (value instanceof EEnumLiteral) {
-			EEnumLiteral literal = (EEnumLiteral) value;
-			result = literal.toString();
+	//Create the dot graph definition
+	//get history and put the model changes in a map with MM element --> Syntax element
+	Map<EObject, EObject> modelChanges = new HashMap<EObject, EObject>();
+	History history = Controller.INSTANCE.getHistory();
+	for (TreeIterator<EObject> iterator = history.eAllContents(); iterator.hasNext();) {
+		EObject eObject = (EObject) iterator.next();
+		if (eObject instanceof Add) {
+			EObject targetSE = ((ModelChange)eObject).getTarget();
+			EObject referredElementSE = ((ModelChange)eObject).getReferredElement();
+			if (targetSE instanceof ConcreteSyntaxElement) {
+				targetSE = ((ConcreteSyntaxElement)targetSE).getElement();
+			} else if (targetSE instanceof ExistingAbstractSyntaxElement) {
+				targetSE = ((ExistingAbstractSyntaxElement)targetSE).getElement();
+			} else {
+				targetSE = ((NewAbstractSyntaxElement)targetSE).getElement();
+			}
+			if (referredElementSE instanceof ConcreteSyntaxElement) {
+				referredElementSE = ((ConcreteSyntaxElement)referredElementSE).getElement();
+			} else if (referredElementSE instanceof ExistingAbstractSyntaxElement) {
+				referredElementSE = ((ExistingAbstractSyntaxElement)referredElementSE).getElement();
+			} else {
+				referredElementSE = ((NewAbstractSyntaxElement)referredElementSE).getElement();
+			}
+			modelChanges.put(referredElementSE, targetSE);
 		}
-
-		return result;
 	}
 
-	/**
-	 * Creates a splash image with the message "No item selected"
-	 * 
-	 * @return
-	 */
-	private SVGDocument createTestImage() {
-		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	//Build the dot represetation
+	StringBuilder dotGraph = new StringBuilder();
+	dotGraph.append("graph ").append(instanceModelElement.eClass().getName()).append(" {\n");
 
-		Element root = doc.getDocumentElement();
-		root.setAttributeNS(null, "width", "500px");
-		root.setAttributeNS(null, "height", "500px");
+	DotNotationBuilder dotBuilder = new DotNotationBuilder();
+	if(modelChanges.keySet().contains(instanceModelElement.eClass())){
+		dotGraph.append(dotBuilder.create(instanceModelElement, (NotationElement)modelChanges.get(instanceModelElement.eClass()), modelChanges));
+	}
+	dotGraph.append(" }\n");
 
-		Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
-		text.setAttributeNS(null, "x", "10");
-		text.setAttributeNS(null, "y", "20");
-		text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
-		text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
-		text.setAttributeNS(null, "font-weight", "bold");
-		text.setAttributeNS(null, "fill", "red");
-		text.setAttributeNS(null, "stroke", "none");
-		text.setTextContent("No item selected");
-		root.appendChild(text);
+	//TODO debug message to delete
+	System.err.println(dotGraph.toString());
 
-		return doc;
+	
+	Document doc = null;
+	try {
+		ByteArrayInputStream input = new ByteArrayInputStream(dotGraph.toString().getBytes());
+		//GraphViz.generate(input, "svg", new Point(300, 300), new Path(instanceModelElement.eResource().getURI().toFileString()+".svg"));
+		runDot(input, new Path(instanceModelElement.eResource().getURI().toFileString()+".svg"));
+		String svgLocation = instanceModelElement.eResource().getURI().toString() + ".svg";
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);	
+		doc = f.createDocument(svgLocation);
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
 
-	/**
-	 * Creates a splash image with the message "No syntax defined"
-	 * 
-	 * @return
-	 */
-	private SVGDocument createNoSyntaxImage() {
-		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
-		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+	return (SVGDocument) doc;
+}
 
-		Element root = doc.getDocumentElement();
-		root.setAttributeNS(null, "width", "500px");
-		root.setAttributeNS(null, "height", "500px");
 
-		Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
-		text.setAttributeNS(null, "x", "10");
-		text.setAttributeNS(null, "y", "20");
-		text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
-		text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
-		text.setAttributeNS(null, "font-weight", "bold");
-		text.setAttributeNS(null, "fill", "red");
-		text.setAttributeNS(null, "stroke", "none");
-		text.setTextContent("No syntax defined");
-		root.appendChild(text);
 
-		return doc;
+
+
+private SVGDocument buildSVGFromDot(NotationElement notationElement) {
+
+	StringBuilder dotGraph = new StringBuilder();
+	dotGraph.append("graph ").append(notationElement.getId()).append(" { rankdir=\"LR\"");
+	DotNotationBuilder dotBuilder = new DotNotationBuilder();
+	dotGraph.append(dotBuilder.create(notationElement));
+	dotGraph.append(" }\n");
+
+
+	//TODO debug message to delete
+	System.err.println(dotGraph.toString());
+	
+	Document doc = null;
+	try {
+		ByteArrayInputStream input = new ByteArrayInputStream(dotGraph.toString().getBytes());
+//		GraphViz.generate(input, "svg", new Point(200, 200), new Path(Controller.INSTANCE.getEcoreModel().eResource().getURI().toFileString()+".svg"));
+		runDot(input, new Path(Controller.INSTANCE.getEcoreModel().eResource().getURI().toFileString()+".svg"));
+		String svgLocation = Controller.INSTANCE.getEcoreModel().eResource().getURI().toString() + ".svg";
+		String parser = XMLResourceDescriptor.getXMLParserClassName();
+		SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);	
+		doc = f.createDocument(svgLocation);
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
+
+	return (SVGDocument) doc;
+}
+
+//method inspired from the generate method of the com.abstratt.graphviz plugin
+private void runDot(ByteArrayInputStream input, IPath outputLocation) {
+	MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
+	java.io.File dotInput = null;
+	java.io.File dotOutput = outputLocation.toFile();
+	try {
+		// determine the temp input location
+		dotInput = java.io.File.createTempFile("graphviz", ".dot");
+		// dump the contents from the input stream into the temporary file
+		// to be submitted to dot
+		FileOutputStream tmpDotOutputStream = null;
+		try {
+			tmpDotOutputStream = new FileOutputStream(dotInput);
+			IOUtils.copy(input, tmpDotOutputStream);
+		} finally {
+			IOUtils.closeQuietly(tmpDotOutputStream);
+		}
+		IStatus result = GraphViz.runDot("-Tsvg", "-Gsize=200,200", "-o"+dotOutput.getAbsolutePath(), dotInput.getAbsolutePath() );
+		if (dotOutput.isFile()) {
+			// success!
+			return;
+		}
+	} catch (IOException e) {
+		status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
+	} finally {
+		dotInput.delete();
+		IOUtils.closeQuietly(input);
+	}
+}
+
+/**
+ * Obtains the string representation of the value
+ * 
+ * @param value
+ * @return
+ */
+protected String convert(Object value) {
+	String result = "ND";
+
+			if (value instanceof String) {
+				result = (String) value;
+			} else if (value instanceof EEnumLiteral) {
+				EEnumLiteral literal = (EEnumLiteral) value;
+				result = literal.toString();
+			}
+	return result;
+}
+
+/**
+ * Creates a splash image with the message "No item selected"
+ * 
+ * @return
+ */
+protected SVGDocument createTestImage() {
+	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+	SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+
+	Element root = doc.getDocumentElement();
+	root.setAttributeNS(null, "width", "500px");
+	root.setAttributeNS(null, "height", "500px");
+
+	Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
+	text.setAttributeNS(null, "x", "10");
+	text.setAttributeNS(null, "y", "20");
+	text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
+	text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+	text.setAttributeNS(null, "font-weight", "bold");
+	text.setAttributeNS(null, "fill", "red");
+	text.setAttributeNS(null, "stroke", "none");
+	text.setTextContent("No item selected");
+	root.appendChild(text);
+
+	return doc;
+}
+
+/**
+ * Creates a splash image with the message "No syntax defined"
+ * 
+ * @return
+ */
+protected SVGDocument createNoSyntaxImage() {
+	DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
+	String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
+	SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
+
+	Element root = doc.getDocumentElement();
+	root.setAttributeNS(null, "width", "500px");
+	root.setAttributeNS(null, "height", "500px");
+
+	Element text = doc.createElementNS(SVGDOMImplementation.SVG_NAMESPACE_URI, "text");
+	text.setAttributeNS(null, "x", "10");
+	text.setAttributeNS(null, "y", "20");
+	text.setAttributeNS(null, "font-size", DEFAULT_FONT_SIZE);
+	text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
+	text.setAttributeNS(null, "font-weight", "bold");
+	text.setAttributeNS(null, "fill", "red");
+	text.setAttributeNS(null, "stroke", "none");
+	text.setTextContent("No syntax defined");
+	root.appendChild(text);
+
+	return doc;
+}
 
 }
