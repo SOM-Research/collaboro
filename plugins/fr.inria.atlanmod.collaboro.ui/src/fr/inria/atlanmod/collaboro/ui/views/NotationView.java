@@ -11,30 +11,70 @@
 
 package fr.inria.atlanmod.collaboro.ui.views;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.dom.svg.SVGDOMImplementation;
+import org.apache.batik.dom.util.DOMUtilities;
+import org.apache.batik.util.XMLResourceDescriptor;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.internal.cdo.object.DynamicCDOObjectImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 
+import com.abstratt.graphviz.GraphViz;
+import com.abstratt.graphviz.GraphVizActivator;
+
+import fr.inria.atlanmod.collaboro.history.Add;
+import fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement;
+import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
+import fr.inria.atlanmod.collaboro.history.History;
+import fr.inria.atlanmod.collaboro.history.ModelChange;
+import fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.notation.AttributeValue;
 import fr.inria.atlanmod.collaboro.notation.Composite;
+import fr.inria.atlanmod.collaboro.notation.GraphicalElement;
 import fr.inria.atlanmod.collaboro.notation.Keyword;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
@@ -42,6 +82,7 @@ import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
 import fr.inria.atlanmod.collaboro.notation.TextualElement;
 import fr.inria.atlanmod.collaboro.notation.Token;
 import fr.inria.atlanmod.collaboro.ui.Controller;
+import fr.inria.atlanmod.collaboro.ui.views.notation.builder.DotNotationBuilder;
 
 
 /**
@@ -65,7 +106,10 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	private static String DEFAULT_FONT_FAMILY = "monospace";
 
 	// The composite showing the notation
-	private NotationComposite notation;
+	//	protected NotationComposite notation;
+	protected Browser notation;
+
+	private boolean inCDO = false;
 
 
 	/**
@@ -127,7 +171,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			}
 		}
 
-		if(part.getSite().getId().equals(Controller.PACKAGE_EXPLORER_PLUGIN_ID)) {
+		if(part.getSite().getId().equals(Controller.PACKAGE_EXPLORER_PLUGIN_ID) || (part.getSite().getId().equals(Controller.PROJECT_EXPLORER_PLUGIN_ID))) {
 			TreeSelection treeSelection = (TreeSelection) selection;
 			Object element = treeSelection.getFirstElement();
 			if (element instanceof File) {
@@ -141,8 +185,29 @@ public class NotationView extends ViewPart implements ISelectionListener {
 					} 
 				}
 			}
-		}	
+		}
 
+		if(part.getSite().getId().equals(VersionView.CDO_SESSIONS_VIEW)) {
+			TreeSelection treeSelection = (TreeSelection) selection;
+			Object element = treeSelection.getFirstElement();
+			if (element instanceof CDOResource) {
+				inCDO = true;
+				updateView((EObject) element);
+				inCDO = false;
+			}
+		}
+		
+		if(part.getSite().getId().equals(VersionView.CDO_EDITOR)) {
+			TreeSelection treeSelection = (TreeSelection) selection;
+			Object element = treeSelection.getFirstElement();
+				inCDO = true;
+				if (element instanceof EClassifier) {
+					updateView((EClassifier) element);
+				}
+				inCDO = false;
+			
+		}
+		
 		if(part.getSite().getId().equals(Controller.REFLECTIVE_EDITOR_PLUGIN_ID)) {	
 			TreeSelection treeSelection = (TreeSelection) selection;		
 			Object element = treeSelection.getFirstElement();
@@ -158,7 +223,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 				}
 			}
 		}
-		
+
 		if(part.getSite().getId().equals(Controller.NOTATION_EDITOR_PLUGIN_ID)) {
 			Controller.INSTANCE.inNotation();
 		} else {
@@ -182,7 +247,9 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	@Override
 	public void createPartControl(org.eclipse.swt.widgets.Composite parent) {
 		parent.setLayout(new FillLayout());
-		notation = new NotationComposite(parent, createTestImage());
+		//		notation = new NotationComposite(parent, createTestImage());
+		//TODO
+		notation = new Browser(parent, SWT.NONE); 
 		parent.layout();
 
 		getSite().getPage().addSelectionListener(this); 
@@ -194,6 +261,20 @@ public class NotationView extends ViewPart implements ISelectionListener {
 
 	}
 
+	private boolean checkGraphical(NotationElement notationElement) {
+		boolean toReturn = false;
+		if (notationElement instanceof GraphicalElement) {
+			toReturn = true;
+		} else if (notationElement instanceof Composite) {
+			for (NotationElement element : ((Composite)notationElement).getSubElements()) {
+				toReturn = toReturn || this.checkGraphical(element);
+			} 
+		}else {
+			toReturn = false;
+		}
+		return toReturn;
+	}
+
 	/**
 	 * Updates the vied with the notation of the modelElement (abstract syntax element).
 	 * 
@@ -202,12 +283,26 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	public void updateView(EClassifier modelElement) {
 		NotationElement notationElement = Controller.INSTANCE.getNotation(modelElement);
 		SVGDocument svgImage = null;
+		String svgLocation;
+		if (inCDO) {
+			String loc = "file:/" + System.getProperty("java.io.tmpdir") + "temp.svg";
+			svgLocation = loc.replaceAll("\\\\", "/");
+		} else {
+			svgLocation  = Controller.INSTANCE.getEcoreModel().eResource().getURI().toString() + ".svg";
+		}
 		if(notationElement == null) {
 			svgImage = createNoSyntaxImage();
+			serialize(svgImage, svgLocation);
 		} else {
-			svgImage = buildSVG(notationElement);		
+			if (this.checkGraphical(notationElement)) {
+				svgImage = buildSVGFromDot(notationElement);
+			} else {
+				svgImage = buildSVG(notationElement);
+				serialize(svgImage, svgLocation);
+			}	
 		}
-		notation.setSVGDocument(svgImage);
+		//		notation.setSVGDocument(svgImage);
+		notation.setUrl(svgLocation);
 		notation.layout(true);
 	}
 
@@ -219,15 +314,32 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	 * @param instanceModelElement
 	 */
 	public void updateView(EObject instanceModelElement) {
-		EClassifier modelElement = instanceModelElement.eClass();
+		EClassifier modelElement = null;
+		if (inCDO) {
+			instanceModelElement = instanceModelElement.eContents().get(0);
+		} 
+		modelElement = instanceModelElement.eClass();
 		NotationElement notationElement = Controller.INSTANCE.getNotation(modelElement);
 		SVGDocument svgImage = null;
+		String location;
+		if (inCDO) {
+			String loc = "file:/" + System.getProperty("java.io.tmpdir") + "temp.svg";
+			location = loc.replaceAll("\\\\", "/");
+		} else {
+			location = instanceModelElement.eResource().getURI().toString() + ".svg";
+		}
 		if(notationElement == null) {
 			svgImage = createNoSyntaxImage();
+			serialize(svgImage, location);
 		} else {
-			svgImage = buildSVG(instanceModelElement, notationElement);		
+			if (this.checkGraphical(notationElement)) {
+				svgImage = buildSVGFromDot(instanceModelElement, notationElement);
+			} else {
+				svgImage = buildSVG(instanceModelElement, notationElement);
+				serialize(svgImage, location);
+			}
 		}
-		notation.setSVGDocument(svgImage);
+		notation.setUrl(location);
 		notation.layout(true);
 	}
 
@@ -260,6 +372,20 @@ public class NotationView extends ViewPart implements ISelectionListener {
 		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
 		buildSVG(instanceModelElement, notationElement, doc, START_X, START_Y);
 		return doc;
+	}
+
+	private void serialize(SVGDocument image, String location) {
+		try {
+			String replaceFirst = location.substring(6);
+			FileWriter fileWriter = new FileWriter(replaceFirst);
+			DOMUtilities.writeDocument(image, fileWriter);
+			fileWriter.close();
+			ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -406,36 +532,36 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			if (textualElement instanceof Keyword) {
 				Keyword keyword = (Keyword) notationElement; 
 				text.setAttributeNS(null, "font-weight", "bold");
-//				text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
+				text.setAttributeNS(null, "fill", keyword.getFill().getLiteral());
 				text.setAttributeNS(null, "stroke", "none");
 				value = keyword.getId();
 			} else if (textualElement instanceof Token) {
 				Token token = (Token) notationElement;
-//				text.setAttributeNS(null, "fill", token.getFill().getLiteral());
+				text.setAttributeNS(null, "fill", token.getFill().getLiteral());
 				text.setAttributeNS(null, "stroke", "none");
 				value = token.getId();
 			} else if (textualElement instanceof AttributeValue) {
 				AttributeValue attributeValue = (AttributeValue) notationElement;
-//				text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
+				text.setAttributeNS(null, "fill", attributeValue.getFill().getLiteral());
 
 				EAttribute eAttribute = attributeValue.getAttribute();
-				
+
 				value = convert(eObject.eGet(eObject.eClass().getEStructuralFeature(eAttribute.getName())));
-//				value = convert(eObject.eGet(eAttribute));
+				//				value = convert(eObject.eGet(eAttribute));
 			} else if (textualElement instanceof ReferenceValue) {
 				ReferenceValue referenceValue = (ReferenceValue) notationElement;
-//				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
+				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
 
 				EReference eReference = referenceValue.getReference();
 				EAttribute eAttribute = referenceValue.getAttribute();
 				String separator = referenceValue.getSeparator();
 
 				Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-//				Object referredObjs = eObject.eGet(eReference);
+				//				Object referredObjs = eObject.eGet(eReference);
 				if (referredObjs instanceof EList) {
 					EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
 					for(EObject elementList : eReferenceList) {
-//						Object attributeValue = elementList.eGet(eAttribute);
+						//						Object attributeValue = elementList.eGet(eAttribute);
 						Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
 						value += convert(attributeValue);
 						if(eReferenceList.indexOf(elementList) != eReferenceList.size() - 1) {
@@ -444,7 +570,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 					}
 				} else if (referredObjs instanceof EObject) {
 					EObject elementList = (EObject) referredObjs;
-//					Object attributeValue = elementList.eGet(eAttribute);
+					//					Object attributeValue = elementList.eGet(eAttribute);
 					Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
 					value += convert(attributeValue);					
 				}			
@@ -459,9 +585,9 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			SyntaxOf syntaxOf = (SyntaxOf) notationElement;
 
 			EReference eReference = syntaxOf.getReference();
-			
+
 			Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-//			Object referredObjs = eObject.eGet(eReference);
+			//			Object referredObjs = eObject.eGet(eReference);
 			if (referredObjs instanceof EList) {
 				EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
 				if(eReferenceList.size() > 0) {
@@ -483,13 +609,161 @@ public class NotationView extends ViewPart implements ISelectionListener {
 		return result;
 	}
 
+	private SVGDocument buildSVGFromDot(EObject instanceModelElement,
+			NotationElement notationElement) {
+
+		//Create the dot graph definition
+		//get history and put the model changes in a map with MM element --> Syntax element
+		Map<EObject, EObject> modelChanges = new HashMap<EObject, EObject>();
+		History history = Controller.INSTANCE.getHistory();
+		for (TreeIterator<EObject> iterator = history.eAllContents(); iterator.hasNext();) {
+			EObject eObject = (EObject) iterator.next();
+			if (eObject instanceof Add) {
+				EObject targetSE = ((ModelChange)eObject).getTarget();
+				EObject referredElementSE = ((ModelChange)eObject).getReferredElement();
+				if (targetSE instanceof ConcreteSyntaxElement) {
+					targetSE = ((ConcreteSyntaxElement)targetSE).getElement();
+				} else if (targetSE instanceof ExistingAbstractSyntaxElement) {
+					targetSE = ((ExistingAbstractSyntaxElement)targetSE).getElement();
+				} else {
+					targetSE = ((NewAbstractSyntaxElement)targetSE).getElement();
+				}
+				if (referredElementSE instanceof ConcreteSyntaxElement) {
+					referredElementSE = ((ConcreteSyntaxElement)referredElementSE).getElement();
+				} else if (referredElementSE instanceof ExistingAbstractSyntaxElement) {
+					referredElementSE = ((ExistingAbstractSyntaxElement)referredElementSE).getElement();
+				} else {
+					referredElementSE = ((NewAbstractSyntaxElement)referredElementSE).getElement();
+				}
+				modelChanges.put(referredElementSE, targetSE);
+			}
+		}
+
+		//Build the dot represetation
+		StringBuilder dotGraph = new StringBuilder();
+		dotGraph.append("graph ").append(instanceModelElement.eClass().getName()).append(" {\n rankdir=\"LR\";\n");
+
+		DotNotationBuilder dotBuilder = new DotNotationBuilder();
+		Map<String, EObject> list = new HashMap<String, EObject>();
+		for (EObject eObj : modelChanges.keySet()) {
+			ENamedElement eClass = (ENamedElement) eObj;
+			list.put(eClass.getName(), modelChanges.get(eObj));
+		}
+		if(list.keySet().contains(instanceModelElement.eClass().getName())) {//(modelChanges.keySet().contains(instanceModelElement.eClass())){
+			dotGraph.append(dotBuilder.create(instanceModelElement, (NotationElement)list.get(instanceModelElement.eClass().getName()), modelChanges));
+		}
+		dotGraph.append(" }\n");
+
+		String svgLocation;
+		if (inCDO) {
+			String loc = "file:/" + System.getProperty("java.io.tmpdir") + "temp.svg";
+			svgLocation = loc.replaceAll("\\\\", "/");
+		} else {
+			svgLocation = instanceModelElement.eResource().getURI().toString() + ".svg";
+		}
+		
+		Document doc = null;
+		try {
+			ByteArrayInputStream input = new ByteArrayInputStream(dotGraph.toString().getBytes());
+			//GraphViz.generate(input, "svg", new Point(300, 300), new Path(instanceModelElement.eResource().getURI().toFileString()+".svg"));
+			runDot(input, new Path(svgLocation));//instanceModelElement.eResource().getURI().toFileString()+".svg"));
+			//String svgLocation = instanceModelElement.eResource().getURI().toString() + ".svg";
+			String parser = XMLResourceDescriptor.getXMLParserClassName();
+			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+			doc = f.createDocument(svgLocation);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return (SVGDocument) doc;
+	}
+
+
+
+
+
+	private SVGDocument buildSVGFromDot(NotationElement notationElement) {
+
+		StringBuilder dotGraph = new StringBuilder();
+		dotGraph.append("graph ").append(notationElement.getId()).append(" {\n rankdir=\"LR\";\n");
+		DotNotationBuilder dotBuilder = new DotNotationBuilder();
+		dotGraph.append(dotBuilder.create(notationElement));
+		dotGraph.append(" }\n");
+
+		Document doc = null;
+		
+
+		String fullPath;
+		if (inCDO) {
+			String loc = "file:/" + System.getProperty("java.io.tmpdir") + "temp.svg";
+			fullPath = loc.replaceAll("\\\\", "/");
+		} else {
+			fullPath = Controller.INSTANCE.getEcoreModel().eResource().getURI().toFileString()+".svg";
+		}
+		
+		try {
+			ByteArrayInputStream input = new ByteArrayInputStream(dotGraph.toString().getBytes());
+			//		GraphViz.generate(input, "svg", new Point(200, 200), new Path(Controller.INSTANCE.getEcoreModel().eResource().getURI().toFileString()+".svg"));
+			runDot(input, new Path(fullPath));
+//			String svgLocation = Controller.INSTANCE.getEcoreModel().eResource().getURI().toString() + ".svg";
+			String parser = XMLResourceDescriptor.getXMLParserClassName();
+			SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+			if (inCDO) {
+				doc = f.createDocument(fullPath);
+			} else {
+				java.io.File file = new java.io.File(fullPath);
+				doc = f.createDocument(file.toURL().toString());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return (SVGDocument) doc;
+	}
+
+	//method inspired from the generate method of the com.abstratt.graphviz plugin
+	private void runDot(ByteArrayInputStream input, IPath outputLocation) {
+		MultiStatus status = new MultiStatus(GraphVizActivator.ID, 0, "Errors occurred while running Graphviz", null);
+		java.io.File dotInput = null;
+		java.io.File dotOutput = outputLocation.toFile();
+		try {
+			// determine the temp input location
+			dotInput = java.io.File.createTempFile("graphviz", ".dot");
+			// dump the contents from the input stream into the temporary file
+			// to be submitted to dot
+			FileOutputStream tmpDotOutputStream = null;
+			try {
+				tmpDotOutputStream = new FileOutputStream(dotInput);
+				IOUtils.copy(input, tmpDotOutputStream);
+			} finally {
+				IOUtils.closeQuietly(tmpDotOutputStream);
+			}
+			String absolutePath;
+			if (outputLocation.isAbsolute()) {
+				absolutePath = dotOutput.getPath().replaceFirst("file:\\\\", "");
+			} else {
+				absolutePath = dotOutput.getAbsolutePath();
+			}
+			IStatus result = GraphViz.runDot("-Tsvg", "-Gsize=200,200", "-o"+absolutePath, dotInput.getAbsolutePath() );
+			if (dotOutput.isFile()) {
+				// success!
+				return;
+			}
+		} catch (IOException e) {
+			status.add(new Status(IStatus.ERROR, GraphVizActivator.ID, "", e));
+		} finally {
+			dotInput.delete();
+			IOUtils.closeQuietly(input);
+		}
+	}
+
 	/**
 	 * Obtains the string representation of the value
 	 * 
 	 * @param value
 	 * @return
 	 */
-	private String convert(Object value) {
+	protected String convert(Object value) {
 		String result = "ND";
 
 		if (value instanceof String) {
@@ -498,7 +772,6 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			EEnumLiteral literal = (EEnumLiteral) value;
 			result = literal.toString();
 		}
-
 		return result;
 	}
 
@@ -507,7 +780,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	 * 
 	 * @return
 	 */
-	private SVGDocument createTestImage() {
+	protected SVGDocument createTestImage() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);
@@ -535,7 +808,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	 * 
 	 * @return
 	 */
-	private SVGDocument createNoSyntaxImage() {
+	protected SVGDocument createNoSyntaxImage() {
 		DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
 		String svgNS = SVGDOMImplementation.SVG_NAMESPACE_URI;
 		SVGDocument doc = (SVGDocument) impl.createDocument(svgNS, "svg", null);

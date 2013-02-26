@@ -13,18 +13,27 @@ package fr.inria.atlanmod.collaboro.ui.views;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.Panel;
-import java.awt.Rectangle;
 
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 
 import org.apache.batik.swing.JSVGCanvas;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.w3c.dom.svg.SVGDocument;
+
+import com.abstratt.content.ContentSupport;
+import com.abstratt.content.IContentProviderRegistry.IProviderDescription;
+import com.abstratt.imageviewer.Activator;
+import com.abstratt.imageviewer.GraphicalViewer;
+import com.abstratt.imageviewer.IGraphicalContentProvider;
 
 public class NotationComposite extends Composite {
 
@@ -35,9 +44,8 @@ public class NotationComposite extends Composite {
 		super(parent, SWT.EMBEDDED);
 
 		canvas = new JSVGCanvas();
-        canvas.setSVGDocument(initImage);
-        canvas.setLayout(new BorderLayout());
-
+		canvas.setSVGDocument(initImage);
+		canvas.setLayout(new BorderLayout());
         frame = SWT_AWT.new_Frame(this);
         
         Panel panel = new Panel();
@@ -55,6 +63,9 @@ public class NotationComposite extends Composite {
 	public void setSVGDocument(SVGDocument svgImage) {
         canvas.setSVGDocument(svgImage);
         canvas.setLayout(new BorderLayout());
+
 	}
+
+
 
 }

@@ -23,7 +23,6 @@ public class CollaboroPlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public CollaboroPlugin() {
-		
 	}
 
 	/*

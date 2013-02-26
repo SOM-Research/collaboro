@@ -68,6 +68,7 @@ public class Controller {
 	public static final String PACKAGE_EXPLORER_PLUGIN_ID = "org.eclipse.jdt.ui.PackageExplorer";
 	public static final String REFLECTIVE_EDITOR_PLUGIN_ID = "org.eclipse.emf.ecore.presentation.ReflectiveEditorID";
 	public static final String NOTATION_EDITOR_PLUGIN_ID = "fr.inria.atlanmod.collaboro.notation.presentation.NotationEditorID";
+	public static final Object PROJECT_EXPLORER_PLUGIN_ID = "org.eclipse.ui.navigator.ProjectExplorer";
 
 	// Singleton instance
 	public static Controller INSTANCE = new Controller();

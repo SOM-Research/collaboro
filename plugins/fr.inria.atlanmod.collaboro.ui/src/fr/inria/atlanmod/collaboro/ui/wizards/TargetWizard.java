@@ -11,9 +11,12 @@
 
 package fr.inria.atlanmod.collaboro.ui.wizards;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -44,6 +47,7 @@ import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryFactory;
 import fr.inria.atlanmod.collaboro.history.ModelChange;
 import fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement;
+import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.ui.Controller;
 
@@ -51,12 +55,14 @@ public class TargetWizard extends Wizard {
 	private static final String NEW_ABSTRACT_ELEMENT = "New Abstract Syntax Element";
 	private static final String EXISTING_ABSTRACT_ELEMENT = "Existing Abstract Syntax Element";
 	private static final String CONCRETE_ELEMENT = "Concrete Syntax Element";
+	private static final String EXISTING_CONCRETE_ELEMENT = "Existing Concrete Syntax Element";
 
 	private Shell shell = null;
 	private ModelChange modelChange = null;
 
 	private ListViewer elementList = null;
 	private Button[] radios = null;
+	private boolean existingNotation = false;
 
 	class NewLabelProvider extends SyntaxElementLabelProvider {
 		@Override
@@ -72,7 +78,11 @@ public class TargetWizard extends Wizard {
 				return "Create " + eObject.eClass().getName();		
 			} else if (element instanceof NotationElement) {
 				NotationElement notationElement = (NotationElement) element;
-				return "Create " + notationElement.eClass().getName();		
+				if (existingNotation) {
+					return notationElement.eClass().getName() + " " + notationElement.getId();
+				} else {
+					return "Create " + notationElement.eClass().getName();
+				}
 			} else {
 				return super.getText(element);
 			}		
@@ -115,6 +125,31 @@ public class TargetWizard extends Wizard {
 		public void widgetDefaultSelected(SelectionEvent e) {
 		}
 	}
+	
+	class ExistingNotationListener implements SelectionListener {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			existingNotation = true;
+			elementList.setInput(getNotationElements(Controller.INSTANCE.getNotation()));
+			elementList.refresh();
+			existingNotation = false;
+		}
+
+		private List<EObject> getNotationElements(Definition notation) {
+			List<EObject> notationElements = new ArrayList<EObject>();
+			for (TreeIterator<EObject> iterator = notation.eAllContents(); iterator.hasNext();) {
+				EObject obj = (EObject) iterator.next();
+				if (obj instanceof NotationElement) {
+					notationElements.add(obj);
+				}
+			}
+			return notationElements;
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+		}
+	}
 
 	class SelectionPage extends WizardPage {
 
@@ -138,7 +173,7 @@ public class TargetWizard extends Wizard {
 			elementType.setLayout(gridLayout);
 			elementType.setText("Select referred type");	
 
-			radios = new Button[3];
+			radios = new Button[4];
 
 			radios[0] = new Button(elementType, SWT.RADIO);
 			radios[0].setSelection(false);
@@ -159,6 +194,12 @@ public class TargetWizard extends Wizard {
 			radios[2].setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
 			radios[2].addSelectionListener(new NotationListener());
 
+			radios[3] = new Button(elementType, SWT.RADIO);
+			radios[3].setSelection(false);
+			radios[3].setText(EXISTING_CONCRETE_ELEMENT);
+			radios[3].setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false));
+			radios[3].addSelectionListener(new ExistingNotationListener());
+			
 			Group element = new Group(composite, SWT.NONE);
 			element.setBounds(new Rectangle(0, 0, 600, 500));
 			element.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -202,19 +243,23 @@ public class TargetWizard extends Wizard {
 		IStructuredSelection selection = (IStructuredSelection) elementList.getSelection();
 		Object selectedElement = selection.getFirstElement();
 
-		if(selected.getText().equals(NEW_ABSTRACT_ELEMENT)) {
+		if(selected.getText().equals(TargetWizard.NEW_ABSTRACT_ELEMENT)) {
 			NewAbstractSyntaxElement syntaxElement = HistoryFactory.eINSTANCE.createNewAbstractSyntaxElement();
 			syntaxElement.setElement((EModelElement) selectedElement);
 			modelChange.setTarget(syntaxElement);
-		} else if (selected.getText().equals(EXISTING_ABSTRACT_ELEMENT)) {
+		} else if (selected.getText().equals(TargetWizard.EXISTING_ABSTRACT_ELEMENT)) {
 			ExistingAbstractSyntaxElement syntaxElement = HistoryFactory.eINSTANCE.createExistingAbstractSyntaxElement();
 			syntaxElement.setElement((EModelElement) selectedElement);
 			modelChange.setTarget(syntaxElement);
-		} else if (selected.getText().equals(CONCRETE_ELEMENT)) {
+		} else if (selected.getText().equals(TargetWizard.CONCRETE_ELEMENT)) {
 			ConcreteSyntaxElement syntaxElement = HistoryFactory.eINSTANCE.createConcreteSyntaxElement();
 			syntaxElement.setElement((NotationElement) selectedElement);
 			modelChange.setTarget(syntaxElement);
 			Controller.INSTANCE.addNotationElement((NotationElement) selectedElement);
+		} else if (selected.getText().equals(TargetWizard.EXISTING_CONCRETE_ELEMENT)) {
+			ConcreteSyntaxElement syntaxElement = HistoryFactory.eINSTANCE.createConcreteSyntaxElement();
+			syntaxElement.setElement((NotationElement) selectedElement);
+			modelChange.setTarget(syntaxElement);
 		}
 		Controller.INSTANCE.saveHistory();
 		Controller.INSTANCE.refreshChanges();
