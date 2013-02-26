@@ -29,7 +29,7 @@
 		<link>
 			<name>collaboro</name>
 			<type>2</type>
-			<location>C:/home/jcanovas/eclipses/eclipse-3.7.1-xtext/runtime-TestingColabDSL/collaboro</location>
+			<location>/home/jcanovas/eclipses/eclipse-3.7.1-xtext/runtime-TestingColabDSL/collaboro</location>
 		</link>
 	</linkedResources>
 </projectDescription>

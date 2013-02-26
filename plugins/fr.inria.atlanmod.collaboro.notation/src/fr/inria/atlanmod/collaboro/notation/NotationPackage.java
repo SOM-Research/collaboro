@@ -199,97 +199,6 @@ public interface NotationPackage extends EPackage {
 	int GRAPHICAL_ELEMENT_FEATURE_COUNT = NOTATION_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
-	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.impl.ImageImpl <em>Image</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see fr.inria.atlanmod.collaboro.notation.impl.ImageImpl
-	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getImage()
-	 * @generated
-	 */
-	int IMAGE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__ID = GRAPHICAL_ELEMENT__ID;
-
-	/**
-	 * The feature id for the '<em><b>X</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__X = GRAPHICAL_ELEMENT__X;
-
-	/**
-	 * The feature id for the '<em><b>Y</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__Y = GRAPHICAL_ELEMENT__Y;
-
-	/**
-	 * The feature id for the '<em><b>Height</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__HEIGHT = GRAPHICAL_ELEMENT__HEIGHT;
-
-	/**
-	 * The feature id for the '<em><b>Width</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__WIDTH = GRAPHICAL_ELEMENT__WIDTH;
-
-	/**
-	 * The feature id for the '<em><b>Fill</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__FILL = GRAPHICAL_ELEMENT__FILL;
-
-	/**
-	 * The feature id for the '<em><b>Stroke</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__STROKE = GRAPHICAL_ELEMENT__STROKE;
-
-	/**
-	 * The feature id for the '<em><b>Path</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE__PATH = GRAPHICAL_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Image</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int IMAGE_FEATURE_COUNT = GRAPHICAL_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.impl.FigureImpl <em>Figure</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -297,7 +206,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getFigure()
 	 * @generated
 	 */
-	int FIGURE = 4;
+	int FIGURE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -379,7 +288,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getRectangle()
 	 * @generated
 	 */
-	int RECTANGLE = 5;
+	int RECTANGLE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -461,7 +370,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getLine()
 	 * @generated
 	 */
-	int LINE = 6;
+	int LINE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -543,7 +452,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getLabel()
 	 * @generated
 	 */
-	int LABEL = 7;
+	int LABEL = 6;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -634,7 +543,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getTextualElement()
 	 * @generated
 	 */
-	int TEXTUAL_ELEMENT = 8;
+	int TEXTUAL_ELEMENT = 7;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -671,7 +580,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getToken()
 	 * @generated
 	 */
-	int TOKEN = 9;
+	int TOKEN = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -708,7 +617,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getKeyword()
 	 * @generated
 	 */
-	int KEYWORD = 10;
+	int KEYWORD = 9;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -745,7 +654,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getValue()
 	 * @generated
 	 */
-	int VALUE = 11;
+	int VALUE = 10;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -800,7 +709,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getAttributeValue()
 	 * @generated
 	 */
-	int ATTRIBUTE_VALUE = 12;
+	int ATTRIBUTE_VALUE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -855,7 +764,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getReferenceValue()
 	 * @generated
 	 */
-	int REFERENCE_VALUE = 13;
+	int REFERENCE_VALUE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -919,7 +828,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getSyntaxOf()
 	 * @generated
 	 */
-	int SYNTAX_OF = 14;
+	int SYNTAX_OF = 13;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -965,7 +874,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getComposite()
 	 * @generated
 	 */
-	int COMPOSITE = 15;
+	int COMPOSITE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1003,7 +912,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getDefinition()
 	 * @generated
 	 */
-	int DEFINITION = 16;
+	int DEFINITION = 15;
 
 	/**
 	 * The feature id for the '<em><b>Elements</b></em>' containment reference list.
@@ -1032,7 +941,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getColor()
 	 * @generated
 	 */
-	int COLOR = 17;
+	int COLOR = 16;
 
 
 	/**
@@ -1141,27 +1050,6 @@ public interface NotationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getGraphicalElement_Stroke();
-
-	/**
-	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.notation.Image <em>Image</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Image</em>'.
-	 * @see fr.inria.atlanmod.collaboro.notation.Image
-	 * @generated
-	 */
-	EClass getImage();
-
-	/**
-	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.notation.Image#getPath <em>Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Path</em>'.
-	 * @see fr.inria.atlanmod.collaboro.notation.Image#getPath()
-	 * @see #getImage()
-	 * @generated
-	 */
-	EAttribute getImage_Path();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.notation.Figure <em>Figure</em>}'.
@@ -1509,24 +1397,6 @@ public interface NotationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GRAPHICAL_ELEMENT__STROKE = eINSTANCE.getGraphicalElement_Stroke();
-
-		/**
-		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.impl.ImageImpl <em>Image</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see fr.inria.atlanmod.collaboro.notation.impl.ImageImpl
-		 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getImage()
-		 * @generated
-		 */
-		EClass IMAGE = eINSTANCE.getImage();
-
-		/**
-		 * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute IMAGE__PATH = eINSTANCE.getImage_Path();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.impl.FigureImpl <em>Figure</em>}' class.

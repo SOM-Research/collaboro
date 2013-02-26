@@ -154,11 +154,6 @@ public class DefinitionItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(NotationPackage.Literals.DEFINITION__ELEMENTS,
-				 NotationFactory.eINSTANCE.createImage()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NotationPackage.Literals.DEFINITION__ELEMENTS,
 				 NotationFactory.eINSTANCE.createRectangle()));
 
 		newChildDescriptors.add
