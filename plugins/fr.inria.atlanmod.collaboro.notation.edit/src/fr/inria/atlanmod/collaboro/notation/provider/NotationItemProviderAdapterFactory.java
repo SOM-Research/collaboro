@@ -76,6 +76,29 @@ public class NotationItemProviderAdapterFactory extends NotationAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link fr.inria.atlanmod.collaboro.notation.Image} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ImageItemProvider imageItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link fr.inria.atlanmod.collaboro.notation.Image}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createImageAdapter() {
+		if (imageItemProvider == null) {
+			imageItemProvider = new ImageItemProvider(this);
+		}
+
+		return imageItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link fr.inria.atlanmod.collaboro.notation.Rectangle} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -427,6 +450,7 @@ public class NotationItemProviderAdapterFactory extends NotationAdapterFactory i
 	 * @generated
 	 */
 	public void dispose() {
+		if (imageItemProvider != null) imageItemProvider.dispose();
 		if (rectangleItemProvider != null) rectangleItemProvider.dispose();
 		if (lineItemProvider != null) lineItemProvider.dispose();
 		if (labelItemProvider != null) labelItemProvider.dispose();
