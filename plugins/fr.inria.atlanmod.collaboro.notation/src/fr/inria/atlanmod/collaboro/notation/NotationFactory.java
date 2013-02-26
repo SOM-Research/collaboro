@@ -26,6 +26,15 @@ public interface NotationFactory extends EFactory {
 	NotationFactory eINSTANCE = fr.inria.atlanmod.collaboro.notation.impl.NotationFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Image</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Image</em>'.
+	 * @generated
+	 */
+	Image createImage();
+
+	/**
 	 * Returns a new object of class '<em>Rectangle</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

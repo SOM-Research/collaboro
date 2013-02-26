@@ -84,6 +84,10 @@ public class NotationAdapterFactory extends AdapterFactoryImpl {
 				return createGraphicalElementAdapter();
 			}
 			@Override
+			public Adapter caseImage(Image object) {
+				return createImageAdapter();
+			}
+			@Override
 			public Adapter caseFigure(Figure object) {
 				return createFigureAdapter();
 			}
@@ -194,6 +198,20 @@ public class NotationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGraphicalElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.notation.Image <em>Image</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.notation.Image
+	 * @generated
+	 */
+	public Adapter createImageAdapter() {
 		return null;
 	}
 
