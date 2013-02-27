@@ -198,19 +198,25 @@
       </category>
       <wizard
             category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
-            class="fr.inria.atlanmod.collaboro.ui.wizards.NewHistoryWizard"
-            icon="icons/collaborationView.png"
-            id="fr.inria.atlanmod.collaboro.ui.newHistoryWizard"
-            name="New Collaboro Model">
-         <selection
-               class="org.eclipse.core.resources.IResource">
-         </selection>
+            class="fr.inria.atlanmod.collaboro.ui.wizards.NewLocalCollaboroProjectWizard"
+            icon="icons/collaboro.png"
+            id="fr.inria.atlanmod.collaboro.ui.newLocalCollaboroProject"
+            name="New Local Collaboro Project"
+            project="true">
       </wizard>
       <wizard
             category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
             class="fr.inria.atlanmod.collaboro.ui.editors.DawnHistoryModelWizard"
+            icon="icons/collaborationView.png"
             id="fr.inria.atlanmod.collaboro.ui.dawnWizard"
             name="History remote model">
+      </wizard>
+      <wizard
+            category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            class="fr.inria.atlanmod.collaboro.ui.wizards.NewHistoryWizard"
+            icon="icons/collaborationView.png"
+            id="fr.inria.atlanmod.collaboro.ui.newLocalHistory"
+            name="New Local History">
       </wizard>
    </extension>
    <extension
