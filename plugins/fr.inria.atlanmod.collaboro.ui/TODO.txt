@@ -1,0 +1,5 @@
+
+USING CDO:
+- CDO Session views as File Explorer
+- Detect extension and update the Collaboro plugin
+- New wizard to initialize a Collaboro model in CDO (we need the ecore file in CDO as well)
