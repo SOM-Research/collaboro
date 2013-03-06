@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="notation" nsURI="http://atlanmod.fr/collaboro/notation" nsPrefix="notation">
+  <eClassifiers xsi:type="ecore:EClass" name="IdElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotationElement" abstract="true" eSuperTypes="#//IdElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GraphicalElement" abstract="true" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill" eType="#//Color"
+        defaultValueLiteral="white"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke" eType="#//Color"
+        defaultValueLiteral="black"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//GraphicalElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Figure" abstract="true" eSuperTypes="#//GraphicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Rectangle" eSuperTypes="#//Figure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Line" eSuperTypes="#//GraphicalElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//GraphicalElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="text" lowerBound="1" eType="#//TextualElement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextualElement" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill" eType="#//Color"
+        defaultValueLiteral="black"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Token" eSuperTypes="#//TextualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Keyword" eSuperTypes="#//TextualElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Value" abstract="true" eSuperTypes="#//TextualElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="separator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeValue" eSuperTypes="#//Value"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceValue" eSuperTypes="#//Value">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SyntaxOf" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="separator" eType="#//NotationElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Composite" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subElements" upperBound="-1"
+        eType="#//NotationElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Definition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//NotationElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color">
+    <eLiterals name="BLACK" literal="black"/>
+    <eLiterals name="WHITE" literal="white"/>
+    <eLiterals name="RED" literal="red"/>
+    <eLiterals name="BLUE" literal="blue"/>
+    <eLiterals name="GREEN" literal="green"/>
+    <eLiterals name="YELLOW" literal="yellow"/>
+    <eLiterals name="ORANGE" literal="orange"/>
+  </eClassifiers>
+</ecore:EPackage>
