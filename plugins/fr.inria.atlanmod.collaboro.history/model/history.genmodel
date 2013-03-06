@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.atlanmod.collaboro.history/src"
+    modelPluginID="fr.inria.atlanmod.collaboro.history" modelName="History" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../fr.inria.atlanmod.collaboro.notation/model/notation.genmodel#//notation">
+  <foreignModel>history.ecore</foreignModel>
+  <genPackages prefix="History" basePackage="fr.inria.atlanmod.collaboro" disposableProviderFactory="true"
+      ecorePackage="history.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="history.ecore#//VersionHistoryType">
+      <genEnumLiterals ecoreEnumLiteral="history.ecore#//VersionHistoryType/TRUNK"/>
+      <genEnumLiterals ecoreEnumLiteral="history.ecore#//VersionHistoryType/BRANCH"/>
+    </genEnums>
+    <genClasses ecoreClass="history.ecore#//History">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//History/users"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//History/histories"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//History/language"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//VersionHistory">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//VersionHistory/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//VersionHistory/versions"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="history.ecore#//IdElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//IdElement/id"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//User">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//User/votes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//User/collaborations"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Version">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Version/proposals"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//Version/previous"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Vote">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Vote/agreement"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//Vote/user"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//Vote/comment"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//Vote/collaboration"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Collaboration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Collaboration/rationale"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//Collaboration/proposedBy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Collaboration/comments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Collaboration/votes"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Proposal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Proposal/sols"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//Proposal/selected"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//Proposal/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Proposal/accepted"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Proposal/meta"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Solution">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//Solution/changes"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//Solution/proposal"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Comment">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//Comment/commentedElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Comment/included"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="history.ecore#//ModelChange">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//ModelChange/solution"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference history.ecore#//ModelChange/referredElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference history.ecore#//ModelChange/target"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Add"/>
+    <genClasses ecoreClass="history.ecore#//Update">
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference history.ecore#//Update/source"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Delete"/>
+    <genClasses image="false" ecoreClass="history.ecore#//SyntaxElement"/>
+    <genClasses image="false" ecoreClass="history.ecore#//AbstractSyntaxElement"/>
+    <genClasses ecoreClass="history.ecore#//ExistingAbstractSyntaxElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//ExistingAbstractSyntaxElement/element"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//NewAbstractSyntaxElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//NewAbstractSyntaxElement/element"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//ConcreteSyntaxElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference history.ecore#//ConcreteSyntaxElement/element"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="history.ecore#//MetaInfo">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//MetaInfo/proposal"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Priority">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Priority/value"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//TagBased">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference history.ecore#//TagBased/tags"/>
+    </genClasses>
+    <genClasses ecoreClass="history.ecore#//Tag">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute history.ecore#//Tag/value"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference history.ecore#//Tag/tagCollection"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
