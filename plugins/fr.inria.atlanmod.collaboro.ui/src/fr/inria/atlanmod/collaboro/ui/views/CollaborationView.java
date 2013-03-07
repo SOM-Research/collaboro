@@ -11,16 +11,15 @@
 package fr.inria.atlanmod.collaboro.ui.views;
 
 
+import java.io.File;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -33,6 +32,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -46,9 +46,8 @@ import org.eclipse.ui.internal.WorkbenchImages;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.inria.atlanmod.collaboro.history.Collaboration;
-import fr.inria.atlanmod.collaboro.history.ModelChange;
+import fr.inria.atlanmod.collaboro.history.Proposal;
 import fr.inria.atlanmod.collaboro.history.Solution;
-import fr.inria.atlanmod.collaboro.history.Update;
 import fr.inria.atlanmod.collaboro.history.Vote;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.ui.CollaboroPlugin;
@@ -160,7 +159,7 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		}
 		
 	}
-
+	
 	public class RationaleModifyListener implements ModifyListener {
 		private Collaboration collaboration;
 
@@ -282,17 +281,17 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		Label proposedByLabel = new Label(collaborationGroup, SWT.NONE);
 		proposedByLabel.setText("Proposed by");
 
-		Composite proposedAndButton = new Composite(collaborationGroup, SWT.NONE);
+		Composite proposedAndButtons = new Composite(collaborationGroup, SWT.NONE);
 		GridLayout gridLayout2 = new GridLayout();
-		proposedAndButton.setLayout(gridLayout2);
-		gridLayout2.numColumns = 2;
-		proposedAndButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		proposedAndButtons.setLayout(gridLayout2);
+		gridLayout2.numColumns = 3;
+		proposedAndButtons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		
-		proposedByText = new Text(proposedAndButton, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
+		proposedByText = new Text(proposedAndButtons, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 		proposedByText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		proposedByText.setText("");
-		
-		saveButton = new Button(proposedAndButton, SWT.BORDER | SWT.PUSH);
+				
+		saveButton = new Button(proposedAndButtons, SWT.PUSH);
 		saveButton.setText("");
 		saveButton.setImage(WorkbenchImages.getImage(ISharedImages.IMG_ETOOL_SAVE_EDIT));
 		

@@ -112,6 +112,12 @@
                id="fr.inria.atlanmod.collaboro.ui.versionView.createComment"
                label="Add a comment">
          </action>
+         <action
+               class="fr.inria.atlanmod.collaboro.ui.actions.CreateExampleBasedProposal"
+               icon="icons/example.png"
+               id="fr.inria.atlanmod.collaboro.ui.action1"
+               label="Give an example">
+         </action>
       </objectContribution>
       <objectContribution
             adaptable="false"

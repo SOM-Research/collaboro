@@ -95,6 +95,8 @@ public class Controller {
 
 	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
 	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
+	
+	ExampleDrivenMediator exampleMediator = new ExampleDrivenMediator();
 
 	private Controller () { }
 
@@ -266,7 +268,7 @@ public class Controller {
 		refreshVoteUpdater();
 	}
 
-	public void createSolution(Proposal proposal) {
+	public Solution createSolution(Proposal proposal) {
 		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
 		newSolution.setProposedBy(loggedUser);
 		newSolution.setId("n" + ++lastIndex);
@@ -274,10 +276,11 @@ public class Controller {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshVersionView();
+		return newSolution;
 	}
 
 
-	public void createProposal() {
+	public Proposal createProposal() {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
 		newProposal.setId("n" + ++lastIndex);
 		newProposal.setProposedBy(loggedUser);
@@ -287,9 +290,10 @@ public class Controller {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshVersionView();
+		return newProposal;
 	}
 
-	public void createComment(Collaboration collaboration) {
+	public Comment createComment(Collaboration collaboration) {
 		Comment newComment = HistoryFactory.eINSTANCE.createComment();
 		newComment.setProposedBy(loggedUser);
 		newComment.setId("n" + ++lastIndex);
@@ -297,30 +301,42 @@ public class Controller {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshVersionView();
+		return newComment;
 	}
 
-	public void createAdd(Solution solution) {
+	public Add createAdd(Solution solution) {
 		Add newAdd = HistoryFactory.eINSTANCE.createAdd();
 		solution.getChanges().add(newAdd);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshChanges();
+		return newAdd;
 	}
 
-	public void createUpdate(Solution solution) {
+	public Update createUpdate(Solution solution) {
 		Update newUpdate = HistoryFactory.eINSTANCE.createUpdate();
 		solution.getChanges().add(newUpdate);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshChanges();
+		return newUpdate;
 	}
 
-	public void createDelete(Solution solution) {
+	public Delete createDelete(Solution solution) {
 		Delete newDelete = HistoryFactory.eINSTANCE.createDelete();
 		solution.getChanges().add(newDelete);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		refreshChanges();
+		return newDelete;
+	}
+	
+	public void createExampleBasedProposal(Proposal proposal, File example) {
+		Solution solution = createSolution(proposal);
+		exampleMediator.createChanges(solution, example);
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+		refreshChanges(); 
 	}
 
 	public void setVersionView(VersionView viewer) {
