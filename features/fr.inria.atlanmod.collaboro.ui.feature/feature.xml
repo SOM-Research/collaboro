@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="fr.inria.atlanmod.collaboro.ui.feature"
+      label="Collaboro UI"
+      version="0.1.0.qualifier"
+      provider-name="Atlanmod Research Team"
+      license-feature="fr.inria.atlanmod.collaboro.feature"
+      license-feature-version="0.1.0.qualifier">
+
+   <description url="http://code.google.com/a/eclipselabs.org/p/collaboro/">
+      The UI for Collaboro
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.ide" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources" version="3.7.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.edit.ui" version="2.7.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="fr.inria.atlanmod.collaboro.notation.editor" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="fr.inria.atlanmod.collaboro.history.editor" version="0.1.2" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="fr.inria.atlanmod.collaboro.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
