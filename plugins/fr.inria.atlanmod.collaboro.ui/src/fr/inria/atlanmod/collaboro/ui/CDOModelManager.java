@@ -477,9 +477,6 @@ public class CDOModelManager extends ModelManager implements IPropertyListener, 
 	}
 
 
-
-
-	//TODO a close operation to close the CDO session in the end and remove the event created by this user
 	protected void closeSync() {
 		synchronization.getEvents().removeAll(eventFromThisUser);
 		try {
@@ -491,5 +488,36 @@ public class CDOModelManager extends ModelManager implements IPropertyListener, 
 		synchronizationTransaction.close();
 	}
 
+	public void createStartModificationEvent(String value) {
+		Event ev = SynchronizationFactory.eINSTANCE.createEvent();
+		ev.setTimeStamp(System.currentTimeMillis());
+		ev.setModifiedElement("");
+		ev.setModifiedModel(value);
+		ev.setUser(Controller.INSTANCE.getLoggedUser().getId());
+		ev.setStatus("DIRTY");
+		eventFromThisUser.add(ev);
+		synchronization.getEvents().add(ev);
+		try {
+			synchronizationTransaction.commit();
+		} catch (CommitException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createEndModificationEvent(String value) {
+		Event ev = SynchronizationFactory.eINSTANCE.createEvent();
+		ev.setTimeStamp(System.currentTimeMillis());
+		ev.setModifiedElement("");
+		ev.setModifiedModel(value);
+		ev.setUser(Controller.INSTANCE.getLoggedUser().getId());
+		ev.setStatus("CLEAN");
+		eventFromThisUser.add(ev);
+		synchronization.getEvents().add(ev);
+		try {
+			synchronizationTransaction.commit();
+		} catch (CommitException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -96,6 +96,10 @@ public class Controller {
 	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
 	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
 
+	public ModelManager getModelManager() {
+		return modelManager;
+	}
+
 	private Controller () { }
 
 	/**

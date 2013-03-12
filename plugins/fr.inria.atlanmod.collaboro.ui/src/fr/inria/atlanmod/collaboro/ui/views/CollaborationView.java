@@ -51,8 +51,11 @@ import fr.inria.atlanmod.collaboro.history.Solution;
 import fr.inria.atlanmod.collaboro.history.Update;
 import fr.inria.atlanmod.collaboro.history.Vote;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
+import fr.inria.atlanmod.collaboro.ui.CDOModelManager;
 import fr.inria.atlanmod.collaboro.ui.CollaboroPlugin;
 import fr.inria.atlanmod.collaboro.ui.Controller;
+import fr.inria.atlanmod.collaboro.ui.ModelManager;
+import fr.inria.atlanmod.collaboro.ui.ModelManagerFactory;
 
 /**
  * This is the view for the details of the collaborations
@@ -150,6 +153,11 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		public void widgetSelected(SelectionEvent e) {
 			collaboration.setRationale(rationaleText.getText());
 			Controller.INSTANCE.saveHistory();
+
+			ModelManager manager = Controller.INSTANCE.getModelManager();
+			if (manager instanceof CDOModelManager){
+				((CDOModelManager)manager).createStartModificationEvent("Collaboration");
+			}
 		}
 
 		@Override
@@ -170,6 +178,10 @@ public class CollaborationView extends ViewPart implements ISelectionListener {
 		@Override
 		public void modifyText(ModifyEvent e) {
 			if(collaboration == null) return;
+			ModelManager manager = Controller.INSTANCE.getModelManager();
+			if (manager instanceof CDOModelManager){
+				((CDOModelManager)manager).createStartModificationEvent("Collaboration");
+			}
 			Text text = (Text) e.getSource();
 			collaboration.setRationale(text.getText());
 		}
