@@ -266,5 +266,12 @@ public class LocalModelManager extends ModelManager {
 			}
 		}
 	}
+	
+	@Override
+	public void closeConnection() {
+		this.saveEcoreModel();
+		this.saveHistory();
+		this.saveNotation();
+	}
 
 }

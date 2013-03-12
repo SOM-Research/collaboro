@@ -218,6 +218,14 @@
             id="fr.inria.atlanmod.collaboro.ui.newLocalHistory"
             name="New Local History">
       </wizard>
+      <wizard
+            category="fr.inria.atlanmod.collaboro.ui.wizardCategory"
+            class="fr.inria.atlanmod.collaboro.ui.wizards.NewRemoteCollaboroProjectWizard"
+            icon="icons/collaboro.png"
+            id="fr.inria.atlanmod.collaboro.ui.newRemoteCollaboroProject"
+            name="New Remote Collaboro Project"
+            project="true">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.editors">

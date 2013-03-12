@@ -57,6 +57,7 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 	public static final String ID = "atlanmod.collaboro.ui.versionView";
 
 	public static final String LOGIN_ACTION_ICON  = "icons/loginAction.png";
+	public static final String LOGOUT_ACTION_ICON  = "icons/logoutAction.png";
 	public static final String FILTER_ACTION_ICON = "icons/filterAction.png";
 	public static final String CREATE_ACTION_ICON = "icons/createAction.png";
 	public static final String VERSIONS_ICON = "icons/versions.png";
@@ -91,20 +92,33 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 		Action loginAction = new Action() {
 			public void run() {
 				InputDialog loginDialog = null;
-				boolean logged = false;
-				do {
-					loginDialog = new InputDialog(collaborationsViewer.getControl().getShell(), "Collaboro login", "Username", "Developer 1", null);
-					if (loginDialog.open() == Window.OK) {
-						boolean userExists = Controller.INSTANCE.loginUser(loginDialog.getValue());
-						if(!userExists) {
-							MessageDialog.openError(collaborationsViewer.getControl().getShell(), "Login error", "The user does not exist");
+				boolean logged = Controller.INSTANCE.isLogged();
+				if (!logged) {
+					do {
+						loginDialog = new InputDialog(collaborationsViewer.getControl().getShell(), "Collaboro login", "Username", "Developer 1", null);
+						if (loginDialog.open() == Window.OK) {
+							boolean userExists = Controller.INSTANCE.loginUser(loginDialog.getValue());
+							if(!userExists) {
+								MessageDialog.openError(collaborationsViewer.getControl().getShell(), "Login error", "The user does not exist");
+							} else {
+								logged = true;
+								this.setImageDescriptor(CollaboroPlugin.getImage(LOGOUT_ACTION_ICON));
+								this.setText("Logout");
+								this.setToolTipText("Logout");
+							}
 						} else {
 							logged = true;
+							this.setImageDescriptor(CollaboroPlugin.getImage(LOGOUT_ACTION_ICON));
+							this.setText("Logout");
+							this.setToolTipText("Logout");
 						}
-					} else {
-						logged = true;
-					}
-				} while (!logged);
+					} while (!logged);
+				} else {
+					Controller.INSTANCE.logout();
+					this.setImageDescriptor(CollaboroPlugin.getImage(LOGIN_ACTION_ICON));
+					this.setText("Login");
+					this.setToolTipText("Login");
+				}
 			}
 		};
 		loginAction.setText("Login");
@@ -290,14 +304,14 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 
 	public void refresh() {
 		Display.getDefault().asyncExec(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				collaborationsViewer.refresh();
 			}
 		});
 	}
-	
+
 	@Override
 	public void partActivated(IWorkbenchPartReference partRef) {
 		//		System.out.println("partActivated " + partRef);

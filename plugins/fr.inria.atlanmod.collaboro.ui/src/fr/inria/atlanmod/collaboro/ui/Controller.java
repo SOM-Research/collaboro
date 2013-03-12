@@ -108,6 +108,9 @@ public class Controller {
 		versionTracked = 0;
 	}
 
+	public User getLoggedUser() {
+		return loggedUser;
+	}
 
 	public History getHistory() {
 		return modelManager.getHistory();
@@ -728,5 +731,10 @@ public class Controller {
 		int indexOfVersion = versions.indexOf(version);
 		versionTracked = indexOfVersion;
 		versionView.refresh();		
+	}
+
+	public void logout() {
+		modelManager.closeConnection();
+		loggedUser = null;
 	}
 }

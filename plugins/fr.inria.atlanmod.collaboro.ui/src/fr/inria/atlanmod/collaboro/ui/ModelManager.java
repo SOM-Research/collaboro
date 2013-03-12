@@ -59,4 +59,11 @@ public abstract class ModelManager {
 	 * @return
 	 */
 	public abstract EObject loadModel(File modelPath);
+	
+	/**
+	 * Save at logout and close the connection if needed
+	 */
+	public abstract void closeConnection();
+	
+	
 }

@@ -2,6 +2,7 @@ package fr.inria.atlanmod.collaboro.ui;
 
 import java.net.URL;
 
+import org.apache.xpath.operations.Mod;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -32,6 +33,7 @@ public class CollaboroPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
 	}
 
 	/*
