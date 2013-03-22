@@ -53,7 +53,9 @@ public class VersionViewLabelProvider extends LabelProvider {
 				return "icons/commentAccepted.png";
 			} 
 			return "icons/comment.png";
-		}  
+		}  else if(element instanceof ExampleElement) {
+			return "icons/example.png";
+		}
 		return null;
 
 	}
@@ -74,6 +76,9 @@ public class VersionViewLabelProvider extends LabelProvider {
 		} else if (element instanceof Comment) {
 			Comment comment = (Comment) element;
 			return "Comment " + comment.getId() + " from " + ((comment.getProposedBy() != null) ? comment.getProposedBy().getId() : "?");
+		} else if (element instanceof ExampleElement) {
+			ExampleElement example = (ExampleElement) element;
+			return example.getLabel();
 		}
 		return super.getText(element);
 	}

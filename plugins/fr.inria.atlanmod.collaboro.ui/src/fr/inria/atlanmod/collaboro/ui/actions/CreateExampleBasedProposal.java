@@ -7,7 +7,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
@@ -20,9 +19,14 @@ public class CreateExampleBasedProposal extends CreateCollaborationAction implem
 	@Override
 	public void run(IAction action) {
 		if(Controller.INSTANCE.isLogged()) {
+			String rationale = ((Proposal) this.collaboration).getRationale();
+			if(rationale != null && rationale.startsWith("[EXAMPLE]")) {
+				MessageDialog.openInformation(this.shell, "Example already given", "The proposal already includes an example.");
+				return;
+			}
+			
 			if (shell == null) 
 			    shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-			
 			FileDialog dialog = new FileDialog(shell);
 			dialog.setText("Select file containing the example");
 			dialog.setFilterExtensions(new String[] { "*.dia" });
@@ -44,11 +48,11 @@ public class CreateExampleBasedProposal extends CreateCollaborationAction implem
 			if (element instanceof Proposal) {
 				Proposal collaboration = (Proposal) element;
 				this.collaboration = collaboration;
-			}
+			}			
 		}
 
 	}
-
+	
 	@Override
 	public void init(IViewPart view) {
 		System.out.println("initializing exampleBased command");

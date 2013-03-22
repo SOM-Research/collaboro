@@ -332,6 +332,7 @@ public class Controller {
 	}
 	
 	public void createExampleBasedProposal(Proposal proposal, File example) {
+		proposal.setRationale("[EXAMPLE-" + example.getAbsolutePath() + "]\n\nThis proposal is based on the example file: "+example.getName());		
 		Solution solution = createSolution(proposal);
 		exampleMediator.createChanges(solution, example);
 		modelManager.saveHistory();

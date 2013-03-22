@@ -25,10 +25,8 @@ import fr.inria.atlanmod.collaboro.ui.Controller;
  * @author Javier Canovas (javier.canovas@inria.fr)
  *
  */
-public class VersionViewContentProvider implements
-IStructuredContentProvider, ITreeContentProvider {
-
-
+public class VersionViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
+	
 	@Override
 	public void dispose() {
 	}
@@ -44,6 +42,10 @@ IStructuredContentProvider, ITreeContentProvider {
 			Proposal proposal = (Proposal) parentElement;
 			
 			ArrayList<Object> result = new ArrayList<Object>();
+			if(proposal.getRationale().startsWith("[EXAMPLE-")) {
+				ExampleElement example = new ExampleElement(proposal);
+				result.add(example);
+			}
 			result.addAll(proposal.getSols());
 			result.addAll(proposal.getComments());
 			
@@ -60,6 +62,8 @@ IStructuredContentProvider, ITreeContentProvider {
 	public Object getParent(Object element) {
 		if (element instanceof Proposal) {
 			return null;
+		} else if (element instanceof ExampleElement) {
+			return ((ExampleElement) element).getParent();
 		}
 		return ((EObject) element).eContainer();
 	}

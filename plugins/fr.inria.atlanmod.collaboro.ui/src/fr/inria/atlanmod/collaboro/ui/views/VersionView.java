@@ -14,15 +14,14 @@ package fr.inria.atlanmod.collaboro.ui.views;
 import java.util.List;
 
 import org.eclipse.core.internal.resources.File;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreePath;
@@ -30,17 +29,16 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
-import org.eclipse.ui.internal.EditorReference;
 import org.eclipse.ui.part.ViewPart;
 
 import fr.inria.atlanmod.collaboro.history.Collaboration;
@@ -85,6 +83,19 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 		collaborationsViewer.setContentProvider(new VersionViewContentProvider());
 		collaborationsViewer.setLabelProvider(new VersionViewLabelProvider());
 		collaborationsViewer.setInput(getViewSite());
+
+		collaborationsViewer.addDoubleClickListener(new IDoubleClickListener() {
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				TreeViewer viewer = (TreeViewer) event.getViewer();
+				IStructuredSelection thisSelection = (IStructuredSelection) event.getSelection(); 
+				Object selectedNode = thisSelection.getFirstElement(); 
+				if (selectedNode instanceof ExampleElement) {
+					ExampleElement example = (ExampleElement) selectedNode;
+					Program.launch(example.getFile().getAbsolutePath());
+				}
+			}
+		});
 
 		// Contributing ActionBars
 
@@ -290,14 +301,14 @@ public class VersionView extends ViewPart implements ISelectionListener, IPartLi
 
 	public void refresh() {
 		Display.getDefault().asyncExec(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				collaborationsViewer.refresh();
 			}
 		});
 	}
-	
+
 	@Override
 	public void partActivated(IWorkbenchPartReference partRef) {
 		//		System.out.println("partActivated " + partRef);
