@@ -1,0 +1,15 @@
+To cite Collaboro in publications, please use:
+
+Javier Luis Cánovas Izquierdo and Jordi Cabot. Enabling the Collaborative Definition of DSMLs, in International Conference on Advanced Information Systems Engineering (CAiSE), LNCS, vol. 7908, pages 272-287, 2013.
+
+A BibTeX entry for LaTeX users is
+
+@inproceedings{bib:collaboro,
+  author    = {C\'anovas Izquierdo, Javier Luis and Cabot, Jordi},
+  title     = {Enabling the Collaborative Definition of {DSMLs}},
+  booktitle = {International Conference on Advanced Information Systems Engineering (CAiSE)},
+  publisher = {LNCS},
+  volume    = {7908},
+  year      = {2013},
+  pages     = {272-287}
+}
