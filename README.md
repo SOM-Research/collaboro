@@ -16,9 +16,9 @@ Collaboro has been developed as an Eclipse plugin, whose features currently impl
 
 The tool is under heavy development but you can give it a try by using the update site file or downloading the source code from the repository.
 
-The second prototype version is the one tagged with 0.2. However, you will always find the last version in the master branch. You can install Collaboro following the steps explained in the wiki
+The second prototype version is the one tagged with 0.2. However, you will always find the last version in the master branch. 
 
-To test the plugin, you can import the Production System project, where you find the ecore file along with the history file which stores the collaboration. Once you open the ecore file, the Version, Collaboration and Notation views will be updated. In the wiki you can find a pair of examples using Collaboro, as well as a user guide.
+To test the plugin, you can import the Production System project, where you find the ecore file along with the history file which stores the collaboration. Once you open the ecore file, the Version, Collaboration and Notation views will be updated. 
 
 You can read the research paper titled Community-driven Language Development published at Models in Software Engineering Workshop at ICSE [here] (http://goo.gl/AAHyg)
 
