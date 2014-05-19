@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Collaboro" default="default">
+    <description>
+    	Build JAR
+    </description>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" description="JAR">
+        <jar destfile="fr.inria.atlanmod.collaboro.web.backend.jar" basedir="bin"/>
+    </target>
+</project>

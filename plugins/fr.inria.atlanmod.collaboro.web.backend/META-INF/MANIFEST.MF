@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: fr.inria.atlanmod.collaboro.web.backend
+Bundle-SymbolicName: fr.inria.atlanmod.collaboro.web.backend
+Bundle-Version: 1.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: fr.inria.atlanmod.collaboro.history,
+ org.eclipse.emf.ecore.xmi
+Bundle-Vendor: Atlanmod
