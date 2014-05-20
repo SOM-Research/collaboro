@@ -241,7 +241,8 @@ public class VersionsServlet extends HttpServlet {
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
         response.setContentType("application/json");
 		
-        URI uriHistoryModel=URI.createFileURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.history"));
+        URI uriHistoryModel=URI.createURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.ecore"));
+        //URI uriHistoryModel=URI.createFileURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.history"));
         
         Controller controller=new Controller(uriHistoryModel);
         history=controller.getHistory();
