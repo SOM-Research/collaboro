@@ -1,0 +1,41 @@
+<form name="newCollaboration" novalidate>
+	<div class="modal-header">
+        <h4>{{dialogtitle}}</h4>
+    </div>
+    <div class="modal-body">
+    	<div class="form-group">
+    		<label>Type of collaboration</label>
+    		<select  class="form-control" ng-model="newcollaboration.label" >
+				<option value="Proposal" ng-selected="false">Proposal</option>
+				<option value="Solution" ng-selected="false">Solution</option>
+				<option value="Comment" ng-selected="false">Comment</option>
+			</select>
+		</div>	
+    	<div class="form-group">
+    		<label>Proposed by</label>
+			<input type="text" class="form-control" ng-model="newcollaboration.data.username">
+		</div>
+		<div class="form-group">	
+			<label>Rationale</label>
+			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.description"></textarea>
+		</div>
+		<div class="form-group">	
+			<label>Votes agree</label>
+			<input type="text" ng-readonly="true" class="form-control" ng-model="newcollaboration.data.agree">
+		</div>	
+		<div class="form-group">
+			<label>Votes disagree</label>
+			<input type="text" ng-readonly="true" class="form-control" ng-model="newcollaboration.data.disagree">
+		</div>	
+    </div>
+
+    </label>
+	
+	<pre ng-bind="newcollaboration | json"></pre>
+
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok(newcollaboration)">Add</button>
+        <button class="btn btn-danger" ng-click="cancelCollaboration()">Cancel</button>
+    </div>
+	
+</form>
