@@ -75,11 +75,14 @@ angular.module('security.service',[
       			closeLoginDialog(false);
       			//redirect();
       		},
-
+      		//Logout the current user and redirect
       		logout:function()
       		{
-      			service.currentUser=null;
-      			redirect('/');
+      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/logout').then(function(){
+      				service.currentUser=null;
+      				redirect('/');
+      			});
+      			
       		},
 
       		//Ask the backend to see if a user is already authenticated - this may be from a previous section
