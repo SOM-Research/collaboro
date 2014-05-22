@@ -13,12 +13,14 @@ package fr.inria.atlanmod.collaboro.web.servlets;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -51,8 +53,8 @@ import fr.inria.atlanmod.collaboro.history.Vote;
 public class VersionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	History history;
-	
+	//History history;
+	Controller controller;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -237,19 +239,25 @@ public class VersionsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		PrintWriter out = response.getWriter();
-		
+		HttpSession theSession=request.getSession();
+		System.out.println("Session creation time: "+theSession.getCreationTime());
+		Enumeration<String> sessionAtributes=theSession.getAttributeNames();
+		while(sessionAtributes.hasMoreElements())
+		{
+			System.out.println("attribute name of the session: "+sessionAtributes.nextElement());
+		}
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
         response.setContentType("application/json");
 		
         URI uriHistoryModel=URI.createURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.ecore"));
         //URI uriHistoryModel=URI.createFileURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.history"));
         
-        Controller controller=new Controller(uriHistoryModel);
-        history=controller.getHistory();
+        controller=new Controller(uriHistoryModel);
+       // history=controller.getHistory();
         
         String proposalsJson="";
         
-        EList<VersionHistory> versionHistories=history.getHistories();
+        EList<VersionHistory> versionHistories=controller.getHistory().getHistories();
         
         if(versionHistories!=null && versionHistories.size()>0)
         {
@@ -258,19 +266,17 @@ public class VersionsServlet extends HttpServlet {
         }
         
         System.out.println(proposalsJson);
-        out.print(proposalsJson);
-        
-         
-        
+        out.print(proposalsJson);   
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
+		
 		PrintWriter out = response.getWriter();
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-		System.out.println("necesario reiniciar");
+		
 		
 		
 		StringBuffer jb = new StringBuffer();
@@ -296,12 +302,24 @@ public class VersionsServlet extends HttpServlet {
 	    	
 	    	JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElement, JsonCollaborationSimplified.class);
 	    	String collaborationType=jsonCollaboration.getType();
-	    	if(collaborationType.compareTo("Comment")==0)
+	    	System.out.println("El tipo de la colaboracion: "+collaborationType);
+	    	if(collaborationType.compareTo("Proposal")==0)
+	    	{
+	    		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
+	    		EList<User> theUsers=controller.getHistory().getUsers();
+	    		for (User user : theUsers) {
+	    			if(user.getId().compareToIgnoreCase(jsonCollaboration.getProposedBy())==0)
+	    				newProposal.setProposedBy(user);
+				}
+	    		newProposal.setRationale(jsonCollaboration.getRationale());
+	    		controller.createProposal(newProposal);
+	    	}
+	    	else if(collaborationType.compareTo("Comment")==0)
 	    	{
 	    		Comment c= HistoryFactory.eINSTANCE.createComment();
 	    		c.setRationale(jsonCollaboration.getRationale());
 	    		
-	    		EList<User> theUsers=history.getUsers();
+	    		EList<User> theUsers=controller.getHistory().getUsers();
 	    		for (User user : theUsers) {
 	    			if(user.getId().compareToIgnoreCase(jsonCollaboration.getProposedBy())==0)
 	    				c.setProposedBy(user);
@@ -310,6 +328,9 @@ public class VersionsServlet extends HttpServlet {
 	    	}
 	    	
 		}
+	    
+	    controller.saveHistory();
+	    
 		response.setContentType("application/json");
 		//TODO Change the response to a success or failure alert
 		out.print("{\"user\": { \"firstName\" : \"Juan\", \"lastName\" : \"Villa\", \"admin\" : false}}");

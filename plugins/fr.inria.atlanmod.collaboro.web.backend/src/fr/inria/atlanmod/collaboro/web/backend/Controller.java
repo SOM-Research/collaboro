@@ -192,8 +192,8 @@ public class Controller
 	}
 
 
-	public void createProposal() {
-		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
+	public void createProposal(Proposal newProposal) {
+		//Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
 		newProposal.setId("n" + ++lastIndex);
 		//newProposal.setProposedBy(loggedUser);
 		getProposals().add(newProposal);
@@ -201,6 +201,7 @@ public class Controller
 		version.getProposals().add(newProposal);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
+		System.out.println("Se guardo!");
 		//refreshVersionView();
 	}
 
