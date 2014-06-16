@@ -9,7 +9,7 @@
  *    Javier Canovas (javier.canovas@inria.fr) 
  *******************************************************************************/
 
-package fr.inria.atlanmod.collaboro.web.backend;
+package fr.inria.atlanmod.collaboro.backend;
 
 import java.io.File;
 

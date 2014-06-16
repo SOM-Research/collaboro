@@ -1,8 +1,6 @@
-package fr.inria.atlanmod.collaboro.web.backend;
+package fr.inria.atlanmod.collaboro.backend;
 
 import java.io.File;
-
-import org.eclipse.emf.cdo.eresource.CDOResource;
 
 
 public class ModelManagerFactory {
@@ -13,7 +11,7 @@ public class ModelManagerFactory {
 		if(resource instanceof File) {
 			modelManager = new LocalModelManager();
 			((LocalModelManager) modelManager).initialize((File) resource);
-		} else if(resource instanceof CDOResource) {
+//		} else if(resource instanceof CDOResource) {
 			//modelManager = new CDOModelManager();
 			//((CDOModelManager) modelManager).initialize((CDOResource) resource);
 		} else {
