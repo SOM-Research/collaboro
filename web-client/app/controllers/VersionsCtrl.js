@@ -38,19 +38,16 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
 
         result.data['username']=security.currentUser.firstName;
         result.label = result.data['type'] +' from '+result.data['username'];
-        //result.data['parent_id']=tree.get_selected_branch.data['collaboration_id'];
-        //result.data['parent_id']=tree.get_selected_branch.data['description'];
 
         var c;
-        c = tree.get_selected_branch();
-        result.data['parent_id'] = c.data['collaboration_id'];
-        newCollaboration.parent_id=c.data['collaboration_id'];
-        //result.label = result.label +' from '+result.data['username'];
-
-        //newCollaboration.username = security.requestCurrentUser().then(function(currentUser){return currentUser.firstName;})
-
-        //security.requestCurrentUser().then(function(currentUser){newCollaboration.username=currentUser.firstName;});
-        //var currentUser = security.requestCurrentUser().then(function(currentUser){return currentUser;});
+        if(newCollaboration.type!='Proposal')
+        {
+           c = tree.get_selected_branch();
+           result.data['parent_id'] = c.data['collaboration_id'];
+          newCollaboration.parent_id=c.data['collaboration_id'];
+        }
+       
+        
 
          $scope.new_collaborations.push(newCollaboration);
          $scope.add_collaboration(result);
