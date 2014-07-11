@@ -1,7 +1,7 @@
 'use strict';
 
 
-var collaboroServices = angular.module('collaboroServices', ['ngResource', 'collaboroControllers']);
+angular.module('collaboroServices', ['ngResource', 'collaboroControllers']);
 
 
 

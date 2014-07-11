@@ -1,10 +1,11 @@
 'use strict';
 
-var collaboroApp = angular.module('collaboroApp', [
+angular.module('collaboroApp', [
 	'ui.bootstrap',
 	'ngRoute',
 	'ngAnimate',
 	'ngSanitize',
+	'ngCookies',
 	'security',
 	'collaboroControllers',
 	'collaboroServices',

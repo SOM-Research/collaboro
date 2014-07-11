@@ -1,6 +1,7 @@
 
-angular.module('collaboroControllers').controller('LoginFormController', ['$scope', 'security',
- function($scope,security)
+//angular.module('collaboroControllers').controller('LoginFormController', ['$scope', 'security',
+angular.module('security.login.form',[]).controller('LoginFormController', ['$scope', 'security','$cookieStore', '$cookies',
+ function($scope,security,$cookieStore, $cookies)
  {
 
     $scope.user={};
@@ -11,6 +12,12 @@ angular.module('collaboroControllers').controller('LoginFormController', ['$scop
   // The reason that we are being asked to login - for instance because we tried to access something to which we are not authorized
   // We could do something diffent for each reason here but to keep it simple...
   $scope.authReason = null;
+
+  if(security.getLoginReason())
+  {
+    $scope.authReason=(security.isAuthenticated())?
+    'Not authorized':'Not authenticated';
+  }
 
 
   $scope.isAuthenticated = security.isAuthenticated;
@@ -32,7 +39,24 @@ angular.module('collaboroControllers').controller('LoginFormController', ['$scop
 
   $scope.login=function()
   {
-    security.login($scope.user.email, $scope.user.password);
+    $scope.authError = null;
+
+    //Try to login
+    security.login($scope.user.email, $scope.user.password).then(function(loggedIn){
+      console.log('Cookies:');
+      console.log($cookies);
+      console.log('Cookie Store:');
+      console.log($cookieStore);
+      //I believe this cookie can not be obtained like this.
+      //$cookies.get('JSESSIONID');
+      //console.log($cookies.get('JSESSIONID'));
+      if(!loggedIn)
+      {
+        $scope.authError = 'Invalid Credentials';
+      }
+    },function(x){
+      $scope.authError = 'Server error';
+    });
 
 
   };

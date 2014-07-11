@@ -1,6 +1,6 @@
-angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','History','collaboration',
+angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','History','collaboration','security',
 
-  function($scope,History, collaboration)
+  function($scope,History, collaboration, security)
   {
 
 
@@ -20,7 +20,7 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
     //Function associated to the Edit Collaboration button.
     $scope.editcollaboration = function()
     {
-      collaboration.editCollaboration(tree.get_selected_branch()).result.then(function(result){console.log(result);});
+      collaboration.editCollaboration(tree.get_selected_branch()).result.then(function(result){result.label = result.data['type'] +' from '+result.data['username'];});
     }
 
     $scope.showcollaboration =function()
@@ -31,10 +31,26 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
 
         var newCollaboration=
         {
-            "proposedBy":result.data['username'],
             "rationale":result.data['description'],
-            "type": result.label
+            "type": result.data['type'],
+            "proposedBy" : security.currentUser.firstName
         };
+
+        result.data['username']=security.currentUser.firstName;
+        result.label = result.data['type'] +' from '+result.data['username'];
+        //result.data['parent_id']=tree.get_selected_branch.data['collaboration_id'];
+        //result.data['parent_id']=tree.get_selected_branch.data['description'];
+
+        var c;
+        c = tree.get_selected_branch();
+        result.data['parent_id'] = c.data['collaboration_id'];
+        newCollaboration.parent_id=c.data['collaboration_id'];
+        //result.label = result.label +' from '+result.data['username'];
+
+        //newCollaboration.username = security.requestCurrentUser().then(function(currentUser){return currentUser.firstName;})
+
+        //security.requestCurrentUser().then(function(currentUser){newCollaboration.username=currentUser.firstName;});
+        //var currentUser = security.requestCurrentUser().then(function(currentUser){return currentUser;});
 
          $scope.new_collaborations.push(newCollaboration);
          $scope.add_collaboration(result);

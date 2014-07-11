@@ -1,7 +1,7 @@
 angular.module('security.service',[
-	
-	]).factory('security',['$http', '$q', '$location', '$modal',
-	function($http, $q, $location, $modal)
+	'security.retryQueue' //Keep tracks of failed requests that need to be retried once the user logs in
+	]).factory('security',['$http', '$q', '$location', 'securityRetryQueue', '$modal',
+	function($http, $q, $location, queue,$modal)
 	{
 		
 		function redirect(url)
@@ -17,13 +17,15 @@ angular.module('security.service',[
 
 			if(!loginDialog)
 			{
+				//loginDialog=$modal.modal();
 				loginDialog=$modal.open
 				(
       				{
         				templateUrl:'security/login/form.tpl.html',
         				controller :  'LoginFormController'
       				}
-      			);
+      			)//TODO	
+ //     			).then(onLoginDialogClose);
 			}
 		}
 
@@ -38,12 +40,37 @@ angular.module('security.service',[
 			}
 		}
 
+		function onLoginDialogClose(success){
+			if(success)
+			{
+				queue.retryAll();
+			}
+			else
+			{
+				queue.cancelAll();
+				redirect();
+			}
+		}
+
+		queue.onItemAddedCallbacks.push(function(retryItem)
+		{
+			if(queue.hasMore())
+			{
+				service.showLogin();
+			}
+		}
+		);
+
 	
 
-		
+		// The public API of the service
 		var service=
 		{
 
+			getLoginReason: function()
+			{
+				return queue.retryReason();
+			},
 
 			showLogin: function()
 			{
@@ -54,11 +81,13 @@ angular.module('security.service',[
 			{
 
 				
-				var request=$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/login',{email: email, password: password});
+				var request=$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/login',{email: email, password: password, dsl:'workflow'});
 
 				return request.then(
 					function(response)
 					{
+						console.log('headers from the response from login are ' + response.headers());
+						//console.log('response from login is ' + response.headers('Set-Cookie'));
 						service.currentUser=response.data.user;
 						if(service.isAuthenticated())
 						{	
@@ -73,7 +102,7 @@ angular.module('security.service',[
       		cancelLogin: function()
       		{
       			closeLoginDialog(false);
-      			//redirect();
+      			redirect();
       		},
       		//Logout the current user and redirect
       		logout:function()
@@ -95,10 +124,13 @@ angular.module('security.service',[
       			else
       			{
       				
-      				return $http.get('/current-user').then(function(response){
+      				//return null;
+      				//Commented 05/07
+      				return $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/currentUser').then(function(response)
+      				{
       					service.currentUser = response.data.user;
       					return service.currentUser;
-      				})
+      				});
       			}
       		},
 
