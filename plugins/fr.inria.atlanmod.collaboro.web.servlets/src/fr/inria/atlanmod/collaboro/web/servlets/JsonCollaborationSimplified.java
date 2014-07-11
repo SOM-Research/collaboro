@@ -24,6 +24,8 @@ public class JsonCollaborationSimplified {
 	
 	private String type;
 	
+	private String parent_id;
+	
 	public JsonCollaborationSimplified()
 	{
 		
@@ -47,6 +49,10 @@ public class JsonCollaborationSimplified {
 
 	public String getType() {
 		return type;
+	}
+	
+	public String getParent_id() {
+		return parent_id;
 	}
 
 	public void setType(String type) {

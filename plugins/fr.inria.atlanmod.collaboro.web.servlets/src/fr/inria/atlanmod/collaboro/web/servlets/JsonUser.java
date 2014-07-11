@@ -6,6 +6,16 @@ public class JsonUser {
 	
 	private String password;
 	
+	private String dsl;
+	
+	public String getDsl() {
+		return dsl;
+	}
+
+	public void setDsl(String dsl) {
+		this.dsl = dsl;
+	}
+
 	public JsonUser()
 	{
 		

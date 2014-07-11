@@ -24,6 +24,7 @@ public class LogoutServlet extends HttpServlet{
 		
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 	    response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+	    response.addHeader("Access-Control-Allow-Credentials", "true");
 		System.out.println("Llega al post del servlet de logout");
 		Cookie loginCookie=null;
 		Cookie [] cookies = request.getCookies();
@@ -44,8 +45,9 @@ public class LogoutServlet extends HttpServlet{
 		}
 		 //invalidate the session if exists
         HttpSession session = request.getSession(false);
-        System.out.println("User="+session.getAttribute("user"));
+        //System.out.println("User="+session.getAttribute("user"));
         if(session != null){
+        	System.out.println("There is a session when trying to logout");
             session.invalidate();
         }
 	}
@@ -57,6 +59,7 @@ public class LogoutServlet extends HttpServlet{
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		super.doOptions(request, response);
 	}
 	

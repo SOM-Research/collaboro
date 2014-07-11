@@ -30,7 +30,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import fr.inria.atlanmod.collaboro.web.backend.Controller;
+
+import fr.inria.atlanmod.collaboro.backend.Controller;
+//import fr.inria.atlanmod.collaboro.web.backend.Controller;
 import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.history.Comment;
 import fr.inria.atlanmod.collaboro.history.History;
@@ -169,7 +171,7 @@ public class VersionsServlet extends HttpServlet {
     
     private String getCollaborationLabel(Collaboration collaboration)
     {
-      
+    	
       	String collaborationJson="";
       	String typeOfCollaboration=collaboration.eClass().getName();
       	String collaborationLabel="\"label\": \"" + typeOfCollaboration + " "+collaboration.getId()+" from "+collaboration.getProposedBy().getId()+"\"";
@@ -178,7 +180,26 @@ public class VersionsServlet extends HttpServlet {
       	{
       		collaborationJson=collaborationJson.concat(",");
           	String cleanRationale = collaboration.getRationale().replaceAll("(\\r|\\n|\")", " ");
-          	String collaborationData="\"data\": { \"username\":\""+ collaboration.getProposedBy().getId() +"\",\"description\": \""+cleanRationale+"\"";
+          	//String collaborationData="\"data\": { \"username\":\""+ collaboration.getProposedBy().getId() +"\",\"description\": \""+cleanRationale+"\"";
+          	String collaborationType="";
+          	String parentId="";
+          	if(collaboration instanceof Solution)
+          	{
+          		collaborationType="Solution";
+          		parentId=((Solution)collaboration).getProposal().getId();
+          	}
+          	if(collaboration instanceof Comment)
+          	{
+          		collaborationType="Comment";
+          		parentId=((Comment)collaboration).getCommentedElement().getId();
+          	}
+          		
+          	else if(collaboration instanceof Proposal)
+          		collaborationType="Proposal";
+          	String collaborationData="\"data\": { \"username\":\""+ collaboration.getProposedBy().getId() +"\",\"description\": \""+cleanRationale+"\""+",\"type\": \""+collaborationType+"\""+",\"collaboration_id\": \""+collaboration.getId()+"\"";
+          	if(parentId!="")
+          		collaborationData=collaborationData+",\"parent_id\": \""+parentId+"\"";
+          	
           	collaborationJson=collaborationJson.concat(collaborationData);
           	
           	EList<Vote> votes=collaboration.getVotes();
@@ -247,6 +268,7 @@ public class VersionsServlet extends HttpServlet {
 			System.out.println("attribute name of the session: "+sessionAtributes.nextElement());
 		}
 		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
         response.setContentType("application/json");
 		
         URI uriHistoryModel=URI.createURI(getServletContext().getRealPath("/WEB-INF/model/ModiscoWorkflow.ecore"));
@@ -274,9 +296,9 @@ public class VersionsServlet extends HttpServlet {
 	{
 		
 		PrintWriter out = response.getWriter();
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-		
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		
 		
 		StringBuffer jb = new StringBuffer();
@@ -302,6 +324,8 @@ public class VersionsServlet extends HttpServlet {
 	    	
 	    	JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElement, JsonCollaborationSimplified.class);
 	    	String collaborationType=jsonCollaboration.getType();
+	    	String parent_id=jsonCollaboration.getParent_id();
+	    	System.out.println("El id de la colaboracion padre: "+ parent_id);
 	    	System.out.println("El tipo de la colaboracion: "+collaborationType);
 	    	if(collaborationType.compareTo("Proposal")==0)
 	    	{
@@ -340,9 +364,10 @@ public class VersionsServlet extends HttpServlet {
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		super.doOptions(request, response);
 		
 	}

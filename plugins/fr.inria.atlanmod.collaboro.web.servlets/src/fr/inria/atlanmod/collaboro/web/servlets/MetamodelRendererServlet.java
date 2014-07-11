@@ -96,8 +96,9 @@ public class MetamodelRendererServlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 	    response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+	    response.addHeader("Access-Control-Allow-Credentials", "true");
 		StringBuffer jb = new StringBuffer();
 		String line = null;
 		try {
@@ -221,9 +222,10 @@ public class MetamodelRendererServlet extends HttpServlet
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		super.doOptions(request, response);
 		
 	}

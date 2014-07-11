@@ -46,18 +46,21 @@ public class LoginServlet extends HttpServlet
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		
-		response.setHeader("Access-Control-Allow-Origin", "*");
+		System.out.println("Llega al doOptions del login");
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		response.addHeader("Access-Control-Allow-Credentials", "true");
 		super.doOptions(request, response);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		System.out.println("Llega al doPost del login");
 		 response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
 	     response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+	     response.addHeader("Access-Control-Allow-Credentials", "true");
 	     
 	     StringBuffer jb = new StringBuffer();
 		 String line = null;
@@ -76,14 +79,15 @@ public class LoginServlet extends HttpServlet
 		 Gson gson = new Gson();
 		
 		JsonUser user=gson.fromJson(jb.toString(), JsonUser.class);   
-	    //System.out.println(user.getEmail());
-	    //System.out.println(user.getPassword());
+	    System.out.println(user.getEmail());
+	    System.out.println(user.getPassword());
+	    System.out.println(user.getDsl());
 	    //TODO Authenticate the user using the email and password parameters from the request
 	     
 		HttpSession session = request.getSession();
 		session.setAttribute("user", "Juan");
 		session.setMaxInactiveInterval(30*60);
-		Cookie userName = new Cookie("user","admin");
+		Cookie userName = new Cookie("collaboro_user","admin");
 		
 		//setting cookie to expiry in 30 mins
         userName.setMaxAge(30*60);
