@@ -1,15 +1,22 @@
 package fr.inria.atlanmod.collaboro.backend;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
+import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.history.Comment;
 import fr.inria.atlanmod.collaboro.history.History;
+import fr.inria.atlanmod.collaboro.history.HistoryFactory;
 import fr.inria.atlanmod.collaboro.history.Proposal;
 import fr.inria.atlanmod.collaboro.history.Solution;
 import fr.inria.atlanmod.collaboro.history.User;
+import fr.inria.atlanmod.collaboro.history.Version;
+import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 
 /**
@@ -22,27 +29,27 @@ import fr.inria.atlanmod.collaboro.notation.Definition;
 public class CollaboroBackend {
 	private static CollaboroBackend instance;
 	public static String PATH_TO_HISTORY = "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.ecore";
-	
+
 	// Variables to control the state of the collaboration
 	private int historyTracked = 0;
 	private int versionTracked = 0;
 	private int lastIndex = 0;
-	
+
 	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
 	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
-	
+
 	private CollaboroBackend() {
 		File historyFile = new File(PATH_TO_HISTORY);
 		loadHistory(historyFile);
 	}
-	
+
 	public static CollaboroBackend getInstance() {
 		if(instance == null) {
 			instance = new CollaboroBackend();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * Sets the user logged in the application. 
 	 * 
@@ -52,7 +59,7 @@ public class CollaboroBackend {
 	public User loginUser(String email, String password, String dsl) {
 		if(email == null || password == null || dsl == null)
 			throw new IllegalArgumentException("Parameters cannot be null");
-		
+
 		User found = null;
 
 		if(getHistory() != null) 
@@ -62,7 +69,7 @@ public class CollaboroBackend {
 
 		return found;
 	}
-	
+
 	/**
 	 * Loads a new History model
 	 * 
@@ -75,7 +82,7 @@ public class CollaboroBackend {
 		if(getHistory() != null) 
 			versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
 	}
-	
+
 	/**
 	 * Testing method to reset the information
 	 */
@@ -84,7 +91,7 @@ public class CollaboroBackend {
 		historyTracked = 0;
 		versionTracked = 0;
 	}
-	
+
 	private void calculateLastIndexProposal() {
 		lastIndex = 0;
 
@@ -115,7 +122,7 @@ public class CollaboroBackend {
 			}
 		}
 	}
-	
+
 
 	public History getHistory() {
 		return modelManager.getHistory();
@@ -128,18 +135,114 @@ public class CollaboroBackend {
 	public Definition getNotation() {
 		return modelManager.getNotation();
 	}
-	
+
 	public ModelManager getModelManager() {
 		return modelManager;
 	}
-	
+
 	public int getHistoryTracked() {
 		return historyTracked;
 	}
-	
+
 	public int getVersionTracked() {
 		return versionTracked;
 	}
+
+	public void createProposalPlain(String userId, String rationale) {
+		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
+
+		// Locating the user
+		User userProposing = null;
+		if(getHistory() != null) 
+			for (User user : getHistory().getUsers()) 
+				if(user.getId() != null && user.getId().equals(userId))
+					userProposing = user;
+
+		if(userProposing != null) {
+			newProposal.setProposedBy(userProposing);
+			newProposal.setRationale(rationale);
+			createProposal(newProposal);
+		}
+	}
+
+	public void createProposal(Proposal newProposal) {
+		newProposal.setId("n" + ++lastIndex);
+		getProposals().add(newProposal);
+		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
+		version.getProposals().add(newProposal);
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+		System.out.println("Se guardo!");
+	}
+
+	public List<Proposal> getProposals() {
+		List<Proposal> result = new ArrayList<Proposal>();
+
+		if(getHistory() != null && getHistory().getHistories() != null) {
+			VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
+			if(versionHistory != null && getHistory().getHistories().get(getHistoryTracked()).getVersions() != null) {
+				Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
+				if(version != null) {
+					result = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals();
+				}
+			}
+		}
+		return result;
+	}
+
+	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale) {
+		// Locating the user
+		User userProposing = null;
+		if(getHistory() != null) 
+			for (User user : getHistory().getUsers()) 
+				if(user.getId() != null && user.getId().equals(userId))
+					userProposing = user;
+
+		if(userProposing != null) {
+			collaboration.setProposedBy(userProposing);
+			collaboration.setRationale(rationale);
+		}
+		return collaboration;
+	}
+
+	private Collaboration locateCollaborationById(Collaboration collaboration, String id) {
+		if(collaboration == null ) {
+			for(Proposal proposal : getProposals()) 
+				return locateCollaborationById(proposal, id);
+		} else {
+			if(collaboration.getId().equals(id)) 
+				return collaboration;
+			else {
+				if(collaboration instanceof Proposal) 
+					for(Solution solution : ((Proposal) collaboration).getSols()) 
+						return locateCollaborationById(solution, id);
+				for(Comment comment : collaboration.getComments()) 
+					return locateCollaborationById(comment, id);
+			}
+		}
+		return null;
+	}
+
+	public void createCommentPlain(String parentCollaboration, String userId, String rationale) {
+		Comment newComment = HistoryFactory.eINSTANCE.createComment();
+		initCollaborationPlain(newComment, userId, rationale);
+
+		Collaboration parent = locateCollaborationById(null, parentCollaboration);
+		if(parent != null) 
+			createComment(parent, newComment);
+	}
+
+	public void createComment(Collaboration collaboration, Comment comment) {
+		Comment newComment = HistoryFactory.eINSTANCE.createComment();
+		newComment.setId("n" + ++lastIndex);
+		collaboration.getComments().add(newComment);
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+	}
 	
-	
+
+	public void saveHistory() {
+		modelManager.saveHistory();
+	}
+
 }

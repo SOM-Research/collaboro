@@ -17,19 +17,10 @@ package fr.inria.atlanmod.collaboro.web.servlets;
  *
  */
 public class JsonCollaborationSimplified {
-	
 	private String proposedBy;
-	
 	private String rationale;
-	
 	private String type;
-	
 	private String parent_id;
-	
-	public JsonCollaborationSimplified()
-	{
-		
-	}
 	
 	public String getProposedBy() {
 		return proposedBy;
@@ -58,7 +49,4 @@ public class JsonCollaborationSimplified {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	
-
 }
