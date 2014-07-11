@@ -26,17 +26,8 @@ import fr.inria.atlanmod.collaboro.history.Version;
 import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
-//import fr.inria.atlanmod.collaboro.ui.LocalModelManager;
-//import fr.inria.atlanmod.collaboro.ui.ModelManager;
-//import fr.inria.atlanmod.collaboro.ui.ModelManagerFactory;
 
-/**
- * 
- * @author Juan David Villa Calle
- *
- */
-public class Controller
-{
+public class Controller {
 
 	// Variables to control the state of the plugin
 	private User loggedUser = null;
@@ -47,11 +38,9 @@ public class Controller
 	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
 	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
 
-	public Controller(URI modelBeingTracked)
-	{
-		if(modelManager instanceof LocalModelManager)
-		{
-			boolean initialized=((LocalModelManager) modelManager).initialize(new File(modelBeingTracked.toString()));
+	public Controller(URI modelBeingTracked) {
+		if(modelManager instanceof LocalModelManager) {
+			boolean initialized = ((LocalModelManager) modelManager).initialize(new File(modelBeingTracked.toString()));
 			System.out.println("Inicializo al modelManager? "+initialized);
 		}
 	}
@@ -65,15 +54,8 @@ public class Controller
 		historyTracked = 0;
 		versionTracked = 0;
 	}
-	
-	//public Controller(URI uriHistoryModel)
-	//{
-		//modelManager = new LocalModelManager();
-		//modelManager.initialize(uriHistoryModel);
-	//}
-	
-	public User getLoggedUser()
-	{
+		
+	public User getLoggedUser() {
 			return loggedUser;
 	}	
 		
@@ -89,8 +71,7 @@ public class Controller
 		return modelManager.getNotation();
 	}
 	
-	public ModelManager getModelManager() 
-	{
+	public ModelManager getModelManager() {
 		return modelManager;
 	}
 	

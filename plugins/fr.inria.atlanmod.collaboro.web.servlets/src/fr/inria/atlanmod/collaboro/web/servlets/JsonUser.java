@@ -1,11 +1,12 @@
 package fr.inria.atlanmod.collaboro.web.servlets;
 
+/**
+ * POJO class to represent user object in the login servlet
+ * 
+ */
 public class JsonUser {
-	
 	private String email;
-	
 	private String password;
-	
 	private String dsl;
 	
 	public String getDsl() {
@@ -14,11 +15,6 @@ public class JsonUser {
 
 	public void setDsl(String dsl) {
 		this.dsl = dsl;
-	}
-
-	public JsonUser()
-	{
-		
 	}
 	
 	public String getEmail() {
@@ -36,9 +32,4 @@ public class JsonUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	
-	
-	
-
 }
