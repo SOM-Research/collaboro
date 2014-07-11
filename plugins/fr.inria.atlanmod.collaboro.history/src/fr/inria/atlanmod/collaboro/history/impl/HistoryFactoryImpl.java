@@ -32,7 +32,7 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	 */
 	public static HistoryFactory init() {
 		try {
-			HistoryFactory theHistoryFactory = (HistoryFactory)EPackage.Registry.INSTANCE.getEFactory("http://atlanmod.fr/collaboro/history"); 
+			HistoryFactory theHistoryFactory = (HistoryFactory)EPackage.Registry.INSTANCE.getEFactory(HistoryPackage.eNS_URI);
 			if (theHistoryFactory != null) {
 				return theHistoryFactory;
 			}

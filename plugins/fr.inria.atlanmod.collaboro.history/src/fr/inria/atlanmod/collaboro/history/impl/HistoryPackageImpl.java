@@ -396,6 +396,42 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getUser_Email() {
+		return (EAttribute)userEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUser_Pasword() {
+		return (EAttribute)userEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUser_FirstName() {
+		return (EAttribute)userEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUser_LastName() {
+		return (EAttribute)userEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getVersion() {
 		return versionEClass;
 	}
@@ -560,6 +596,15 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 */
 	public EReference getProposal_Meta() {
 		return (EReference)proposalEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProposal_ConflictWith() {
+		return (EReference)proposalEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -893,6 +938,10 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		userEClass = createEClass(USER);
 		createEReference(userEClass, USER__VOTES);
 		createEReference(userEClass, USER__COLLABORATIONS);
+		createEAttribute(userEClass, USER__EMAIL);
+		createEAttribute(userEClass, USER__PASWORD);
+		createEAttribute(userEClass, USER__FIRST_NAME);
+		createEAttribute(userEClass, USER__LAST_NAME);
 
 		versionEClass = createEClass(VERSION);
 		createEReference(versionEClass, VERSION__PROPOSALS);
@@ -916,6 +965,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		createEReference(proposalEClass, PROPOSAL__VERSION);
 		createEAttribute(proposalEClass, PROPOSAL__ACCEPTED);
 		createEReference(proposalEClass, PROPOSAL__META);
+		createEReference(proposalEClass, PROPOSAL__CONFLICT_WITH);
 
 		solutionEClass = createEClass(SOLUTION);
 		createEReference(solutionEClass, SOLUTION__CHANGES);
@@ -1032,6 +1082,10 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUser_Votes(), this.getVote(), this.getVote_User(), "votes", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUser_Collaborations(), this.getCollaboration(), this.getCollaboration_ProposedBy(), "collaborations", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_Email(), ecorePackage.getEString(), "email", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_Pasword(), ecorePackage.getEString(), "pasword", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_FirstName(), ecorePackage.getEString(), "firstName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_LastName(), ecorePackage.getEString(), "lastName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(versionEClass, Version.class, "Version", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVersion_Proposals(), this.getProposal(), this.getProposal_Version(), "proposals", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1055,6 +1109,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		initEReference(getProposal_Version(), this.getVersion(), this.getVersion_Proposals(), "version", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getProposal_Accepted(), ecorePackage.getEBoolean(), "accepted", null, 0, 1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getProposal_Meta(), this.getMetaInfo(), this.getMetaInfo_Proposal(), "meta", null, 0, -1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProposal_ConflictWith(), this.getProposal(), null, "conflictWith", null, 0, -1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(solutionEClass, Solution.class, "Solution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSolution_Changes(), this.getModelChange(), this.getModelChange_Solution(), "changes", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

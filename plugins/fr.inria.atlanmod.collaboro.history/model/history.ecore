@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="history"
-    nsURI="http://atlanmod.fr/collaboro/history" nsPrefix="history">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="history" nsURI="http://atlanmod.fr/collaboro/history" nsPrefix="history">
   <eClassifiers xsi:type="ecore:EClass" name="History">
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
         eType="#//User" containment="true"/>
@@ -27,6 +25,10 @@
         eType="#//Vote" eOpposite="#//Vote/user"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="collaborations" upperBound="-1"
         eType="#//Collaboration" eOpposite="#//Collaboration/proposedBy"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pasword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Version" eSuperTypes="#//IdElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="proposals" upperBound="-1"
