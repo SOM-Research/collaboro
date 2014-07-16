@@ -17,6 +17,10 @@ angular.module('collaboroControllers').controller('imagesCtrl', ['$scope',functi
   //$scope.addSlide();
  }
 
+ $scope.nextImage=function(){if($scope.notationImageIndex+1<$scope.slides.length){$scope.notationImageIndex++;}else{$scope.notationImageIndex=0;}};
+ $scope.previousImage=function(){if($scope.notationImageIndex-1>=0){$scope.notationImageIndex--;}else{$scope.notationImageIndex=$scope.slides.length-1}};
+
+
  //$scope.sportImages = ['http://placekitten.com/600/300','http://placekitten.com/601/300','http://placekitten.com/602/300'];
  //$scope.sportImages = ['http://placekitten.com/604/300','http://placekitten.com/601/300','http://placekitten.com/602/300'];
 
