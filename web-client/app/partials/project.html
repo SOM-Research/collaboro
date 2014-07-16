@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row-fluid">
       <!--The vertical menu-->    
       <div class="col-sm-2 col-md-1 sidebar">
         <ul class="nav nav-sidebar">
@@ -7,7 +7,7 @@
         </ul>
       </div>
       <!--The four panels.--> 
-      <div class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-1 main">
+      <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
          <div class="row-fluid" ng-controller="metamodelAndModelsCtrl">
           <!--The panel of the metamodel-->
           <div class="col-md-6">
@@ -31,8 +31,12 @@
               </div>
               <div class="panel-body">  
                   <div ng-controller="imagesCtrl">
-                  <div style="height: 305px">
-                    <!--<div style="height: 400px">-->             
+                    <!--<div style="height:305 px width:600">-->
+                     <!--<ul rn-carousel class="image">
+                      <li ng-repeat="image in sportImages" ng-style="{ backgroundImage: 'url(' + image + ')' }">
+                        <div class="layer">{{ image }}</div>
+                      </li>
+                     </ul> -->           
                       <carousel interval="myInterval">
                         <slide ng-repeat="slide in slides" active="slide.active">
                           <img ng-src="{{slide.image}}" style="margin:auto;">
@@ -42,7 +46,7 @@
                           </div>
                         </slide>
                       </carousel>
-                    </div>
+                    <!--</div>-->
                   </div>
               </div> 
             </div>

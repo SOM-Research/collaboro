@@ -1,7 +1,7 @@
 angular.module('collaboroControllers').controller('imagesCtrl', ['$scope',function($scope){
-  $scope.myInterval = 5000;
+  $scope.myInterval = -1;
   //var slides= $scope.slides  =[];
-  var slides = $scope.slides = [{image:'http://www.eclipse.org/atl/usecases/MMIndApproachtoDiffRep/img/extendedUmlMetamodel.png', text:'Notation example 0'}];
+  var slides = $scope.slides = [{image:'https://cloud.githubusercontent.com/assets/1996760/3596028/92b81bde-0cbe-11e4-9f3d-3e72e54655da.png', text:'Notation example 0'},{image:'https://cloud.githubusercontent.com/assets/1996760/3596026/9298408e-0cbe-11e4-8cb7-8b40d6aa6361.png', text:'Notation example 1'},{image:'https://cloud.githubusercontent.com/assets/1996760/3596027/92ab5980-0cbe-11e4-88c8-8931bd265b63.png', text:'Notation example 2'}];
   $scope.addSlide = function() {
    //var newWidth = 600 + slides.length;
    var newWidth = 600;
