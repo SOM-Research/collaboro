@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
+import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
 
 /**
@@ -78,7 +79,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(user.getDsl());
 		
 		// Accesing the backend to validate the user
-		User historyUser = CollaboroBackend.getInstance().loginUser(user.getEmail(), user.getPassword(), user.getDsl());  
+		CollaboroBackend backend = CollaboroBackendFactory.getBackend(user.getDsl());
+		User historyUser = backend.loginUser(user.getEmail(), user.getPassword(), user.getDsl());  
 		String userId = historyUser.getId();
 		
 		// Setting session and cookies

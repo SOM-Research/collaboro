@@ -5,7 +5,7 @@ import java.io.File;
 
 public class ModelManagerFactory {
 	
-	public ModelManager createModelManager(Object resource) {
+	public static ModelManager createModelManager(Object resource) {
 		ModelManager modelManager = null;
 		
 		if(resource instanceof File) {

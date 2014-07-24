@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 
 import fr.inria.atlanmod.collaboro.history.Collaboration;
@@ -19,35 +17,16 @@ import fr.inria.atlanmod.collaboro.history.Version;
 import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 
-/**
- * This class is the main entry point to play with Collaboro. 
- * For the moment, we are moving thing from Controller class here.
- * 
- * @author Javier Canovas (javier.canovas@inria.fr)
- *
- */
 public class CollaboroBackend {
-	private static CollaboroBackend instance;
-	public static String PATH_TO_HISTORY = "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.ecore";
-
 	// Variables to control the state of the collaboration
 	private int historyTracked = 0;
 	private int versionTracked = 0;
 	private int lastIndex = 0;
 
-	ModelManagerFactory modelManagerFactory = new ModelManagerFactory();
-	ModelManager modelManager = modelManagerFactory.createEmptyModelManager();
+	ModelManager modelManager = null;
 
-	private CollaboroBackend() {
-		File historyFile = new File(PATH_TO_HISTORY);
-		loadHistory(historyFile);
-	}
-
-	public static CollaboroBackend getInstance() {
-		if(instance == null) {
-			instance = new CollaboroBackend();
-		}
-		return instance;
+	public CollaboroBackend(File historyFile, File ecoreFile) {
+		 modelManager = ModelManagerFactory.createModelManager(ecoreFile);
 	}
 
 	/**
@@ -61,26 +40,12 @@ public class CollaboroBackend {
 			throw new IllegalArgumentException("Parameters cannot be null");
 
 		User found = null;
-
 		if(getHistory() != null) 
 			for (User user : getHistory().getUsers()) 
-				if(user.getEmail() != null && user.getEmail().equals(email))
+				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPasword() != null && user.getPasword().equals(password))
 					return user;
 
 		return found;
-	}
-
-	/**
-	 * Loads a new History model
-	 * 
-	 * @param resource to be tracked
-	 */
-	public void loadHistory(Object resource) { 
-		reset();
-		modelManager = modelManagerFactory.createModelManager(resource);
-		calculateLastIndexProposal();
-		if(getHistory() != null) 
-			versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
 	}
 
 	/**

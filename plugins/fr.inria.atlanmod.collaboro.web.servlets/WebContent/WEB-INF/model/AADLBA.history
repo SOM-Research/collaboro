@@ -24,7 +24,7 @@
       collaborations="//@histories.0/@versions.0/@proposals.0 //@histories.0/@versions.0/@proposals.0/@sols.0 //@histories.0/@versions.0/@proposals.2 //@histories.0/@versions.0/@proposals.2/@sols.0 //@histories.0/@versions.0/@proposals.3/@comments.0 //@histories.0/@versions.0/@proposals.4 //@histories.0/@versions.0/@proposals.5/@comments.0 //@histories.0/@versions.1/@proposals.0 //@histories.0/@versions.1/@proposals.0/@sols.0 //@histories.0/@versions.1/@proposals.1 //@histories.0/@versions.1/@proposals.2/@comments.0 //@histories.0/@versions.1/@proposals.3/@comments.0 //@histories.0/@versions.1/@proposals.4 //@histories.0/@versions.1/@proposals.5/@comments.0 //@histories.0/@versions.1/@proposals.6/@comments.0 //@histories.0/@versions.1/@proposals.6/@sols.0 //@histories.0/@versions.1/@proposals.6/@comments.1 //@histories.0/@versions.0/@proposals.6/@sols.0 //@histories.0/@versions.0/@proposals.3/@sols.0 //@histories.0/@versions.1/@proposals.4/@sols.0 //@histories.0/@versions.1/@proposals.5/@sols.0"/>
   <users id="juan"
       email="juan@inria.fr"
-      pasword="47bce5c74f589f4867dbd57e9ca9f808"
+      pasword="aaa"
       firstName="Juan David"
       lastName="Villa"/>
   <histories>

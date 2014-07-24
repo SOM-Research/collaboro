@@ -32,6 +32,7 @@ import com.google.gson.JsonParser;
 
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
+import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.backend.Controller;
 //import fr.inria.atlanmod.collaboro.web.backend.Controller;
 import fr.inria.atlanmod.collaboro.history.Collaboration;
@@ -321,10 +322,12 @@ public class VersionsServlet extends HttpServlet {
 			String collaborationType = jsonCollaboration.getType();
 			System.out.println("El tipo de la colaboracion: "+collaborationType);
 			
+			
+			
 			if(collaborationType.compareTo("Proposal") == 0) {
-				CollaboroBackend.getInstance().createProposalPlain(jsonCollaboration.getProposedBy(), jsonCollaboration.getRationale());
+				CollaboroBackendFactory.getLastBackend().createProposalPlain(jsonCollaboration.getProposedBy(), jsonCollaboration.getRationale());
 			} else if(collaborationType.compareTo("Comment") == 0) {
-				CollaboroBackend.getInstance().createCommentPlain(jsonCollaboration.getParent_id(), jsonCollaboration.getProposedBy(), jsonCollaboration.getRationale());
+				CollaboroBackendFactory.getLastBackend().createCommentPlain(jsonCollaboration.getParent_id(), jsonCollaboration.getProposedBy(), jsonCollaboration.getRationale());
 			}
 		}
 
