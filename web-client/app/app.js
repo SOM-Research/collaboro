@@ -2,6 +2,7 @@
 
 angular.module('collaboroApp', [
 	'ui.bootstrap',
+	'angular-md5',
 	'ngRoute',
 	'ngAnimate',
 	'ngSanitize',

@@ -20,9 +20,8 @@
   <script src="vendor/angular-bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
   <script src="vendor/ecore.js-master/underscore.js"></script>
   <script src="vendor/ecore.js-master/ecore.js"></script>
+  <script src="vendor/angular-md5/angular-md5.js"></script>
 
-  
-  
   <script src="app/app.js"></script>
   <script src="app/RouteProvider.js"></script>
   <script src="app/controllers/controllers.js"></script>
@@ -34,17 +33,17 @@
   <script src="app/services/services.js"></script>
   <script src="app/services/HistoryService.js"></script>
   <script src="app/services/CollaborationService.js"></script>
-  <script src="security/security.js"></script>
-  <script src="security/interceptor.js"></script>
-  <script src="security/retryQueue.js"></script>
-  <script src="security/login/login.js"></script>
 
-  <script src="security/authorization.js"></script>
-  <script src="security/index.js"></script>
-  <script src="security/login/LoginFormController.js"></script>
+  <script src="security/services/security.service.js"></script>
+  <script src="security/services/security.retryQueue.js"></script>
+  <script src="security/services/security.interceptor.js"></script>
+  <script src="security/controllers/LoginFormController.js"></script>
+  <script src="security/services/security.authorization.js"></script>
+  <script src="security/security.js"></script>
 
   <!--<script src="app/js/ecoreTest.js"></script>-->
   <script src="vendor/angular-bootstrap-nav-tree-master/dist/abn_tree_directive.js"></script>
+
   <link rel="stylesheet" href="vendor/angular-bootstrap-nav-tree-master/dist/abn_tree.css">
   <!-- Font Awesome (optional)-->
   <!--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
@@ -70,7 +69,7 @@
           <a href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a>
           </li>
           <li ng-show="isAuthenticated()"><a ng-click="logout()">Log out</a></li>
-          <li ng-hide="isAuthenticated()"><a href="#/register">Register</a></li>
+          <!--<li ng-hide="isAuthenticated()"><a href="#/register">Register</a></li>-->
           <li ng-hide="isAuthenticated()"><a ng-click="showLogin()">Log in</a></li>
           <!-- <li><a href="http://localhost:8001/Desktop/collaboro/index.html/#">Help</a></li> -->
         </ul>
