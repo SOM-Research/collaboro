@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 INRIA.
+ * Copyright (c) 2014 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  * Juan David Villa Calle - (juan-david.villa_calle@inria.fr)
+ * Javier Canovas (me@jlcanovas.es)
  *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
@@ -17,47 +18,24 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
 
-/**
- * Simple login service
- * 
- * @author Juan David Villa Calle (juan-david.villa_calle@inria.fr)
- *
- */
 @WebServlet(description = "Exposes the login service", urlPatterns = { "/login" })
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends AbstractSecurityServlet {
 	private static final long serialVersionUID = 1L;
-
-	public LoginServlet() {
-		super();
-	}
-
-	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		System.out.println("Llega al doOptions del login");
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-		response.addHeader("Access-Control-Allow-Credentials", "true");
-		super.doOptions(request, response);
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Llega al doPost del login");
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-		response.addHeader("Access-Control-Allow-Credentials", "true");
+		addResponseOptions(response);
 
 		// Getting the parameter (in JSON)
 		StringBuffer jb = new StringBuffer();
@@ -69,30 +47,40 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception e)	{
 			throw new ServletException("There are no parameters in the login");
 		}
-		System.out.println(jb);
-		
+
 		// Getting the JSON object 
 		Gson gson = new Gson();
 		JsonUser user = gson.fromJson(jb.toString(), JsonUser.class);   
-		System.out.println(user.getEmail());
-		System.out.println(user.getPassword());
-		System.out.println(user.getDsl());
-		
+
 		// Accesing the backend to validate the user
 		CollaboroBackend backend = CollaboroBackendFactory.getBackend(user.getDsl());
 		User historyUser = backend.loginUser(user.getEmail(), user.getPassword(), user.getDsl());  
-		String userId = historyUser.getId();
-		
-		// Setting session and cookies
-		HttpSession session = request.getSession();
-		session.setAttribute("user", historyUser.getFirstName());
-		session.setMaxInactiveInterval(30*60);
-		Cookie userName = new Cookie("collaboro_user", userId);
-		userName.setMaxAge(30*60); // setting cookie to expiry in 30 mins
-		response.addCookie(userName);
-		System.out.println("Se crea una cookie llamada: "+userName.getName());
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
-		out.print("{\"user\": { \"firstName\" : \"" + historyUser.getFirstName() + "\", \"lastName\" : \"" + historyUser.getLastName() + "\", \"admin\" : false}}");
+		if(historyUser != null) {
+			String userId = historyUser.getId();
+
+			// Setting session and cookies
+			HttpSession session = request.getSession();
+			session.setAttribute("user", historyUser);
+			session.setAttribute("dsl", user.getDsl());
+			session.setMaxInactiveInterval(30*60);
+
+			Cookie userName = new Cookie("collaboro_user", userId);
+			userName.setMaxAge(30*60); // setting cookie to expiry in 30 mins
+
+			response.addCookie(userName);
+			response.setContentType("application/json");
+			PrintWriter out = response.getWriter();
+			
+			JsonObject jsonResponse = buildJsonUserResponse(historyUser, user.getDsl());
+			out.print(jsonResponse.toString());
+		} else {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
+	}
+
+	@Override
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		addResponseOptions(response);
+		super.doOptions(request, response);
 	}
 }

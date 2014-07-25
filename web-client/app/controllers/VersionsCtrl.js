@@ -128,7 +128,6 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
       });
     };
 
-    
 
   }
   ]);
