@@ -10,12 +10,13 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
     // Functions controlling the modal dialog
     function openLoginDialog() {
       if(!loginDialog) {
-        loginDialog= $modal.open(
+        loginDialog = $modal.open(
           {
             templateUrl : 'security/partials/form.tpl.html',
             controller  : 'LoginFormController'
           }
-        )
+        );
+        console.log(loginDialog);
       }
     }
 
@@ -88,17 +89,18 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
         if(service.isAuthenticated()) {
           return $q.when(service.currentUser);
         } else {
+          redirect('/');
           return $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/currentUser').then(
             function(response) {
               service.currentUser = response.data.user;
+              redirect('/project');
               return service.currentUser;
             }, function(response) {
               if(response.status === 401) {
-                service.showLogin();
+                return $q.when(service.showLogin());
               } else {
                 service.currentUser = null;
                 service.currentDSL = null;
-                redirect('/');
               }
             }
           );
