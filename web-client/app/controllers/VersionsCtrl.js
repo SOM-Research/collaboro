@@ -1,17 +1,12 @@
 angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'History', 'collaboration', 'security',
   function($scope, History, collaboration, security) {
+    // Tree tree 
+    // It is initialized by refreshCollaborations() function (see below)
     var tree;
     $scope.my_tree = tree = {};
 
     // The collaborations tree
     $scope.treeCollaborations = [];
-
-    // Tree initialization
-    History.query(
-      function(history){
-        $scope.treeCollaborations = history;
-      }
-    );
 
     // The new collaborations to be sent to the server
     // (We keep different arrays due to different formats)
@@ -56,6 +51,18 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
           result.label = result.data['type'] +' from '+ result.data['username'];
         });
     }
+
+    // Refresh the tree
+    $scope.refreshcollaborations = function() {
+      History.query(
+        function(history){
+          $scope.treeCollaborations = history;
+        }
+      );
+    }
+
+    // Tree initialization
+    $scope.refreshcollaborations();
 
     $scope.add_collaboration = function(newbranch) {
       var b;
