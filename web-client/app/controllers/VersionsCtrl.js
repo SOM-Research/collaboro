@@ -19,6 +19,7 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
           // We build the collaboration to be sent to the server
           var newCollaboration = {
               "rationale": result.data['description'],
+              "actions" : result.data['actions'],
               "type": result.data['type'],
               "proposedBy" : security.currentUser.firstName
           };

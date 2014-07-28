@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -225,7 +221,7 @@ public class VoteImpl extends EObjectImpl implements Vote {
 	 */
 	public Collaboration getCollaboration() {
 		if (eContainerFeatureID() != HistoryPackage.VOTE__COLLABORATION) return null;
-		return (Collaboration)eContainer();
+		return (Collaboration)eInternalContainer();
 	}
 
 	/**

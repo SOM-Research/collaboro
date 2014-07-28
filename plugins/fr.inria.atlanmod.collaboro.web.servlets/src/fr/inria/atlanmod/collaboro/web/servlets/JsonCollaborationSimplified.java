@@ -19,6 +19,7 @@ package fr.inria.atlanmod.collaboro.web.servlets;
 public class JsonCollaborationSimplified {
 	private String proposedBy;
 	private String rationale;
+	private String actions;
 	private String type;
 	private String parent_id;
 	
@@ -36,6 +37,14 @@ public class JsonCollaborationSimplified {
 
 	public void setRationale(String rationale) {
 		this.rationale = rationale;
+	}
+
+	public String getActions() {
+		return actions;
+	}
+
+	public void setActions(String actions) {
+		this.actions = actions;
 	}
 
 	public String getType() {

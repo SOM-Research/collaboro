@@ -3,11 +3,13 @@
     <description>
     	Build JAR
     </description>
-
-    <!-- ================================= 
-          target: default              
-         ================================= -->
+	
     <target name="default" description="JAR">
-        <jar destfile="fr.inria.atlanmod.collaboro.backend.jar" basedir="bin"/>
+    	<delete file="fr.inria.atlanmod.collaboro.backend.jar"/>
+        <jar destfile="fr.inria.atlanmod.collaboro.backend.jar">
+        	<fileset dir="bin"/>
+        	<fileset dir="src"/>
+        </jar>
+    	<copy file="fr.inria.atlanmod.collaboro.backend.jar" todir="../fr.inria.atlanmod.collaboro.web.servlets/WebContent/WEB-INF/lib"/>
     </target>
 </project>

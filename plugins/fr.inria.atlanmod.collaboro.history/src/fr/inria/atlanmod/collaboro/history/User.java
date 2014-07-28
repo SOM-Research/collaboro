@@ -1,13 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
 import org.eclipse.emf.common.util.EList;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +26,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface User extends IdElement {
-
 	/**
 	 * Returns the value of the '<em><b>Votes</b></em>' reference list.
 	 * The list contents are of type {@link fr.inria.atlanmod.collaboro.history.Vote}.
@@ -171,4 +165,5 @@ public interface User extends IdElement {
 	 * @generated
 	 */
 	void setLastName(String value);
+
 } // User

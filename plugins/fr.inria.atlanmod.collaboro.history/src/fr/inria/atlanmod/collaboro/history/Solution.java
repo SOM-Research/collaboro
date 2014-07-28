@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -18,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Solution#getChanges <em>Changes</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Solution#getProposal <em>Proposal</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Solution#getChangesText <em>Changes Text</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,5 +68,31 @@ public interface Solution extends Collaboration {
 	 * @generated
 	 */
 	void setProposal(Proposal value);
+
+	/**
+	 * Returns the value of the '<em><b>Changes Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Changes Text</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Changes Text</em>' attribute.
+	 * @see #setChangesText(String)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getSolution_ChangesText()
+	 * @model
+	 * @generated
+	 */
+	String getChangesText();
+
+	/**
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Solution#getChangesText <em>Changes Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Changes Text</em>' attribute.
+	 * @see #getChangesText()
+	 * @generated
+	 */
+	void setChangesText(String value);
 
 } // Solution

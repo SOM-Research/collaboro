@@ -1,13 +1,7 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.impl.EcorePackageImpl;
 import fr.inria.atlanmod.collaboro.history.AbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.Add;
 import fr.inria.atlanmod.collaboro.history.Collaboration;
@@ -36,11 +30,13 @@ import fr.inria.atlanmod.collaboro.history.VersionHistoryType;
 import fr.inria.atlanmod.collaboro.history.Vote;
 
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -639,6 +635,15 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getSolution_ChangesText() {
+		return (EAttribute)solutionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getComment() {
 		return commentEClass;
 	}
@@ -675,6 +680,15 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getModelChange_Solution() {
+		return (EReference)modelChangeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getModelChange_ReferredElement() {
 		return (EReference)modelChangeEClass.getEStructuralFeatures().get(1);
 	}
@@ -686,15 +700,6 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 */
 	public EReference getModelChange_Target() {
 		return (EReference)modelChangeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getModelChange_Solution() {
-		return (EReference)modelChangeEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -970,6 +975,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		solutionEClass = createEClass(SOLUTION);
 		createEReference(solutionEClass, SOLUTION__CHANGES);
 		createEReference(solutionEClass, SOLUTION__PROPOSAL);
+		createEAttribute(solutionEClass, SOLUTION__CHANGES_TEXT);
 
 		commentEClass = createEClass(COMMENT);
 		createEReference(commentEClass, COMMENT__COMMENTED_ELEMENT);
@@ -1114,6 +1120,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		initEClass(solutionEClass, Solution.class, "Solution", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSolution_Changes(), this.getModelChange(), this.getModelChange_Solution(), "changes", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSolution_Proposal(), this.getProposal(), this.getProposal_Sols(), "proposal", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSolution_ChangesText(), ecorePackage.getEString(), "changesText", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComment_CommentedElement(), this.getCollaboration(), this.getCollaboration_Comments(), "commentedElement", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

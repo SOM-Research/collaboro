@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -610,13 +606,22 @@ public interface HistoryPackage extends EPackage {
 	int SOLUTION__PROPOSAL = COLLABORATION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Changes Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOLUTION__CHANGES_TEXT = COLLABORATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Solution</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SOLUTION_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 2;
+	int SOLUTION_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.CommentImpl <em>Comment</em>}' class.
@@ -1199,7 +1204,6 @@ public interface HistoryPackage extends EPackage {
 	 */
 	int TAG_FEATURE_COUNT = 2;
 
-
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}' enum.
 	 * <!-- begin-user-doc -->
@@ -1632,6 +1636,17 @@ public interface HistoryPackage extends EPackage {
 	EReference getSolution_Proposal();
 
 	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Solution#getChangesText <em>Changes Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Changes Text</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Solution#getChangesText()
+	 * @see #getSolution()
+	 * @generated
+	 */
+	EAttribute getSolution_ChangesText();
+
+	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Comment <em>Comment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1674,6 +1689,17 @@ public interface HistoryPackage extends EPackage {
 	EClass getModelChange();
 
 	/**
+	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Solution</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getSolution()
+	 * @see #getModelChange()
+	 * @generated
+	 */
+	EReference getModelChange_Solution();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1694,17 +1720,6 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModelChange_Target();
-
-	/**
-	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Solution</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getSolution()
-	 * @see #getModelChange()
-	 * @generated
-	 */
-	EReference getModelChange_Solution();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Add <em>Add</em>}'.
@@ -2288,6 +2303,14 @@ public interface HistoryPackage extends EPackage {
 		EReference SOLUTION__PROPOSAL = eINSTANCE.getSolution_Proposal();
 
 		/**
+		 * The meta object literal for the '<em><b>Changes Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOLUTION__CHANGES_TEXT = eINSTANCE.getSolution_ChangesText();
+
+		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.CommentImpl <em>Comment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2324,6 +2347,14 @@ public interface HistoryPackage extends EPackage {
 		EClass MODEL_CHANGE = eINSTANCE.getModelChange();
 
 		/**
+		 * The meta object literal for the '<em><b>Solution</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_CHANGE__SOLUTION = eINSTANCE.getModelChange_Solution();
+
+		/**
 		 * The meta object literal for the '<em><b>Referred Element</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2338,14 +2369,6 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MODEL_CHANGE__TARGET = eINSTANCE.getModelChange_Target();
-
-		/**
-		 * The meta object literal for the '<em><b>Solution</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODEL_CHANGE__SOLUTION = eINSTANCE.getModelChange_Solution();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.AddImpl <em>Add</em>}' class.

@@ -1,23 +1,20 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.Tag;
-
 import fr.inria.atlanmod.collaboro.history.TagBased;
+
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -102,7 +99,7 @@ public class TagImpl extends EObjectImpl implements Tag {
 	 */
 	public TagBased getTagCollection() {
 		if (eContainerFeatureID() != HistoryPackage.TAG__TAG_COLLECTION) return null;
-		return (TagBased)eContainer();
+		return (TagBased)eInternalContainer();
 	}
 
 	/**

@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="ASCII"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:history="http://atlanmod.fr/collaboro/history" language="aadlba">
-  <users id="juan" email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David" lastName="Villa"/>
-  <users id="javier" email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Javier" lastName="Canovas"/>
-  <users id="etienne" collaborations="//@histories.0/@versions.0/@proposals.0" email="etienne.borde@telecom-paristech.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Etienne" lastName="Borde"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:history="http://atlanmod.fr/collaboro/history"
+    language="aadlba">
+  <users id="juan" collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.0/@sols.1 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0"
+      email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
+      lastName="Villa"/>
+  <users id="javier" email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808"
+      firstName="Javier" lastName="Canovas"/>
+  <users id="etienne" collaborations="#//@histories.0/@versions.0/@proposals.0" email="etienne.borde@telecom-paristech.fr"
+      pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Etienne" lastName="Borde"/>
   <histories>
     <versions id="0.1">
-      <proposals id="n0" rationale="Section D.3, when defining a local variable, it could be interesting to define or override property associations, the same way we can do this in the core of the language when defining the property associations for a subcomponent." proposedBy="//@users.2"/>
+      <proposals id="n0" rationale="Section D.3, when defining a local variable, it could be interesting to define or override property associations, the same way we can do this in the core of the language when defining the property associations for a subcomponent."
+          proposedBy="#//@users.2">
+        <sols id="n1" rationale="qerqewr" proposedBy="#//@users.0"/>
+        <sols id="n2" rationale="aaa" proposedBy="#//@users.0"/>
+      </proposals>
+      <proposals id="n3" rationale="qqerwerwerwer" proposedBy="#//@users.0">
+        <comments id="n1" rationale="erewe" proposedBy="#//@users.0"/>
+      </proposals>
     </versions>
   </histories>
 </history:History>

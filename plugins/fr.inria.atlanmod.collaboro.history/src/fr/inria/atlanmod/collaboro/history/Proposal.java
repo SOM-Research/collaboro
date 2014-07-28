@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -21,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getVersion <em>Version</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#isAccepted <em>Accepted</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getMeta <em>Meta</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Proposal#getConflictWith <em>Conflict With</em>}</li>
  * </ul>
  * </p>
  *
@@ -145,7 +142,20 @@ public interface Proposal extends Collaboration {
 	 */
 	EList<MetaInfo> getMeta();
 
+	/**
+	 * Returns the value of the '<em><b>Conflict With</b></em>' reference list.
+	 * The list contents are of type {@link fr.inria.atlanmod.collaboro.history.Proposal}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Conflict With</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Conflict With</em>' reference list.
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getProposal_ConflictWith()
+	 * @model
+	 * @generated
+	 */
+	EList<Proposal> getConflictWith();
 
-	String getStringState();
-	
 } // Proposal

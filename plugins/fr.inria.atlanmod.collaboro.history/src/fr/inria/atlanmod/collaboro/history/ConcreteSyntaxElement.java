@@ -1,13 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ConcreteSyntaxElement extends SyntaxElement {
-
 	/**
 	 * Returns the value of the '<em><b>Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -52,4 +46,5 @@ public interface ConcreteSyntaxElement extends SyntaxElement {
 	 * @generated
 	 */
 	void setElement(NotationElement value);
+
 } // ConcreteSyntaxElement

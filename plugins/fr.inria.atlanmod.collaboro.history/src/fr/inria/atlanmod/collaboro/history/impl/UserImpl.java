@@ -1,23 +1,24 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
 import fr.inria.atlanmod.collaboro.history.Collaboration;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.User;
-
 import fr.inria.atlanmod.collaboro.history.Vote;
+
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -49,6 +50,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected EList<Vote> votes;
+
 	/**
 	 * The cached value of the '{@link #getCollaborations() <em>Collaborations</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -68,6 +70,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected static final String EMAIL_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getEmail() <em>Email</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -77,6 +80,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected String email = EMAIL_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getPasword() <em>Pasword</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,6 +90,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected static final String PASWORD_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getPasword() <em>Pasword</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -95,6 +100,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected String pasword = PASWORD_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -104,6 +110,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected static final String FIRST_NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -113,6 +120,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected String firstName = FIRST_NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -122,6 +130,7 @@ public class UserImpl extends IdElementImpl implements User {
 	 * @ordered
 	 */
 	protected static final String LAST_NAME_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

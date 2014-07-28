@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -24,8 +20,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -41,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#isAccepted <em>Accepted</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getMeta <em>Meta</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl#getConflictWith <em>Conflict With</em>}</li>
  * </ul>
  * </p>
  *
@@ -96,6 +93,16 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	 * @ordered
 	 */
 	protected EList<MetaInfo> meta;
+
+	/**
+	 * The cached value of the '{@link #getConflictWith() <em>Conflict With</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConflictWith()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Proposal> conflictWith;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -173,7 +180,7 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 	 */
 	public Version getVersion() {
 		if (eContainerFeatureID() != HistoryPackage.PROPOSAL__VERSION) return null;
-		return (Version)eContainer();
+		return (Version)eInternalContainer();
 	}
 
 	/**
@@ -238,6 +245,18 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 			meta = new EObjectContainmentWithInverseEList<MetaInfo>(MetaInfo.class, this, HistoryPackage.PROPOSAL__META, HistoryPackage.META_INFO__PROPOSAL);
 		}
 		return meta;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Proposal> getConflictWith() {
+		if (conflictWith == null) {
+			conflictWith = new EObjectResolvingEList<Proposal>(Proposal.class, this, HistoryPackage.PROPOSAL__CONFLICT_WITH);
+		}
+		return conflictWith;
 	}
 
 	/**
@@ -312,6 +331,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 				return isAccepted();
 			case HistoryPackage.PROPOSAL__META:
 				return getMeta();
+			case HistoryPackage.PROPOSAL__CONFLICT_WITH:
+				return getConflictWith();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -342,6 +363,10 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 				getMeta().clear();
 				getMeta().addAll((Collection<? extends MetaInfo>)newValue);
 				return;
+			case HistoryPackage.PROPOSAL__CONFLICT_WITH:
+				getConflictWith().clear();
+				getConflictWith().addAll((Collection<? extends Proposal>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -369,6 +394,9 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 			case HistoryPackage.PROPOSAL__META:
 				getMeta().clear();
 				return;
+			case HistoryPackage.PROPOSAL__CONFLICT_WITH:
+				getConflictWith().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -391,6 +419,8 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 				return accepted != ACCEPTED_EDEFAULT;
 			case HistoryPackage.PROPOSAL__META:
 				return meta != null && !meta.isEmpty();
+			case HistoryPackage.PROPOSAL__CONFLICT_WITH:
+				return conflictWith != null && !conflictWith.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -409,11 +439,6 @@ public class ProposalImpl extends CollaborationImpl implements Proposal {
 		result.append(accepted);
 		result.append(')');
 		return result.toString();
-	}
-	
-
-	public String getStringState() {
-		return "Proposal " + getId() + ((isAccepted()) ? " accepted " : " not accepted " ) + "\n  " + getSols().size() + " solutions proposed\n  " + ((getSelected() == null) ? "No solution selected": "Solution " + getSelected().getId() + " selected");
 	}
 
 } //ProposalImpl

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -10,7 +6,6 @@ import fr.inria.atlanmod.collaboro.history.History;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.User;
 import fr.inria.atlanmod.collaboro.history.VersionHistory;
-import fr.inria.atlanmod.collaboro.history.Version;
 
 import java.util.Collection;
 

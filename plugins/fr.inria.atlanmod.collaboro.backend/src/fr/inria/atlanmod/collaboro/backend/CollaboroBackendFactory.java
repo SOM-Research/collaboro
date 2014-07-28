@@ -15,11 +15,11 @@ public class CollaboroBackendFactory {
 	private CollaboroBackendFactory() {
 		this.histories = new HashMap<>();
 		this.histories.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.history");
-		this.histories.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\AADLBA.history");
+		this.histories.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.history");
 
 		this.ecores = new HashMap<>();
 		this.ecores.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.ecore");
-		this.ecores.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\AADLBA.ecore");
+		this.ecores.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.ecore");
 		
 		this.backends = new HashMap<>();
 	}
@@ -30,8 +30,8 @@ public class CollaboroBackendFactory {
 
 		CollaboroBackend backend = instance.backends.get(dsl.toLowerCase());
 		if(backend == null) {
-			String historyFileString = instance.histories.get(dsl);
-			String ecoreFileString = instance.ecores.get(dsl);
+			String historyFileString = instance.histories.get(dsl.toLowerCase());
+			String ecoreFileString = instance.ecores.get(dsl.toLowerCase());
 
 			if(historyFileString != null && ecoreFileString != null){
 				File historyFile = new File(historyFileString);

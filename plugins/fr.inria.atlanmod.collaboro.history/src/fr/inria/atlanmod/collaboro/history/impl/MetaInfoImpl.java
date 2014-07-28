@@ -1,22 +1,20 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 import fr.inria.atlanmod.collaboro.history.MetaInfo;
-
 import fr.inria.atlanmod.collaboro.history.Proposal;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -59,7 +57,7 @@ public abstract class MetaInfoImpl extends EObjectImpl implements MetaInfo {
 	 */
 	public Proposal getProposal() {
 		if (eContainerFeatureID() != HistoryPackage.META_INFO__PROPOSAL) return null;
-		return (Proposal)eContainer();
+		return (Proposal)eInternalContainer();
 	}
 
 	/**

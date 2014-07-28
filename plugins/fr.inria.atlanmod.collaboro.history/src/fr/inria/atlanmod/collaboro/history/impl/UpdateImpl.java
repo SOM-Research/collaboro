@@ -1,23 +1,17 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
-import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
-import fr.inria.atlanmod.collaboro.history.NewAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.SyntaxElement;
 import fr.inria.atlanmod.collaboro.history.Update;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**

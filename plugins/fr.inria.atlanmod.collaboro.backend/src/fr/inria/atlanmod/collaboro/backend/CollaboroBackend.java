@@ -26,7 +26,7 @@ public class CollaboroBackend {
 	ModelManager modelManager = null;
 
 	public CollaboroBackend(File historyFile, File ecoreFile) {
-		 modelManager = ModelManagerFactory.createModelManager(ecoreFile);
+		modelManager = ModelManagerFactory.createModelManager(ecoreFile);
 	}
 
 	/**
@@ -115,29 +115,37 @@ public class CollaboroBackend {
 
 	public void createProposalPlain(String userId, String rationale) {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
-
-		// Locating the user
-		User userProposing = null;
-		if(getHistory() != null) 
-			for (User user : getHistory().getUsers()) 
-				if(user.getId() != null && user.getId().equals(userId))
-					userProposing = user;
-
-		if(userProposing != null) {
-			newProposal.setProposedBy(userProposing);
-			newProposal.setRationale(rationale);
-			createProposal(newProposal);
-		}
+		initCollaborationPlain(newProposal, userId, rationale);
+		createProposal(newProposal);
 	}
 
 	public void createProposal(Proposal newProposal) {
 		newProposal.setId("n" + ++lastIndex);
-		getProposals().add(newProposal);
 		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
 		version.getProposals().add(newProposal);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
-		System.out.println("Se guardo!");
+	}
+	
+	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions) {
+		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
+		initCollaborationPlain(newSolution, userId, rationale);
+		newSolution.setChangesText(actions);
+		
+		Collaboration parent = locateCollaborationById(null, parentCollaboration);
+		if (parent != null && parent instanceof Proposal) {
+			Proposal parentProposal = (Proposal) parent;
+			createSolution(parentProposal, newSolution);
+		} else {
+			throw new IllegalArgumentException("The parent does not exists");
+		}
+	}
+
+	public void createSolution(Proposal parent, Solution newSolution) {
+		newSolution.setId("n" + ++lastIndex);
+		parent.getSols().add(newSolution);	
+		modelManager.saveHistory();
+		modelManager.saveNotation();
 	}
 
 	public List<Proposal> getProposals() {
@@ -166,26 +174,39 @@ public class CollaboroBackend {
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
+		} else {
+			throw new IllegalArgumentException("The user does not exists");
 		}
 		return collaboration;
 	}
 
 	private Collaboration locateCollaborationById(Collaboration collaboration, String id) {
+		Collaboration found = null;
 		if(collaboration == null ) {
-			for(Proposal proposal : getProposals()) 
-				return locateCollaborationById(proposal, id);
+			for(Proposal proposal : getProposals()) {
+				found = locateCollaborationById(proposal, id);
+				if(found != null) break;
+			}
 		} else {
 			if(collaboration.getId().equals(id)) 
 				return collaboration;
 			else {
-				if(collaboration instanceof Proposal) 
-					for(Solution solution : ((Proposal) collaboration).getSols()) 
-						return locateCollaborationById(solution, id);
-				for(Comment comment : collaboration.getComments()) 
-					return locateCollaborationById(comment, id);
+				if(collaboration instanceof Proposal) { 
+					for(Solution solution : ((Proposal) collaboration).getSols()) {
+						found = locateCollaborationById(solution, id);
+						if(found != null) break;
+					}
+				}
+				if(found == null) {
+					for(Comment comment : collaboration.getComments()) { 
+						found = locateCollaborationById(comment, id);
+						if(found != null) break;
+					}
+				}
+				return found;
 			}
 		}
-		return null;
+		return found;
 	}
 
 	public void createCommentPlain(String parentCollaboration, String userId, String rationale) {
@@ -193,18 +214,20 @@ public class CollaboroBackend {
 		initCollaborationPlain(newComment, userId, rationale);
 
 		Collaboration parent = locateCollaborationById(null, parentCollaboration);
-		if(parent != null) 
+		if(parent != null) {
 			createComment(parent, newComment);
+		} else {
+			throw new IllegalArgumentException("The parent does not exists");
+		}
 	}
 
-	public void createComment(Collaboration collaboration, Comment comment) {
-		Comment newComment = HistoryFactory.eINSTANCE.createComment();
+	public void createComment(Collaboration collaboration, Comment newComment) {
 		newComment.setId("n" + ++lastIndex);
 		collaboration.getComments().add(newComment);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 	}
-	
+
 
 	public void saveHistory() {
 		modelManager.saveHistory();

@@ -8,6 +8,11 @@
           target: default              
          ================================= -->
     <target name="default" description="JAR">
-        <jar destfile="fr.inria.atlanmod.collaboro.history.jar" basedir="bin"/>
+    	<delete file="fr.inria.atlanmod.collaboro.history.jar"/>
+        <jar destfile="fr.inria.atlanmod.collaboro.history.jar">
+        	<fileset dir="bin"/>
+        	<fileset dir="src"/>
+        </jar>
+    	<copy file="fr.inria.atlanmod.collaboro.history.jar" todir="../fr.inria.atlanmod.collaboro.web.servlets/WebContent/WEB-INF/lib"/>
     </target>
 </project>

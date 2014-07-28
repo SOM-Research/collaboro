@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -81,7 +77,7 @@ public class CommentImpl extends CollaborationImpl implements Comment {
 	 */
 	public Collaboration getCommentedElement() {
 		if (eContainerFeatureID() != HistoryPackage.COMMENT__COMMENTED_ELEMENT) return null;
-		return (Collaboration)eContainer();
+		return (Collaboration)eInternalContainer();
 	}
 
 	/**
