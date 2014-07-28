@@ -3,9 +3,14 @@
       <!--The vertical menu-->    
       <div class="col-sm-2 col-md-1 sidebar">
         <p class="text-center">Current Version</p>
-        <ul class="nav nav-sidebar">
-          <li class="active"><a href="http://localhost:8001/Desktop/collaboro/index.html#/">Run Decissions</a></li>
-        </ul>
+        <div class="alert alert-info text-center"><strong>{{dslVersion}}</strong></div>  
+        <div class="btn-group-vertical">
+        <button ng-click="previousVersion()" class="btn btn-default btn-sm">Previos Version</button>
+        <button ng-click="createVersion()" class="btn btn-default btn-sm">Create Version</button>
+        <button ng-click="nextVersion()" class="btn btn-default btn-sm">Next Version</button>
+        </div>
+        <p></p>
+        <button ng-click="launchDecision()" class="btn btn-default btn-sm">Run Decisions</button>
       </div>
       <!--The four panels.--> 
       <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">

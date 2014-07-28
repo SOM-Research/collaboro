@@ -62,6 +62,10 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
       );
     }
 
+    $scope.$on('dslVersionChanged', function() {
+      $scope.refreshcollaborations();
+    });
+
     // Tree initialization
     $scope.refreshcollaborations();
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:history="http://atlanmod.fr/collaboro/history"
     language="aadlba">
-  <users id="juan" collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.0/@sols.1 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.0/@sols.2"
+  <users id="juan" collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.0/@sols.1 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.0/@sols.2 #//@histories.0/@versions.1/@proposals.0"
       email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
       lastName="Villa"/>
   <users id="javier" email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808"
@@ -19,6 +19,9 @@
       <proposals id="n3" rationale="qqerwerwerwer" proposedBy="#//@users.0">
         <comments id="n1" rationale="erewe" proposedBy="#//@users.0"/>
       </proposals>
+    </versions>
+    <versions id="1">
+      <proposals id="n1" rationale="tests" proposedBy="#//@users.0"/>
     </versions>
   </histories>
 </history:History>
