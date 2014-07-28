@@ -2,6 +2,7 @@
     <div class="row-fluid">
       <!--The vertical menu-->    
       <div class="col-sm-2 col-md-1 sidebar">
+        <p class="text-center">Current Version</p>
         <ul class="nav nav-sidebar">
           <li class="active"><a href="http://localhost:8001/Desktop/collaboro/index.html#/">Run Decissions</a></li>
         </ul>
@@ -67,7 +68,15 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
-                        <abn-tree tree-data="example_treedata" tree-control="my_tree" icon-leaf="fa fa-leaf" icon-expand="fa fa-plus-circle" icon-collapse= "fa fa-minus-circle"  on-select="my_tree_handler(branch); $broadcast('VersionSelectedEvent')" expand-level="0"></abn-tree>
+                        <abn-tree 
+                          tree-data="example_treedata" 
+                          tree-control="my_tree" 
+                          icon-leaf="fa fa-leaf" 
+                          icon-expand="fa fa-plus-circle" 
+                          icon-collapse= "fa fa-minus-circle"  
+                          on-select="my_tree_handler(branch); $broadcast('VersionSelectedEvent')" 
+                          expand-level="0">
+                        </abn-tree>
                       </div>
                       <hr>
                       <p class="text-center">
@@ -102,7 +111,6 @@
               </div>
              </div>
             </div>
-            
            </div>
          </div>    
       </div>    

@@ -1,9 +1,5 @@
-angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$rootScope',
-  function($scope, $rootScope) {
-
-    $rootScope.$on("$routeChangeError", function () {
-      console.log("failed to change routes");
-    });
-
+angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$rootScope', 'security',
+  function($scope, $rootScope, security) {
+    $scope.isAuthenticated = security.isAuthenticated;
   }
 ]);
