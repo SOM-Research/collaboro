@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:history="http://atlanmod.fr/collaboro/history"
     language="aadlba">
-  <users id="juan" collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.0/@sols.1 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0"
+  <users id="juan" collaborations="#//@histories.0/@versions.0/@proposals.0/@sols.0 #//@histories.0/@versions.0/@proposals.0/@sols.1 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.0/@sols.2"
       email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
       lastName="Villa"/>
   <users id="javier" email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808"
@@ -14,6 +14,7 @@
           proposedBy="#//@users.2">
         <sols id="n1" rationale="qerqewr" proposedBy="#//@users.0"/>
         <sols id="n2" rationale="aaa" proposedBy="#//@users.0"/>
+        <sols id="n1" rationale="rewrew" proposedBy="#//@users.0" changesText="1111"/>
       </proposals>
       <proposals id="n3" rationale="qqerwerwerwer" proposedBy="#//@users.0">
         <comments id="n1" rationale="erewe" proposedBy="#//@users.0"/>

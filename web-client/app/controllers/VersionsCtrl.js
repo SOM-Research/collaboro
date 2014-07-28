@@ -76,6 +76,8 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
       if ((_ref = branch.data) != null ? _ref.description : void 0) {
         $scope.versionSelected = branch.label;
         $scope.versionSelectedDescription = branch.data.description;
+        $scope.showAction = (branch.data.type == 'Solution') ? true : false;
+        $scope.versionSelectedActions = branch.data.actions;
         $scope.versionSelectedUsersAgree = branch.data.agree;
         $scope.versionSelectedUsersDisagree = branch.data.disagree;
         $scope.userNameSelected = branch.data.username;

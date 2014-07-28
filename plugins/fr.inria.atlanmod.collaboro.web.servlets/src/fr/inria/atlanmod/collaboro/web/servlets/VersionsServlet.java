@@ -131,9 +131,11 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 
 			String collaborationType = "";
 			String parentId = "";
+			String actions = "";
 			if(collaboration instanceof Solution) {
 				collaborationType = "Solution";
 				parentId = ((Solution)collaboration).getProposal().getId();
+				actions = (((Solution) collaboration).getChangesText() != null) ? ((Solution) collaboration).getChangesText() : "";
 			} else if(collaboration instanceof Comment) {
 				collaborationType = "Comment";
 				parentId = ((Comment)collaboration).getCommentedElement().getId();
@@ -143,6 +145,7 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 			String collaborationData = "\"data\": { "
 					+ "\"username\":\""	+ collaboration.getProposedBy().getId() + "\"," 
 					+ "\"description\": \"" + cleanRationale + "\"," 
+					+ ((collaboration instanceof Solution) ? "\"actions\" : \"" + actions.replaceAll("(\\r|\\t|\\n|\")", " ") + "\", ": "\"actions\" : \"\",") 
 					+ "\"type\": \"" + collaborationType + "\"," 
 					+ "\"collaboration_id\": \"" + collaboration.getId() + "\"";
 
@@ -265,8 +268,6 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 				out.print("{\"user\": { \"firstName\" : \"Juan\", \"lastName\" : \"Villa\", \"admin\" : false}}");
 			}
 		}
-
-
 	}
 
 	@Override

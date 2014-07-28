@@ -103,12 +103,36 @@
                 <h3 class="panel-title">Collaboration data</h3>
              </div>
              <div class="panel-body">
-              <div ng-controller="collaborationsCtrl">
-                <accordion close-others="oneAtATime">
-                  <accordion-group heading="{{group.title}}" ng-repeat="group in groups" is-open="true">
-                   <p ng-bind-html="group.content"></p>
-                  </accordion-group>
-                </accordion>
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Proposed by</h3>
+                </div>
+                <div class="panel-body">{{userNameSelected}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Rationale</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedDescription}}</div>
+              </div>
+              <div class="panel panel-default" ng-show="showAction">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Actions</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedActions}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Votes Agree</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedUsersAgree}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Votes Disagree</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedUsersDisagree}}</div>
               </div>
              </div>
             </div>
