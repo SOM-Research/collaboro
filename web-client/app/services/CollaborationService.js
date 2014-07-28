@@ -49,7 +49,7 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
       			return openCollaborationDialog(collaborationtoedit);
       		},
       		saveCollaborations: function(collaborations) {
-      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { collaborations:collaborations });
+      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { collaborations : collaborations });
       		}
 		};
 		return service;

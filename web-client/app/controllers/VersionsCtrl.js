@@ -1,31 +1,24 @@
-angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','History','collaboration','security',
-  function($scope,History, collaboration, security) {
+angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'History', 'collaboration', 'security',
+  function($scope, History, collaboration, security) {
+    var tree;
+    $scope.my_tree = tree = {};
+
     // The collaborations tree
-    $scope.example_treedata =[];
+    $scope.treeCollaborations = [];
+
+    // Tree initialization
+    History.query(
+      function(history){
+        $scope.treeCollaborations = history;
+      }
+    );
 
     // The new collaborations to be sent to the server
     // (We keep different arrays due to different formats)
-    $scope.new_collaborations =[];
+    $scope.newCollaborations =[];
 
-    // Function associated with the cancel button in the collaboration dialog.
-    $scope.cancelCollaboration = function() {
-      collaboration.cancelCollaboration();
-    };
-
-    //Function associated with sending the new collaborations to the server.
-    $scope.savecollaborations = function() {
-      collaboration.saveCollaborations($scope.new_collaborations);
-    }
-
-    //Function associated to the Edit Collaboration button.
-    $scope.editcollaboration = function() {
-      collaboration.editCollaboration(tree.get_selected_branch()).result.then(
-        function(result){
-          result.label = result.data['type'] +' from '+ result.data['username'];
-        });
-    }
-
-    $scope.showcollaboration = function() {
+    // Adds a new collaboration
+    $scope.addcollaboration = function() {
       collaboration.showCollaboration().result.then(
         function(result) {
           // We build the collaboration to be sent to the server
@@ -46,15 +39,23 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
           result.data['username'] = security.currentUser.firstName;
           result.label = result.data['type'] + ' from ' + result.data['username'];
 
-          $scope.new_collaborations.push(newCollaboration);
+          $scope.newCollaborations.push(newCollaboration);
           $scope.add_collaboration(result);
         });
     };
 
+    // Save (sends) the collaboration to the server
+    $scope.savecollaborations = function() {
+      collaboration.saveCollaborations($scope.newCollaborations);
+    }
 
-    var tree;
-
-    History.query(function(history){$scope.example_treedata=history;});
+    // Edit an existing collaboration
+    $scope.editcollaboration = function() {
+      collaboration.editCollaboration(tree.get_selected_branch()).result.then(
+        function(result){
+          result.label = result.data['type'] +' from '+ result.data['username'];
+        });
+    }
 
     $scope.add_collaboration = function(newbranch) {
       var b;
@@ -73,47 +74,5 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope','His
         return $scope.output += '(' + branch.data.description + ')';
       }
     };
-
-    $scope.try_changing_the_tree_data = function() {
-       $scope.example_treedata = [ 
-        {
-          label: 'North America',
-          children: [
-            {
-              label: 'Canada',
-              children: ['Toronto', 'Vancouver']
-            }, 
-            {
-              label: 'USA',
-              children: ['New York', 'Los Angeles']
-            }, 
-            {
-              label: 'Mexico',
-              children: ['Mexico City', 'Guadalajara']
-            }
-          ]
-        } 
-      ];
-    };
-
-    $scope.my_tree = tree = {};
-
-    return $scope.try_adding_a_branch = function() 
-    {
-      var b;
-      b = tree.get_selected_branch();
-
-      return tree.add_branch(b, {
-        label: 'New Collaboration',
-        data:
-        {
-          username: 'Insert username',
-          description: 'Insert rationale',
-          agree: 'Insert users who agree',
-          disagree: 'No users who disagree'
-        }
-      });
-    };
-
   }
 ]);
