@@ -20,6 +20,10 @@
 			<label>Rationale</label>
 			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.description"></textarea>
 		</div>
+		<div class="form-group" ng-show="newcollaboration.data.type == 'Solution'">
+			<label>Action list</label>
+			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.actions"></textarea>
+		</div>
 		<div class="form-group">	
 			<label>Votes agree</label>
 			<input type="text" ng-readonly="true" class="form-control" ng-model="newcollaboration.data.agree">
@@ -32,7 +36,7 @@
 
     </label>
 	
-	<pre ng-bind="newcollaboration | json"></pre>
+	<pre ng-bind="newcollaboration | json"></pre> 
 
     <div class="modal-footer">
         <button class="btn btn-success" ng-click="add(newcollaboration)">Add</button>

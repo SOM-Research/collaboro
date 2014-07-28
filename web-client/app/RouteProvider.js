@@ -5,12 +5,6 @@ angular.module('collaboroApp').config(['$routeProvider','$httpProvider',
           templateUrl :  'app/partials/main.html',
           controller : "LoginFormController"
         }
-      /*).when('/project',
-        {
-          templateUrl: 'app/partials/project.html',
-          controller : "ProjectCtrl",
-          resolve : securityAuthorizationProvider.requireAuthenticatedUser
-        }*/
       ).when('/project',
         {
           templateUrl: 'app/partials/project.html',

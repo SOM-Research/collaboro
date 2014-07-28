@@ -8,7 +8,7 @@ angular.module('collaboroControllers').controller('metamodelAndModelsCtrl', ['$s
 					function(response)
 					{
 						$scope.metamodelImage= "data:image/jpg;base64," + response.data;
-						console.log(response);
+						//console.log(response);
 					}
 				);
 
