@@ -15,6 +15,7 @@ import fr.inria.atlanmod.collaboro.history.Solution;
 import fr.inria.atlanmod.collaboro.history.User;
 import fr.inria.atlanmod.collaboro.history.Version;
 import fr.inria.atlanmod.collaboro.history.VersionHistory;
+import fr.inria.atlanmod.collaboro.history.Vote;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 
 public class CollaboroBackend {
@@ -112,6 +113,30 @@ public class CollaboroBackend {
 	public int getVersionTracked() {
 		return versionTracked;
 	}
+	
+	public void nextVersion() {
+		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
+		
+		if(versionTracked + 1 < versionHistory.getVersions().size()) {
+			versionTracked++;
+		}
+	} 
+	
+	public void previousVersion() {
+		if(versionTracked > 0) {
+			versionTracked--;
+		}
+	}
+	
+	public void createVersion() {
+		Version version = HistoryFactory.eINSTANCE.createVersion();
+		versionTracked++;
+		version.setId(String.valueOf(versionTracked));
+		
+		getHistory().getHistories().get(getHistoryTracked()).getVersions().add(version);
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+	}
 
 	public void createProposalPlain(String userId, String rationale) {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
@@ -163,13 +188,20 @@ public class CollaboroBackend {
 		return result;
 	}
 
-	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale) {
-		// Locating the user
-		User userProposing = null;
+	private User locateUser(String userId) {
+		User userProposing = null; 
 		if(getHistory() != null) 
 			for (User user : getHistory().getUsers()) 
-				if(user.getId() != null && user.getId().equals(userId))
+				if(user.getId() != null && user.getId().equals(userId)) {
 					userProposing = user;
+					break;
+				}
+		return userProposing;
+	}
+	
+	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale) {
+		// Locating the user
+		User userProposing = locateUser(userId);
 
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
@@ -228,9 +260,46 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 
+	public void createVotePlain(String parentCollaboration, String userId, boolean agreement) {
+		User userVoting = locateUser(userId);
+		Collaboration collaboration = locateCollaborationById(null, parentCollaboration);
+		createVote(collaboration, userVoting, agreement);
+	}
+	
+	public void createVote(Collaboration collaboration, User userVoting, boolean agreement) {
+		Vote newVote = null;
+		
+		// If the user has already voted, we take the vote
+		for(Vote vote : collaboration.getVotes()) {
+			if(vote.getUser().getId().equals(userVoting.getId())) {
+				newVote = vote;
+				break;
+			}
+		}
+
+		if(newVote == null) {
+			newVote = HistoryFactory.eINSTANCE.createVote();
+			newVote.setUser(userVoting);
+			collaboration.getVotes().add(newVote);
+		}
+
+		newVote.setAgreement(agreement);
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+	}
 
 	public void saveHistory() {
 		modelManager.saveHistory();
+	}
+	
+	public void launchDecision() {
+		DecisionEngine engine = DecisionEngine.INSTANCE;
+
+		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
+		for (Proposal proposal : version.getProposals()) {
+			engine.resolveProposal(getHistory(), proposal);
+			engine.resolveSolution(getHistory(), proposal);
+		}
 	}
 
 }

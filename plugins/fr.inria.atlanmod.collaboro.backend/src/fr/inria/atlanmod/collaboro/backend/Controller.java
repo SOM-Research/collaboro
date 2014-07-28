@@ -169,7 +169,6 @@ public class Controller {
 		proposal.getSols().add(newSolution);	
 		modelManager.saveHistory();
 		modelManager.saveNotation();
-		//refreshVersionView();
 	}
 
 
@@ -183,7 +182,6 @@ public class Controller {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 		System.out.println("Se guardo!");
-		//refreshVersionView();
 	}
 
 	public void createComment(Collaboration collaboration) {
