@@ -55,10 +55,10 @@ public class NotationServlet extends AbstractCollaboroServlet
 			}
 			else
 			{
-				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfNotModelImages();
+				int numOfNotModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfNotModelImages();
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
-				out.print("{\"numImages\": "+numOfAbsModelImages +"}"); 
+				out.print("{\"numImages\": "+numOfNotModelImages +"}"); 
 			}
 
 		}
@@ -69,8 +69,6 @@ public class NotationServlet extends AbstractCollaboroServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		addResponseOptions(response);
-		response.setHeader("Access-Control-Allow-Origin", "*");
-	    response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 	    //TODO Configure the request dispatcher
 	    RequestDispatcher rd = request.getRequestDispatcher("versionsservlet");
 	    rd.forward(request, response);
