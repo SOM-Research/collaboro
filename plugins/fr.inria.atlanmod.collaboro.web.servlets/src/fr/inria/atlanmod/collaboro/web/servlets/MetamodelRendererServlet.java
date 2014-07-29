@@ -84,6 +84,9 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 			else
 			{
 				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
+				response.setContentType("application/json");
+				PrintWriter out = response.getWriter();
+				out.print("{\"numImages\": "+numOfAbsModelImages +"}"); 
 			}
 
 		}
