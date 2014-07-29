@@ -366,5 +366,10 @@ public class CollaboroBackend {
 	{
 		return 2;
 	}
+	
+	public int getNumOfNotModelImages()
+	{
+		return 3;
+	}
 
 }
