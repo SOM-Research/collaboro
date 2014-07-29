@@ -98,6 +98,10 @@
                         <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
                         <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
                       </p>
+
+                      <div class="alert bg-danger" ng-show="connError">
+                          {{connError}}
+                      </div>
                   </div>
                 </div>
                 <br>
