@@ -122,7 +122,7 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 	private String getCollaborationLabel(Collaboration collaboration) {
 		String collaborationJson = "";
 		String typeOfCollaboration = collaboration.eClass().getName();
-		String collaborationLabel = "\"label\": \"" + typeOfCollaboration + " " + collaboration.getId() + " from " + collaboration.getProposedBy().getFirstName() + " " + collaboration.getProposedBy().getLastName() + "\"";
+		String collaborationLabel = "\"label\": \"" + typeOfCollaboration + " from " + collaboration.getProposedBy().getFirstName() + " " + collaboration.getProposedBy().getLastName() + "\"";
 		collaborationJson = collaborationJson.concat(collaborationLabel);
 
 		if(collaboration.getRationale() != null && collaboration.getRationale().length() > 0) {

@@ -1,6 +1,8 @@
 package fr.inria.atlanmod.collaboro.backend;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +26,7 @@ public class CollaboroBackend {
 	private int historyTracked = 0;
 	private int versionTracked = 0;
 	private int maxVersionTracked = 0;
-	private int lastIndex = 0;
-
+	
 	ModelManager modelManager = null;
 
 	public CollaboroBackend(File historyFile, File ecoreFile) {
@@ -58,42 +59,9 @@ public class CollaboroBackend {
 	 * Testing method to reset the information
 	 */
 	public void reset() {
-		lastIndex = 0;
 		historyTracked = 0;
 		versionTracked = 0;
 	}
-
-	private void calculateLastIndexProposal() {
-		lastIndex = 0;
-
-		if(getHistory() != null) {
-			for(Proposal proposal : getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals()) {
-				String idProposal = proposal.getId();
-				int valueProposal = Integer.valueOf(idProposal.substring(1, idProposal.length()));
-				if(valueProposal > lastIndex) 
-					lastIndex = valueProposal;
-				for(Comment comment : proposal.getComments()) { 
-					String idComment = comment.getId();
-					int valueComment = Integer.valueOf(idComment.substring(1, idComment.length()));
-					if(valueComment > lastIndex) 
-						lastIndex = valueComment;
-				}
-				for(Solution solution : proposal.getSols()) {
-					String idSolution = solution.getId();
-					int valueSolution = Integer.valueOf(idSolution.substring(1, idSolution.length()));
-					if(valueSolution > lastIndex) 
-						lastIndex = valueSolution;
-					for(Comment comment : solution.getComments()) {
-						String idCommentSol = comment.getId();
-						int valueCommentSol = Integer.valueOf(idCommentSol.substring(1, idCommentSol.length()));
-						if(valueCommentSol > lastIndex) 
-							lastIndex = valueCommentSol;
-					}
-				}
-			}
-		}
-	}
-
 
 	public History getHistory() {
 		return modelManager.getHistory();
@@ -150,7 +118,7 @@ public class CollaboroBackend {
 	}
 
 	public void createProposal(Proposal newProposal) {
-		newProposal.setId("n" + ++lastIndex);
+		newProposal.setId(generateId());
 		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
 		version.getProposals().add(newProposal);
 		modelManager.saveHistory();
@@ -172,7 +140,7 @@ public class CollaboroBackend {
 	}
 
 	public void createSolution(Proposal parent, Solution newSolution) {
-		newSolution.setId("n" + ++lastIndex);
+		newSolution.setId(generateId());
 		parent.getSols().add(newSolution);	
 		modelManager.saveHistory();
 		modelManager.saveNotation();
@@ -259,7 +227,7 @@ public class CollaboroBackend {
 	}
 
 	public void createComment(Collaboration collaboration, Comment newComment) {
-		newComment.setId("n" + ++lastIndex);
+		newComment.setId(generateId());
 		collaboration.getComments().add(newComment);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
@@ -328,7 +296,6 @@ public class CollaboroBackend {
 		}
 		modelManager.saveHistory();
 		modelManager.saveNotation();
-		calculateLastIndexProposal();
 	}
 
 	private void deleteProposal(Proposal proposalToDelete) {
@@ -361,6 +328,11 @@ public class CollaboroBackend {
 	public int getNumOfAbsModelImages()
 	{
 		return 2;
+	}
+	
+	public String generateId() {
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random).toString(32);
 	}
 
 }

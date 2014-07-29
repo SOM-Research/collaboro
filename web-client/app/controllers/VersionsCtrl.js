@@ -14,8 +14,6 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     $scope.connError = "";
 
-    console.log($scope.newCollaborations.lenght == 0);
-
     // Adds a new collaboration
     $scope.addcollaboration = function() {
       collaboration.showCollaboration().result.then(
@@ -25,15 +23,16 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
               "rationale": result.data['description'],
               "actions" : result.data['actions'],
               "type": result.data['type'],
-              "proposedBy" : security.currentUser.firstName
+              "proposedBy" : security.currentUser.firstName,
+              "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? null : tree.get_selected_branch().data['collaboration_id']
           };
 
-          var c;
+          /*var c;
           if(newCollaboration.type != 'Proposal') {
             c = tree.get_selected_branch();
             result.data['parent_id'] = c.data['collaboration_id'];
             newCollaboration.parent_id = c.data['collaboration_id'];
-          }
+          }*/
 
           // We build the element for the tree
           result.data['username'] = security.currentUser.firstName;
@@ -41,6 +40,9 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
           $scope.newCollaborations.push(newCollaboration);
           $scope.add_collaboration(result);
+        }).then(
+        function(result) {
+          $scope.savecollaborations();
         });
     };
 
@@ -48,12 +50,12 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
     $scope.savecollaborations = function() {
       collaboration.saveCollaborations($scope.newCollaborations, 
         function(response) {
-          if(response.data.result == 'success') {
-            $scope.newCollaborations = [];
-            $scope.connError = "";
-          } else {
-            $scope.connError = "Error while saving";
-          }
+          $scope.newCollaborations = [];
+          $scope.connError = "";
+        },
+        function(response) {
+          $scope.newCollaborations = [];
+          $scope.connError = "Error while saving";
         });
     }
 
