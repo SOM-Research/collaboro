@@ -23,12 +23,16 @@ public class CollaboroBackend {
 	// Variables to control the state of the collaboration
 	private int historyTracked = 0;
 	private int versionTracked = 0;
+	private int maxVersionTracked = 0;
 	private int lastIndex = 0;
 
 	ModelManager modelManager = null;
 
 	public CollaboroBackend(File historyFile, File ecoreFile) {
 		modelManager = ModelManagerFactory.createModelManager(ecoreFile);
+
+		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
+		maxVersionTracked = versionHistory.getVersions().size() - 1;
 	}
 
 	/**
@@ -131,7 +135,7 @@ public class CollaboroBackend {
 	
 	public void createVersion() {
 		Version version = HistoryFactory.eINSTANCE.createVersion();
-		versionTracked++;
+		versionTracked = ++maxVersionTracked;
 		version.setId(String.valueOf(versionTracked));
 		
 		getHistory().getHistories().get(getHistoryTracked()).getVersions().add(version);
