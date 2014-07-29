@@ -125,7 +125,9 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
         function(response) {
           $scope.versionSelectedUsersAgree = response.data.data.agree;
           $scope.versionSelectedUsersDisagree = response.data.data.disagree;
-          $scope.refreshcollaborations();
+          tree.get_selected_branch().data.agree = response.data.data.agree;
+          tree.get_selected_branch().data.disagree = response.data.data.disagree;
+          //$scope.refreshcollaborations();
       });
     }
   }

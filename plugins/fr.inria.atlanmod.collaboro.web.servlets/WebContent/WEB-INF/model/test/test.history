@@ -2,87 +2,23 @@
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
     xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
-  <users id="hugo" votes="#//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.3 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.1/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@votes.0 #//@histories.0/@versions.1/@proposals.4/@votes.2"
-      collaborations="#//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.1/@proposals.2/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.2"/>
-  <users id="salva" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.2 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.0/@votes.3 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@votes.2"
+  <users id="hugo" votes="#//@histories.0/@versions.1/@proposals.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.1/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@votes.0 #//@histories.0/@versions.1/@proposals.4/@votes.2"
+      collaborations="#//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.1/@proposals.2/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.2"/>
+  <users id="salva" votes="#//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.0/@votes.3 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@votes.2"
       collaborations="#//@histories.0/@versions.1/@proposals.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.0 #//@histories.0/@versions.1/@proposals.6"/>
-  <users id="valerio" votes="#//@histories.0/@versions.0/@proposals.1/@votes.2 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.2/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.3 #//@histories.0/@versions.1/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.2 #//@histories.0/@versions.1/@proposals.6/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.5/@votes.3 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.3"
+  <users id="valerio" votes="#//@histories.0/@versions.1/@proposals.2/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.3 #//@histories.0/@versions.1/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.2 #//@histories.0/@versions.1/@proposals.6/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.5/@votes.3 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.3"
       collaborations="#//@histories.0/@versions.1/@proposals.3"/>
-  <users id="elena" votes="#//@histories.0/@versions.0/@proposals.1/@votes.3 #//@histories.0/@versions.0/@proposals.0/@votes.1 #//@histories.0/@versions.0/@proposals.2/@votes.1 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.4/@votes.1 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.0"
-      collaborations="#//@histories.0/@versions.0/@proposals.2/@sols.1 #//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1"/>
-  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.1 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.5/@votes.1"
-      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.1 #//@histories.0/@versions.1/@proposals.4/@sols.0 #//@histories.0/@versions.1/@proposals.5/@sols.0"/>
-  <users id="juan" collaborations="#//@histories.0/@versions.2/@proposals.0 #//@histories.0/@versions.0/@proposals.3 #//@histories.0/@versions.0/@proposals.4 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.0 #//@histories.0/@versions.0/@proposals.5 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.1 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.2 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.3 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.4 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.5 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.6 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.7 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.8 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.9 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.10 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.11 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.12 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.13 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.14 #//@histories.0/@versions.0/@proposals.6 #//@histories.0/@versions.0/@proposals.7 #//@histories.0/@versions.0/@proposals.8 #//@histories.0/@versions.0/@proposals.9 #//@histories.0/@versions.0/@proposals.10 #//@histories.0/@versions.0/@proposals.10/@comments.0 #//@histories.0/@versions.0/@proposals.6/@comments.0 #//@histories.0/@versions.3/@proposals.0 #//@histories.0/@versions.3/@proposals.1 #//@histories.0/@versions.3/@proposals.0/@comments.0 #//@histories.0/@versions.2/@proposals.1 #//@histories.0/@versions.2/@proposals.1/@comments.0 #//@histories.0/@versions.2/@proposals.2 #//@histories.0/@versions.2/@proposals.2/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.2 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.3 #//@histories.0/@versions.2/@proposals.3 #//@histories.0/@versions.2/@proposals.4"
+  <users id="elena" votes="#//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.4/@votes.1 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.0"
+      collaborations="#//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1"/>
+  <users id="javi" votes="#//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.5/@votes.1"
+      collaborations="#//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.1 #//@histories.0/@versions.1/@proposals.4/@sols.0 #//@histories.0/@versions.1/@proposals.5/@sols.0"/>
+  <users id="juan" votes="#//@histories.0/@versions.2/@proposals.4/@votes.0 #//@histories.0/@versions.2/@proposals.3/@votes.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@votes.0"
+      collaborations="#//@histories.0/@versions.2/@proposals.0 #//@histories.0/@versions.3/@proposals.0 #//@histories.0/@versions.3/@proposals.1 #//@histories.0/@versions.3/@proposals.0/@comments.0 #//@histories.0/@versions.2/@proposals.1 #//@histories.0/@versions.2/@proposals.1/@comments.0 #//@histories.0/@versions.2/@proposals.2 #//@histories.0/@versions.2/@proposals.2/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.2 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.3 #//@histories.0/@versions.2/@proposals.3 #//@histories.0/@versions.2/@proposals.4 #//@histories.0/@versions.0/@proposals.0"
       email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
       lastName="Villa"/>
   <histories>
     <versions id="0.1">
-      <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4">
-        <votes agreement="true" user="#//@users.0"/>
-        <votes agreement="true" user="#//@users.3"/>
-      </proposals>
-      <proposals id="n12" rationale="I suggest to delete Proposals n2 &amp; n4, and start from here a more focus discussion.&#xD;&#xA;Your vote please?&#xD;&#xA;&#xD;&#xA;IMHO, we should re-focus on the real objective of this DSL: allow users to easily design MDE workflows.&#xD;&#xA;We are not going to redefine here a new version of BPMN or UML Activity Diagram...&#xD;&#xA;&#xD;&#xA;"
-          proposedBy="#//@users.0" accepted="true">
-        <comments id="n18" rationale="Summary of past discussions:&#xD;&#xA;&#xD;&#xA; - How to name the base element of a Workflow instead of &quot;Work&quot;?&#xD;&#xA;&#x9;&#x9;&quot;Task&quot;, &quot;Action&quot;, etc&#xD;&#xA;- Which granularity level do we need to address?&#xD;&#xA;&#x9;&#x9;&quot;Process&quot;, &quot;Activity&quot;, etc&#xD;&#xA;&#xD;&#xA;"
-            proposedBy="#//@users.0">
-          <comments id="n4" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n7" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n8" rationale="ggggg" proposedBy="#//@users.5"/>
-          <comments id="n11" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n12" rationale="ggggg" proposedBy="#//@users.5"/>
-          <comments id="n13" rationale="11111" proposedBy="#//@users.5"/>
-          <comments id="n16" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n17" rationale="ggggg" proposedBy="#//@users.5"/>
-          <comments id="n18" rationale="11111" proposedBy="#//@users.5"/>
-          <comments id="n21" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n22" rationale="ggggg" proposedBy="#//@users.5"/>
-          <comments id="n23" rationale="11111" proposedBy="#//@users.5"/>
-          <comments id="n26" rationale="dddd" proposedBy="#//@users.5"/>
-          <comments id="n27" rationale="ggggg" proposedBy="#//@users.5"/>
-          <comments id="n28" rationale="11111" proposedBy="#//@users.5"/>
-          <votes agreement="true" user="#//@users.4"/>
-        </comments>
-        <votes agreement="true" user="#//@users.1"/>
-        <votes agreement="true" user="#//@users.4"/>
-        <votes agreement="true" user="#//@users.2"/>
-        <votes agreement="true" user="#//@users.3"/>
-      </proposals>
-      <proposals id="n13" rationale="I would remove the &quot;ExportInfos&quot; metaclass, in its current version, it is simply useless"
-          proposedBy="#//@users.4" selected="#//@histories.0/@versions.0/@proposals.2/@sols.0"
-          accepted="true">
-        <votes agreement="true" user="#//@users.2"/>
-        <votes agreement="true" user="#//@users.3"/>
-        <votes agreement="true" user="#//@users.1"/>
-        <votes agreement="true" user="#//@users.0"/>
-        <sols id="n16" rationale="Removing &quot;ExportInfos&quot; metaclasss " proposedBy="#//@users.4">
-          <votes agreement="true" user="#//@users.3"/>
-          <votes agreement="true" user="#//@users.0"/>
-          <votes agreement="true" user="#//@users.1"/>
-          <votes agreement="true" user="#//@users.2"/>
-          <changes xsi:type="history:Delete">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EPackage ModiscoWorkflow.ecore#/"/>
-            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//ExportInfos"/>
-          </changes>
-        </sols>
-        <sols id="n23" rationale="Updating the &quot;Workflow&quot; metaclass in order to remove the inheritance relationship with the recently  removed metaclass &quot;ExportInfos&quot;.&#xD;&#xA;&#xD;&#xA;@javi: I'm not sure how I should indicate this solution."
-            proposedBy="#//@users.3">
-          <changes xsi:type="history:Update">
-            <target xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
-          </changes>
-        </sols>
-      </proposals>
-      <proposals id="n2" rationale="aaa" proposedBy="#//@users.5"/>
-      <proposals id="n3" rationale="sfgsdfgdsf" proposedBy="#//@users.5"/>
-      <proposals id="n6" rationale="sfgsdfgdsf" proposedBy="#//@users.5"/>
-      <proposals id="n1" rationale="3333" proposedBy="#//@users.5">
-        <comments id="n2" rationale="123" proposedBy="#//@users.5"/>
-      </proposals>
-      <proposals id="n2" rationale="ewerwerwer" proposedBy="#//@users.5"/>
-      <proposals id="n3" rationale="eeeee" proposedBy="#//@users.5"/>
-      <proposals id="n4" rationale="111111" proposedBy="#//@users.5"/>
-      <proposals id="n5" rationale="213" proposedBy="#//@users.5">
-        <comments id="n1" rationale="42" proposedBy="#//@users.5"/>
-      </proposals>
+      <proposals id="ugtb1sjbii4un04qq0185ro28v" rationale="111" proposedBy="#//@users.5"/>
     </versions>
     <versions id="0.2" previous="#//@histories.0/@versions.0">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4"
@@ -238,11 +174,16 @@
           <comments id="646pp1mlpsh2btvrbudf06352r" rationale="123" proposedBy="#//@users.5"/>
           <comments id="6gleoq3ce2q78mmolrkokrhggs" rationale="321" proposedBy="#//@users.5"/>
           <comments id="pl9ua9la9f42beqcaha31je571" rationale="11111111" proposedBy="#//@users.5"/>
+          <votes user="#//@users.5"/>
         </comments>
         <comments id="qeuou4j6h9bmrg5pv46udu4rvd" rationale="321" proposedBy="#//@users.5"/>
       </proposals>
-      <proposals id="msb3op5rfh1959dk27o7uj7sus" rationale="3333" proposedBy="#//@users.5"/>
-      <proposals id="feicsu34gip97dt8oi3gks0nrl" rationale="4234234234" proposedBy="#//@users.5"/>
+      <proposals id="msb3op5rfh1959dk27o7uj7sus" rationale="3333" proposedBy="#//@users.5">
+        <votes user="#//@users.5"/>
+      </proposals>
+      <proposals id="feicsu34gip97dt8oi3gks0nrl" rationale="4234234234" proposedBy="#//@users.5">
+        <votes agreement="true" user="#//@users.5"/>
+      </proposals>
     </versions>
     <versions id="3">
       <proposals id="112332214225343550101112050213150011124124435552151145554000105541421100244450054530012301231225330"

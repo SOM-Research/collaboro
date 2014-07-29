@@ -1,4 +1,5 @@
-angular.module('collaboroControllers').controller('imagesCtrl', ['$scope',function($scope){
+angular.module('collaboroControllers').controller('imagesCtrl', ['$scope', '$http',
+  function($scope, $http){
 
   $scope.modelImage="assets/imf/loading.gif";
   $scope.numModelImages=1;
