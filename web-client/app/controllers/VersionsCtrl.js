@@ -10,7 +10,11 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     // The new collaborations to be sent to the server
     // (We keep different arrays due to different formats)
-    $scope.newCollaborations =[];
+    $scope.newCollaborations = [];
+
+    $scope.connError = "";
+
+    console.log($scope.newCollaborations.lenght == 0);
 
     // Adds a new collaboration
     $scope.addcollaboration = function() {
@@ -42,7 +46,15 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     // Save (sends) the collaboration to the server
     $scope.savecollaborations = function() {
-      collaboration.saveCollaborations($scope.newCollaborations);
+      collaboration.saveCollaborations($scope.newCollaborations, 
+        function(response) {
+          if(response.data.result == 'success') {
+            $scope.newCollaborations = [];
+            $scope.connError = "";
+          } else {
+            $scope.connError = "Error while saving";
+          }
+        });
     }
 
     // Edit an existing collaboration
@@ -85,7 +97,10 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     $scope.add_collaboration = function(newbranch) {
       var b;
-      b = tree.get_selected_branch();
+      if(newbranch.data['type'] != 'Proposal') 
+        b = tree.get_selected_branch();
+      else
+        b = null; // Proposals are always in the root
       return tree.add_branch(b, newbranch);
     };
     

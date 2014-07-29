@@ -265,18 +265,12 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 						}
 					}
 					response.setContentType("application/json");
-					//TODO Change the response to a success or failure alert
 					out.print("{\"result\": \"success\" }");
 				} else if (action.equals("delete")) {
 					JsonElement jsonElementCollaboration = jsonObject.get("collaboration").getAsJsonObject().get("data");
-					System.out.println("--> " + jsonElementCollaboration.toString());
 					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElementCollaboration, JsonCollaborationSimplified.class);
-					
-					System.out.println("--> " + jsonCollaboration.getId());
 					CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(jsonCollaboration.getId());
-					
 					response.setContentType("application/json");
-					//TODO Change the response to a success or failure alert
 					out.print("{\"result\": \"success\" }");
 				} else if (action.equals("vote")) {
 
@@ -294,7 +288,6 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, jsonCollaboration.getId());
 						String resultingCollaboration = getCollaborationLabel(collaboration);
 						
-						System.out.println("--> " + resultingCollaboration);
 						out.print("{" + resultingCollaboration + "}");
 					}
 				}

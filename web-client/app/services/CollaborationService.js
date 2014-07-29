@@ -48,18 +48,22 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
       		editCollaboration: function(collaborationtoedit) {
       			return openCollaborationDialog(collaborationtoedit);
       		},
-      		saveCollaborations: function(collaborations) {
-      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "save", collaborations : collaborations });
+      		saveCollaborations: function(collaborations, successFn) {
+      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "save", collaborations : collaborations }).then(
+      				function(response) {
+      					successFn(response);
+      				}
+      			);
       		},
       		deleteCollaboration: function(collaboration, successFn) {
-      			return $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "delete", collaboration : collaboration }).then(
+      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "delete", collaboration : collaboration }).then(
       				function(response) {
       					successFn(response);
       				}
       			);
       		},
       		voteCollaboration: function(collaboration, data, successFn) {
-      			return $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "vote", collaboration : collaboration, data : data }).then(
+      			$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "vote", collaboration : collaboration, data : data }).then(
       				function(response) {
       					successFn(response);
       				}
