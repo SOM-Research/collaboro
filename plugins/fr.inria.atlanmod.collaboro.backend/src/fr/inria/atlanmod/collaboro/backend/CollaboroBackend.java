@@ -98,6 +98,10 @@ public class CollaboroBackend {
 	public EPackage getEcoreModel() {
 		return modelManager.getEcoreModel();
 	}
+	
+	public EPackage getEcoreModel(int index) {
+		return modelManager.getEcoreModel();
+	}
 
 	public Definition getNotation() {
 		return modelManager.getNotation();
