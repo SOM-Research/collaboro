@@ -214,7 +214,6 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 				List<Proposal> proposals = backend.getProposals();
 				String proposalsJson = createProposalsResponseJson(proposals);
 
-				System.out.println(proposalsJson);
 				out.print(proposalsJson);  
 			}
 		}
