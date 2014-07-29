@@ -85,6 +85,27 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 		if(!workingDir.isDirectory()) throw new ServletException("The working dir does not exist");
 	}
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		HttpSession session = request.getSession(false);
+		if(session == null) 
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		else
+		{
+			User historyUser = (User) session.getAttribute("user");
+			String dsl = (String) session.getAttribute("dsl");
+			if(historyUser == null || dsl == null)
+			{
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			}
+			else
+			{
+				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
+			}
+			
+		}
+	}
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);

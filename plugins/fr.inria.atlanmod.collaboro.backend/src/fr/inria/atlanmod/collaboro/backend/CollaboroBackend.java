@@ -353,5 +353,10 @@ public class CollaboroBackend {
 	public void removeCollaboration(Collaboration collaboration) {
 		
 	}
+	
+	public int getNumOfAbsModelImages()
+	{
+		return 2;
+	}
 
 }
