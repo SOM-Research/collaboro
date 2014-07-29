@@ -12,9 +12,7 @@
                 <label class="col-md-2 control-label">Language</label>
                 <div class="col-md-4">
                     <select class="form-control" name="language" ng-model="user.dsl" required autofocus>
-                        <option value="workflow">workflow</option>
-                        <option value="aadlba">aadlba</option>
-                        <option value="test">test</option>
+                        <option ng-repeat="language in languages" ng-value="language">{{language}}</option>
                     </select>
                 </div>
             </div>

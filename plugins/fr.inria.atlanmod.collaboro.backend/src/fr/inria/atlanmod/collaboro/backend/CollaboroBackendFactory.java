@@ -2,28 +2,33 @@ package fr.inria.atlanmod.collaboro.backend;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 public class CollaboroBackendFactory {
 	private static CollaboroBackendFactory instance;
 
-	private HashMap<String, String> histories;
-	private HashMap<String, String> ecores;
+	private HashMap<String, File> histories;
+	private HashMap<String, File> ecores;
 
 	private HashMap<String, CollaboroBackend> backends;
 	private CollaboroBackend lastBackendCreated;
 
 	private CollaboroBackendFactory() {
 		this.histories = new HashMap<>();
-		this.histories.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.history");
-		this.histories.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.history");
-		this.histories.put("test", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\test.history");
-
 		this.ecores = new HashMap<>();
-		this.ecores.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.ecore");
-		this.ecores.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.ecore");
-		this.ecores.put("test", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\test.ecore");
-		
 		this.backends = new HashMap<>();
+	}
+
+	public static boolean isActive() {
+		return !(instance == null);
+	}
+
+	public static void init(List<CollaboroLanguageConfig> languages) {
+		instance = new CollaboroBackendFactory();
+		for(CollaboroLanguageConfig language : languages) {
+			instance.histories.put(language.getLanguageName(), language.getHistoryFile());
+			instance.ecores.put(language.getLanguageName(), language.getEcoreFile());
+		}
 	}
 
 	public static CollaboroBackend getBackend(String dsl) {
@@ -32,23 +37,19 @@ public class CollaboroBackendFactory {
 
 		CollaboroBackend backend = instance.backends.get(dsl.toLowerCase());
 		if(backend == null) {
-			String historyFileString = instance.histories.get(dsl.toLowerCase());
-			String ecoreFileString = instance.ecores.get(dsl.toLowerCase());
-
-			if(historyFileString != null && ecoreFileString != null){
-				File historyFile = new File(historyFileString);
-				File ecoreFile = new File(ecoreFileString);
-				if(historyFile.exists() && ecoreFile.exists()) {
-					backend = new CollaboroBackend(historyFile, ecoreFile);
-					instance.backends.put(dsl.toLowerCase(), backend);
-					instance.lastBackendCreated = backend;
-				}
-			}
-
+			File historyFile = instance.histories.get(dsl.toLowerCase());
+			File ecoreFile = instance.ecores.get(dsl.toLowerCase());
+			backend = new CollaboroBackend(historyFile, ecoreFile);
+			instance.backends.put(dsl.toLowerCase(), backend);
+			instance.lastBackendCreated = backend;
 		} 
 		return backend;
 	}
 	
+	public static String[] getActiveLanguages() {
+		return instance.histories.keySet().toArray(new String[] { } );
+	}
+
 	public static CollaboroBackend getLastBackend() {
 		return instance.lastBackendCreated;
 	}

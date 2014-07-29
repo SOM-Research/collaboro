@@ -1,8 +1,8 @@
 
-angular.module('security.login.form', []).controller('LoginFormController', ['$scope', 'security', '$cookieStore', '$cookies', 'md5',
-  function($scope, security, $cookieStore, $cookies, md5) {
+angular.module('security.login.form', []).controller('LoginFormController', ['$scope', 'security', '$cookieStore', '$cookies', 'md5', '$http',
+  function($scope, security, $cookieStore, $cookies, md5, $http) {
     $scope.user = {};
-
+    $scope.languages = []
     // Any error message from failing to login
     $scope.authError = null;
 
@@ -45,6 +45,15 @@ angular.module('security.login.form', []).controller('LoginFormController', ['$s
     $scope.cancelLogin = function() {
       security.cancelLogin();
     };
+
+    // We get the languages to collaborate
+    $scope.updateLanguages = function() {
+      $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/languages').then(
+        function(response) {
+          $scope.languages = response.data.languages;
+        });
+    }
+    $scope.updateLanguages();
 
 
   }

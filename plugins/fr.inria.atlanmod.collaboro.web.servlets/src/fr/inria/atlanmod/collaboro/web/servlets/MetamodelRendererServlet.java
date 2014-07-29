@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -28,25 +27,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.emftools.emf2gv.graphdesc.GraphdescPackage;
 import org.emftools.emf2gv.processor.core.StandaloneProcessor;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
+import sun.misc.BASE64Encoder;
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
-
-import sun.misc.BASE64Encoder;
 
 /**
  * Service to render an EMF model as as jpg in base64
@@ -64,21 +53,12 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 	// The path to the Graphviz DOT execitable (needed for generating the pictures)
 	public static String dotExePath = null;
 
-	Properties properties = null;
 
 	@Override
 	public void init() throws ServletException {
-		String workingDirString = null;
-		properties = new Properties();
-
-		try	{
-			properties.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
-			workingDirString = properties.getProperty("workingDir");
-			dotExePath = properties.getProperty("dotExePath");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super.init();
+		String workingDirString = properties.getProperty("workingDir");
+		dotExePath = properties.getProperty("dotExePath");
 
 		// We need a File (not a String)
 		workingDir = new File(workingDirString);
@@ -102,10 +82,10 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 			{
 				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
 			}
-			
+
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
