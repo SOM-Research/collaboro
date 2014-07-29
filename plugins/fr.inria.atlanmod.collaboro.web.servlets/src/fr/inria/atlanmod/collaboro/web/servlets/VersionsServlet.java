@@ -279,6 +279,25 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 					response.setContentType("application/json");
 					//TODO Change the response to a success or failure alert
 					out.print("{\"result\": \"success\" }");
+				} else if (action.equals("vote")) {
+
+					JsonElement jsonElementCollaboration = jsonObject.get("collaboration").getAsJsonObject().get("data");
+					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElementCollaboration, JsonCollaborationSimplified.class);
+					
+					String vote = jsonObject.get("data").getAsJsonObject().get("vote").getAsString();
+					if(vote != null) {
+						if(vote.equals("yes")) {
+							CollaboroBackendFactory.getBackend(dsl).createVotePlain(jsonCollaboration.getId(), historyUser.getId(), true);
+						} else if (vote.equals("no")) {
+							CollaboroBackendFactory.getBackend(dsl).createVotePlain(jsonCollaboration.getId(), historyUser.getId(), false);
+						}
+						response.setContentType("application/json");
+						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, jsonCollaboration.getId());
+						String resultingCollaboration = getCollaborationLabel(collaboration);
+						
+						System.out.println("--> " + resultingCollaboration);
+						out.print("{" + resultingCollaboration + "}");
+					}
 				}
 			}
 		}

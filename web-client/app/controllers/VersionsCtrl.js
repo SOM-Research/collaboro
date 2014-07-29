@@ -102,5 +102,14 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
         return $scope.output += '(' + branch.data.description + ')';
       }
     };
+
+    $scope.vote = function(vote) {
+      collaboration.voteCollaboration(tree.get_selected_branch(), { vote : vote }, 
+        function(response) {
+          $scope.versionSelectedUsersAgree = response.data.data.agree;
+          $scope.versionSelectedUsersDisagree = response.data.data.disagree;
+          $scope.refreshcollaborations();
+      });
+    }
   }
 ]);

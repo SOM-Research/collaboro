@@ -213,7 +213,7 @@ public class CollaboroBackend {
 		return collaboration;
 	}
 
-	private Collaboration locateCollaborationById(Collaboration collaboration, String id) {
+	public Collaboration locateCollaborationById(Collaboration collaboration, String id) {
 		Collaboration found = null;
 		if(collaboration == null ) {
 			for(Proposal proposal : getProposals()) {

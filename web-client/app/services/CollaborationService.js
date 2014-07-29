@@ -57,7 +57,14 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
       					successFn(response);
       				}
       			);
-      		}
+      		},
+      		voteCollaboration: function(collaboration, data, successFn) {
+      			return $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/version', { action : "vote", collaboration : collaboration, data : data }).then(
+      				function(response) {
+      					successFn(response);
+      				}
+      			);
+      		},
 		};
 		return service;
 	}
