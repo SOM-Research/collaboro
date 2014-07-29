@@ -18,7 +18,7 @@ import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
 
 @WebServlet(description = "Exposes the current version being used", urlPatterns = { "/versionManagement" })
-public class VersionManagement extends AbstractCollaboroServlet {
+public class VersionManagementServlet extends AbstractCollaboroServlet {
 
 	private static final long serialVersionUID = 52L;
 

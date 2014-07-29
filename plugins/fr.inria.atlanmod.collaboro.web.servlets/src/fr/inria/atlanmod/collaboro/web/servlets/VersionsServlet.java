@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EList;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
@@ -143,6 +144,7 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 				collaborationType="Proposal";
 
 			String collaborationData = "\"data\": { "
+					+ "\"id\":\""	+ collaboration.getId() + "\"," 
 					+ "\"username\":\""	+ collaboration.getProposedBy().getId() + "\"," 
 					+ "\"description\": \"" + cleanRationale + "\"," 
 					+ ((collaboration instanceof Solution) ? "\"actions\" : \"" + actions.replaceAll("(\\r|\\t|\\n|\")", " ") + "\", ": "\"actions\" : \"\",") 
@@ -247,25 +249,37 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 				// Parsing the parameters
 				Gson gson = new Gson();
 				JsonParser parser = new JsonParser();
-				JsonArray array = (JsonArray)parser.parse(jb.toString()).getAsJsonObject().get("collaborations");
-				for (JsonElement jsonElement : array) {
-					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElement, JsonCollaborationSimplified.class);
+				JsonObject jsonObject = (JsonObject) parser.parse(jb.toString()).getAsJsonObject();
+				String action = jsonObject.get("action").getAsString();
+				if(action.equals("save")) {
+					JsonArray array = (JsonArray) jsonObject.get("collaborations");
+					for (JsonElement jsonElement : array) {
+						JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElement, JsonCollaborationSimplified.class);
 
-					String collaborationType = jsonCollaboration.getType();
-					System.out.println("El tipo de la colaboracion: "+collaborationType);
-
-					if(collaborationType.compareTo("Proposal") == 0) {
-						CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), jsonCollaboration.getRationale());
-					} else if(collaborationType.compareTo("Comment") == 0) {
-						CollaboroBackendFactory.getBackend(dsl).createCommentPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale());
-					} else if(collaborationType.compareTo("Solution") == 0) {
-						CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(), jsonCollaboration.getActions());
+						String collaborationType = jsonCollaboration.getType();
+						if(collaborationType.compareTo("Proposal") == 0) {
+							CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), jsonCollaboration.getRationale());
+						} else if(collaborationType.compareTo("Comment") == 0) {
+							CollaboroBackendFactory.getBackend(dsl).createCommentPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale());
+						} else if(collaborationType.compareTo("Solution") == 0) {
+							CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(), jsonCollaboration.getActions());
+						}
 					}
+					response.setContentType("application/json");
+					//TODO Change the response to a success or failure alert
+					out.print("{\"result\": \"success\" }");
+				} else if (action.equals("delete")) {
+					JsonElement jsonElementCollaboration = jsonObject.get("collaboration").getAsJsonObject().get("data");
+					System.out.println("--> " + jsonElementCollaboration.toString());
+					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElementCollaboration, JsonCollaborationSimplified.class);
+					
+					System.out.println("--> " + jsonCollaboration.getId());
+					CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(jsonCollaboration.getId());
+					
+					response.setContentType("application/json");
+					//TODO Change the response to a success or failure alert
+					out.print("{\"result\": \"success\" }");
 				}
-				response.setContentType("application/json");
-				
-				//TODO Change the response to a success or failure alert
-				out.print("{\"user\": { \"firstName\" : \"Juan\", \"lastName\" : \"Villa\", \"admin\" : false}}");
 			}
 		}
 	}

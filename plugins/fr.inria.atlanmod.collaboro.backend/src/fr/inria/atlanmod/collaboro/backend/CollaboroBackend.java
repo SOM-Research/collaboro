@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import fr.inria.atlanmod.collaboro.history.Collaboration;
@@ -300,6 +301,57 @@ public class CollaboroBackend {
 			engine.resolveProposal(getHistory(), proposal);
 			engine.resolveSolution(getHistory(), proposal);
 		}
+	}
+	
+	public void deleteCollaborationPlain(String collaborationId) {
+		Collaboration collaboration = locateCollaborationById(null, collaborationId);
+		if(collaboration != null)
+			deleteCollaboration(collaboration);
+		else 
+			throw new IllegalArgumentException("The collaboration does not exist");
+	}
+	
+	public void deleteCollaboration(Collaboration collaboration) {
+		if (collaboration instanceof Proposal) {
+			Proposal proposal = (Proposal) collaboration;
+			deleteProposal(proposal);
+		} else if (collaboration instanceof Solution) {
+			Solution solution = (Solution) collaboration;
+			deleteSolution(solution);
+		} else if (collaboration instanceof Comment) {
+			Comment comment = (Comment) collaboration;
+			deleteComment(comment);
+		}
+		modelManager.saveHistory();
+		modelManager.saveNotation();
+		calculateLastIndexProposal();
+	}
+
+	private void deleteProposal(Proposal proposalToDelete) {
+		getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked()).getProposals().remove(proposalToDelete);
+		proposalToDelete.setVersion(null);
+		proposalToDelete.setProposedBy(null);
+	}
+
+	private void deleteSolution(Solution solutionToDelete) {
+		EObject eObject = solutionToDelete.eContainer();
+		if (eObject instanceof Proposal) {
+			Proposal proposal = (Proposal) eObject;
+			proposal.getSols().remove(solutionToDelete);
+		}
+	}
+
+	private void deleteComment(Comment commentToDelete) {
+		EObject eObject = commentToDelete.eContainer();
+		if (eObject instanceof Collaboration) {
+			Collaboration collaboration = (Collaboration) eObject;
+			collaboration.getComments().remove(commentToDelete);
+		}
+	}
+
+	
+	public void removeCollaboration(Collaboration collaboration) {
+		
 	}
 
 }

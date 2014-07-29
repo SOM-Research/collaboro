@@ -16,7 +16,6 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
             controller  : 'LoginFormController'
           }
         );
-        console.log(loginDialog);
       }
     }
 

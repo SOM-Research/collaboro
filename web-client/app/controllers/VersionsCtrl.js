@@ -48,15 +48,29 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
     // Edit an existing collaboration
     $scope.editcollaboration = function() {
       collaboration.editCollaboration(tree.get_selected_branch()).result.then(
-        function(result){
+        function(result) {
           result.label = result.data['type'] +' from '+ result.data['username'];
         });
+    }
+
+    // Deletes an existing collaboration
+    $scope.deletecollaboration = function() {
+      var selectedElement = tree.get_selected_branch();
+      if(selectedElement.data['id']) {
+        collaboration.deleteCollaboration(tree.get_selected_branch(),
+          function(result) {
+            $scope.refreshcollaborations();
+          }
+        );
+      } else {
+        $scope.refreshcollaborations();
+      }
     }
 
     // Refresh the tree
     $scope.refreshcollaborations = function() {
       History.query(
-        function(history){
+        function(history) {
           $scope.treeCollaborations = history;
         }
       );

@@ -17,12 +17,23 @@ package fr.inria.atlanmod.collaboro.web.servlets;
  *
  */
 public class JsonCollaborationSimplified {
+	private String id;
 	private String proposedBy;
 	private String rationale;
 	private String actions;
 	private String type;
 	private String parent_id;
 	
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getProposedBy() {
 		return proposedBy;
 	}

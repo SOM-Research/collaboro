@@ -16,10 +16,12 @@ public class CollaboroBackendFactory {
 		this.histories = new HashMap<>();
 		this.histories.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.history");
 		this.histories.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.history");
+		this.histories.put("test", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\test.history");
 
 		this.ecores = new HashMap<>();
 		this.ecores.put("workflow", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\ModiscoWorkflow.ecore");
 		this.ecores.put("aadlba", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\aadlba.ecore");
+		this.ecores.put("test", "C:\\Users\\useradm\\git\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\model\\test.ecore");
 		
 		this.backends = new HashMap<>();
 	}
