@@ -33,6 +33,9 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.emftools.emf2gv.graphdesc.GraphdescPackage;
 import org.emftools.emf2gv.processor.core.StandaloneProcessor;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 import sun.misc.BASE64Encoder;
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
@@ -81,6 +84,9 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 			else
 			{
 				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
+				response.setContentType("application/json");
+				PrintWriter out = response.getWriter();
+				out.print("{\"numImages\": "+numOfAbsModelImages +"}"); 
 			}
 
 		}
@@ -109,7 +115,10 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 				} catch (Exception e) {
 					throw new ServletException("There was an error reading the parameters");
 				}
-				EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel();
+				
+				JsonParser parser = new JsonParser();
+				JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
+				EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel(actionJsonObject.get("numImage").getAsInt());
 
 				// Drawing the metamodel
 				List<EObject> toDraw= new ArrayList<EObject>();

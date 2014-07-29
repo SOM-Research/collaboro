@@ -2,17 +2,61 @@ angular.module('collaboroControllers').controller('metamodelAndModelsCtrl', ['$s
 	function($scope, $http)
 	{
 		$scope.metamodelImage="assets/img/loading.gif";
-		var request=$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/renderMetamodel',{metamodelname:'ModiscoWorkflow.ecore'});
+		$scope.numImages=1;
+		$scope.currentImageIndex=0;
 
-		request.then(
+		var requestNumImages = $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/renderMetamodel');
+
+		requestNumImages.then(
+				function(response)
+				{
+					$scope.numImages = response.data.numImages;
+					console.log('numImages is' + $scope.numImages);
+				}
+
+			);
+
+		$scope.nextMetamodeImage = function()
+		{
+			var nextImageIndex=0;
+			if($scope.currentImageIndex+1<$scope.numImages)
+			{
+				nextImageIndex = $scope.currentImageIndex+1;
+			}
+			$scope.metamodelImage="assets/img/loading.gif";
+			var request=$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/renderMetamodel',{'numImage': nextImageIndex});
+			request.then
+			    (
 					function(response)
 					{
-						$scope.metamodelImage= "data:image/jpg;base64," + response.data;
+						$scope.metamodelImage = "data:image/jpg;base64," + response.data;
+						$scope.currentImageIndex = nextImageIndex;
 						//console.log(response);
 					}
 				);
 
-   //$http.get('assets/models/models.json').success(function(data) {
-    //$scope.models = data;
-  //});
+		};
+
+		$scope.nextMetamodeImage();
+
+		$scope.previousMetamodeImage = function()
+		{
+			var previousImageIndex=$scope.numImages-1;
+			if($scope.currentImageIndex-1>=0)
+			{
+				previousImageIndex = $scope.currentImageIndex-1;
+			}
+			$scope.metamodelImage="assets/img/loading.gif";
+			var request=$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/renderMetamodel',{'numImage': previousImageIndex});
+			request.then
+			    (
+					function(response)
+					{
+						$scope.metamodelImage = "data:image/jpg;base64," + response.data;
+						$scope.currentImageIndex = previousImageIndex;
+					}
+				);
+
+		};
+
  }]);

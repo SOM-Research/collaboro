@@ -70,6 +70,10 @@ public class CollaboroBackend {
 	public EPackage getEcoreModel() {
 		return modelManager.getEcoreModel();
 	}
+	
+	public EPackage getEcoreModel(int index) {
+		return modelManager.getEcoreModel();
+	}
 
 	public Definition getNotation() {
 		return modelManager.getNotation();
@@ -330,9 +334,13 @@ public class CollaboroBackend {
 		return 2;
 	}
 	
+	public int getNumOfNotModelImages()
+	{
+		return 3;
+	}
+
 	public String generateId() {
 		SecureRandom random = new SecureRandom();
 		return new BigInteger(130, random).toString(32);
 	}
-
 }
