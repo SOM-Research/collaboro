@@ -7,16 +7,13 @@ import java.util.List;
 public class CollaboroBackendFactory {
 	private static CollaboroBackendFactory instance;
 
-	private HashMap<String, File> histories;
-	private HashMap<String, File> ecores;
-
+	private HashMap<String, CollaboroLanguageConfig> configs;
 	private HashMap<String, CollaboroBackend> backends;
 	private CollaboroBackend lastBackendCreated;
 
 	private CollaboroBackendFactory() {
-		this.histories = new HashMap<>();
-		this.ecores = new HashMap<>();
 		this.backends = new HashMap<>();
+		this.configs = new HashMap<>();
 	}
 
 	public static boolean isActive() {
@@ -26,8 +23,7 @@ public class CollaboroBackendFactory {
 	public static void init(List<CollaboroLanguageConfig> languages) {
 		instance = new CollaboroBackendFactory();
 		for(CollaboroLanguageConfig language : languages) {
-			instance.histories.put(language.getLanguageName(), language.getHistoryFile());
-			instance.ecores.put(language.getLanguageName(), language.getEcoreFile());
+			instance.configs.put(language.getLanguageName().toLowerCase(), language);
 		}
 	}
 
@@ -36,10 +32,13 @@ public class CollaboroBackendFactory {
 			instance = new CollaboroBackendFactory();
 
 		CollaboroBackend backend = instance.backends.get(dsl.toLowerCase());
-		if(backend == null) {
-			File historyFile = instance.histories.get(dsl.toLowerCase());
-			File ecoreFile = instance.ecores.get(dsl.toLowerCase());
+		CollaboroLanguageConfig config = instance.configs.get(dsl.toLowerCase());
+		if(backend == null && config != null) {
+			File historyFile = config.getHistoryFile();
+			File ecoreFile = config.getEcoreFile();
 			backend = new CollaboroBackend(historyFile, ecoreFile);
+			backend.setPreviousEcores(config.getPreviousEcores());
+			backend.setPreviousModels(config.getPreviousModels());
 			instance.backends.put(dsl.toLowerCase(), backend);
 			instance.lastBackendCreated = backend;
 		} 
@@ -47,7 +46,7 @@ public class CollaboroBackendFactory {
 	}
 	
 	public static String[] getActiveLanguages() {
-		return instance.histories.keySet().toArray(new String[] { } );
+		return instance.configs.keySet().toArray(new String[] { } );
 	}
 
 	public static CollaboroBackend getLastBackend() {

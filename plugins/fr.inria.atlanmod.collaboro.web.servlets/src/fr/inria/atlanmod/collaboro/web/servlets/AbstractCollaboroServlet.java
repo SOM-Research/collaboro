@@ -44,6 +44,41 @@ public class AbstractCollaboroServlet extends HttpServlet {
 					File ecoreFile = new File(ecorePath);
 					if(historyFile.exists() && ecoreFile.exists()) {
 						CollaboroLanguageConfig languageConfig = new CollaboroLanguageConfig(languageName, historyFile, ecoreFile);
+
+						String versions = properties.getProperty(language + ".versions");
+						if(versions != null) {
+							String[] versionsWithExamples = versions.split(",");
+							if(versionsWithExamples != null && versionsWithExamples.length > 0) {
+								for(String versionWithExamples : versionsWithExamples) {
+									String previousEcores = properties.getProperty(language + ".previous.version." + versionWithExamples + ".ecores");
+									if(previousEcores != null) {
+										int previousEcoresInt = Integer.valueOf(previousEcores);
+										for(int i = 0; i < previousEcoresInt; i++) {
+											String previousEcorePath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".ecores." + String.valueOf(previousEcoresInt));
+											if(previousEcorePath != null) {
+												File previousEcoreFile = new File(previousEcorePath);
+												if(previousEcoreFile.exists()) {
+													languageConfig.addPreviousEcore(versionWithExamples, previousEcoreFile);
+												}
+											}
+										}
+									}
+									String previousModels = properties.getProperty(language + ".previous.version." + versionWithExamples + ".models");
+									if(previousModels != null) {
+										int previousModelsInt = Integer.valueOf(previousModels);
+										for(int i = 0; i < previousModelsInt; i++) {
+											String previousModelPath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".models." + String.valueOf(previousModelsInt));
+											if(previousModelPath != null) {
+												File previousModelFile = new File(previousModelPath);
+												if(previousModelFile.exists()) {
+													languageConfig.addPreviousModel(versionWithExamples, previousModelFile);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
 						languageConfigs.add(languageConfig);
 					}
 				}
