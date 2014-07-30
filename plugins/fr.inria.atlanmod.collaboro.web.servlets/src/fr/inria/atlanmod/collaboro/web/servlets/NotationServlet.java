@@ -69,18 +69,30 @@ public class NotationServlet extends AbstractCollaboroServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		addResponseOptions(response);
-	    //TODO Configure the request dispatcher
-	    RequestDispatcher rd = request.getRequestDispatcher("versionsservlet");
-	    rd.forward(request, response);
+		HttpSession session = request.getSession(false);
+		if(session == null) 
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		else
+		{
+			User historyUser = (User) session.getAttribute("user");
+			String dsl = (String) session.getAttribute("dsl");
+			if(historyUser == null || dsl == null)
+			{
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			}
+			else
+			{
+				//TODO Invoke new method in Collaboro backend
+			}
+		}
 	}
 	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
 	{
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		addResponseOptions(response);
 		super.doOptions(request, response);
+	
 		
 	}
 	
