@@ -10,6 +10,8 @@
  *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
@@ -82,7 +87,22 @@ public class NotationServlet extends AbstractCollaboroServlet
 			}
 			else
 			{
-				//TODO Invoke new method in Collaboro backend
+				// Getting the parameters from the request
+				StringBuffer jb = new StringBuffer();
+				String line = null;
+				try {
+					BufferedReader reader = request.getReader();
+					while ((line = reader.readLine()) != null)
+						jb.append(line);
+				} catch (Exception e) {
+					throw new ServletException("There was an error reading the parameters");
+				}
+				
+				JsonParser parser = new JsonParser();
+				JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
+				int numImage = actionJsonObject.get("numImage").getAsInt();
+				File notationModelImage=null;
+				
 			}
 		}
 	}
