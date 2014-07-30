@@ -94,6 +94,10 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
       $scope.refreshcollaborations();
     });
 
+    $scope.$on('dslDecisionsMade', function() {
+      $scope.refreshcollaborations();
+    });
+
     // Tree initialization
     $scope.refreshcollaborations();
 

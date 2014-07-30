@@ -49,7 +49,10 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	};
 
   	$scope.launchDecision = function() {
-
+      $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/decision').then(
+        function(response) {
+          $scope.$broadcast('dslDecisionsMade');
+        });
 
   	};
 

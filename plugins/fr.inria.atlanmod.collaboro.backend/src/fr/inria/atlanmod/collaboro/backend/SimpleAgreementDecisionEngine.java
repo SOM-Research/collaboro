@@ -11,35 +11,26 @@
 
 package fr.inria.atlanmod.collaboro.backend;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.inria.atlanmod.collaboro.history.History;
 import fr.inria.atlanmod.collaboro.history.Proposal;
 import fr.inria.atlanmod.collaboro.history.Solution;
-import fr.inria.atlanmod.collaboro.history.User;
 import fr.inria.atlanmod.collaboro.history.Vote;
 
-public class TotalAgreementDecisionEngine extends DecisionEngine {
-	
+/**
+ * Decides proposals and solutions. To be accepted, there must be more positive votes than negative ones. Only
+ * the emmited voted are counted (even if no every user has voted).
+ */
+public class SimpleAgreementDecisionEngine extends DecisionEngine {
 	public boolean resolveProposal(History history, Proposal proposal) {
-		List<String> userNames = new ArrayList<String>();
-		for(User user : history.getUsers()) {
-			userNames.add(user.getId());
-		}
-		userNames.remove(proposal.getProposedBy().getId());
-		
 		boolean accepted = true;
-		
 		for(Vote vote : proposal.getVotes()) {
-			userNames.remove(vote.getUser().getId());
 			if(!vote.isAgreement()) {
 				accepted = false;
 				break;
 			}
 		}
 		
-		if((proposal.getVotes().size() == 0) || !accepted || userNames.size() > 0) {
+		if((proposal.getVotes().size() == 0) || !accepted) {
 			proposal.setAccepted(false);
 			return false;
 		} else {
@@ -49,33 +40,22 @@ public class TotalAgreementDecisionEngine extends DecisionEngine {
 	}
 
 	public boolean resolveSolution(History history, Proposal proposal) {
-		
 		for(Solution solution : proposal.getSols()) {
-			List<String> userNames = new ArrayList<String>();
-			for(User user : history.getUsers()) {
-				userNames.add(user.getId());
-			}
-			userNames.remove(solution.getProposedBy().getId());
-			
 			boolean accepted = true;
-			
 			for(Vote vote : solution.getVotes()) {
-				userNames.remove(vote.getUser().getId());
 				if(!vote.isAgreement()) {
 					accepted = false;
 					break;
 				}
 			}
 			
-			if(!((proposal.getVotes().size() == 0) || !accepted || userNames.size() > 0)) {
+			if(!((proposal.getVotes().size() == 0) || !accepted)) {
 				proposal.setSelected(solution);
-//				System.out.println("Solution " + solution.getId() + " found");
 				break;
 			} 
 		}
 		
 		if(proposal.getSelected() == null) {
-//			System.out.println("No solution found");
 			return false;
 		} else {
 			return true;

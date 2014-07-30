@@ -12,13 +12,16 @@
       collaborations="#//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1"/>
   <users id="javi" votes="#//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.5/@votes.1"
       collaborations="#//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.1 #//@histories.0/@versions.1/@proposals.4/@sols.0 #//@histories.0/@versions.1/@proposals.5/@sols.0"/>
-  <users id="juan" votes="#//@histories.0/@versions.2/@proposals.4/@votes.0 #//@histories.0/@versions.2/@proposals.3/@votes.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@votes.0"
+  <users id="juan" votes="#//@histories.0/@versions.2/@proposals.4/@votes.0 #//@histories.0/@versions.2/@proposals.3/@votes.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.3/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0"
       collaborations="#//@histories.0/@versions.2/@proposals.0 #//@histories.0/@versions.3/@proposals.0 #//@histories.0/@versions.3/@proposals.1 #//@histories.0/@versions.3/@proposals.0/@comments.0 #//@histories.0/@versions.2/@proposals.1 #//@histories.0/@versions.2/@proposals.1/@comments.0 #//@histories.0/@versions.2/@proposals.2 #//@histories.0/@versions.2/@proposals.2/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.1 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.2 #//@histories.0/@versions.2/@proposals.2/@comments.0/@comments.3 #//@histories.0/@versions.2/@proposals.3 #//@histories.0/@versions.2/@proposals.4 #//@histories.0/@versions.0/@proposals.0"
       email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
       lastName="Villa"/>
   <histories>
     <versions id="0.1">
-      <proposals id="ugtb1sjbii4un04qq0185ro28v" rationale="111" proposedBy="#//@users.5"/>
+      <proposals id="ugtb1sjbii4un04qq0185ro28v" rationale="111" proposedBy="#//@users.5"
+          accepted="true">
+        <votes agreement="true" user="#//@users.5"/>
+      </proposals>
     </versions>
     <versions id="0.2" previous="#//@histories.0/@versions.0">
       <proposals id="n0" rationale="giving a textual syntax" proposedBy="#//@users.4"
@@ -190,6 +193,7 @@
           rationale="111" proposedBy="#//@users.5">
         <comments id="531523510513214405224434011201413252430345441553125425333503144231332102240133552153455443255230001"
             rationale="122" proposedBy="#//@users.5"/>
+        <votes agreement="true" user="#//@users.5"/>
       </proposals>
       <proposals id="25414423143000351210254551121311435204023304251352525105240400220334450054422142442540233124312054"
           rationale="222" proposedBy="#//@users.5"/>

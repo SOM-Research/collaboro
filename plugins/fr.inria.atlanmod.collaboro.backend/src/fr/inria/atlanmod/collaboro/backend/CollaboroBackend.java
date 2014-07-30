@@ -289,6 +289,8 @@ public class CollaboroBackend {
 			engine.resolveProposal(getHistory(), proposal);
 			engine.resolveSolution(getHistory(), proposal);
 		}
+		modelManager.saveHistory();
+		modelManager.saveNotation();
 	}
 	
 	public void deleteCollaborationPlain(String collaborationId) {

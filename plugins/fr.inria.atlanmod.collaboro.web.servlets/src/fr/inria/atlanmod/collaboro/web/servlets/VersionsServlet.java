@@ -122,13 +122,14 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 	private String getCollaborationLabel(Collaboration collaboration) {
 		String collaborationJson = "";
 		String typeOfCollaboration = collaboration.eClass().getName();
-		String collaborationLabel = "\"label\": \"" + typeOfCollaboration + " from " + collaboration.getProposedBy().getFirstName() + " " + collaboration.getProposedBy().getLastName() + "\"";
+		String author = (collaboration.getProposedBy().getFirstName() == null || collaboration.getProposedBy().getLastName() == null) ? collaboration.getProposedBy().getId() : collaboration.getProposedBy().getFirstName() + " " + collaboration.getProposedBy().getLastName();
+		String status = (collaboration instanceof Proposal) ? ((((Proposal) collaboration).isAccepted()) ? "[Accepted]" : "[Not accepted]") : "";
+		String collaborationLabel = "\"label\": \"" + typeOfCollaboration + " from " + author + " " + status + "\"";
 		collaborationJson = collaborationJson.concat(collaborationLabel);
 
 		if(collaboration.getRationale() != null && collaboration.getRationale().length() > 0) {
 			collaborationJson = collaborationJson.concat(",");
 			String cleanRationale = collaboration.getRationale().replaceAll("(\\r|\\t|\\n|\")", " ");
-			//String collaborationData="\"data\": { \"username\":\""+ collaboration.getProposedBy().getId() +"\",\"description\": \""+cleanRationale+"\"";
 
 			String collaborationType = "";
 			String parentId = "";

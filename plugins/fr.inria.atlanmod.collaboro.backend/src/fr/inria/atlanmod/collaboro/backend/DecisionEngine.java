@@ -18,6 +18,6 @@ public abstract class DecisionEngine {
 	abstract public boolean resolveProposal(History history, Proposal proposal);
 	abstract public boolean resolveSolution(History history, Proposal proposal);
 	
-	public static DecisionEngine INSTANCE = new TotalAgreementDecisionEngine();
+	public static DecisionEngine INSTANCE = new SimpleAgreementDecisionEngine();
 	
 }
