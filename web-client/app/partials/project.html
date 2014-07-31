@@ -19,18 +19,18 @@
           <div class="col-md-6">
             <div class="panel panel-primary"> 
               <div class="panel-heading">
-                <h3 class="panel-title">Language definition</h3>
+                <h3 class="panel-title">Abstract Syntax</h3>
               </div>
-              <div class="panel-body" ng-controller="metamodelAndModelsCtrl">
+              <div class="panel-body" ng-controller="AbstractSyntaxCtrl">
                 <div class="row">
                   <p class="text-center">
-                    <img ng-src="{{metamodelImage}}" height="300">
+                    <img ng-src="{{abstractSyntaxImage}}" height="300">
                   </p>
                 </div>
                 <div class="row">
                   <p class="text-center">
-                    <button ng-click="previousMetamodeImage()" class="btn btn-default btn-sm"><<</button>
-                    <button ng-click="nextMetamodeImage()" class="btn btn-default btn-sm">>></button>
+                    <button ng-click="previousAbstractSyntaxImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextAbstractSyntaxImage()" class="btn btn-default btn-sm">>></button>
                   </p>
                 </div>
               </div>
@@ -40,18 +40,18 @@
           <div class="col-md-6">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title">Notation examples</h3>
+                <h3 class="panel-title">Concrete Syntax Examples</h3>
               </div>
-              <div class="panel-body" ng-controller="imagesCtrl">
+              <div class="panel-body" ng-controller="ConcreteSyntaxCtrl">
                 <div class="row">  
                   <p class="text-center">
-                    <img ng-src="{{modelImage}}" height="300" >
+                    <img ng-src="{{concreteSyntaxImage}}" height="300" >
                   </p>
                 </div>
                 <div class="row">
                   <p class="text-center">
-                    <button ng-click="previousModelImage()" class="btn btn-default btn-sm"><<</button>
-                    <button ng-click="nextModelImage()" class="btn btn-default btn-sm">>></button>
+                    <button ng-click="previousConcreteSyntaxImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextConcreteSyntaxImage()" class="btn btn-default btn-sm">>></button>
                   </p>
                 </div>
               </div> 
