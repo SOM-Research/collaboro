@@ -3,7 +3,7 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	$scope.dslVersion = "";
 
   	$scope.checkVersion = function() {
-  		$http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/versionManagement').then(
+  		$http.get(collaboroServletURL + '/versionManagement').then(
   			function(response) {
   				$scope.dslVersion = response.data.version;
   			},
@@ -14,7 +14,7 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
 
 
   	$scope.nextVersion = function() {
-  		$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/versionManagement', { action : "next" } ).then(
+  		$http.post(collaboroServletURL + '/versionManagement', { action : "next" } ).then(
   			function(response) {
   				$scope.dslVersion = response.data.version;
   				$scope.$broadcast('dslVersionChanged');
@@ -25,7 +25,7 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	};
 
   	$scope.createVersion = function() {
-  		$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/versionManagement', { action : "create" } ).then(
+  		$http.post(collaboroServletURL + '/versionManagement', { action : "create" } ).then(
   			function(response) {
   				$scope.dslVersion = response.data.version;
   				$scope.$broadcast('dslVersionChanged');
@@ -37,7 +37,7 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	};
 
   	$scope.previousVersion = function() {
-  		$http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/versionManagement', { action : "previous" } ).then(
+  		$http.post(collaboroServletURL + '/versionManagement', { action : "previous" } ).then(
   			function(response) {
   				$scope.dslVersion = response.data.version;
   				$scope.$broadcast('dslVersionChanged');
@@ -49,7 +49,7 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	};
 
   	$scope.launchDecision = function() {
-      $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/decision').then(
+      $http.post(collaboroServletURL + '/decision').then(
         function(response) {
           $scope.$broadcast('dslDecisionsMade');
         });

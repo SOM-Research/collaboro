@@ -6,7 +6,6 @@ angular.module('collaboroControllers').controller('ConcreteSyntaxCtrl', ['$scope
 
     syntax.getTotalConcreteSyntaxImages(
       function(response) {
-        console.log(response);
         $scope.totalConcreteSyntaxImages = response.data.numImages;
       }
     );
@@ -18,7 +17,6 @@ angular.module('collaboroControllers').controller('ConcreteSyntaxCtrl', ['$scope
         $scope.concreteSyntaxImage="assets/img/loading.gif";
         syntax.getConcreteSyntaxImage(nextImageIndex,
           function(response) {
-            console.log(response);
             $scope.concreteSyntaxImage = "data:image/jpg;base64," + response.data;
             $scope.currentConcreteSyntaxIndex = nextImageIndex;
           }

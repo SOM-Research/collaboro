@@ -6,7 +6,6 @@ angular.module('collaboroControllers').controller('AbstractSyntaxCtrl', ['$scope
 
 		syntax.getTotalAbstractSyntaxImages(
 			function(response) {
-				console.log(response);
 				$scope.totalAbstractSyntaxImages = response.data.numImages;
 			}
 		);
@@ -18,7 +17,6 @@ angular.module('collaboroControllers').controller('AbstractSyntaxCtrl', ['$scope
 				$scope.abstractSyntaxImage="assets/img/loading.gif";
 				syntax.getAbstractSyntaxImage(nextImageIndex,
 					function(response) {
-						console.log(response);
 						$scope.abstractSyntaxImage = "data:image/jpg;base64," + response.data;
 						$scope.currentAbstractSyntaxIndex = nextImageIndex;
 					}

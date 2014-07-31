@@ -1,5 +1,7 @@
 'use strict';
 
+var collaboroServletURL = 'http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets';
+
 angular.module('collaboroApp', [
 	'ui.bootstrap',
 	'angular-md5',
