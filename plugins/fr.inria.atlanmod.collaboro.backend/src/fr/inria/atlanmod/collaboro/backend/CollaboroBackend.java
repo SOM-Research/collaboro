@@ -22,6 +22,9 @@ import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.history.Vote;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 
+/**
+ * Main backedn for collaboro
+ */
 public class CollaboroBackend {
 	// Variables to control the state of the collaboration
 	private int historyTracked = 0;
@@ -30,7 +33,14 @@ public class CollaboroBackend {
 	
 	ModelManager modelManager = null;
 	
+	/**
+	 * Keeps a list of files pointing at previous versions of the Ecore files
+	 */
 	private HashMap<String, List<File>> previousEcores;
+	
+	/**
+	 * Keeps a list of files pointing at previous model examples   
+	 */
 	private HashMap<String, List<File>> previousModels;
 
 	public CollaboroBackend(File historyFile, File ecoreFile) {
@@ -83,8 +93,26 @@ public class CollaboroBackend {
 		return modelManager.getEcoreModel();
 	}
 	
-	public EPackage getEcoreModel(int index) {
-		return modelManager.getEcoreModel();
+	public File getEcoreModel(int index) {
+		if(this.previousEcores == null)
+			return null;
+		if(this.previousEcores.get(String.valueOf(getVersionTracked())) == null) 
+			throw new IllegalArgumentException("There are no models for such version");	
+		if(index < 0 || index > this.previousEcores.get(String.valueOf(getVersionTracked())).size())
+			throw new IllegalArgumentException("The index is out of bounds");
+		File previousEcoreModelsList = this.previousEcores.get(String.valueOf(getVersionTracked())).get(index);
+		return previousEcoreModelsList;
+	}
+	
+	public File getModel(int index) {
+		if(this.previousModels == null)
+			return null;
+		if(this.previousModels.get(String.valueOf(getVersionTracked())) == null) 
+			throw new IllegalArgumentException("There are no example models for such version");	
+		if(index < 0 || index > this.previousModels.get(String.valueOf(getVersionTracked())).size())
+			throw new IllegalArgumentException("The index is out of bounds");
+		File previousModels = this.previousModels.get(String.valueOf(getVersionTracked())).get(index);
+		return previousModels;
 	}
 
 	public Definition getNotation() {
@@ -344,11 +372,17 @@ public class CollaboroBackend {
 	}
 	
 	public int getNumOfAbsModelImages() {
-		return 2;
+		if(previousEcores == null) return 0;
+		List<File> previousEcoresList = previousEcores.get(String.valueOf(getVersionTracked()));
+		if(previousEcoresList == null) return 0;
+		return previousEcoresList.size();
 	}
 	
 	public int getNumOfNotModelImages()	{
-		return 3;
+		if(previousModels == null) return 0;
+		List<File> previousModelsList = previousModels.get(String.valueOf(getVersionTracked()));
+		if(previousModelsList == null) return 0;
+		return previousModelsList.size();
 	}
 
 	public String generateId() {

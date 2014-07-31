@@ -15,10 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,34 +30,24 @@ import fr.inria.atlanmod.collaboro.history.User;
 /**
  * Service to render the notation images
  * 
- * @author Juan David Villa Calle (juan-david.villa_calle@inria.fr)
- *
  */
 @WebServlet(description = "Exposes the notations", urlPatterns = { "/notations" })
-public class NotationServlet extends AbstractCollaboroServlet
-{
-	/**
-	 * 
-	 */
+public class NotationRendererServlet extends AbstractRendererServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);
 		HttpSession session = request.getSession(false);
 		if(session == null) 
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else
-		{
+		else {
 			User historyUser = (User) session.getAttribute("user");
 			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null)
-			{
+			if(historyUser == null || dsl == null) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
-			else
-			{
+			else {
 				int numOfNotModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfNotModelImages();
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
@@ -67,26 +55,20 @@ public class NotationServlet extends AbstractCollaboroServlet
 			}
 
 		}
-	
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
 		HttpSession session = request.getSession(false);
 		if(session == null) 
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else
-		{
+		else {
 			User historyUser = (User) session.getAttribute("user");
 			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null)
-			{
+			if(historyUser == null || dsl == null) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			}
-			else
-			{
+			} else {
 				// Getting the parameters from the request
 				StringBuffer jb = new StringBuffer();
 				String line = null;
@@ -100,21 +82,29 @@ public class NotationServlet extends AbstractCollaboroServlet
 				
 				JsonParser parser = new JsonParser();
 				JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
-				int numImage = actionJsonObject.get("numImage").getAsInt();
-				File notationModelImage=null;
+				int num = actionJsonObject.get("numImage").getAsInt();
+				File pictureFile = CollaboroBackendFactory.getBackend(dsl).getModel(num);
+
+				if(pictureFile == null) 
+					pictureFile = new File(workingDir.getAbsolutePath() + "/error.jpg");
+				
+				String resultImage;
+				try {
+					resultImage = encodeToString(pictureFile);
+				} catch (IOException e) {
+					throw new ServletException("Not possible to encode");
+				}
+
+				PrintWriter out = response.getWriter();
+				out.print(resultImage);
 				
 			}
 		}
 	}
 	
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException
-	{
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);
 		super.doOptions(request, response);
-	
-		
 	}
-	
-
 }

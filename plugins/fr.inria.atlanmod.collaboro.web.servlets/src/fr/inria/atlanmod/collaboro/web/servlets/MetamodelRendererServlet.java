@@ -47,48 +47,27 @@ import fr.inria.atlanmod.collaboro.history.User;
  *
  */
 @WebServlet("/renderMetamodel")
-public class MetamodelRendererServlet extends AbstractCollaboroServlet {
+public class MetamodelRendererServlet extends AbstractRendererServlet {
 	private static final long serialVersionUID = 1L;
 
-	// The main path to the working dir (needed for generating the pictures)
-	public static File workingDir = null;
 
-	// The path to the Graphviz DOT execitable (needed for generating the pictures)
-	public static String dotExePath = null;
-
-
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		String workingDirString = properties.getProperty("workingDir");
-		dotExePath = properties.getProperty("dotExePath");
-
-		// We need a File (not a String)
-		workingDir = new File(workingDirString);
-		if(!workingDir.isDirectory()) throw new ServletException("The working dir does not exist");
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		addResponseOptions(response);
 		HttpSession session = request.getSession(false);
 		if(session == null) 
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else
-		{
+		else {
 			User historyUser = (User) session.getAttribute("user");
 			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null)
-			{
+			if(historyUser == null || dsl == null) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
-			else
-			{
+			else {
 				int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
 				out.print("{\"numImages\": "+numOfAbsModelImages +"}"); 
 			}
-
 		}
 	}
 
@@ -118,18 +97,16 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 				
 				JsonParser parser = new JsonParser();
 				JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
-				EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel(actionJsonObject.get("numImage").getAsInt());
+				int num = actionJsonObject.get("numImage").getAsInt();
+				File pictureFile = CollaboroBackendFactory.getBackend(dsl).getEcoreModel(num);
 
-				// Drawing the metamodel
-				List<EObject> toDraw= new ArrayList<EObject>();
-				toDraw.add(metamodelPackage);
-
-				File resultPath = drawModel(toDraw);
+				if(pictureFile == null) 
+					pictureFile = new File(workingDir.getAbsolutePath() + "/error.jpg");
+				
 				String resultImage;
-				try{
-					resultImage = encodeToString(resultPath);
-				}
-				catch (IOException e) {
+				try {
+					resultImage = encodeToString(pictureFile);
+				} catch (IOException e) {
 					throw new ServletException("Not possible to encode");
 				}
 
@@ -162,32 +139,6 @@ public class MetamodelRendererServlet extends AbstractCollaboroServlet {
 	}
 
 
-	/**
-	 * Encodes a JPG picture into the BASE64 format
-	 * 
-	 * @param imagePath
-	 * @return
-	 * @throws IOException
-	 */
-	private String encodeToString(File imagePath) throws IOException {
-		BufferedImage image = ImageIO.read(imagePath);
-
-		String imageString = null;
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-
-		try {
-			ImageIO.write(image, "JPG", bos);
-			byte[] imageBytes = bos.toByteArray();
-
-			BASE64Encoder encoder = new BASE64Encoder();
-			imageString = encoder.encode(imageBytes);
-
-			bos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return imageString;
-	}
 
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

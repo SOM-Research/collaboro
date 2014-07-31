@@ -45,7 +45,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 					if(historyFile.exists() && ecoreFile.exists()) {
 						CollaboroLanguageConfig languageConfig = new CollaboroLanguageConfig(languageName, historyFile, ecoreFile);
 
-						String versions = properties.getProperty(language + ".versions");
+						String versions = properties.getProperty(language + ".previous.versions");
 						if(versions != null) {
 							String[] versionsWithExamples = versions.split(",");
 							if(versionsWithExamples != null && versionsWithExamples.length > 0) {
@@ -54,7 +54,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 									if(previousEcores != null) {
 										int previousEcoresInt = Integer.valueOf(previousEcores);
 										for(int i = 0; i < previousEcoresInt; i++) {
-											String previousEcorePath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".ecores." + String.valueOf(previousEcoresInt));
+											String previousEcorePath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".ecores." + String.valueOf(i));
 											if(previousEcorePath != null) {
 												File previousEcoreFile = new File(previousEcorePath);
 												if(previousEcoreFile.exists()) {
@@ -67,7 +67,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 									if(previousModels != null) {
 										int previousModelsInt = Integer.valueOf(previousModels);
 										for(int i = 0; i < previousModelsInt; i++) {
-											String previousModelPath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".models." + String.valueOf(previousModelsInt));
+											String previousModelPath = properties.getProperty(language + ".previous.version." + versionWithExamples + ".models." + String.valueOf(i));
 											if(previousModelPath != null) {
 												File previousModelFile = new File(previousModelPath);
 												if(previousModelFile.exists()) {

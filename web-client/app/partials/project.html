@@ -14,23 +14,25 @@
       </div>
       <!--The four panels.--> 
       <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
-         <div class="row-fluid" ng-controller="metamodelAndModelsCtrl">
+         <div class="row-fluid">
           <!--The panel of the metamodel-->
           <div class="col-md-6">
             <div class="panel panel-primary"> 
               <div class="panel-heading">
-                <!--<h3 class="panel-title">Language definition of  {{models[0].metamodelName}}</h3>-->
                 <h3 class="panel-title">Language definition</h3>
               </div>
-              <!-- <h1>Language definition of  {{models[0].metamodelName}}</h1> -->
-              <div class="panel-body">
-                <!--<img ng-src="{{models[0].metamodelImage}}" >-->
-                <div class="row"><img ng-src="{{metamodelImage}}" style="margin: 0px 250px" height="300" width="300"></div>
-                <div class="row" style="text-align:center;">
-                  <button ng-click="previousMetamodeImage()" class="btn btn-default btn-sm"><<
-                  </button>
-                  <button ng-click="nextMetamodeImage()" class="btn btn-default btn-sm">>></button>
-                  </div>
+              <div class="panel-body" ng-controller="metamodelAndModelsCtrl">
+                <div class="row">
+                  <p class="text-center">
+                    <img ng-src="{{metamodelImage}}" height="300">
+                  </p>
+                </div>
+                <div class="row">
+                  <p class="text-center">
+                    <button ng-click="previousMetamodeImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextMetamodeImage()" class="btn btn-default btn-sm">>></button>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -40,28 +42,18 @@
               <div class="panel-heading">
                 <h3 class="panel-title">Notation examples</h3>
               </div>
-              <div class="panel-body">  
-                  <div ng-controller="imagesCtrl">
-                    <div class="row"><img style="height:305px;" ng-src="{{slides[notationImageIndex].image}}"></div>
-                    <div class="row" style="text-align:center;"><button ng-click="previousModelImage()" class="btn btn-default btn-sm"><<</button>
-                    <button ng-click="nextModelImage()" class="btn btn-default btn-sm">>></button></div>
-                    <!--<div style="height:305 px width:600">-->
-                     <!--<ul rn-carousel class="image">
-                      <li ng-repeat="image in sportImages" ng-style="{ backgroundImage: 'url(' + image + ')' }">
-                        <div class="layer">{{ image }}</div>
-                      </li>
-                     </ul> -->           
-                      <!--<carousel interval="myInterval">
-                        <slide ng-repeat="slide in slides" active="slide.active">
-                          <img ng-src="{{slide.image}}" style="margin:auto;">
-                          <div class="carousel-caption">
-                            <h4>Slide {{$index}}</h4>
-                            <p>{{slide.text}}</p>
-                          </div>
-                        </slide>
-                      </carousel>-->
-                    <!--</div>-->
-                  </div>
+              <div class="panel-body" ng-controller="imagesCtrl">
+                <div class="row">  
+                  <p class="text-center">
+                    <img ng-src="{{modelImage}}" height="300" >
+                  </p>
+                </div>
+                <div class="row">
+                  <p class="text-center">
+                    <button ng-click="previousModelImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextModelImage()" class="btn btn-default btn-sm">>></button>
+                  </p>
+                </div>
               </div> 
             </div>
           </div>
