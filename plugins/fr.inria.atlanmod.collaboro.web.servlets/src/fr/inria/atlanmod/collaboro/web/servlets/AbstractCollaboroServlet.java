@@ -20,6 +20,8 @@ public class AbstractCollaboroServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	Properties properties = null;
+	
+	String serverURL = "";
 
 	@Override
 	public void init() throws ServletException {
@@ -30,6 +32,10 @@ public class AbstractCollaboroServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		serverURL = properties.getProperty("serverURL");
+		if(serverURL == null) 
+			serverURL = "http://localhost:8001";
 
 		if(!CollaboroBackendFactory.isActive()) {
 			String[] languages = properties.getProperty("languages").split(",");
@@ -93,7 +99,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 	 * @param response
 	 */
 	protected void addResponseOptions(HttpServletResponse response) {
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:8001");
+		response.setHeader("Access-Control-Allow-Origin", serverURL);
 		response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
 		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
