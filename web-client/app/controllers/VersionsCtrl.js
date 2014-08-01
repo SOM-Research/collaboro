@@ -120,6 +120,7 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
         $scope.versionSelectedActions = branch.data.actions;
         $scope.versionSelectedUsersAgree = branch.data.agree;
         $scope.versionSelectedUsersDisagree = branch.data.disagree;
+        $scope.versionSelectedReferredElements = branch.data.referredElements;
         $scope.userNameSelected = branch.data.username;
         return $scope.output += '(' + branch.data.description + ')';
       }
