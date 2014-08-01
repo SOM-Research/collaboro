@@ -1,0 +1,161 @@
+<div class="container-fluid" ng-controller="ProjectCtrl">
+    <div class="row-fluid">
+      <!--The vertical menu-->    
+      <div class="col-sm-2 col-md-1 sidebar">
+        <p class="text-center">Current Version</p>
+        <div class="alert alert-info text-center"><strong>{{dslVersion}}</strong></div>  
+        <div class="btn-group-vertical">
+        <button ng-click="previousVersion()" class="btn btn-default btn-sm">Previous Version</button>
+        <button ng-click="createVersion()" class="btn btn-default btn-sm">Create Version</button>
+        <button ng-click="nextVersion()" class="btn btn-default btn-sm">Next Version</button>
+        </div>
+        <p></p>
+        <button ng-click="launchDecision()" class="btn btn-default btn-sm">Run Decisions</button>
+      </div>
+      <!--The four panels.--> 
+      <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
+         <div class="row-fluid">
+          <!--The panel of the metamodel-->
+          <div class="col-md-6">
+            <div class="panel panel-primary"> 
+              <div class="panel-heading">
+                <h3 class="panel-title">Abstract Syntax</h3>
+              </div>
+              <div class="panel-body" ng-controller="AbstractSyntaxCtrl">
+                <div class="row">
+                  <p class="text-center">
+                    <img ng-src="{{abstractSyntaxImage}}" height="300">
+                  </p>
+                </div>
+                <div class="row">
+                  <p class="text-center">
+                    <button ng-click="previousAbstractSyntaxImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextAbstractSyntaxImage()" class="btn btn-default btn-sm">>></button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--The panel of the models--> 
+          <div class="col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Concrete Syntax Examples</h3>
+              </div>
+              <div class="panel-body" ng-controller="ConcreteSyntaxCtrl">
+                <div class="row">  
+                  <p class="text-center">
+                    <img ng-src="{{concreteSyntaxImage}}" height="300" >
+                  </p>
+                </div>
+                <div class="row">
+                  <p class="text-center">
+                    <button ng-click="previousConcreteSyntaxImage()" class="btn btn-default btn-sm"><<</button>
+                    <button ng-click="nextConcreteSyntaxImage()" class="btn btn-default btn-sm">>></button>
+                  </p>
+                </div>
+              </div> 
+            </div>
+          </div>
+         </div> 
+         <div class="row-fluid" ng-controller="versionsCtrl">
+           <!--The panel of the versions--> 
+           <div class="col-md-6">
+            <div class="panel panel-primary">
+             <div class="panel-heading">
+                <h3 class="panel-title">Collaborations</h3>
+             </div>
+             <div class="panel-body">
+               <div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
+                        <abn-tree 
+                          tree-data="treeCollaborations" 
+                          tree-control="my_tree" 
+                          icon-leaf="fa fa-leaf" 
+                          icon-expand="fa fa-plus-circle" 
+                          icon-collapse= "fa fa-minus-circle"  
+                          on-select="my_tree_handler(branch); $broadcast('VersionSelectedEvent')" 
+                          expand-level="0">
+                        </abn-tree>
+                      </div>
+                      <hr>
+                      <p class="text-center">
+                        <button ng-click="addcollaboration()" class="btn btn-default btn-sm">Add</button>
+                        <button ng-click="editcollaboration()" class="btn btn-default btn-sm">Edit</button>
+                        <button ng-click="deletecollaboration()" class="btn btn-default btn-sm">Delete</button>
+                        <!--<button ng-click="savecollaborations()" class="btn btn-default btn-sm">Save</button>-->
+                        <button ng-click="refreshcollaborations()" class="btn btn-default btn-sm">Refresh</button>
+                        <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
+                        <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
+                      </p>
+
+                      <div class="alert bg-danger" ng-show="connError">
+                          {{connError}}
+                      </div>
+                  </div>
+                </div>
+                <br>
+                <!--<button ng-click="try_changing_the_tree_data()" class="btn btn-default muted">Change The Tree Definition</button>-->
+               </div>
+             </div>      
+            </div>
+  
+           </div>  
+           <!--The panel of the collaborations-->   
+           <div class="col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Collaboration data</h3>
+             </div>
+             <div class="panel-body">
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Proposed by</h3>
+                </div>
+                <div class="panel-body">{{userNameSelected}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Rationale</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedDescription}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Referred Elements</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedReferredElements}}</div>
+              </div>
+              <div class="panel panel-default" ng-show="showAction">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Actions</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedActions}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Votes Agree</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedUsersAgree}}</div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Votes Disagree</h3>
+                </div>
+                <div class="panel-body">{{versionSelectedUsersDisagree}}</div>
+              </div>
+
+              <p class="text-center">
+                <button ng-click="vote('yes')" class="btn btn-success btn-sm">Agree</button>
+                <button ng-click="vote('no')" class="btn btn-danger btn-sm">Disagree</button>
+              </p>
+             </div>
+            </div>
+           </div>
+         </div>    
+      </div>    
+    </div>
+  </div>

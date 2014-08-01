@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<dawnEmfGenmodel:DawnEMFGenerator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dawnEmfGenmodel="http://www.eclipse.org/emf/cdo/dawn/2010/GenModel/emf" fragmentName="fr.inria.atlanmod.collaboro.notation.cdo.editor.dawn" dawnEditorClassName="DawnNotationEditor">
-  <dawnGenerator href="notation.dawngenmodel#/"/>
-  <emfGenModel href="notation.genmodel#/"/>
-</dawnEmfGenmodel:DawnEMFGenerator>

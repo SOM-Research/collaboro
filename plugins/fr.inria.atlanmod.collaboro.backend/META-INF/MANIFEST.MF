@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Backend
-Bundle-SymbolicName: fr.inria.atlanmod.collaboro.backend
-Bundle-Version: 1.0.0.qualifier
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.xmi
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
