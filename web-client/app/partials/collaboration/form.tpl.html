@@ -20,17 +20,17 @@
 			<label>Rationale</label>
 			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.description"></textarea>
 		</div>
-		<div class="form-group" ng-show="newcollaboration.data.type == 'Solution'">
+		<!--<div class="form-group" ng-show="newcollaboration.data.type == 'Solution'">
 			<label>Action list</label>
 			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.actions"></textarea>
-		</div>
+		</div>-->
 		<div class="form-group">
 			<label>Referred elements</label>
 			<!--<select ui-select2="select2Options" class="form-control" ng-model="select2" data-placeholder="Pick a number">
     			<option value=""></option>
     			<option ng-repeat="number in range" value="{{number.value}}">{{number.text}}</option>
 			</select>-->
-			<input
+			<input style="height: 100%;"
 				class="form-control"
     			type="hidden"
     			ui-select2="select2Options"

@@ -54,6 +54,7 @@ public class LoginServlet extends AbstractSecurityServlet {
 
 		// Accesing the backend to validate the user
 		CollaboroBackend backend = CollaboroBackendFactory.getBackend(user.getDsl());
+		System.out.println(user.getPassword());
 		User historyUser = backend.loginUser(user.getEmail(), user.getPassword(), user.getDsl());  
 		if(historyUser != null) {
 			String userId = historyUser.getId();

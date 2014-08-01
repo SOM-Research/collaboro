@@ -31,7 +31,6 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
                       //$scope.availableElementsToRefer=response.data.availableElementsToRefer;
                       //$scope.tags=response.data;
                       angular.extend($scope.select2Options.tags,response.data);
-                      console.log('Que tiene '+response.data);
                     }
               );
 

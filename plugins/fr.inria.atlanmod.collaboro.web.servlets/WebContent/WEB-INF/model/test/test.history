@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="ASCII"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
-    xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
+    language="transport">
   <users id="hugo" votes="#//@histories.0/@versions.1/@proposals.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.1/@votes.1 #//@histories.0/@versions.1/@proposals.2/@votes.2 #//@histories.0/@versions.1/@proposals.3/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.5/@votes.0 #//@histories.0/@versions.1/@proposals.4/@votes.2"
       collaborations="#//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0 #//@histories.0/@versions.1/@proposals.2/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.2"/>
   <users id="salva" votes="#//@histories.0/@versions.1/@proposals.3/@votes.1 #//@histories.0/@versions.1/@proposals.4/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.2 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.0/@votes.3 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.2 #//@histories.0/@versions.1/@proposals.5/@votes.2"
       collaborations="#//@histories.0/@versions.1/@proposals.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1 #//@histories.0/@versions.1/@proposals.3/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.0 #//@histories.0/@versions.1/@proposals.6"/>
   <users id="valerio" votes="#//@histories.0/@versions.1/@proposals.2/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.3 #//@histories.0/@versions.1/@proposals.5/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.0/@votes.2 #//@histories.0/@versions.1/@proposals.6/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.5/@votes.3 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.3 #//@histories.0/@versions.1/@proposals.4/@votes.3 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.3"
       collaborations="#//@histories.0/@versions.1/@proposals.3"/>
-  <users id="elena" votes="#//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.4/@votes.1 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.0"
-      collaborations="#//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1"/>
+  <users id="etienne" votes="#//@histories.0/@versions.1/@proposals.0/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@votes.1 #//@histories.0/@versions.1/@proposals.1/@votes.0 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.1 #//@histories.0/@versions.1/@proposals.3/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.2 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.2 #//@histories.0/@versions.1/@proposals.4/@votes.1 #//@histories.0/@versions.1/@proposals.4/@sols.0/@votes.0 #//@histories.0/@versions.1/@proposals.5/@sols.0/@votes.0"
+      collaborations="#//@histories.0/@versions.1/@proposals.5 #//@histories.0/@versions.1/@proposals.4/@comments.1 #//@histories.0/@versions.1/@proposals.4/@comments.2 #//@histories.0/@versions.1/@proposals.5/@comments.1 #//@histories.0/@versions.1/@proposals.7"
+      email="etienne.borde@telecom-paristech.fr" pasword="781836ce570cd9ad51f9cb82734572b9"
+      firstName="Etienne" lastName="Borde"/>
   <users id="javi" votes="#//@histories.0/@versions.1/@proposals.2/@votes.1 #//@histories.0/@versions.1/@proposals.0/@sols.0/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.3/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.0/@votes.0 #//@histories.0/@versions.1/@proposals.3/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.2/@votes.0 #//@histories.0/@versions.1/@proposals.4/@comments.1/@votes.0 #//@histories.0/@versions.1/@proposals.5/@votes.1"
       collaborations="#//@histories.0/@versions.1/@proposals.0 #//@histories.0/@versions.1/@proposals.0/@sols.0 #//@histories.0/@versions.1/@proposals.1 #//@histories.0/@versions.1/@proposals.2/@comments.0 #//@histories.0/@versions.1/@proposals.3/@comments.0 #//@histories.0/@versions.1/@proposals.4 #//@histories.0/@versions.1/@proposals.5/@comments.0 #//@histories.0/@versions.1/@proposals.6/@comments.0 #//@histories.0/@versions.1/@proposals.6/@sols.0 #//@histories.0/@versions.1/@proposals.6/@comments.1 #//@histories.0/@versions.1/@proposals.4/@sols.0 #//@histories.0/@versions.1/@proposals.5/@sols.0"/>
   <users id="juan" votes="#//@histories.0/@versions.2/@proposals.4/@votes.0 #//@histories.0/@versions.2/@proposals.3/@votes.0 #//@histories.0/@versions.2/@proposals.2/@comments.0/@votes.0 #//@histories.0/@versions.3/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.3/@proposals.2/@votes.0"
@@ -55,18 +57,6 @@
           <votes agreement="true" user="#//@users.3"/>
           <votes agreement="true" user="#//@users.1"/>
           <votes agreement="true" user="#//@users.2"/>
-          <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Workflow"/>
-            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.0"/>
-          </changes>
-          <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//Work"/>
-            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.1"/>
-          </changes>
-          <changes xsi:type="history:Add">
-            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass ModiscoWorkflow.ecore#//WorkParameter"/>
-            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite ModiscoWorkflow.notation#//@elements.2"/>
-          </changes>
         </sols>
       </proposals>
       <proposals id="n19" rationale="From the comment on proposal n12:&#xA;&#xA;Maybe we can think of a main element called &quot;Workflow&quot; which can be composed of simple/composite elements, which could be could task/activity respectively.&#xA;&#xA;Anyway, I'm afraid of over-complicating the language. Actually, the support for simple/composite elements is included with the work/workflow metaclasses&#xA;"
@@ -173,6 +163,7 @@
           </changes>
         </sols>
       </proposals>
+      <proposals id="lu5v165pmvdkcs3igs0h92mm9m" rationale="eeeee" proposedBy="#//@users.3"/>
     </versions>
     <versions id="1">
       <proposals id="n1" rationale="aaa" proposedBy="#//@users.5"/>
