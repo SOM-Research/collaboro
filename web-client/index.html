@@ -26,14 +26,15 @@
   <script src="app/RouteProvider.js"></script>
   <script src="app/controllers/controllers.js"></script>
   <script src="app/controllers/ProjectCtrl.js"></script>
-  <script src="app/controllers/MetamodelAndModelsCtrl.js"></script>
-  <script src="app/controllers/ImagesCtrl.js"></script>
+  <script src="app/controllers/AbstractSyntaxCtrl.js"></script>
+  <script src="app/controllers/ConcreteSyntaxCtrl.js"></script>
   <script src="app/controllers/VersionsCtrl.js"></script>
   <script src="app/controllers/CollaborationsCtrl.js"></script>
 
   <script src="app/services/services.js"></script>
   <script src="app/services/HistoryService.js"></script>
   <script src="app/services/CollaborationService.js"></script>
+  <script src="app/services/SyntaxService.js"></script>
 
   <script src="security/services/security.service.js"></script>
   <script src="security/controllers/LoginFormController.js"></script>
@@ -52,20 +53,11 @@
   <!--The top navigation bar-->
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="http://localhost:8001/Desktop/collaboro/index.html#/">Collaboro: Let's design together</a>
-      </div>
       <div class="navbar-collapse collapse" ng-controller="LoginFormController">
         <ul class="nav navbar-nav navbar-right">
           <!-- <li><a ng-click="login()">Login</a></li> -->
           <li ng-show="isAuthenticated()">
-          <a href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a>
+          <a>{{currentUser.firstName}} {{currentUser.lastName}}</a>
           </li>
           <li ng-show="isAuthenticated()"><a ng-click="logout()">Log out</a></li>
           <!--<li ng-hide="isAuthenticated()"><a href="#/register">Register</a></li>-->

@@ -53,7 +53,7 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
         openLoginDialog();
       },
       login: function(email, password, dsl) {
-        var request = $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/login', { email: email, password: password, dsl: dsl});
+        var request = $http.post(collaboroServletURL + '/login', { email: email, password: password, dsl: dsl});
         return request.then(
           function(response) {
             service.currentUser = response.data.user;
@@ -75,7 +75,7 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
       },
       // Logout the current user and redirect
       logout:function() {
-        $http.post('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/logout').then(
+        $http.post(collaboroServletURL + '/logout').then(
           function(){
             service.currentUser = null;
             service.currentDSL = null;
@@ -89,7 +89,7 @@ angular.module('security.service', []).factory('security', ['$http', '$q', '$loc
           return $q.when(service.currentUser);
         } else {
           redirect('/');
-          return $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/currentUser').then(
+          return $http.get(collaboroServletURL + '/currentUser').then(
             function(response) {
               service.currentUser = response.data.user;
               redirect('/project');

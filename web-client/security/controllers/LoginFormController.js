@@ -48,7 +48,7 @@ angular.module('security.login.form', []).controller('LoginFormController', ['$s
 
     // We get the languages to collaborate
     $scope.updateLanguages = function() {
-      $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/languages').then(
+      $http.get(collaboroServletURL + '/languages').then(
         function(response) {
           $scope.languages = response.data.languages;
         });
