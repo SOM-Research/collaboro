@@ -258,11 +258,11 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 
 						String collaborationType = jsonCollaboration.getType();
 						if(collaborationType.compareTo("Proposal") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), jsonCollaboration.getRationale());
+							CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), jsonCollaboration.getRationale(),jsonCollaboration.getReferredElements());
 						} else if(collaborationType.compareTo("Comment") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createCommentPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale());
+							CollaboroBackendFactory.getBackend(dsl).createCommentPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(),jsonCollaboration.getReferredElements());
 						} else if(collaborationType.compareTo("Solution") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(), jsonCollaboration.getActions());
+							CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(), jsonCollaboration.getActions(),jsonCollaboration.getReferredElements());
 						}
 					}
 					response.setContentType("application/json");

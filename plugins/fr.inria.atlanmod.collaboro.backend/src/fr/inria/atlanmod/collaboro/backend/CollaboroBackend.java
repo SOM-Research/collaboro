@@ -155,9 +155,9 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 
-	public void createProposalPlain(String userId, String rationale) {
+	public void createProposalPlain(String userId, String rationale, String referredElements) {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
-		initCollaborationPlain(newProposal, userId, rationale);
+		initCollaborationPlain(newProposal, userId, rationale, referredElements);
 		createProposal(newProposal);
 	}
 
@@ -169,9 +169,9 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 	
-	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions) {
+	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, String referredElements) {
 		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
-		initCollaborationPlain(newSolution, userId, rationale);
+		initCollaborationPlain(newSolution, userId, rationale,referredElements);
 		newSolution.setChangesText(actions);
 		
 		Collaboration parent = locateCollaborationById(null, parentCollaboration);
@@ -216,7 +216,7 @@ public class CollaboroBackend {
 		return userProposing;
 	}
 	
-	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale) {
+	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
 
@@ -258,9 +258,9 @@ public class CollaboroBackend {
 		return found;
 	}
 
-	public void createCommentPlain(String parentCollaboration, String userId, String rationale) {
+	public void createCommentPlain(String parentCollaboration, String userId, String rationale, String referredElements) {
 		Comment newComment = HistoryFactory.eINSTANCE.createComment();
-		initCollaborationPlain(newComment, userId, rationale);
+		initCollaborationPlain(newComment, userId, rationale,referredElements);
 
 		Collaboration parent = locateCollaborationById(null, parentCollaboration);
 		if(parent != null) {

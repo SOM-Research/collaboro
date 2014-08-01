@@ -23,9 +23,18 @@ public class JsonCollaborationSimplified {
 	private String actions;
 	private String type;
 	private String parent_id;
+	private String referredElements;
 	
 	
 	
+	public String getReferredElements() {
+		return referredElements;
+	}
+
+	public void setReferredElements(String referredElements) {
+		this.referredElements = referredElements;
+	}
+
 	public String getId() {
 		return id;
 	}
