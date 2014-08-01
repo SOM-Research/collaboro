@@ -223,6 +223,7 @@ public class CollaboroBackend {
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
+			collaboration.setReferredElements(referredElements);
 		} else {
 			throw new IllegalArgumentException("The user does not exists");
 		}
