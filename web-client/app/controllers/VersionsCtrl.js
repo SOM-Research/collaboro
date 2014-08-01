@@ -24,7 +24,8 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
               "actions" : result.data['actions'],
               "type": result.data['type'],
               "proposedBy" : security.currentUser.firstName,
-              "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? null : tree.get_selected_branch().data['collaboration_id']
+              "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? null : tree.get_selected_branch().data['collaboration_id'],
+              "referredElements" : result.data['referredElements']
           };
 
           /*var c;

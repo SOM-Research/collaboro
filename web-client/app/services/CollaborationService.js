@@ -21,6 +21,28 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
         					$scope.cancel = function() {
             					$modalInstance.dismiss('closed');
         					}
+
+                  $scope.list_of_string = [];
+                  var requestReferredElements = $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/availableElementsToRefer');
+                  requestReferredElements.then
+                  (
+                    function(response)
+                    {
+                      //$scope.availableElementsToRefer=response.data.availableElementsToRefer;
+                      //$scope.tags=response.data;
+                      angular.extend($scope.select2Options.tags,response.data);
+                      console.log('Que tiene '+response.data);
+                    }
+              );
+
+              $scope.range=[{value:'One', text:'First!'},{value:'Two', text:'Second!'},{value:'Three', text:'Third!'}];
+              $scope.select2Options =
+              {
+                'allowClear':true,
+                'multiple': true,
+                'simple_tags': true,
+                'tags': []
+              };    
 						}
 				}
 			);

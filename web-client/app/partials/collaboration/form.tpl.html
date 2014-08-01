@@ -24,6 +24,19 @@
 			<label>Action list</label>
 			<textarea rows="3" class="form-control" ng-model="newcollaboration.data.actions"></textarea>
 		</div>
+		<div class="form-group">
+			<label>Referred elements</label>
+			<!--<select ui-select2="select2Options" class="form-control" ng-model="select2" data-placeholder="Pick a number">
+    			<option value=""></option>
+    			<option ng-repeat="number in range" value="{{number.value}}">{{number.text}}</option>
+			</select>-->
+			<input
+				class="form-control"
+    			type="hidden"
+    			ui-select2="select2Options"
+    			ng-model="newcollaboration.data.referred_elements"
+    		>
+		</div>
 		<div class="form-group">	
 			<label>Votes agree</label>
 			<input type="text" ng-readonly="true" class="form-control" ng-model="newcollaboration.data.agree">
