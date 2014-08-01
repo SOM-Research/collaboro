@@ -12,7 +12,8 @@ angular.module('collaboroApp', [
 	'security',
 	'collaboroControllers',
 	'collaboroServices',
-	'angularBootstrapNavTree']);
+	'angularBootstrapNavTree',
+	'ui.select2']);
 
 
 
