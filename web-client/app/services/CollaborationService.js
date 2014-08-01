@@ -23,7 +23,7 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
         					}
 
                   $scope.list_of_string = [];
-                  var requestReferredElements = $http.get('http://localhost:8080/fr.inria.atlanmod.collaboro.web.servlets/availableElementsToRefer');
+                  var requestReferredElements = $http.get(collaboroServletURL+'/availableElementsToRefer');
                   requestReferredElements.then
                   (
                     function(response)
