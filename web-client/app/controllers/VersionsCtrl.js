@@ -19,6 +19,14 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
       collaboration.showCollaboration().result.then(
         function(result) {
           // We build the collaboration to be sent to the server
+
+          var joinReferredElements ='';
+          for (var i =0; i< result.data['referredElements'].length; i++) {
+            joinReferredElements=joinReferredElements+result.data['referredElements'][i]+',';
+          };
+          joinReferredElements=joinReferredElements.substr(0,joinReferredElements.length-1);
+
+          result.data['referredElements']=joinReferredElements;
           var newCollaboration = {
               "rationale": result.data['description'],
               "actions" : result.data['actions'],
