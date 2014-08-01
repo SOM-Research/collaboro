@@ -6,11 +6,9 @@ import fr.inria.atlanmod.collaboro.history.ExistingAbstractSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
+ *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -103,6 +104,15 @@ public interface HistoryPackage extends EPackage {
 	int HISTORY_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>History</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HISTORY_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionHistoryImpl <em>Version History</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -140,6 +150,15 @@ public interface HistoryPackage extends EPackage {
 	int VERSION_HISTORY_FEATURE_COUNT = 2;
 
 	/**
+	 * The number of operations of the '<em>Version History</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_HISTORY_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.IdElementImpl <em>Id Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -166,6 +185,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ID_ELEMENT_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Id Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ID_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl <em>User</em>}' class.
@@ -250,6 +278,15 @@ public interface HistoryPackage extends EPackage {
 	int USER_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
+	 * The number of operations of the '<em>User</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER_OPERATION_COUNT = ID_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl <em>Version</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -294,6 +331,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int VERSION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Version</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_OPERATION_COUNT = ID_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VoteImpl <em>Vote</em>}' class.
@@ -351,6 +397,15 @@ public interface HistoryPackage extends EPackage {
 	int VOTE_FEATURE_COUNT = 4;
 
 	/**
+	 * The number of operations of the '<em>Vote</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VOTE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.CollaborationImpl <em>Collaboration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,13 +461,31 @@ public interface HistoryPackage extends EPackage {
 	int COLLABORATION__VOTES = ID_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLABORATION__REFERRED_ELEMENTS = ID_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Collaboration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLABORATION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 4;
+	int COLLABORATION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of operations of the '<em>Collaboration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLABORATION_OPERATION_COUNT = ID_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl <em>Proposal</em>}' class.
@@ -468,6 +541,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int PROPOSAL__VOTES = COLLABORATION__VOTES;
+
+	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPOSAL__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Sols</b></em>' containment reference list.
@@ -533,6 +615,15 @@ public interface HistoryPackage extends EPackage {
 	int PROPOSAL_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 6;
 
 	/**
+	 * The number of operations of the '<em>Proposal</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPOSAL_OPERATION_COUNT = COLLABORATION_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl <em>Solution</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -588,6 +679,15 @@ public interface HistoryPackage extends EPackage {
 	int SOLUTION__VOTES = COLLABORATION__VOTES;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOLUTION__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Changes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -622,6 +722,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int SOLUTION_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Solution</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOLUTION_OPERATION_COUNT = COLLABORATION_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.CommentImpl <em>Comment</em>}' class.
@@ -679,6 +788,15 @@ public interface HistoryPackage extends EPackage {
 	int COMMENT__VOTES = COLLABORATION__VOTES;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Commented Element</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -704,6 +822,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMMENT_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Comment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT_OPERATION_COUNT = COLLABORATION_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ModelChangeImpl <em>Model Change</em>}' class.
@@ -752,6 +879,15 @@ public interface HistoryPackage extends EPackage {
 	int MODEL_CHANGE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Model Change</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_CHANGE_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.AddImpl <em>Add</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -796,6 +932,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ADD_FEATURE_COUNT = MODEL_CHANGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Add</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADD_OPERATION_COUNT = MODEL_CHANGE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.UpdateImpl <em>Update</em>}' class.
@@ -853,6 +998,15 @@ public interface HistoryPackage extends EPackage {
 	int UPDATE_FEATURE_COUNT = MODEL_CHANGE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Update</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UPDATE_OPERATION_COUNT = MODEL_CHANGE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.DeleteImpl <em>Delete</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -899,6 +1053,15 @@ public interface HistoryPackage extends EPackage {
 	int DELETE_FEATURE_COUNT = MODEL_CHANGE_FEATURE_COUNT + 0;
 
 	/**
+	 * The number of operations of the '<em>Delete</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DELETE_OPERATION_COUNT = MODEL_CHANGE_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.SyntaxElementImpl <em>Syntax Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -927,6 +1090,15 @@ public interface HistoryPackage extends EPackage {
 	int SYNTAX_ELEMENT_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The number of operations of the '<em>Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYNTAX_ELEMENT_OPERATION_COUNT = ID_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.AbstractSyntaxElementImpl <em>Abstract Syntax Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -953,6 +1125,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = SYNTAX_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_SYNTAX_ELEMENT_OPERATION_COUNT = SYNTAX_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ExistingAbstractSyntaxElementImpl <em>Existing Abstract Syntax Element</em>}' class.
@@ -992,6 +1173,15 @@ public interface HistoryPackage extends EPackage {
 	int EXISTING_ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Existing Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXISTING_ABSTRACT_SYNTAX_ELEMENT_OPERATION_COUNT = ABSTRACT_SYNTAX_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.NewAbstractSyntaxElementImpl <em>New Abstract Syntax Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1027,6 +1217,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int NEW_ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT = ABSTRACT_SYNTAX_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>New Abstract Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_ABSTRACT_SYNTAX_ELEMENT_OPERATION_COUNT = ABSTRACT_SYNTAX_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ConcreteSyntaxElementImpl <em>Concrete Syntax Element</em>}' class.
@@ -1066,6 +1265,15 @@ public interface HistoryPackage extends EPackage {
 	int CONCRETE_SYNTAX_ELEMENT_FEATURE_COUNT = SYNTAX_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Concrete Syntax Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONCRETE_SYNTAX_ELEMENT_OPERATION_COUNT = SYNTAX_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.MetaInfoImpl <em>Meta Info</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1092,6 +1300,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int META_INFO_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Meta Info</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int META_INFO_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.PriorityImpl <em>Priority</em>}' class.
@@ -1131,6 +1348,15 @@ public interface HistoryPackage extends EPackage {
 	int PRIORITY_FEATURE_COUNT = META_INFO_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Priority</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIORITY_OPERATION_COUNT = META_INFO_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.TagBasedImpl <em>Tag Based</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1168,6 +1394,15 @@ public interface HistoryPackage extends EPackage {
 	int TAG_BASED_FEATURE_COUNT = META_INFO_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Tag Based</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG_BASED_OPERATION_COUNT = META_INFO_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.TagImpl <em>Tag</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1203,6 +1438,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int TAG_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Tag</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TAG_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}' enum.
@@ -1526,6 +1770,17 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCollaboration_Votes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements <em>Referred Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Referred Elements</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements()
+	 * @see #getCollaboration()
+	 * @generated
+	 */
+	EAttribute getCollaboration_ReferredElements();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Proposal <em>Proposal</em>}'.
@@ -1965,6 +2220,7 @@ public interface HistoryPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
+	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -2217,6 +2473,14 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COLLABORATION__VOTES = eINSTANCE.getCollaboration_Votes();
+
+		/**
+		 * The meta object literal for the '<em><b>Referred Elements</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLABORATION__REFERRED_ELEMENTS = eINSTANCE.getCollaboration_ReferredElements();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl <em>Proposal</em>}' class.

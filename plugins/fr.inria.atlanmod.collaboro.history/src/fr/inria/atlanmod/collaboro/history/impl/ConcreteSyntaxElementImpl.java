@@ -4,14 +4,12 @@ package fr.inria.atlanmod.collaboro.history.impl;
 
 import fr.inria.atlanmod.collaboro.history.ConcreteSyntaxElement;
 import fr.inria.atlanmod.collaboro.history.HistoryPackage;
-
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -63,7 +61,7 @@ public class ConcreteSyntaxElementImpl extends SyntaxElementImpl implements Conc
 	 * @generated
 	 */
 	public NotationElement getElement() {
-		if (element != null && element.eIsProxy()) {
+		if (element != null && ((EObject)element).eIsProxy()) {
 			InternalEObject oldElement = (InternalEObject)element;
 			element = (NotationElement)eResolveProxy(oldElement);
 			if (element != oldElement) {

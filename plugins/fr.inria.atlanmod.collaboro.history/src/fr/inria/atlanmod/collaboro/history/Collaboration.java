@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Collaboration#getProposedBy <em>Proposed By</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Collaboration#getComments <em>Comments</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Collaboration#getVotes <em>Votes</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements <em>Referred Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -113,5 +114,31 @@ public interface Collaboration extends IdElement {
 	 * @generated
 	 */
 	EList<Vote> getVotes();
+
+	/**
+	 * Returns the value of the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Referred Elements</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Referred Elements</em>' attribute.
+	 * @see #setReferredElements(String)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getCollaboration_ReferredElements()
+	 * @model
+	 * @generated
+	 */
+	String getReferredElements();
+
+	/**
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements <em>Referred Elements</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Referred Elements</em>' attribute.
+	 * @see #getReferredElements()
+	 * @generated
+	 */
+	void setReferredElements(String value);
 
 } // Collaboration

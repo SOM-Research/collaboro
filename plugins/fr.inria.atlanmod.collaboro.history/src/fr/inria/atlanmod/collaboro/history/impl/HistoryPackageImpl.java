@@ -28,7 +28,6 @@ import fr.inria.atlanmod.collaboro.history.Version;
 import fr.inria.atlanmod.collaboro.history.VersionHistory;
 import fr.inria.atlanmod.collaboro.history.VersionHistoryType;
 import fr.inria.atlanmod.collaboro.history.Vote;
-
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -37,7 +36,6 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -545,6 +543,15 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCollaboration_ReferredElements() {
+		return (EAttribute)collaborationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getProposal() {
 		return proposalEClass;
 	}
@@ -963,6 +970,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		createEReference(collaborationEClass, COLLABORATION__PROPOSED_BY);
 		createEReference(collaborationEClass, COLLABORATION__COMMENTS);
 		createEReference(collaborationEClass, COLLABORATION__VOTES);
+		createEAttribute(collaborationEClass, COLLABORATION__REFERRED_ELEMENTS);
 
 		proposalEClass = createEClass(PROPOSAL);
 		createEReference(proposalEClass, PROPOSAL__SOLS);
@@ -1072,7 +1080,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		priorityEClass.getESuperTypes().add(this.getMetaInfo());
 		tagBasedEClass.getESuperTypes().add(this.getMetaInfo());
 
-		// Initialize classes and features; add operations and parameters
+		// Initialize classes, features, and operations; add parameters
 		initEClass(historyEClass, History.class, "History", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getHistory_Users(), this.getUser(), null, "users", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getHistory_Histories(), this.getVersionHistory(), null, "histories", null, 0, -1, History.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1108,6 +1116,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		initEReference(getCollaboration_ProposedBy(), this.getUser(), this.getUser_Collaborations(), "proposedBy", null, 0, 1, Collaboration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCollaboration_Comments(), this.getComment(), this.getComment_CommentedElement(), "comments", null, 0, -1, Collaboration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCollaboration_Votes(), this.getVote(), this.getVote_Collaboration(), "votes", null, 0, -1, Collaboration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCollaboration_ReferredElements(), theEcorePackage.getEString(), "referredElements", null, 0, 1, Collaboration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(proposalEClass, Proposal.class, "Proposal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getProposal_Sols(), this.getSolution(), this.getSolution_Proposal(), "sols", null, 0, -1, Proposal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

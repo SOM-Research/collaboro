@@ -12,14 +12,10 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -34,6 +30,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.CollaborationImpl#getProposedBy <em>Proposed By</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.CollaborationImpl#getComments <em>Comments</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.CollaborationImpl#getVotes <em>Votes</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.CollaborationImpl#getReferredElements <em>Referred Elements</em>}</li>
  * </ul>
  * </p>
  *
@@ -89,6 +86,26 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 	 * @ordered
 	 */
 	protected EList<Vote> votes;
+
+	/**
+	 * The default value of the '{@link #getReferredElements() <em>Referred Elements</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReferredElements()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String REFERRED_ELEMENTS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getReferredElements() <em>Referred Elements</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReferredElements()
+	 * @generated
+	 * @ordered
+	 */
+	protected String referredElements = REFERRED_ELEMENTS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -219,6 +236,27 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getReferredElements() {
+		return referredElements;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReferredElements(String newReferredElements) {
+		String oldReferredElements = referredElements;
+		referredElements = newReferredElements;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.COLLABORATION__REFERRED_ELEMENTS, oldReferredElements, referredElements));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -270,6 +308,8 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 				return getComments();
 			case HistoryPackage.COLLABORATION__VOTES:
 				return getVotes();
+			case HistoryPackage.COLLABORATION__REFERRED_ELEMENTS:
+				return getReferredElements();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -297,6 +337,9 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 				getVotes().clear();
 				getVotes().addAll((Collection<? extends Vote>)newValue);
 				return;
+			case HistoryPackage.COLLABORATION__REFERRED_ELEMENTS:
+				setReferredElements((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -321,6 +364,9 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 			case HistoryPackage.COLLABORATION__VOTES:
 				getVotes().clear();
 				return;
+			case HistoryPackage.COLLABORATION__REFERRED_ELEMENTS:
+				setReferredElements(REFERRED_ELEMENTS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -341,6 +387,8 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 				return comments != null && !comments.isEmpty();
 			case HistoryPackage.COLLABORATION__VOTES:
 				return votes != null && !votes.isEmpty();
+			case HistoryPackage.COLLABORATION__REFERRED_ELEMENTS:
+				return REFERRED_ELEMENTS_EDEFAULT == null ? referredElements != null : !REFERRED_ELEMENTS_EDEFAULT.equals(referredElements);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -357,6 +405,8 @@ public class CollaborationImpl extends IdElementImpl implements Collaboration {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (rationale: ");
 		result.append(rationale);
+		result.append(", referredElements: ");
+		result.append(referredElements);
 		result.append(')');
 		return result.toString();
 	}
