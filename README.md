@@ -14,11 +14,12 @@ Collaboro has been developed as an Eclipse plugin, whose features currently impl
 * Decision engine based on a total agreement (i.e., all the community users must vote for the collaboration). The decision engine can be launch by using the bar menu.
 * Notation engine and Notation view to render SVG snapshots of the DSL concrete syntax.
 
-The tool is under heavy development but you can give it a try by using the update site file or downloading the source code from the repository.
-
-The second prototype version is the one tagged with 0.2. However, you will always find the last version in the master branch. 
-
 To test the plugin, you can import the Production System project, where you find the ecore file along with the history file which stores the collaboration. Once you open the ecore file, the Version, Collaboration and Notation views will be updated. 
+
+We are also developing a web-enabled version of the tool that you can find in the web-support branch.
+
+Papers
+------
 
 You can read the research paper titled Community-driven Language Development published at Models in Software Engineering Workshop at ICSE [here] (http://goo.gl/AAHyg)
 
@@ -49,5 +50,9 @@ Who is behind this project?
 ---------------------------
 * [Javier Canovas](http://github.com/jlcanovas/ "Javier Canovas")
 * [Jordi Cabot](http://github.com/jcabot/ "Jordi Cabot")
+* [Juan David Villa](http://github.com/juandavidvillacalle/ "Juan David Villa")
+
+Also participated:
+* [Guillaume Doux](http://github.com/scheremele/ "Guillaume Doux")
 
 Javier and Jordi work in [Atlanmod](http://www.emn.fr/z-info/atlanmod), a research team of Inria.
