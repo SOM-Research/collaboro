@@ -130,7 +130,9 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 		if(collaboration.getRationale() != null && collaboration.getRationale().length() > 0) {
 			collaborationJson = collaborationJson.concat(",");
 			String cleanRationale = collaboration.getRationale().replaceAll("(\\r|\\t|\\n|\")", " ");
-
+			String referredElements= collaboration.getReferredElements();
+			if(referredElements==null)
+				referredElements="";
 			String collaborationType = "";
 			String parentId = "";
 			String actions = "";
@@ -147,7 +149,8 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 			String collaborationData = "\"data\": { "
 					+ "\"id\":\""	+ collaboration.getId() + "\"," 
 					+ "\"username\":\""	+ collaboration.getProposedBy().getId() + "\"," 
-					+ "\"description\": \"" + cleanRationale + "\"," 
+					+ "\"description\": \"" + cleanRationale + "\","
+					+ "\"referredElements\": \"" + referredElements + "\","
 					+ ((collaboration instanceof Solution) ? "\"actions\" : \"" + actions.replaceAll("(\\r|\\t|\\n|\")", " ") + "\", ": "\"actions\" : \"\",") 
 					+ "\"type\": \"" + collaborationType + "\"," 
 					+ "\"collaboration_id\": \"" + collaboration.getId() + "\"";
@@ -214,7 +217,7 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 				CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
 				List<Proposal> proposals = backend.getProposals();
 				String proposalsJson = createProposalsResponseJson(proposals);
-
+				System.out.println(proposalsJson);
 				out.print(proposalsJson);  
 			}
 		}
