@@ -1,4 +1,4 @@
-serverURL=http://atlanmodexp.info.emn.fr:8800
+serverURL=http://atlanmod.github.io
 workingDir=/opt/apache-tomee-jaxrs-1.6.0/webapps/collaboro/workingDir
 dotExePath=/usr/bin/dot
 languages=test
