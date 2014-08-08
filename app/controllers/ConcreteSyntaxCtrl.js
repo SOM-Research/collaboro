@@ -7,9 +7,6 @@ angular.module('collaboroControllers').controller('ConcreteSyntaxCtrl', ['$scope
     syntax.getTotalConcreteSyntaxImages(
       function(response) {
         $scope.totalConcreteSyntaxImages = response.data.numImages;
-      },
-      function(response) {
-        $scope.abstractSyntaxImage = "assets/img/loading.gif";
       }
     );
 
@@ -22,9 +19,6 @@ angular.module('collaboroControllers').controller('ConcreteSyntaxCtrl', ['$scope
           function(response) {
             $scope.concreteSyntaxImage = "data:image/jpg;base64," + response.data;
             $scope.currentConcreteSyntaxIndex = nextImageIndex;
-          },
-          function(response) {
-            $scope.abstractSyntaxImage = "assets/img/loading.gif";
           }
         );
       }
@@ -42,9 +36,6 @@ angular.module('collaboroControllers').controller('ConcreteSyntaxCtrl', ['$scope
           function(response) {
             $scope.concreteSyntaxImage = "data:image/jpg;base64," + response.data;
             $scope.currentConcreteSyntaxIndex = previousImageIndex;
-          },
-          function(response) {
-            $scope.abstractSyntaxImage = "assets/img/loading.gif";
           }
         );
       }

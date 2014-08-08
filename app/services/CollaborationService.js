@@ -28,10 +28,7 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
                   (
                     function(response)
                     {
-                      //$scope.availableElementsToRefer=response.data.availableElementsToRefer;
-                      //$scope.tags=response.data;
                       angular.extend($scope.select2Options.tags,response.data);
-                      console.log('Que tiene '+response.data);
                     }
               );
 
@@ -41,8 +38,16 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
                 'allowClear':true,
                 'multiple': true,
                 'simple_tags': true,
-                'tags': []
-              };    
+                'tags': [],
+                initSelection : function (element, callback)
+                {
+                  callback($(element).data('$ngModelController').$modelValue);
+                }
+              };
+              //if(collaborationtoedit)
+              //{
+                //$scope.select2Options.initSelection();
+              //}
 						}
 				}
 			);
