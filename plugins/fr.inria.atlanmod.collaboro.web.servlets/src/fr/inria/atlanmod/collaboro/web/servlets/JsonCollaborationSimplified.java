@@ -10,6 +10,8 @@
  *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
+import java.util.List;
+
 /**
  * Simple object to desirialize a collaboration in json format
  * 
@@ -23,15 +25,14 @@ public class JsonCollaborationSimplified {
 	private String actions;
 	private String type;
 	private String parent_id;
-	private String referredElements;
+	private List<String> referredElements;
 	
 	
-	
-	public String getReferredElements() {
+	public List<String> getReferredElements() {
 		return referredElements;
 	}
 
-	public void setReferredElements(String referredElements) {
+	public void setReferredElements(List<String> referredElements) {
 		this.referredElements = referredElements;
 	}
 

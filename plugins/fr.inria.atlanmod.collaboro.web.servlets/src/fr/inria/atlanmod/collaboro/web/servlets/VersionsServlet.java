@@ -28,6 +28,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
@@ -130,9 +131,13 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 		if(collaboration.getRationale() != null && collaboration.getRationale().length() > 0) {
 			collaborationJson = collaborationJson.concat(",");
 			String cleanRationale = collaboration.getRationale().replaceAll("(\\r|\\t|\\n|\")", " ");
-			String referredElements= collaboration.getReferredElements();
-			if(referredElements==null)
-				referredElements="";
+			
+			// Digesting the referredElements
+			String[] referredElements = collaboration.getReferredElements().split(",");
+			JsonArray referredElementsArray = new JsonArray();
+			for(String referredElement : referredElements) {
+				referredElementsArray.add(new JsonPrimitive(referredElement));
+			}
 			String collaborationType = "";
 			String parentId = "";
 			String actions = "";
@@ -150,7 +155,7 @@ public class VersionsServlet extends AbstractCollaboroServlet {
 					+ "\"id\":\""	+ collaboration.getId() + "\"," 
 					+ "\"username\":\""	+ collaboration.getProposedBy().getId() + "\"," 
 					+ "\"description\": \"" + cleanRationale + "\","
-					+ "\"referredElements\": \"" + referredElements + "\","
+					+ "\"referredElements\": " + referredElementsArray.toString() + ","
 					+ ((collaboration instanceof Solution) ? "\"actions\" : \"" + actions.replaceAll("(\\r|\\t|\\n|\")", " ") + "\", ": "\"actions\" : \"\",") 
 					+ "\"type\": \"" + collaborationType + "\"," 
 					+ "\"collaboration_id\": \"" + collaboration.getId() + "\"";

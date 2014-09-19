@@ -155,7 +155,7 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 
-	public void createProposalPlain(String userId, String rationale, String referredElements) {
+	public void createProposalPlain(String userId, String rationale, List<String> referredElements) {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
 		initCollaborationPlain(newProposal, userId, rationale, referredElements);
 		createProposal(newProposal);
@@ -169,7 +169,7 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 	
-	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, String referredElements) {
+	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, List<String> referredElements) {
 		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
 		initCollaborationPlain(newSolution, userId, rationale,referredElements);
 		newSolution.setChangesText(actions);
@@ -216,14 +216,19 @@ public class CollaboroBackend {
 		return userProposing;
 	}
 	
-	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
+	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, List<String> referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
 
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
-			collaboration.setReferredElements(referredElements);
+			String referredElementsFlattened = "";
+			for(String referredElement : referredElements) {
+				referredElementsFlattened += referredElement + ",";
+			}
+			referredElementsFlattened = referredElementsFlattened.substring(0, referredElementsFlattened.length()-1);
+			collaboration.setReferredElements(referredElementsFlattened);
 		} else {
 			throw new IllegalArgumentException("The user does not exists");
 		}
@@ -259,7 +264,7 @@ public class CollaboroBackend {
 		return found;
 	}
 
-	public void createCommentPlain(String parentCollaboration, String userId, String rationale, String referredElements) {
+	public void createCommentPlain(String parentCollaboration, String userId, String rationale, List<String> referredElements) {
 		Comment newComment = HistoryFactory.eINSTANCE.createComment();
 		initCollaborationPlain(newComment, userId, rationale,referredElements);
 
