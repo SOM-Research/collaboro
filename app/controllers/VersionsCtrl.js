@@ -1,6 +1,5 @@
 angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'History', 'collaboration', 'security',
   function($scope, History, collaboration, security) {
-    // Tree tree 
     // It is initialized by refreshCollaborations() function (see below)
     var tree;
     $scope.my_tree = tree = {};
@@ -19,14 +18,13 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
       collaboration.showCollaboration().result.then(
         function(result) {
           // We build the collaboration to be sent to the server
-
-          var joinReferredElements ='';
-          for (var i =0; i< result.data['referredElements'].length; i++) {
-            joinReferredElements=joinReferredElements+result.data['referredElements'][i]+',';
+          /**var joinReferredElements = '';
+          for (var i = 0; i < result.data['referredElements'].length; i++) {
+            joinReferredElements = joinReferredElements + result.data['referredElements'][i] + ',';
           };
-          joinReferredElements=joinReferredElements.substr(0,joinReferredElements.length-1);
+          joinReferredElements = joinReferredElements.substr(0,joinReferredElements.length-1);
 
-          result.data['referredElements']=joinReferredElements;
+          result.data['referredElements'] = joinReferredElements;*/
           var newCollaboration = {
               "rationale": result.data['description'],
               "actions" : result.data['actions'],
@@ -35,6 +33,7 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
               "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? null : tree.get_selected_branch().data['collaboration_id'],
               "referredElements" : result.data['referredElements']
           };
+          console.log(newCollaboration);
 
           /*var c;
           if(newCollaboration.type != 'Proposal') {
@@ -57,7 +56,7 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     // Save (sends) the collaboration to the server
     $scope.savecollaborations = function() {
-      collaboration.saveCollaborations($scope.newCollaborations, 
+      collaboration.saveCollaborations($scope.newCollaborations,
         function(response) {
           $scope.newCollaborations = [];
           $scope.connError = "";
@@ -112,13 +111,13 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
 
     $scope.add_collaboration = function(newbranch) {
       var b;
-      if(newbranch.data['type'] != 'Proposal') 
+      if(newbranch.data['type'] != 'Proposal')
         b = tree.get_selected_branch();
       else
         b = null; // Proposals are always in the root
       return tree.add_branch(b, newbranch);
     };
-    
+
     $scope.my_tree_handler = function(branch) {
       var _ref;
       if ((_ref = branch.data) != null ? _ref.description : void 0) {
@@ -128,14 +127,20 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
         $scope.versionSelectedActions = branch.data.actions;
         $scope.versionSelectedUsersAgree = branch.data.agree;
         $scope.versionSelectedUsersDisagree = branch.data.disagree;
-        $scope.versionSelectedReferredElements = branch.data.referredElements;
+
+        var joinReferredElements = '';
+        for (var i = 0; i < branch.data.referredElements.length; i++) {
+          joinReferredElements = joinReferredElements + branch.data.referredElements[i] + ',';
+        };
+        joinReferredElements = joinReferredElements.substr(0,joinReferredElements.length-1);
+        $scope.versionSelectedReferredElements = joinReferredElements;
         $scope.userNameSelected = branch.data.username;
         return $scope.output += '(' + branch.data.description + ')';
       }
     };
 
     $scope.vote = function(vote) {
-      collaboration.voteCollaboration(tree.get_selected_branch(), { vote : vote }, 
+      collaboration.voteCollaboration(tree.get_selected_branch(), { vote : vote },
         function(response) {
           $scope.versionSelectedUsersAgree = response.data.data.agree;
           $scope.versionSelectedUsersDisagree = response.data.data.disagree;
