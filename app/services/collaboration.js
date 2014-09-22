@@ -5,17 +5,16 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
 		function openCollaborationDialog(collaborationtoedit) {
 			collaborationDialog = $modal.open(
 				{
-					templateUrl : 'app/partials/collaboration/form.tpl.html',
+					templateUrl : 'app/partials/modal/collaboration.html',
 					controller : function($scope, $modalInstance) {
-            //$scope.range=[{value:'One', text:'First!'},{value:'Two', text:'Second!'},{value:'Three', text:'Third!'}];
-            //$scope.list_of_string = [];
 
             // Setting the title of the window
-            $scope.dialogtitle = 'New Collaboration';
             if(collaborationtoedit) {
-              $scope.newcollaboration = collaborationtoedit;
-              $scope.newcollaboration.data.referredElements = collaborationtoedit.data.referredElements;
+              $scope.collaboration = collaborationtoedit;
+              //$scope.collaboration.data.referredElements = collaborationtoedit.data.referredElements;
               $scope.dialogtitle = 'Edit Collaboration';
+            } else {
+              $scope.dialogtitle = 'New Collaboration';
             };
 
             // Setting the referred elements
@@ -63,18 +62,14 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
 			showCollaboration : function() {
 				return openCollaborationDialog();
 			},
+      editCollaboration : function(collaborationtoedit) {
+        return openCollaborationDialog(collaborationtoedit);
+      },
 			cancelCollaboration: function() {
   			closeCollaborationDialog(false);
-  			//redirect();
   		},
-  		saveCollaboration: function(newcollaboration) {
-  			closeCollaborationDialog(newcollaboration);
-  		},
-  		editCollaboration: function(collaborationtoedit) {
-  			return openCollaborationDialog(collaborationtoedit);
-  		},
-  		saveCollaborations: function(collaborations, successFn, errorFn) {
-  			$http.post(collaboroServletURL + '/collaboration', { action : "save", collaborations : collaborations }).then(
+  		saveCollaboration: function(collaboration, successFn, errorFn) {
+  			$http.post(collaboroServletURL + '/collaboration', { action : "save", collaboration : collaboration }).then(
   				function(response) {
   					successFn(response);
   				},
