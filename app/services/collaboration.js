@@ -74,7 +74,7 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
   			return openCollaborationDialog(collaborationtoedit);
   		},
   		saveCollaborations: function(collaborations, successFn, errorFn) {
-  			$http.post(collaboroServletURL + '/version', { action : "save", collaborations : collaborations }).then(
+  			$http.post(collaboroServletURL + '/collaboration', { action : "save", collaborations : collaborations }).then(
   				function(response) {
   					successFn(response);
   				},
@@ -84,14 +84,14 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
   			);
   		},
   		deleteCollaboration: function(collaboration, successFn) {
-  			$http.post(collaboroServletURL + '/version', { action : "delete", collaboration : collaboration }).then(
+  			$http.post(collaboroServletURL + '/collaboration', { action : "delete", collaboration : collaboration }).then(
   				function(response) {
   					successFn(response);
   				}
   			);
   		},
   		voteCollaboration: function(collaboration, data, successFn) {
-  			$http.post(collaboroServletURL + '/version', { action : "vote", collaboration : collaboration, data : data }).then(
+  			$http.post(collaboroServletURL + '/collaboration', { action : "vote", collaboration : collaboration, data : data }).then(
   				function(response) {
   					successFn(response);
   				}

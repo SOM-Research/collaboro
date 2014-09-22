@@ -58,7 +58,7 @@
             </div>
           </div>
          </div> 
-         <div class="row-fluid" ng-controller="versionsCtrl">
+         <div class="row-fluid" ng-controller="collaborationController">
            <!--The panel of the versions--> 
            <div class="col-md-6">
             <div class="panel panel-primary">
@@ -76,7 +76,7 @@
                           icon-leaf="fa fa-leaf" 
                           icon-expand="fa fa-plus-circle" 
                           icon-collapse= "fa fa-minus-circle"  
-                          on-select="my_tree_handler(branch); $broadcast('VersionSelectedEvent')" 
+                          on-select="collaborationSelected(branch); $broadcast('collaborationSelectedEvent')" 
                           expand-level="0">
                         </abn-tree>
                       </div>
@@ -110,7 +110,6 @@
                 <h3 class="panel-title">Collaboration data</h3>
              </div>
              <div class="panel-body">
-
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Proposed by</h3>
@@ -129,12 +128,6 @@
                 </div>
                 <div class="panel-body">{{versionSelectedReferredElements}}</div>
               </div>
-              <!--<div class="panel panel-default" ng-show="showAction">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Actions</h3>
-                </div>
-                <div class="panel-body">{{versionSelectedActions}}</div>
-              </div>-->
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Votes Agree</h3>
