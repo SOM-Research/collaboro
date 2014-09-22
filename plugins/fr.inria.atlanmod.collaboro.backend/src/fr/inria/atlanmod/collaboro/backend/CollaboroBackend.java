@@ -155,10 +155,12 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 
-	public void createProposalPlain(String userId, String rationale, List<String> referredElements) {
+	public String createProposalPlain(String userId, String rationale, String referredElements) {
 		Proposal newProposal = HistoryFactory.eINSTANCE.createProposal();
 		initCollaborationPlain(newProposal, userId, rationale, referredElements);
 		createProposal(newProposal);
+
+		return newProposal.getId();
 	}
 
 	public void createProposal(Proposal newProposal) {
@@ -169,7 +171,7 @@ public class CollaboroBackend {
 		modelManager.saveNotation();
 	}
 
-	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, List<String> referredElements) {
+	public String createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, String referredElements) {
 		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
 		initCollaborationPlain(newSolution, userId, rationale,referredElements);
 		newSolution.setChangesText(actions);
@@ -178,6 +180,7 @@ public class CollaboroBackend {
 		if (parent != null && parent instanceof Proposal) {
 			Proposal parentProposal = (Proposal) parent;
 			createSolution(parentProposal, newSolution);
+			return newSolution.getId();
 		} else {
 			throw new IllegalArgumentException("The parent does not exists");
 		}
@@ -216,21 +219,14 @@ public class CollaboroBackend {
 		return userProposing;
 	}
 
-	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, List<String> referredElements) {
+	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
 
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
-			String referredElementsFlattened = "";
-			if(referredElements != null) {
-				for(String referredElement : referredElements) {
-					referredElementsFlattened += referredElement + ",";
-				}
-				referredElementsFlattened = referredElementsFlattened.substring(0, referredElementsFlattened.length()-1);
-			}
-			collaboration.setReferredElements(referredElementsFlattened);
+			collaboration.setReferredElements(referredElements);
 		} else {
 			throw new IllegalArgumentException("The user does not exists");
 		}
@@ -266,7 +262,7 @@ public class CollaboroBackend {
 		return found;
 	}
 
-	public void createCommentPlain(String parentCollaboration, String userId, String rationale, List<String> referredElements) {
+	public String createCommentPlain(String parentCollaboration, String userId, String rationale, String referredElements) {
 		Comment newComment = HistoryFactory.eINSTANCE.createComment();
 		initCollaborationPlain(newComment, userId, rationale,referredElements);
 
@@ -276,6 +272,8 @@ public class CollaboroBackend {
 		} else {
 			throw new IllegalArgumentException("The parent does not exists");
 		}
+		
+		return newComment.getId();
 	}
 
 	public void createComment(Collaboration collaboration, Comment newComment) {
@@ -288,7 +286,10 @@ public class CollaboroBackend {
 	public void createVotePlain(String parentCollaboration, String userId, boolean agreement) {
 		User userVoting = locateUser(userId);
 		Collaboration collaboration = locateCollaborationById(null, parentCollaboration);
-		createVote(collaboration, userVoting, agreement);
+		if(collaboration != null)
+			createVote(collaboration, userVoting, agreement);
+		else 
+			throw new IllegalArgumentException("The collaboration does not exist");
 	}
 
 	public void createVote(Collaboration collaboration, User userVoting, boolean agreement) {

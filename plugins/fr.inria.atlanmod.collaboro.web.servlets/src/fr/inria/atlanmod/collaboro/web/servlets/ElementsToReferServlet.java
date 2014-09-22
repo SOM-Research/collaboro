@@ -64,8 +64,6 @@ public class ElementsToReferServlet extends AbstractCollaboroServlet
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
 				out.print(result); 
-				System.out.println("Result:"+result);
-				
 			}
 		}
 	}

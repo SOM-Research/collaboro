@@ -95,49 +95,67 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 				} catch (Exception e) {
 					throw new ServletException("There was an error reading the parameters");
 				}
-				System.out.println(jb);
-
 				// Parsing the parameters
 				Gson gson = new Gson();
 				JsonParser parser = new JsonParser();
 				JsonObject jsonObject = (JsonObject) parser.parse(jb.toString()).getAsJsonObject();
+
+				System.out.println(jsonObject);
 				String action = jsonObject.get("action").getAsString();
 				if(action.equals("save")) {
-					JsonArray array = (JsonArray) jsonObject.get("collaborations");
-					for (JsonElement jsonElement : array) {
-						JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElement, JsonCollaborationSimplified.class);
+					JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
 
-						String collaborationType = jsonCollaboration.getType();
-						if(collaborationType.compareTo("Proposal") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), jsonCollaboration.getRationale(),jsonCollaboration.getReferredElements());
-						} else if(collaborationType.compareTo("Comment") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createCommentPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(),jsonCollaboration.getReferredElements());
-						} else if(collaborationType.compareTo("Solution") == 0) {
-							CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(jsonCollaboration.getParent_id(), historyUser.getId(), jsonCollaboration.getRationale(), jsonCollaboration.getActions(),jsonCollaboration.getReferredElements());
-						}
+					String type = data.get("type").getAsString();
+					String rationale = "";
+					if(data.has("rationale"))
+						rationale = data.get("rationale").getAsString();
+					String referredElements = "";
+					if(data.has("referreElements"))
+						referredElements = data.get("referredElements").getAsString();
+					String parentId = "";
+					if(data.has("parent_id"))
+						parentId = data.get("parent_id").getAsString();
+
+					String collaborationId = null;
+					if(type.equals("Proposal")) {
+						collaborationId = CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), rationale, referredElements);
+					} else if(type.equals("Comment")) {
+						collaborationId = CollaboroBackendFactory.getBackend(dsl).createCommentPlain(parentId, historyUser.getId(), rationale, referredElements);
+					} else if(type.equals("Solution")) {
+						collaborationId = CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(parentId, historyUser.getId(), rationale, "", referredElements);
 					}
-					response.setContentType("application/json");
-					out.print("{\"result\": \"success\" }");
+
+					if(collaborationId != null) {
+						response.setContentType("application/json");
+						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+						JsonObject collaborationJSON = toJson(collaboration);
+						out.print(collaborationJSON);
+					} else {
+						throw new ServletException("Problem saving the collaboration");
+					}
 				} else if (action.equals("delete")) {
-					JsonElement jsonElementCollaboration = jsonObject.get("collaboration").getAsJsonObject().get("data");
-					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElementCollaboration, JsonCollaborationSimplified.class);
-					CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(jsonCollaboration.getId());
+					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+					String collaborationId = data.get("id").getAsString();
+					CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(collaborationId);
 					response.setContentType("application/json");
 					out.print("{\"result\": \"success\" }");
 				} else if (action.equals("vote")) {
 
-					JsonElement jsonElementCollaboration = jsonObject.get("collaboration").getAsJsonObject().get("data");
-					JsonCollaborationSimplified jsonCollaboration = gson.fromJson(jsonElementCollaboration, JsonCollaborationSimplified.class);
+					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+					String collaborationId = data.get("id").getAsString();
 
 					String vote = jsonObject.get("data").getAsJsonObject().get("vote").getAsString();
 					if(vote != null) {
 						if(vote.equals("yes")) {
-							CollaboroBackendFactory.getBackend(dsl).createVotePlain(jsonCollaboration.getId(), historyUser.getId(), true);
+							CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), true);
 						} else if (vote.equals("no")) {
-							CollaboroBackendFactory.getBackend(dsl).createVotePlain(jsonCollaboration.getId(), historyUser.getId(), false);
+							CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), false);
 						}
+
 						response.setContentType("application/json");
-						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, jsonCollaboration.getId());
+						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+						JsonObject collaborationJSON = toJson(collaboration);
+						out.print(collaborationJSON);
 					}
 				}
 			}
@@ -153,6 +171,23 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 		}
 
 		return result;
+	}
+
+	private JsonObject toJson(Collaboration collaboration) {
+		if(collaboration == null)
+			throw new IllegalArgumentException("The collaboration cannot be null");
+
+		if (collaboration instanceof Proposal) {
+			Proposal proposal = (Proposal) collaboration;
+			return toJson(proposal);
+		} else if (collaboration instanceof Solution) {
+			Solution solution = (Solution) collaboration;
+			return toJson(solution);
+		} else if (collaboration instanceof Comment) {
+			Comment comment = (Comment) collaboration;
+			return toJson(comment);
+		}
+		return new JsonObject();
 	}
 
 	private JsonObject toJson(Proposal proposal) {
@@ -194,6 +229,7 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 			JsonObject commentJSON = toJson(comment2);
 			children.add(commentJSON);
 		} 
+		result.add("children", children);
 
 		return result;
 	}
@@ -237,7 +273,7 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 				referredElementsArray.add(new JsonPrimitive(referredElement));
 			} 
 		} 
-		
+
 		// Digesting votes
 		JsonArray usersAgree = new JsonArray();
 		JsonArray usersDisagree = new JsonArray();
@@ -252,10 +288,9 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 		JsonObject result = new JsonObject();
 		result.addProperty("id", collaboration.getId());
 		result.addProperty("username", collaboration.getProposedBy().getId());
-		result.addProperty("description", cleanRationale);
+		result.addProperty("rationale", cleanRationale);
 		result.add("referredElements", referredElementsArray);
 		result.addProperty("type", collaboration.eClass().getName());
-		result.addProperty("collaboration_id", collaboration.getId());
 		result.add("agree", usersAgree);
 		result.add("disagree", usersDisagree);
 
