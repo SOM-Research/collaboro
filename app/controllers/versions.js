@@ -129,10 +129,12 @@ angular.module('collaboroControllers').controller('versionsCtrl', ['$scope', 'Hi
         $scope.versionSelectedUsersDisagree = branch.data.disagree;
 
         var joinReferredElements = '';
-        for (var i = 0; i < branch.data.referredElements.length; i++) {
-          joinReferredElements = joinReferredElements + branch.data.referredElements[i] + ',';
-        };
-        joinReferredElements = joinReferredElements.substr(0,joinReferredElements.length-1);
+        if(branch.data.referredElements) {
+          for (var i = 0; i < branch.data.referredElements.length; i++) {
+            joinReferredElements = joinReferredElements + branch.data.referredElements[i] + ',';
+          };
+          joinReferredElements = joinReferredElements.substr(0,joinReferredElements.length-1);
+        }
         $scope.versionSelectedReferredElements = joinReferredElements;
         $scope.userNameSelected = branch.data.username;
         return $scope.output += '(' + branch.data.description + ')';
