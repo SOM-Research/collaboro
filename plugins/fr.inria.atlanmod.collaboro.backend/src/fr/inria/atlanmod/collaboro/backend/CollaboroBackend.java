@@ -30,14 +30,14 @@ public class CollaboroBackend {
 	private int historyTracked = 0;
 	private int versionTracked = 0;
 	private int maxVersionTracked = 0;
-	
+
 	ModelManager modelManager = null;
-	
+
 	/**
 	 * Keeps a list of files pointing at previous versions of the Ecore files
 	 */
 	private HashMap<String, List<File>> previousEcores;
-	
+
 	/**
 	 * Keeps a list of files pointing at previous model examples   
 	 */
@@ -49,7 +49,7 @@ public class CollaboroBackend {
 		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
 		maxVersionTracked = versionHistory.getVersions().size() - 1;
 	}
-	
+
 	public void setPreviousEcores(HashMap<String, List<File>> previousEcores) {
 		this.previousEcores = previousEcores;
 	}
@@ -92,7 +92,7 @@ public class CollaboroBackend {
 	public EPackage getEcoreModel() {
 		return modelManager.getEcoreModel();
 	}
-	
+
 	public File getEcoreModel(int index) {
 		if(this.previousEcores == null)
 			return null;
@@ -103,7 +103,7 @@ public class CollaboroBackend {
 		File previousEcoreModelsList = this.previousEcores.get(String.valueOf(getVersionTracked())).get(index);
 		return previousEcoreModelsList;
 	}
-	
+
 	public File getModel(int index) {
 		if(this.previousModels == null)
 			return null;
@@ -130,26 +130,26 @@ public class CollaboroBackend {
 	public int getVersionTracked() {
 		return versionTracked;
 	}
-	
+
 	public void nextVersion() {
 		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
-		
+
 		if(versionTracked + 1 < versionHistory.getVersions().size()) {
 			versionTracked++;
 		}
 	} 
-	
+
 	public void previousVersion() {
 		if(versionTracked > 0) {
 			versionTracked--;
 		}
 	}
-	
+
 	public void createVersion() {
 		Version version = HistoryFactory.eINSTANCE.createVersion();
 		versionTracked = ++maxVersionTracked;
 		version.setId(String.valueOf(versionTracked));
-		
+
 		getHistory().getHistories().get(getHistoryTracked()).getVersions().add(version);
 		modelManager.saveHistory();
 		modelManager.saveNotation();
@@ -168,12 +168,12 @@ public class CollaboroBackend {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 	}
-	
+
 	public void createSolutionPlain(String parentCollaboration, String userId, String rationale, String actions, List<String> referredElements) {
 		Solution newSolution = HistoryFactory.eINSTANCE.createSolution();
 		initCollaborationPlain(newSolution, userId, rationale,referredElements);
 		newSolution.setChangesText(actions);
-		
+
 		Collaboration parent = locateCollaborationById(null, parentCollaboration);
 		if (parent != null && parent instanceof Proposal) {
 			Proposal parentProposal = (Proposal) parent;
@@ -215,7 +215,7 @@ public class CollaboroBackend {
 				}
 		return userProposing;
 	}
-	
+
 	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, List<String> referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
@@ -224,10 +224,12 @@ public class CollaboroBackend {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
 			String referredElementsFlattened = "";
-			for(String referredElement : referredElements) {
-				referredElementsFlattened += referredElement + ",";
+			if(referredElements != null) {
+				for(String referredElement : referredElements) {
+					referredElementsFlattened += referredElement + ",";
+				}
+				referredElementsFlattened = referredElementsFlattened.substring(0, referredElementsFlattened.length()-1);
 			}
-			referredElementsFlattened = referredElementsFlattened.substring(0, referredElementsFlattened.length()-1);
 			collaboration.setReferredElements(referredElementsFlattened);
 		} else {
 			throw new IllegalArgumentException("The user does not exists");
@@ -288,10 +290,10 @@ public class CollaboroBackend {
 		Collaboration collaboration = locateCollaborationById(null, parentCollaboration);
 		createVote(collaboration, userVoting, agreement);
 	}
-	
+
 	public void createVote(Collaboration collaboration, User userVoting, boolean agreement) {
 		Vote newVote = null;
-		
+
 		// If the user has already voted, we take the vote
 		for(Vote vote : collaboration.getVotes()) {
 			if(vote.getUser().getId().equals(userVoting.getId())) {
@@ -314,7 +316,7 @@ public class CollaboroBackend {
 	public void saveHistory() {
 		modelManager.saveHistory();
 	}
-	
+
 	public void launchDecision() {
 		DecisionEngine engine = DecisionEngine.INSTANCE;
 
@@ -326,7 +328,7 @@ public class CollaboroBackend {
 		modelManager.saveHistory();
 		modelManager.saveNotation();
 	}
-	
+
 	public void deleteCollaborationPlain(String collaborationId) {
 		Collaboration collaboration = locateCollaborationById(null, collaborationId);
 		if(collaboration != null)
@@ -334,7 +336,7 @@ public class CollaboroBackend {
 		else 
 			throw new IllegalArgumentException("The collaboration does not exist");
 	}
-	
+
 	public void deleteCollaboration(Collaboration collaboration) {
 		if (collaboration instanceof Proposal) {
 			Proposal proposal = (Proposal) collaboration;
@@ -372,18 +374,18 @@ public class CollaboroBackend {
 		}
 	}
 
-	
+
 	public void removeCollaboration(Collaboration collaboration) {
-		
+
 	}
-	
+
 	public int getNumOfAbsModelImages() {
 		if(previousEcores == null) return 0;
 		List<File> previousEcoresList = previousEcores.get(String.valueOf(getVersionTracked()));
 		if(previousEcoresList == null) return 0;
 		return previousEcoresList.size();
 	}
-	
+
 	public int getNumOfNotModelImages()	{
 		if(previousModels == null) return 0;
 		List<File> previousModelsList = previousModels.get(String.valueOf(getVersionTracked()));

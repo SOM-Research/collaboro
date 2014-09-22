@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="ASCII"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:history="http://atlanmod.fr/collaboro/history"
     language="test">
-  <users id="etienne" 
-      email="etienne.borde@telecom-paristech.fr" pasword="781836ce570cd9ad51f9cb82734572b9"
+  <users id="etienne" email="etienne.borde@telecom-paristech.fr" pasword="781836ce570cd9ad51f9cb82734572b9"
       firstName="Etienne" lastName="Borde"/>
-  <users id="javi" 
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0" collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@sols.0 #//@histories.0/@versions.0/@proposals.1/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.3"
       email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Javier"
       lastName="Villa"/>
-  <users id="juan"
-      email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
-      lastName="Villa"/>
+  <users id="juan" email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808"
+      firstName="Juan David" lastName="Villa"/>
   <histories>
     <versions id="0">
+      <proposals id="pmb4anhlgqbdg6taiqvndn9036" rationale="aaaa" proposedBy="#//@users.1"
+          referredElements="werw">
+        <comments id="l0646fj2qsefs49abn8gfngecm" rationale="wwww" proposedBy="#//@users.1"
+            referredElements="Element.name"/>
+      </proposals>
+      <proposals id="eeropv34pgqqr8hoj92l1sgrc5" rationale="aaa" proposedBy="#//@users.1"
+          referredElements="Element.type">
+        <votes agreement="true" user="#//@users.1"/>
+        <sols id="ufgdumva4cb9f45cdhm1puh6o" rationale="werwe" proposedBy="#//@users.1"
+            referredElements="Workflow.elements">
+          <comments id="pii7urj160qb61rgem5h2ugq2k" rationale="eee" proposedBy="#//@users.1"
+              referredElements=""/>
+        </sols>
+      </proposals>
+      <proposals id="10b47punmd4t0513mpide6ak6o" rationale="aaa" proposedBy="#//@users.1"
+          referredElements=""/>
+      <proposals id="shvvf20ooarpfnf3c9it5iq256" rationale="werw" proposedBy="#//@users.1"
+          referredElements="Element.type,Element.index"/>
     </versions>
   </histories>
 </history:History>
