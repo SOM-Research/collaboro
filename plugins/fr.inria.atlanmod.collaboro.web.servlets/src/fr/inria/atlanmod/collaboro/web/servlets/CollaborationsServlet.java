@@ -133,6 +133,30 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 					} else {
 						throw new ServletException("Problem saving the collaboration");
 					}
+				} else if (action.equals("edit")) { 
+					JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
+
+					String id = data.get("id").getAsString();
+					String rationale = "";
+					if(data.has("rationale"))
+						rationale = data.get("rationale").getAsString();
+					String referredElements = "";
+					if(data.has("referreElements"))
+						referredElements = data.get("referredElements").getAsString();
+					String parentId = "";
+					if(data.has("parent_id") && !data.get("parent_id").equals(""))
+						parentId = data.get("parent_id").getAsString();
+
+					String collaborationId = CollaboroBackendFactory.getBackend(dsl).editCollaborationPlain(parentId, id, historyUser.getId(), rationale, referredElements);
+
+					if(collaborationId != null) {
+						response.setContentType("application/json");
+						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+						JsonObject collaborationJSON = toJson(collaboration);
+						out.print(collaborationJSON);
+					} else {
+						throw new ServletException("Problem editing the collaboration");
+					}
 				} else if (action.equals("delete")) {
 					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
 					String collaborationId = data.get("id").getAsString();

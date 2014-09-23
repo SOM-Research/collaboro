@@ -163,6 +163,22 @@ public class CollaboroBackend {
 		return newProposal.getId();
 	}
 
+	public String editCollaborationPlain(String parentId, String collabId, String userId, String rationale, String referredElements) {
+		Collaboration parent = locateCollaborationById(null, parentId);
+		Collaboration collaboration = locateCollaborationById(parent, collabId);
+		if(collaboration != null) {
+			User user = locateUser(userId);
+			if(user == null) throw new IllegalArgumentException("The user does not exists");
+			
+			collaboration.setProposedBy(user);
+			collaboration.setRationale(rationale);
+			collaboration.setReferredElements(referredElements);
+			return collaboration.getId();
+		} else {
+			return null;
+		}
+	}
+	
 	public void createProposal(Proposal newProposal) {
 		newProposal.setId(generateId());
 		Version version = getHistory().getHistories().get(getHistoryTracked()).getVersions().get(getVersionTracked());
@@ -233,26 +249,33 @@ public class CollaboroBackend {
 		return collaboration;
 	}
 
-	public Collaboration locateCollaborationById(Collaboration collaboration, String id) {
+	/**
+	 * Locates a collaboration
+	 *  
+	 * @param collaboration The root proposal to traverse (null if general root)
+	 * @param id The id of the collaboration to look for
+	 * @return
+	 */
+	public Collaboration locateCollaborationById(Collaboration parentCollaboration, String collaborationId) {
 		Collaboration found = null;
-		if(collaboration == null ) {
+		if(parentCollaboration == null ) {
 			for(Proposal proposal : getProposals()) {
-				found = locateCollaborationById(proposal, id);
+				found = locateCollaborationById(proposal, collaborationId);
 				if(found != null) break;
 			}
 		} else {
-			if(collaboration.getId().equals(id)) 
-				return collaboration;
+			if(parentCollaboration.getId().equals(collaborationId)) 
+				return parentCollaboration;
 			else {
-				if(collaboration instanceof Proposal) { 
-					for(Solution solution : ((Proposal) collaboration).getSols()) {
-						found = locateCollaborationById(solution, id);
+				if(parentCollaboration instanceof Proposal) { 
+					for(Solution solution : ((Proposal) parentCollaboration).getSols()) {
+						found = locateCollaborationById(solution, collaborationId);
 						if(found != null) break;
 					}
 				}
 				if(found == null) {
-					for(Comment comment : collaboration.getComments()) { 
-						found = locateCollaborationById(comment, id);
+					for(Comment comment : parentCollaboration.getComments()) { 
+						found = locateCollaborationById(comment, collaborationId);
 						if(found != null) break;
 					}
 				}
