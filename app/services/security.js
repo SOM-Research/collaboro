@@ -13,7 +13,7 @@ angular.module('collaboroServices').factory('securityService', ['$http', '$q', '
         loginDialog = $modal.open(
           {
             templateUrl : 'app/partials/modal/login.html',
-            controller  : 'LoginFormController'
+            controller  : 'LoginController'
           }
         );
       }

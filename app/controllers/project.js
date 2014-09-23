@@ -1,4 +1,4 @@
-angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$rootScope', 'securityService', '$http',
+angular.module('collaboroControllers').controller('ProjectController', ['$scope', '$rootScope', 'securityService', '$http',
   function($scope, $rootScope, securityService, $http) {
   	$scope.dslVersion = "";
 

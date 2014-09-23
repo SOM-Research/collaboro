@@ -1,5 +1,5 @@
 
-angular.module('collaboroControllers', []).controller('LoginFormController', ['$scope', 'securityService', '$cookieStore', '$cookies', 'md5', '$http',
+angular.module('collaboroControllers', []).controller('LoginController', ['$scope', 'securityService', '$cookieStore', '$cookies', 'md5', '$http',
   function($scope, securityService, $cookieStore, $cookies, md5, $http) {
     $scope.user = {};
     $scope.languages = []

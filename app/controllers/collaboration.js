@@ -130,12 +130,12 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     $scope.vote = function(vote) {
       collaborationService.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote }).then(
         function(response) {
-          var agreeConverted = $scope.convert(response.data.data.agree, 'agreement votes');
-          var disagreeConverted = $scope.convert(response.data.data.disagree, 'disagreement votes');
+          var agreeConverted = $scope.convert(response.data.agree, 'agreement votes');
+          var disagreeConverted = $scope.convert(response.data.disagree, 'disagreement votes');
           $scope.versionSelectedUsersAgree = agreeConverted;
           $scope.versionSelectedUsersDisagree = disagreeConverted;
-          $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.data.agree;
-          $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.data.disagree;
+          $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.agree;
+          $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.disagree;
       });
     }
 

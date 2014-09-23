@@ -1,4 +1,4 @@
-angular.module('collaboroControllers').controller('AbstractSyntaxCtrl', ['$scope', '$http', 'syntaxService',
+angular.module('collaboroControllers').controller('AbstractSyntaxController', ['$scope', '$http', 'syntaxService',
 	function($scope, $http, syntax) {
 		$scope.abstractSyntaxImage = "assets/img/loading.gif";
 		$scope.totalAbstractSyntaxImages = 1;

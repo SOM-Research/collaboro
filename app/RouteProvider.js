@@ -3,12 +3,12 @@ angular.module('collaboroApp').config(['$routeProvider','$httpProvider',
       $routeProvider.when('/',
         {
           templateUrl :  'app/partials/main.html',
-          controller : "LoginFormController"
+          controller : "LoginController"
         }
       ).when('/project',
         {
           templateUrl: 'app/partials/project.html',
-          controller : "ProjectCtrl",
+          controller : "ProjectController",
           resolve : {
             accept : function(securityService) {
               return securityService.requestCurrentUser();
