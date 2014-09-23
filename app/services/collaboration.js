@@ -1,5 +1,5 @@
-angular.module('collaboroServices').factory('collaboration', ['$location', '$modal', '$http',
-	function($location, $modal, $http) {
+angular.module('collaboroServices').factory('collaborationService', ['$location', '$modal', '$http', '$q',
+	function($location, $modal, $http, $q) {
 		var collaborationDialog = null;
 
 		function openCollaborationDialog(collaborationtoedit) {
@@ -59,6 +59,17 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
 		}
 
 		var service = {
+      getCollaborations : function() {
+        var deferred = $q.defer();
+        $http.get(collaboroServletURL + '/collaboration')
+          .success(function(data) {
+            deferred.resolve(data);
+          })
+          .error(function(reason) {
+            deferred.reject(reason);
+          });
+        return deferred.promise;
+      },
 			showCollaboration : function() {
 				return openCollaborationDialog();
 			},

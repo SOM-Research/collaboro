@@ -71,13 +71,13 @@
                   <div class="col-md-12">
                       <div style="background:whitesmoke;border:1px solid lightgray;border-radius:5px;">
                         <abn-tree 
-                          tree-data="treeCollaborations" 
-                          tree-control="my_tree" 
+                          tree-data="collaborationTreeData" 
+                          tree-control="collaborationTreeControl" 
                           icon-leaf="fa fa-leaf" 
                           icon-expand="fa fa-plus-circle" 
                           icon-collapse= "fa fa-minus-circle"  
                           on-select="collaborationSelected(branch); $broadcast('collaborationSelectedEvent')" 
-                          expand-level="0">
+                          expand-level="10">
                         </abn-tree>
                       </div>
                       <hr>
@@ -85,10 +85,9 @@
                         <button ng-click="addcollaboration()" class="btn btn-default btn-sm">Add</button>
                         <button ng-click="editcollaboration()" class="btn btn-default btn-sm">Edit</button>
                         <button ng-click="deletecollaboration()" class="btn btn-default btn-sm">Delete</button>
-                        <!--<button ng-click="savecollaborations()" class="btn btn-default btn-sm">Save</button>-->
-                        <button ng-click="refreshcollaborations()" class="btn btn-default btn-sm">Refresh</button>
-                        <button ng-click="my_tree.expand_all()" class="btn btn-default btn-sm">Expand All</button>
-                        <button ng-click="my_tree.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
+                        <button ng-click="refreshcollaborations(); collaborationTreeControl.expand_all()" class="btn btn-default btn-sm">Refresh</button>
+                        <button ng-click="collaborationTreeControl.expand_all()" class="btn btn-default btn-sm">Expand All</button>
+                        <button ng-click="collaborationTreeControl.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
                       </p>
 
                       <div class="alert bg-danger" ng-show="connError">

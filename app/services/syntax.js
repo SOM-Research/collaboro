@@ -1,4 +1,4 @@
-angular.module('collaboroServices').factory('syntax', ['$http', 
+angular.module('collaboroServices').factory('syntaxService', ['$http', 
 	function($http) {
 		var service = {
       getTotalAbstractSyntaxImages : function(successFn, errorFn) {

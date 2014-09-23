@@ -1,12 +1,12 @@
-angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'History', 'collaboration', 'security',
-  function($scope, History, collaboration, security) {
+angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService', 'security',
+  function($scope, collaboration, security) {
     // It is initialized by refreshCollaborations() function (see below)
-    var tree;
-    $scope.my_tree = tree = {};
+    $scope.collaborationTreeControl = {};
 
     // The collaborations tree
-    $scope.treeCollaborations = [];
+    $scope.collaborationTreeData = [];
 
+    // Error messages
     $scope.connError = "";
 
     // Adds a new collaboration
@@ -17,7 +17,9 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
               "type": result.data['type'],
               "rationale": result.data['rationale'],
               "referredElements" : result.data['referredElements'],
-              "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? "" : tree.get_selected_branch().data['id']
+              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ? 
+                              "" : 
+                              $scope.collaborationTreeControl.get_selected_branch().data['id']
           };
 
           // We send the new collaboration to the server and the update the tree
@@ -36,14 +38,16 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Edit an existing collaboration
     $scope.editcollaboration = function() {
-      collaboration.editCollaboration(tree.get_selected_branch()).result.then(
+      collaboration.editCollaboration($scope.collaborationTreeControl.get_selected_branch()).result.then(
         function(result) {
           var newCollaboration = {
               "id" : result.data["id"],
               "type": result.data['type'],
               "rationale": result.data['rationale'],
               "referredElements" : result.data['referredElements'],
-              "parent_id" : (tree.get_selected_branch == null || result.data['type'] == 'Proposal') ? "" : tree.get_selected_branch().data['id']
+              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ? 
+                              "" : 
+                              $scope.collaborationTreeControl.get_selected_branch().data['id']
           };
 
           // We send the new collaboration to the server and the update the tree
@@ -64,9 +68,9 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Deletes an existing collaboration
     $scope.deletecollaboration = function() {
-      var selectedElement = tree.get_selected_branch();
+      var selectedElement = $scope.collaborationTreeControl.get_selected_branch();
       if(selectedElement.data['id']) {
-        collaboration.deleteCollaboration(tree.get_selected_branch(),
+        collaboration.deleteCollaboration($scope.collaborationTreeControl.get_selected_branch(),
           function(result) {
             $scope.refreshcollaborations();
           }
@@ -78,9 +82,17 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Refresh the tree
     $scope.refreshcollaborations = function() {
-      History.query(
+      /*History.query(
         function(history) {
-          $scope.treeCollaborations = history;
+          $scope.collaborationTreeData = history;            
+        }
+      );*/
+      collaboration.getCollaborations().then(
+        function(response) {
+          $scope.collaborationTreeData = response;
+        }, 
+        function(reason) {
+          $scope.connError = "Error while refreshing the collaboration treE: " + reason;
         }
       );
     }
@@ -96,13 +108,20 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     // Tree initialization
     $scope.refreshcollaborations();
 
+    /*$scope.$watch('collaborationTreeControl',
+      function(newVal, oldVal) {
+        console.log(newVal);
+        console.log(oldVal);
+      }
+    );*/
+
     $scope.add_collaboration = function(newbranch) {
       var b;
       if(newbranch.data['type'] != 'Proposal')
-        b = tree.get_selected_branch();
+        b = $scope.collaborationTreeControl.get_selected_branch();
       else
         b = null; // Proposals are always in the root
-      return tree.add_branch(b, newbranch);
+      return $scope.collaborationTreeControl.add_branch(b, newbranch);
     };
 
     $scope.collaborationSelected = function(element) {
@@ -117,14 +136,14 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     };
 
     $scope.vote = function(vote) {
-      collaboration.voteCollaboration(tree.get_selected_branch(), { vote : vote },
+      collaboration.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote },
         function(response) {
           var agreeConverted = $scope.convert(response.data.data.agree, 'agreement votes');
           var disagreeConverted = $scope.convert(response.data.data.disagree, 'disagreement votes');
           $scope.versionSelectedUsersAgree = agreeConverted;
           $scope.versionSelectedUsersDisagree = disagreeConverted;
-          tree.get_selected_branch().data.agree = response.data.data.agree;
-          tree.get_selected_branch().data.disagree = response.data.data.disagree;
+          $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.data.agree;
+          $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.data.disagree;
           //$scope.refreshcollaborations();
       });
     }
