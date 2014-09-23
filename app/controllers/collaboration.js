@@ -22,14 +22,14 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
                               $scope.collaborationTreeControl.get_selected_branch().data['id']
           };
 
-          // We send the new collaboration to the server and the update the tree
+          // We send the new collaboration to the server and then update the tree
           collaborationService.saveCollaboration(newCollaboration).then(
             function(response) {
-              $scope.refreshcollaborations();
+              var parentCollaboration = (response.data['type'] != 'Proposal') ? $scope.collaborationTreeControl.get_selected_branch() : null;
+              $scope.collaborationTreeControl.add_branch(parentCollaboration, response);
               $scope.connError = "";
             },
             function(response) {
-              $scope.refreshcollaborations();
               $scope.connError = "Error while saving";
             }
           );
@@ -53,16 +53,14 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           // We send the new collaboration to the server and the update the tree
           collaborationService.modifyCollaboration(newCollaboration).then(
             function(response) {
-              $scope.refreshcollaborations();
+              $scope.collaborationSelected(response);
               $scope.connError = "";
             },
             function(response) {
-              $scope.refreshcollaborations();
               $scope.connError = "Error while saving";
             }
           );
 
-          $scope.collaborationSelected(result);
         });
     }
 
@@ -72,12 +70,10 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       if(selectedElement.data['id']) {
         collaborationService.deleteCollaboration($scope.collaborationTreeControl.get_selected_branch()).then(
           function(result) {
-            $scope.refreshcollaborations();
+            $scope.collaborationTreeControl.remove_branch($scope.collaborationTreeControl.get_selected_branch());
           }
         );
-      } else {
-        $scope.refreshcollaborations();
-      }
+      } 
     }
 
     // Refresh the tree
@@ -85,6 +81,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       collaborationService.getCollaborations().then(
         function(response) {
           $scope.collaborationTreeData = response;
+          $scope.collaborationTreeControl.expand_all();
         }, 
         function(reason) {
           $scope.connError = "Error while refreshing the collaboration treE: " + reason;
@@ -103,12 +100,12 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     // Tree initialization
     $scope.refreshcollaborations();
 
-    /*$scope.$watch('collaborationTreeControl',
+    $scope.$watch('collaborationTreeControl',
       function(newVal, oldVal) {
         console.log(newVal);
         console.log(oldVal);
       }
-    );*/
+    );
 
     $scope.add_collaboration = function(newbranch) {
       var b;
@@ -139,7 +136,6 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           $scope.versionSelectedUsersDisagree = disagreeConverted;
           $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.data.agree;
           $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.data.disagree;
-          //$scope.refreshcollaborations();
       });
     }
 
