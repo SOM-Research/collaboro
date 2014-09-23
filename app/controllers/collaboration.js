@@ -39,6 +39,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       collaboration.editCollaboration(tree.get_selected_branch()).result.then(
         function(result) {
           var newCollaboration = {
+              "id" : result.data["id"],
               "type": result.data['type'],
               "rationale": result.data['rationale'],
               "referredElements" : result.data['referredElements'],
@@ -46,7 +47,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           };
 
           // We send the new collaboration to the server and the update the tree
-          collaboration.saveCollaboration(newCollaboration,
+          collaboration.modifyCollaboration(newCollaboration,
             function(response) {
               $scope.refreshcollaborations();
               $scope.connError = "";

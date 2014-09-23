@@ -78,6 +78,16 @@ angular.module('collaboroServices').factory('collaboration', ['$location', '$mod
   				}
   			);
   		},
+      modifyCollaboration: function(collaboration, successFn, errorFn) {
+        $http.post(collaboroServletURL + '/collaboration', { action : "edit", collaboration : collaboration }).then(
+          function(response) {
+            successFn(response);
+          },
+          function(response) {
+            errorFn(response);
+          }
+        );
+      },
   		deleteCollaboration: function(collaboration, successFn) {
   			$http.post(collaboroServletURL + '/collaboration', { action : "delete", collaboration : collaboration }).then(
   				function(response) {
