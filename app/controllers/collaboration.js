@@ -1,5 +1,5 @@
 angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService', 'security',
-  function($scope, collaboration, security) {
+  function($scope, collaborationService, security) {
     // It is initialized by refreshCollaborations() function (see below)
     $scope.collaborationTreeControl = {};
 
@@ -11,7 +11,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Adds a new collaboration
     $scope.addcollaboration = function() {
-      collaboration.showCollaboration().result.then(
+      collaborationService.showCollaboration().result.then(
         function(result) {
           var newCollaboration = {
               "type": result.data['type'],
@@ -23,7 +23,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           };
 
           // We send the new collaboration to the server and the update the tree
-          collaboration.saveCollaboration(newCollaboration,
+          collaborationService.saveCollaboration(newCollaboration).then(
             function(response) {
               $scope.refreshcollaborations();
               $scope.connError = "";
@@ -38,7 +38,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Edit an existing collaboration
     $scope.editcollaboration = function() {
-      collaboration.editCollaboration($scope.collaborationTreeControl.get_selected_branch()).result.then(
+      collaborationService.editCollaboration($scope.collaborationTreeControl.get_selected_branch()).result.then(
         function(result) {
           var newCollaboration = {
               "id" : result.data["id"],
@@ -51,7 +51,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           };
 
           // We send the new collaboration to the server and the update the tree
-          collaboration.modifyCollaboration(newCollaboration,
+          collaborationService.modifyCollaboration(newCollaboration).then(
             function(response) {
               $scope.refreshcollaborations();
               $scope.connError = "";
@@ -70,7 +70,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     $scope.deletecollaboration = function() {
       var selectedElement = $scope.collaborationTreeControl.get_selected_branch();
       if(selectedElement.data['id']) {
-        collaboration.deleteCollaboration($scope.collaborationTreeControl.get_selected_branch(),
+        collaborationService.deleteCollaboration($scope.collaborationTreeControl.get_selected_branch()).then(
           function(result) {
             $scope.refreshcollaborations();
           }
@@ -82,12 +82,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Refresh the tree
     $scope.refreshcollaborations = function() {
-      /*History.query(
-        function(history) {
-          $scope.collaborationTreeData = history;            
-        }
-      );*/
-      collaboration.getCollaborations().then(
+      collaborationService.getCollaborations().then(
         function(response) {
           $scope.collaborationTreeData = response;
         }, 
@@ -136,7 +131,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     };
 
     $scope.vote = function(vote) {
-      collaboration.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote },
+      collaborationService.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote }).then(
         function(response) {
           var agreeConverted = $scope.convert(response.data.data.agree, 'agreement votes');
           var disagreeConverted = $scope.convert(response.data.data.disagree, 'disagreement votes');

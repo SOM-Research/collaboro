@@ -58,6 +58,24 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
 			}
 		}
 
+    function performCollaboration(action, collaboration, payload) {
+      var data;
+      if(payload) 
+        data = { action: action, collaboration: collaboration, data: payload };
+      else 
+        data = { action: action, collaboration: collaboration};
+
+      var deferred = $q.defer();
+      $http.post(collaboroServletURL + '/collaboration', data)
+        .success(function(data) {
+          deferred.resolve(data);
+        })
+        .error(function(reason) {
+          deferred.reject(reason);
+        });
+      return deferred.promise;
+    }
+
 		var service = {
       getCollaborations : function() {
         var deferred = $q.defer();
@@ -79,39 +97,17 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
 			cancelCollaboration: function() {
   			closeCollaborationDialog(false);
   		},
-  		saveCollaboration: function(collaboration, successFn, errorFn) {
-  			$http.post(collaboroServletURL + '/collaboration', { action : "save", collaboration : collaboration }).then(
-  				function(response) {
-  					successFn(response);
-  				},
-  				function(response) {
-  					errorFn(response);
-  				}
-  			);
+  		saveCollaboration: function(collaboration) {
+        return performCollaboration('save', collaboration);
   		},
-      modifyCollaboration: function(collaboration, successFn, errorFn) {
-        $http.post(collaboroServletURL + '/collaboration', { action : "edit", collaboration : collaboration }).then(
-          function(response) {
-            successFn(response);
-          },
-          function(response) {
-            errorFn(response);
-          }
-        );
+      modifyCollaboration: function(collaboration) {
+        return performCollaboration('edit', collaboration);
       },
-  		deleteCollaboration: function(collaboration, successFn) {
-  			$http.post(collaboroServletURL + '/collaboration', { action : "delete", collaboration : collaboration }).then(
-  				function(response) {
-  					successFn(response);
-  				}
-  			);
+  		deleteCollaboration: function(collaboration) {
+        return performCollaboration('delete', collaboration);
   		},
-  		voteCollaboration: function(collaboration, data, successFn) {
-  			$http.post(collaboroServletURL + '/collaboration', { action : "vote", collaboration : collaboration, data : data }).then(
-  				function(response) {
-  					successFn(response);
-  				}
-  			);
+  		voteCollaboration: function(collaboration, data) {
+        return performCollaboration('vote', collaboration, data);
   		},
     };
 		return service;
