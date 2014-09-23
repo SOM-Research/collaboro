@@ -1,5 +1,5 @@
-angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$rootScope', 'security', '$http',
-  function($scope, $rootScope, security, $http) {
+angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$rootScope', 'securityService', '$http',
+  function($scope, $rootScope, securityService, $http) {
   	$scope.dslVersion = "";
 
   	$scope.checkVersion = function() {
@@ -59,6 +59,6 @@ angular.module('collaboroControllers').controller('ProjectCtrl', ['$scope', '$ro
   	// First call to update the version
   	$scope.checkVersion();
 
-    $scope.isAuthenticated = security.isAuthenticated;
+    $scope.isAuthenticated = securityService.isAuthenticated;
   }
 ]);

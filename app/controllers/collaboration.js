@@ -1,5 +1,5 @@
-angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService', 'security',
-  function($scope, collaborationService, security) {
+angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService',
+  function($scope, collaborationService) {
     // It is initialized by refreshCollaborations() function (see below)
     $scope.collaborationTreeControl = {};
 
@@ -100,12 +100,12 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     // Tree initialization
     $scope.refreshcollaborations();
 
-    $scope.$watch('collaborationTreeControl',
+    /*$scope.$watch('collaborationTreeControl',
       function(newVal, oldVal) {
         console.log(newVal);
         console.log(oldVal);
       }
-    );
+    );*/
 
     $scope.add_collaboration = function(newbranch) {
       var b;

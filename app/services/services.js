@@ -1,5 +1,5 @@
 'use strict';
-angular.module('collaboroServices', ['ngResource', 'collaboroControllers']);
+angular.module('collaboroServices', []);
 
 
 
