@@ -109,6 +109,9 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
   		voteCollaboration: function(collaboration, data) {
         return performCollaboration('vote', collaboration, data);
   		},
+      sendDisagreement : function(collaboration, comment) {
+        return performCollaboration('disagreementComment', collaboration, comment);
+      }
     };
 		return service;
 	}

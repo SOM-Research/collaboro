@@ -9,6 +9,9 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     // Error messages
     $scope.connError = "";
 
+    // Control showing the text area to write the comment related to a disagreement vote
+    $scope.disagreement = false;
+
     // Adds a new collaboration
     $scope.addcollaboration = function() {
       collaborationService.showCollaboration().result.then(
@@ -118,25 +121,42 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     $scope.collaborationSelected = function(element) {
       if (element.data) { 
-        $scope.versionSelected = element.label;
-        $scope.versionSelectedDescription = element.data.rationale;
-        $scope.versionSelectedUsersAgree = $scope.convert(element.data.agree, 'agreement votes');
-        $scope.versionSelectedUsersDisagree = $scope.convert(element.data.disagree, 'disagreement votes');
-        $scope.versionSelectedReferredElements = $scope.convert(element.data.referredElements, 'referred elements');
-        $scope.userNameSelected = element.data.username;
+        $scope.collaborationSelectedProposedBy = element.data.username;
+        $scope.collaborationSelectedRationale = element.data.rationale;
+        $scope.collaborationSelectedReferredElements = $scope.convert(element.data.referredElements, 'referred elements');
+        $scope.collaborationSelectedAgreeVotes = $scope.convert(element.data.agree, 'agreement votes');
+        $scope.collaborationSelectedDisagreeVotes = $scope.convert(element.data.disagree, 'disagreement votes');
       }
     };
 
+
+
     $scope.vote = function(vote) {
-      collaborationService.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote }).then(
+      if($scope.collaborationTreeControl.get_selected_branch()) {
+        if(vote == 'no') $scope.disagreement = true;
+        else $scope.disagreement = false;
+
+        collaborationService.voteCollaboration($scope.collaborationTreeControl.get_selected_branch(), { vote : vote }).then(
+          function(response) {
+            var agreeConverted = $scope.convert(response.data.agree, 'agreement votes');
+            var disagreeConverted = $scope.convert(response.data.disagree, 'disagreement votes');
+            $scope.collaborationSelectedAgreeVotes = agreeConverted;
+            $scope.collaborationSelectedDisagreeVotes = disagreeConverted;
+            $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.agree;
+            $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.disagree;
+        });
+      }
+    }
+
+    $scope.disagreementComment = function() {
+      collaborationService.sendDisagreement($scope.collaborationTreeControl.get_selected_branch(), { comment : $scope.disagreementRationale }).then(
         function(response) {
-          var agreeConverted = $scope.convert(response.data.agree, 'agreement votes');
-          var disagreeConverted = $scope.convert(response.data.disagree, 'disagreement votes');
-          $scope.versionSelectedUsersAgree = agreeConverted;
-          $scope.versionSelectedUsersDisagree = disagreeConverted;
-          $scope.collaborationTreeControl.get_selected_branch().data.agree = response.data.agree;
-          $scope.collaborationTreeControl.get_selected_branch().data.disagree = response.data.disagree;
-      });
+          var parentCollaboration = $scope.collaborationTreeControl.get_selected_branch();
+          $scope.collaborationTreeControl.add_branch(parentCollaboration, response);
+          $scope.disagreementRationale = "";
+          $scope.disagreement = false;
+        }
+      );
     }
 
     $scope.convert = function(jsonArray, topic) {

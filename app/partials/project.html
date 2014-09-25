@@ -113,37 +113,48 @@
                 <div class="panel-heading">
                   <h3 class="panel-title">Proposed by</h3>
                 </div>
-                <div class="panel-body">{{userNameSelected}}</div>
+                <div class="panel-body">{{collaborationSelectedProposedBy}}</div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Rationale</h3>
                 </div>
-                <div class="panel-body">{{versionSelectedDescription}}</div>
+                <div class="panel-body">{{collaborationSelectedRationale}}</div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Referred Elements</h3>
                 </div>
-                <div class="panel-body">{{versionSelectedReferredElements}}</div>
+                <div class="panel-body">{{collaborationSelectedReferredElements}}</div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Votes Agree</h3>
                 </div>
-                <div class="panel-body">{{versionSelectedUsersAgree}}</div>
+                <div class="panel-body">{{collaborationSelectedAgreeVotes}}</div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Votes Disagree</h3>
                 </div>
-                <div class="panel-body">{{versionSelectedUsersDisagree}}</div>
+                <div class="panel-body">{{collaborationSelectedDisagreeVotes}}</div>
               </div>
 
               <p class="text-center">
                 <button ng-click="vote('yes')" class="btn btn-success btn-sm">Agree</button>
                 <button ng-click="vote('no')" class="btn btn-danger btn-sm">Disagree</button>
               </p>
+
+              <div style="margin-top: 20px;" class="panel panel-default" ng-show="disagreement">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Do you want to comment on your disagreement?</h3>
+                </div>
+                <div class="panel-body"><textarea rows="5" class="form-control" ng-model="disagreementRationale"></textarea></div>
+                <div class="panel-footer">
+                  <p style="margin-bottom: 0px;" class="text-center"><button ng-click="disagreementComment()" class="btn btn-primary btn-sm">Send</button></p>
+                </div>
+              </div>
+
              </div>
             </div>
            </div>
