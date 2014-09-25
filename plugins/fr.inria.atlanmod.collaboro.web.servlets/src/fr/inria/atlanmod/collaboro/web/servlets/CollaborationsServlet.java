@@ -164,7 +164,6 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 					response.setContentType("application/json");
 					out.print("{\"result\": \"success\" }");
 				} else if (action.equals("vote")) {
-
 					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
 					String collaborationId = data.get("id").getAsString();
 
@@ -178,6 +177,20 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 
 						response.setContentType("application/json");
 						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+						JsonObject collaborationJSON = toJson(collaboration);
+						out.print(collaborationJSON);
+					}
+				} else if (action.equals("disagreementComment")) {
+					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+					String collaborationId = data.get("id").getAsString();
+
+					String comment = jsonObject.get("data").getAsJsonObject().get("comment").getAsString();
+					
+					if(comment != null) {
+						String commentId = CollaboroBackendFactory.getBackend(dsl).createDisagreementVote(collaborationId, historyUser.getId(), comment);
+						
+						response.setContentType("application/json");
+						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, commentId);
 						JsonObject collaborationJSON = toJson(collaboration);
 						out.print(collaborationJSON);
 					}

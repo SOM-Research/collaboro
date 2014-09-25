@@ -298,6 +298,27 @@ public class CollaboroBackend {
 		
 		return newComment.getId();
 	}
+	
+	public String createDisagreementVote(String collaborationId, String userId, String comment) {
+		Collaboration collaboration = locateCollaborationById(null, collaborationId);
+		User user = locateUser(userId);
+		if(collaboration != null) {
+			for(Vote vote : collaboration.getVotes()) {
+				boolean alreadyVoted = false;
+				if(vote.getUser().getId().equals(user.getId())) {
+					alreadyVoted = true;
+				}
+				
+				if(!alreadyVoted) 
+					createVote(collaboration, user, false);
+				
+				return createCommentPlain(collaborationId, userId, comment, "");
+			}
+		} else {
+			throw new IllegalArgumentException("The collaboration does not exists");
+		}
+		return null;
+	}
 
 	public void createComment(Collaboration collaboration, Comment newComment) {
 		newComment.setId(generateId());
