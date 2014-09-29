@@ -1,13 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2014 INRIA.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- * Juan David Villa Calle - (juan-david.villa_calle@inria.fr)
- *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
 import java.io.BufferedReader;
@@ -21,11 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.eclipse.emf.common.util.EList;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -49,7 +36,7 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
-
+		
 		HttpSession session = request.getSession();
 		if(session == null) 
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -65,7 +52,6 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 				CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
 				List<Proposal> proposals = backend.getProposals();
 				JsonArray proposalsJson = toJson(proposals);
-				System.out.println("--> " + proposalsJson.toString());
 				out.print(proposalsJson.toString());  
 			}
 		}
@@ -315,10 +301,11 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 		JsonArray usersAgree = new JsonArray();
 		JsonArray usersDisagree = new JsonArray();
 		for (Vote vote : collaboration.getVotes())	{
+			String builtName = vote.getUser().getFirstName() + " " + vote.getUser().getLastName();
 			if(vote.isAgreement())
-				usersAgree.add(new JsonPrimitive(vote.getUser().getId()));
+				usersAgree.add(new JsonPrimitive(builtName));
 			else
-				usersDisagree.add(new JsonPrimitive(vote.getUser().getId()));
+				usersDisagree.add(new JsonPrimitive(builtName));
 		}
 
 		// Building response JSON object

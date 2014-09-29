@@ -17,50 +17,42 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
 
-@SuppressWarnings("serial")
 @WebServlet("/availableElementsToRefer")
-public class ElementsToReferServlet extends AbstractCollaboroServlet
-{
+public class ElementsToReferServlet extends AbstractCollaboroServlet {
+	private static final long serialVersionUID = 133L;
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-	{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
 		HttpSession session = request.getSession(false);
 		if(session == null) 
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else
-		{
+		else {
 			User historyUser = (User) session.getAttribute("user");
 			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null)
-			{
+			if(historyUser == null || dsl == null){
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			}
-			else
-			{
+			} else {
 				EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel();
-				EList<EClassifier> classifiers=metamodelPackage.getEClassifiers();
-				ArrayList<String> metamodelElements=new ArrayList<String>();
-				for (EClassifier eClassifier : classifiers)
-				{
+				EList<EClassifier> classifiers = metamodelPackage.getEClassifiers();
+				ArrayList<String> metamodelElements = new ArrayList<String>();
+				for (EClassifier eClassifier : classifiers) {
 					metamodelElements.add(eClassifier.getName());
-					if(eClassifier instanceof EClass)
-					{
+					if(eClassifier instanceof EClass) {
 						EClass eClass=(EClass)eClassifier;
-						for(EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures())
-						{
+						for(EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures()) {
 							metamodelElements.add(eClassifier.getName()+"."+eStructuralFeature.getName());
 						}
 					}
-					
 				}
-				Gson gson=new Gson();
-				String result=gson.toJson(metamodelElements);
+				
+				// Building the response
+				Gson gson = new Gson();
+				String result = gson.toJson(metamodelElements);
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
 				out.print(result); 
@@ -72,5 +64,4 @@ public class ElementsToReferServlet extends AbstractCollaboroServlet
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);
 	}
-
 }

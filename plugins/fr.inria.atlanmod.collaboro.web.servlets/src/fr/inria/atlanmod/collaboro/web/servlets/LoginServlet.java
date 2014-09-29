@@ -1,14 +1,3 @@
-/*******************************************************************************
- * Copyright (c) 2014 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- * Juan David Villa Calle - (juan-david.villa_calle@inria.fr)
- * Javier Canovas (me@jlcanovas.es)
- *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
 import java.io.BufferedReader;
@@ -22,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackend;
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
@@ -49,20 +38,22 @@ public class LoginServlet extends AbstractSecurityServlet {
 		}
 
 		// Getting the JSON object 
-		Gson gson = new Gson();
-		JsonUser user = gson.fromJson(jb.toString(), JsonUser.class);   
-
+		JsonParser parser = new JsonParser();
+		JsonObject jsonObject = (JsonObject) parser.parse(jb.toString()).getAsJsonObject();
+		String email = jsonObject.get("email").getAsString();
+		String password = jsonObject.get("password").getAsString();
+		String dsl = jsonObject.get("dsl").getAsString();
+		
 		// Accesing the backend to validate the user
-		CollaboroBackend backend = CollaboroBackendFactory.getBackend(user.getDsl());
-		System.out.println(user.getPassword());
-		User historyUser = backend.loginUser(user.getEmail(), user.getPassword(), user.getDsl());  
+		CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
+		User historyUser = backend.loginUser(email, password, dsl);  
 		if(historyUser != null) {
 			String userId = historyUser.getId();
 
 			// Setting session and cookies
 			HttpSession session = request.getSession();
 			session.setAttribute("user", historyUser);
-			session.setAttribute("dsl", user.getDsl());
+			session.setAttribute("dsl", dsl);
 			session.setMaxInactiveInterval(30*60);
 
 			Cookie userName = new Cookie("collaboro_user", userId);
@@ -72,7 +63,7 @@ public class LoginServlet extends AbstractSecurityServlet {
 			response.setContentType("application/json");
 			PrintWriter out = response.getWriter();
 			
-			JsonObject jsonResponse = buildJsonUserResponse(historyUser, user.getDsl());
+			JsonObject jsonResponse = buildJsonUserResponse(historyUser, dsl);
 			out.print(jsonResponse.toString());
 		} else {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -80,7 +71,7 @@ public class LoginServlet extends AbstractSecurityServlet {
 	}
 
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
 		super.doOptions(request, response);
 	}
