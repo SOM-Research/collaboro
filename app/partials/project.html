@@ -141,8 +141,8 @@
               </div>
 
               <p class="text-center">
-                <button ng-click="vote('yes')" class="btn btn-success btn-sm">Agree</button>
-                <button ng-click="vote('no')" class="btn btn-danger btn-sm">Disagree</button>
+                <button ng-click="vote('yes')" ng-disabled="hasVotedAgree()" class="btn btn-success btn-sm">Agree</button>
+                <button ng-click="vote('no')" ng-disabled="!hasVotedAgree()" class="btn btn-danger btn-sm">Disagree</button>
               </p>
 
               <div style="margin-top: 20px;" class="panel panel-default" ng-show="disagreement">

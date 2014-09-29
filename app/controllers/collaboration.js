@@ -1,5 +1,5 @@
-angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService',
-  function($scope, collaborationService) {
+angular.module('collaboroControllers').controller('collaborationController', ['$scope', 'collaborationService', 'securityService',
+  function($scope, collaborationService, securityService) {
     // It is initialized by refreshCollaborations() function (see below)
     $scope.collaborationTreeControl = {};
 
@@ -129,6 +129,11 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       }
     };
 
+    $scope.hasVotedAgree = function() {
+      var builtName = securityService.currentUser.firstName + " " + securityService.currentUser.lastName;
+      console.log(builtName);
+      return $scope.collaborationSelectedAgreeVotes != undefined && $scope.collaborationSelectedAgreeVotes.indexOf(builtName) > -1
+    };
 
 
     $scope.vote = function(vote) {
