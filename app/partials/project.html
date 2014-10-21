@@ -10,7 +10,7 @@
         <button ng-click="nextVersion()" class="btn btn-default btn-sm">Next Version</button>
         </div>
         <p></p>
-        <button ng-click="launchDecision()" class="btn btn-default btn-sm">Run Decisions</button>
+        <!--<button ng-click="launchDecision()" class="btn btn-default btn-sm">Run Decisions</button>-->
       </div>
       <!--The four panels.--> 
       <div class="col-sm-9 col-sm-offset-1 col-md-10 col-md-offset-1 main">
@@ -24,7 +24,7 @@
               <div class="panel-body" ng-controller="AbstractSyntaxController">
                 <div class="row">
                   <p class="text-center">
-                    <img ng-src="{{abstractSyntaxImage}}" height="300">
+                    <a ng-href="{{abstractSyntaxImage}}" target="_blank"><img ng-src="{{abstractSyntaxImage}}" height="300"></a>
                   </p>
                 </div>
                 <div class="row">
@@ -45,7 +45,7 @@
               <div class="panel-body" ng-controller="ConcreteSyntaxController">
                 <div class="row">  
                   <p class="text-center">
-                    <img ng-src="{{concreteSyntaxImage}}" height="300" >
+                    <a ng-href="{{concreteSyntaxImage}}" target="_blank"><img ng-src="{{concreteSyntaxImage}}" height="300" ></a>
                   </p>
                 </div>
                 <div class="row">

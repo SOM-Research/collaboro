@@ -20,8 +20,8 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
               "type": result.data['type'],
               "rationale": result.data['rationale'],
               "referredElements" : result.data['referredElements'],
-              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ? 
-                              "" : 
+              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ?
+                              "" :
                               $scope.collaborationTreeControl.get_selected_branch().data['id']
           };
 
@@ -48,8 +48,8 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
               "type": result.data['type'],
               "rationale": result.data['rationale'],
               "referredElements" : result.data['referredElements'],
-              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ? 
-                              "" : 
+              "parent_id" : ($scope.collaborationTreeControl.get_selected_branch == null || result.data['type'] == 'Proposal') ?
+                              "" :
                               $scope.collaborationTreeControl.get_selected_branch().data['id']
           };
 
@@ -76,7 +76,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
             $scope.collaborationTreeControl.remove_branch($scope.collaborationTreeControl.get_selected_branch());
           }
         );
-      } 
+      }
     }
 
     // Refresh the tree
@@ -85,7 +85,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
         function(response) {
           $scope.collaborationTreeData = response;
           $scope.collaborationTreeControl.expand_all();
-        }, 
+        },
         function(reason) {
           $scope.connError = "Error while refreshing the collaboration treE: " + reason;
         }
@@ -120,7 +120,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     };
 
     $scope.collaborationSelected = function(element) {
-      if (element.data) { 
+      if (element.data) {
         $scope.collaborationSelectedProposedBy = element.data.username;
         $scope.collaborationSelectedRationale = element.data.rationale;
         $scope.collaborationSelectedReferredElements = $scope.convert(element.data.referredElements, 'referred elements');
@@ -131,7 +131,6 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     $scope.hasVotedAgree = function() {
       var builtName = securityService.currentUser.firstName + " " + securityService.currentUser.lastName;
-      console.log(builtName);
       return $scope.collaborationSelectedAgreeVotes != undefined && $scope.collaborationSelectedAgreeVotes.indexOf(builtName) > -1
     };
 
