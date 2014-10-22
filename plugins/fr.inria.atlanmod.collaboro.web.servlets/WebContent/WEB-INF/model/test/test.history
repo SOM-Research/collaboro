@@ -3,31 +3,62 @@
     language="test">
   <users id="etienne" email="etienne.borde@telecom-paristech.fr" pasword="781836ce570cd9ad51f9cb82734572b9"
       firstName="Etienne" lastName="Borde"/>
-  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.1/@votes.0" collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@sols.0 #//@histories.0/@versions.0/@proposals.1/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.3"
+  <users id="javi" votes="#//@histories.0/@versions.0/@proposals.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.1/@votes.0 #//@histories.0/@versions.0/@proposals.2/@votes.0 #//@histories.0/@versions.0/@proposals.2/@sols.0/@votes.0 #//@histories.0/@versions.0/@proposals.0/@comments.3/@votes.0 #//@histories.0/@versions.0/@proposals.0/@comments.3/@comments.0/@votes.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@votes.0"
+      collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.1 #//@histories.0/@versions.0/@proposals.1/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.0 #//@histories.0/@versions.0/@proposals.1/@comments.0/@comments.1 #//@histories.0/@versions.0/@proposals.2 #//@histories.0/@versions.0/@proposals.2/@sols.0 #//@histories.0/@versions.0/@proposals.0/@comments.0 #//@histories.0/@versions.0/@proposals.0/@comments.1 #//@histories.0/@versions.0/@proposals.0/@comments.2 #//@histories.0/@versions.0/@proposals.0/@comments.3 #//@histories.0/@versions.0/@proposals.0/@comments.3/@comments.0 #//@histories.0/@versions.0/@proposals.0/@comments.3/@comments.0/@comments.0 #//@histories.0/@versions.0/@proposals.2/@sols.0/@comments.0 #//@histories.0/@versions.0/@proposals.2/@comments.0 #//@histories.0/@versions.0/@proposals.0/@comments.4"
       email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Javier"
-      lastName="Villa"/>
+      lastName="Canovas"/>
   <users id="juan" email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808"
       firstName="Juan David" lastName="Villa"/>
   <histories>
     <versions id="0">
-      <proposals id="pmb4anhlgqbdg6taiqvndn9036" rationale="aaaa" proposedBy="#//@users.1"
-          referredElements="werw">
-        <comments id="l0646fj2qsefs49abn8gfngecm" rationale="wwww" proposedBy="#//@users.1"
-            referredElements="Element.name"/>
-      </proposals>
-      <proposals id="eeropv34pgqqr8hoj92l1sgrc5" rationale="aaa" proposedBy="#//@users.1"
-          referredElements="Element.type">
+      <proposals id="44a0m1ad59vhhh5eiuamjptvaa" rationale="a" proposedBy="#//@users.1"
+          referredElements="Element" accepted="true">
+        <comments id="sb2makr3kqu0032f5ogkhp16ae" rationale="asdfg" proposedBy="#//@users.1"
+            referredElements=""/>
+        <comments id="6ptkpo1ard53ii58m3qtf7ug4l" rationale="q no" proposedBy="#//@users.1"
+            referredElements=""/>
+        <comments id="3vtv7jidsm7vqrjafths1ctom7" rationale="ole" proposedBy="#//@users.1"
+            referredElements=""/>
+        <comments id="3nb6ajh04cfplaafj5fl2uc52p" rationale="adfasdfasdf" proposedBy="#//@users.1"
+            referredElements="">
+          <comments id="4kupjsn251f13hhourivlqc8u" rationale="afasdf" proposedBy="#//@users.1"
+              referredElements="">
+            <comments id="8v2le1qpdgrngjskmdmudobi28" rationale="afadfasd" proposedBy="#//@users.1"
+                referredElements=""/>
+            <votes user="#//@users.1"/>
+          </comments>
+          <votes user="#//@users.1"/>
+        </comments>
+        <comments id="em9ag8nqth0u1g77ft6ru99dkj" rationale="adfasd" proposedBy="#//@users.1"
+            referredElements=""/>
         <votes agreement="true" user="#//@users.1"/>
-        <sols id="ufgdumva4cb9f45cdhm1puh6o" rationale="werwe" proposedBy="#//@users.1"
-            referredElements="Workflow.elements">
-          <comments id="pii7urj160qb61rgem5h2ugq2k" rationale="eee" proposedBy="#//@users.1"
+      </proposals>
+      <proposals id="fiqh54ivao0esb0p4n74nvg5ce" rationale="bbb" proposedBy="#//@users.1"
+          referredElements="" accepted="true">
+        <comments id="2g0f2f59uemffe5qcte1gslif6" rationale="cccc3" proposedBy="#//@users.1"
+            referredElements="">
+          <comments id="4pm9j6hr6ebjicd4n5rno4ebbi" rationale="dddd" proposedBy="#//@users.1"
               referredElements=""/>
+          <comments id="havjc2vbmisf4uu9fg25uagd13" rationale="saasas123" proposedBy="#//@users.1"
+              referredElements="">
+            <votes agreement="true" user="#//@users.1"/>
+          </comments>
+          <votes agreement="true" user="#//@users.1"/>
+        </comments>
+        <votes user="#//@users.1"/>
+      </proposals>
+      <proposals id="7oderacjhick0qn6mb6v1e7geu" rationale="qwerty" proposedBy="#//@users.1"
+          referredElements="">
+        <comments id="t3g0mou3bhi02bnh8dktqiq2ro" rationale="wwerwer" proposedBy="#//@users.1"
+            referredElements=""/>
+        <votes user="#//@users.1"/>
+        <sols id="di61ftge9mgt9dl909qhnmk53m" rationale="adfadfasdfasdfasdf" proposedBy="#//@users.1"
+            referredElements="" changesText="">
+          <comments id="1gfbgrcsorqk3e4v581uer08dk" rationale="wwwwww" proposedBy="#//@users.1"
+              referredElements=""/>
+          <votes user="#//@users.1"/>
         </sols>
       </proposals>
-      <proposals id="10b47punmd4t0513mpide6ak6o" rationale="aaa" proposedBy="#//@users.1"
-          referredElements=""/>
-      <proposals id="shvvf20ooarpfnf3c9it5iq256" rationale="werw" proposedBy="#//@users.1"
-          referredElements="Element.type,Element.index"/>
     </versions>
   </histories>
 </history:History>
