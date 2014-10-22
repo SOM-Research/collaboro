@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -15,16 +11,11 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -37,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl#getChanges <em>Changes</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl#getProposal <em>Proposal</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl#getChangesText <em>Changes Text</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,6 +44,26 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 	 * @ordered
 	 */
 	protected EList<ModelChange> changes;
+
+	/**
+	 * The default value of the '{@link #getChangesText() <em>Changes Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChangesText()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String CHANGES_TEXT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getChangesText() <em>Changes Text</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getChangesText()
+	 * @generated
+	 * @ordered
+	 */
+	protected String changesText = CHANGES_TEXT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -91,7 +103,7 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 	 */
 	public Proposal getProposal() {
 		if (eContainerFeatureID() != HistoryPackage.SOLUTION__PROPOSAL) return null;
-		return (Proposal)eContainer();
+		return (Proposal)eInternalContainer();
 	}
 
 	/**
@@ -123,6 +135,27 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.SOLUTION__PROPOSAL, newProposal, newProposal));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getChangesText() {
+		return changesText;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setChangesText(String newChangesText) {
+		String oldChangesText = changesText;
+		changesText = newChangesText;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.SOLUTION__CHANGES_TEXT, oldChangesText, changesText));
 	}
 
 	/**
@@ -186,6 +219,8 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 				return getChanges();
 			case HistoryPackage.SOLUTION__PROPOSAL:
 				return getProposal();
+			case HistoryPackage.SOLUTION__CHANGES_TEXT:
+				return getChangesText();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -206,6 +241,9 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 			case HistoryPackage.SOLUTION__PROPOSAL:
 				setProposal((Proposal)newValue);
 				return;
+			case HistoryPackage.SOLUTION__CHANGES_TEXT:
+				setChangesText((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -224,6 +262,9 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 			case HistoryPackage.SOLUTION__PROPOSAL:
 				setProposal((Proposal)null);
 				return;
+			case HistoryPackage.SOLUTION__CHANGES_TEXT:
+				setChangesText(CHANGES_TEXT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -240,8 +281,26 @@ public class SolutionImpl extends CollaborationImpl implements Solution {
 				return changes != null && !changes.isEmpty();
 			case HistoryPackage.SOLUTION__PROPOSAL:
 				return getProposal() != null;
+			case HistoryPackage.SOLUTION__CHANGES_TEXT:
+				return CHANGES_TEXT_EDEFAULT == null ? changesText != null : !CHANGES_TEXT_EDEFAULT.equals(changesText);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (changesText: ");
+		result.append(changesText);
+		result.append(')');
+		return result.toString();
 	}
 
 } //SolutionImpl

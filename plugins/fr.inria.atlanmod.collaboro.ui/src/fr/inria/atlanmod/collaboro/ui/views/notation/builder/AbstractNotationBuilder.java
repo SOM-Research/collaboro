@@ -33,7 +33,6 @@ import fr.inria.atlanmod.collaboro.notation.Value;
 
 public abstract class AbstractNotationBuilder implements INotationBuilder {
 
-
 	@Override
 	public String create(NotationElement notationElement) {
 		String result;
@@ -133,11 +132,6 @@ public abstract class AbstractNotationBuilder implements INotationBuilder {
 		return result;
 	}
 	
-	
-	
-	//
-	
-	
 	@Override
 	public String create(EObject eObject, NotationElement notationElement, Map<EObject, EObject> historyLinks) {
 		String result;
@@ -218,7 +212,6 @@ public abstract class AbstractNotationBuilder implements INotationBuilder {
 
 		return result;
 	}
-	
 	
 	@Override
 	public String create(EObject eObject, Value value, Map<EObject, EObject> historyLinks) {

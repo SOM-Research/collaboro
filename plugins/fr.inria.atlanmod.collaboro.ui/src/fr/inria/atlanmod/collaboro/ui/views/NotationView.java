@@ -408,14 +408,14 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			for(NotationElement subElement : composite.getSubElements()) {
 				if (subElement instanceof Composite) {
 					x = oldX + TAB;
-					y = y + VERTICAL_SEP; 
+					y = y + VERTICAL_SEP;  
 				}
 
 				Box subBox = buildSVG(subElement, doc, x, y);
 
 				if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
 					x = oldX;
-					y = y + subBox.getHeight(); 
+					y = y + subBox.getHeight() - VERTICAL_SEP;   
 					if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
 					result.setHeight(result.getHeight() + subBox.getHeight());
 				} else {
@@ -493,7 +493,7 @@ public class NotationView extends ViewPart implements ISelectionListener {
 	 */
 	public Box buildSVG(EObject eObject, NotationElement notationElement, SVGDocument doc, int x, int y) {
 		Element svgRoot = doc.getDocumentElement();
-		Box result = new Box(0, 0, x, y);
+		Box result = new Box(0, 0, x, y);  
 
 		if (notationElement instanceof Composite) {
 			Composite composite = (Composite) notationElement;
@@ -502,14 +502,14 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			for(NotationElement subElement : composite.getSubElements()) {
 				if (subElement instanceof Composite) {
 					x = oldX + TAB;
-					y = y + VERTICAL_SEP; 
+					y = y + VERTICAL_SEP;    
 				}
 
 				Box subBox = buildSVG(eObject, subElement, doc, x, y);
 
-				if ((subElement instanceof Composite) || (subElement instanceof SyntaxOf)) {
+				if ((subElement instanceof Composite)) { // || (subElement instanceof SyntaxOf)) {
 					x = oldX;
-					y = y + subBox.getHeight(); 
+					y = y + subBox.getHeight() - VERTICAL_SEP;  
 					if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
 					result.setHeight(result.getHeight() + subBox.getHeight());
 				} else {
@@ -547,7 +547,6 @@ public class NotationView extends ViewPart implements ISelectionListener {
 				EAttribute eAttribute = attributeValue.getAttribute();
 
 				value = convert(eObject.eGet(eObject.eClass().getEStructuralFeature(eAttribute.getName())));
-				//				value = convert(eObject.eGet(eAttribute));
 			} else if (textualElement instanceof ReferenceValue) {
 				ReferenceValue referenceValue = (ReferenceValue) notationElement;
 				text.setAttributeNS(null, "fill", referenceValue.getFill().getLiteral());
@@ -557,11 +556,9 @@ public class NotationView extends ViewPart implements ISelectionListener {
 				String separator = referenceValue.getSeparator();
 
 				Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-				//				Object referredObjs = eObject.eGet(eReference);
 				if (referredObjs instanceof EList) {
 					EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
 					for(EObject elementList : eReferenceList) {
-						//						Object attributeValue = elementList.eGet(eAttribute);
 						Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
 						value += convert(attributeValue);
 						if(eReferenceList.indexOf(elementList) != eReferenceList.size() - 1) {
@@ -570,33 +567,30 @@ public class NotationView extends ViewPart implements ISelectionListener {
 					}
 				} else if (referredObjs instanceof EObject) {
 					EObject elementList = (EObject) referredObjs;
-					//					Object attributeValue = elementList.eGet(eAttribute);
 					Object attributeValue = elementList.eGet(elementList.eClass().getEStructuralFeature(eAttribute.getName()));
 					value += convert(attributeValue);					
 				}			
 			}
 
-			result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
-			result.setHeight(VERTICAL_SEP);
-
-			text.setTextContent(value);		
-			svgRoot.appendChild(text);
+			if(value.length() > 0) {
+				result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
+				result.setHeight(VERTICAL_SEP);
+				text.setTextContent(value);		
+				svgRoot.appendChild(text);
+			}
 		} else if (notationElement instanceof SyntaxOf) {
 			SyntaxOf syntaxOf = (SyntaxOf) notationElement;
 
 			EReference eReference = syntaxOf.getReference();
 
 			Object referredObjs = eObject.eGet(eObject.eClass().getEStructuralFeature(eReference.getName()));
-			//			Object referredObjs = eObject.eGet(eReference);
 			if (referredObjs instanceof EList) {
 				EList<EObject> eReferenceList = (EList<EObject>) referredObjs;
 				if(eReferenceList.size() > 0) {
-					int oldX = x;
 					for(EObject elementList : eReferenceList) {
 						NotationElement subNotationElement = Controller.INSTANCE.getNotation(elementList.eClass());
 						if(subNotationElement != null) {
 							Box subBox = buildSVG(elementList, subNotationElement, doc, x, y);
-							x = oldX;
 							y = y + subBox.getHeight(); 
 
 							if(result.getWidth() < subBox.getWidth()) result.setWidth(subBox.getWidth());
@@ -683,15 +677,12 @@ public class NotationView extends ViewPart implements ISelectionListener {
 
 
 	private SVGDocument buildSVGFromDot(NotationElement notationElement) {
-
 		StringBuilder dotGraph = new StringBuilder();
 		dotGraph.append("graph ").append(notationElement.getId()).append(" {\n rankdir=\"LR\";\n");
 		DotNotationBuilder dotBuilder = new DotNotationBuilder();
 		dotGraph.append(dotBuilder.create(notationElement));
 		dotGraph.append(" }\n");
-
 		Document doc = null;
-		
 
 		String fullPath;
 		if (inCDO) {

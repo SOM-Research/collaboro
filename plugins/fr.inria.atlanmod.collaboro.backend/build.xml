@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Collaboro builder" default="default">
+    <description>
+    	Build JAR
+    </description>
+	
+    <target name="default" description="JAR">
+    	<delete file="fr.inria.atlanmod.collaboro.backend.jar"/>
+        <jar destfile="fr.inria.atlanmod.collaboro.backend.jar">
+        	<fileset dir="bin"/>
+        	<fileset dir="src"/>
+        </jar>
+    	<copy file="fr.inria.atlanmod.collaboro.backend.jar" todir="../fr.inria.atlanmod.collaboro.web.servlets/WebContent/WEB-INF/lib"/>
+    </target>
+</project>

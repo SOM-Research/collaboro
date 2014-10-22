@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -12,9 +8,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -32,7 +26,7 @@ public class HistoryFactoryImpl extends EFactoryImpl implements HistoryFactory {
 	 */
 	public static HistoryFactory init() {
 		try {
-			HistoryFactory theHistoryFactory = (HistoryFactory)EPackage.Registry.INSTANCE.getEFactory("http://atlanmod.fr/collaboro/history"); 
+			HistoryFactory theHistoryFactory = (HistoryFactory)EPackage.Registry.INSTANCE.getEFactory(HistoryPackage.eNS_URI);
 			if (theHistoryFactory != null) {
 				return theHistoryFactory;
 			}

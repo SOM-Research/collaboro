@@ -1,13 +1,7 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
-import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->

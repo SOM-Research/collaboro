@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
+    language="test">
+  <users id="etienne" 
+      email="etienne.borde@telecom-paristech.fr" pasword="781836ce570cd9ad51f9cb82734572b9"
+      firstName="Etienne" lastName="Borde"/>
+  <users id="javi" 
+      email="javier.canovas@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Javier"
+      lastName="Villa"/>
+  <users id="juan"
+      email="juan@inria.fr" pasword="47bce5c74f589f4867dbd57e9ca9f808" firstName="Juan David"
+      lastName="Villa"/>
+  <histories>
+    <versions id="0">
+    </versions>
+  </histories>
+</history:History>

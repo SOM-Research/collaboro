@@ -1,6 +1,5 @@
 package fr.inria.atlanmod.collaboro.ui.views.notation.builder;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -9,11 +8,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import fr.inria.atlanmod.collaboro.notation.AttributeValue;
 import fr.inria.atlanmod.collaboro.notation.Composite;

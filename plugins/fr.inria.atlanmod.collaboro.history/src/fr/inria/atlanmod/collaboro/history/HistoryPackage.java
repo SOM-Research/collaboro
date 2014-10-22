@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -19,6 +15,7 @@ import org.eclipse.emf.ecore.EReference;
  * <ul>
  *   <li>each class,</li>
  *   <li>each feature of each class,</li>
+ *   <li>each operation of each class,</li>
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
@@ -209,13 +206,49 @@ public interface HistoryPackage extends EPackage {
 	int USER__COLLABORATIONS = ID_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Email</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__EMAIL = ID_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Pasword</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__PASWORD = ID_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>First Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__FIRST_NAME = ID_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Last Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__LAST_NAME = ID_ELEMENT_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 2;
+	int USER_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl <em>Version</em>}' class.
@@ -374,13 +407,22 @@ public interface HistoryPackage extends EPackage {
 	int COLLABORATION__VOTES = ID_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COLLABORATION__REFERRED_ELEMENTS = ID_ELEMENT_FEATURE_COUNT + 4;
+
+	/**
 	 * The number of structural features of the '<em>Collaboration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COLLABORATION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 4;
+	int COLLABORATION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl <em>Proposal</em>}' class.
@@ -438,6 +480,15 @@ public interface HistoryPackage extends EPackage {
 	int PROPOSAL__VOTES = COLLABORATION__VOTES;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPOSAL__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Sols</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -483,13 +534,22 @@ public interface HistoryPackage extends EPackage {
 	int PROPOSAL__META = COLLABORATION_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Conflict With</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROPOSAL__CONFLICT_WITH = COLLABORATION_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Proposal</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PROPOSAL_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 5;
+	int PROPOSAL_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 6;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl <em>Solution</em>}' class.
@@ -547,6 +607,15 @@ public interface HistoryPackage extends EPackage {
 	int SOLUTION__VOTES = COLLABORATION__VOTES;
 
 	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOLUTION__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
+
+	/**
 	 * The feature id for the '<em><b>Changes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -565,13 +634,22 @@ public interface HistoryPackage extends EPackage {
 	int SOLUTION__PROPOSAL = COLLABORATION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Changes Text</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SOLUTION__CHANGES_TEXT = COLLABORATION_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Solution</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SOLUTION_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 2;
+	int SOLUTION_FEATURE_COUNT = COLLABORATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.CommentImpl <em>Comment</em>}' class.
@@ -627,6 +705,15 @@ public interface HistoryPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMMENT__VOTES = COLLABORATION__VOTES;
+
+	/**
+	 * The feature id for the '<em><b>Referred Elements</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMMENT__REFERRED_ELEMENTS = COLLABORATION__REFERRED_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Commented Element</b></em>' container reference.
@@ -1154,7 +1241,6 @@ public interface HistoryPackage extends EPackage {
 	 */
 	int TAG_FEATURE_COUNT = 2;
 
-
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.VersionHistoryType <em>Version History Type</em>}' enum.
 	 * <!-- begin-user-doc -->
@@ -1293,6 +1379,50 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getUser_Collaborations();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getEmail <em>Email</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Email</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.User#getEmail()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_Email();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getPasword <em>Pasword</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Pasword</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.User#getPasword()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_Pasword();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getFirstName <em>First Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>First Name</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.User#getFirstName()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_FirstName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getLastName <em>Last Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Last Name</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.User#getLastName()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_LastName();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Version <em>Version</em>}'.
@@ -1435,6 +1565,17 @@ public interface HistoryPackage extends EPackage {
 	EReference getCollaboration_Votes();
 
 	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements <em>Referred Elements</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Referred Elements</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Collaboration#getReferredElements()
+	 * @see #getCollaboration()
+	 * @generated
+	 */
+	EAttribute getCollaboration_ReferredElements();
+
+	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Proposal <em>Proposal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1500,6 +1641,17 @@ public interface HistoryPackage extends EPackage {
 	EReference getProposal_Meta();
 
 	/**
+	 * Returns the meta object for the reference list '{@link fr.inria.atlanmod.collaboro.history.Proposal#getConflictWith <em>Conflict With</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Conflict With</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Proposal#getConflictWith()
+	 * @see #getProposal()
+	 * @generated
+	 */
+	EReference getProposal_ConflictWith();
+
+	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Solution <em>Solution</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1530,6 +1682,17 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSolution_Proposal();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Solution#getChangesText <em>Changes Text</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Changes Text</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Solution#getChangesText()
+	 * @see #getSolution()
+	 * @generated
+	 */
+	EAttribute getSolution_ChangesText();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Comment <em>Comment</em>}'.
@@ -1574,6 +1737,17 @@ public interface HistoryPackage extends EPackage {
 	EClass getModelChange();
 
 	/**
+	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Solution</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getSolution()
+	 * @see #getModelChange()
+	 * @generated
+	 */
+	EReference getModelChange_Solution();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getReferredElement <em>Referred Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1594,17 +1768,6 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModelChange_Target();
-
-	/**
-	 * Returns the meta object for the container reference '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Solution</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.ModelChange#getSolution()
-	 * @see #getModelChange()
-	 * @generated
-	 */
-	EReference getModelChange_Solution();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Add <em>Add</em>}'.
@@ -1850,6 +2013,7 @@ public interface HistoryPackage extends EPackage {
 	 * <ul>
 	 *   <li>each class,</li>
 	 *   <li>each feature of each class,</li>
+	 *   <li>each operation of each class,</li>
 	 *   <li>each enum,</li>
 	 *   <li>and each data type</li>
 	 * </ul>
@@ -1962,6 +2126,38 @@ public interface HistoryPackage extends EPackage {
 		EReference USER__COLLABORATIONS = eINSTANCE.getUser_Collaborations();
 
 		/**
+		 * The meta object literal for the '<em><b>Email</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__EMAIL = eINSTANCE.getUser_Email();
+
+		/**
+		 * The meta object literal for the '<em><b>Pasword</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__PASWORD = eINSTANCE.getUser_Pasword();
+
+		/**
+		 * The meta object literal for the '<em><b>First Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__FIRST_NAME = eINSTANCE.getUser_FirstName();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__LAST_NAME = eINSTANCE.getUser_LastName();
+
+		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl <em>Version</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2072,6 +2268,14 @@ public interface HistoryPackage extends EPackage {
 		EReference COLLABORATION__VOTES = eINSTANCE.getCollaboration_Votes();
 
 		/**
+		 * The meta object literal for the '<em><b>Referred Elements</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COLLABORATION__REFERRED_ELEMENTS = eINSTANCE.getCollaboration_ReferredElements();
+
+		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.ProposalImpl <em>Proposal</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2122,6 +2326,14 @@ public interface HistoryPackage extends EPackage {
 		EReference PROPOSAL__META = eINSTANCE.getProposal_Meta();
 
 		/**
+		 * The meta object literal for the '<em><b>Conflict With</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROPOSAL__CONFLICT_WITH = eINSTANCE.getProposal_ConflictWith();
+
+		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.SolutionImpl <em>Solution</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2146,6 +2358,14 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SOLUTION__PROPOSAL = eINSTANCE.getSolution_Proposal();
+
+		/**
+		 * The meta object literal for the '<em><b>Changes Text</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SOLUTION__CHANGES_TEXT = eINSTANCE.getSolution_ChangesText();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.CommentImpl <em>Comment</em>}' class.
@@ -2184,6 +2404,14 @@ public interface HistoryPackage extends EPackage {
 		EClass MODEL_CHANGE = eINSTANCE.getModelChange();
 
 		/**
+		 * The meta object literal for the '<em><b>Solution</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_CHANGE__SOLUTION = eINSTANCE.getModelChange_Solution();
+
+		/**
 		 * The meta object literal for the '<em><b>Referred Element</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2198,14 +2426,6 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MODEL_CHANGE__TARGET = eINSTANCE.getModelChange_Target();
-
-		/**
-		 * The meta object literal for the '<em><b>Solution</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MODEL_CHANGE__SOLUTION = eINSTANCE.getModelChange_Solution();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.AddImpl <em>Add</em>}' class.

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history.impl;
 
@@ -12,12 +8,9 @@ import fr.inria.atlanmod.collaboro.history.HistoryPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -81,7 +74,7 @@ public class CommentImpl extends CollaborationImpl implements Comment {
 	 */
 	public Collaboration getCommentedElement() {
 		if (eContainerFeatureID() != HistoryPackage.COMMENT__COMMENTED_ELEMENT) return null;
-		return (Collaboration)eContainer();
+		return (Collaboration)eInternalContainer();
 	}
 
 	/**

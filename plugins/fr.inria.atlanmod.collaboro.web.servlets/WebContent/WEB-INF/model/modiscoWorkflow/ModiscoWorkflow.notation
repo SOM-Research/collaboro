@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ASCII"?>
+<notation:Definition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://atlanmod.fr/collaboro/notation">
+  <elements xsi:type="notation:Composite" id="workflowNotation">
+    <subElements xsi:type="notation:Keyword" id="workflow" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="workflowName">
+      <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+    </subElements>
+    <subElements xsi:type="notation:Token" id=":"/>
+    <subElements xsi:type="notation:Keyword" id="elements" fill="red"/>
+    <subElements xsi:type="notation:Token" id=":"/>
+    <subElements xsi:type="notation:SyntaxOf" id="workflowElements">
+      <reference href="ModiscoWorkflow.ecore#//Workflow/elements"/>
+    </subElements>
+  </elements>
+  <elements xsi:type="notation:Composite" id="workNotation">
+    <subElements xsi:type="notation:Keyword" id="work" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="workName">
+      <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+    </subElements>
+    <subElements xsi:type="notation:Token" id=":"/>
+    <subElements xsi:type="notation:Composite" id="prevComposite">
+      <subElements xsi:type="notation:Keyword" id="previous" fill="red"/>
+      <subElements xsi:type="notation:Token" id=":"/>
+      <subElements xsi:type="notation:ReferenceValue">
+        <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+        <reference href="ModiscoWorkflow.ecore#//Work/previous"/>
+      </subElements>
+    </subElements>
+    <subElements xsi:type="notation:Composite" id="nextComposite">
+      <subElements xsi:type="notation:Keyword" id="next" fill="red"/>
+      <subElements xsi:type="notation:Token" id=":"/>
+      <subElements xsi:type="notation:ReferenceValue">
+        <attribute href="ModiscoWorkflow.ecore#//Element/name"/>
+        <reference href="ModiscoWorkflow.ecore#//Work/next"/>
+      </subElements>
+    </subElements>
+    <subElements xsi:type="notation:Composite" id="paramsComposite">
+      <subElements xsi:type="notation:Keyword" id="parameters" fill="red"/>
+      <subElements xsi:type="notation:Token" id=":"/>
+      <subElements xsi:type="notation:SyntaxOf" id="paramsWork">
+        <reference href="ModiscoWorkflow.ecore#//Work/parameters"/>
+      </subElements>
+    </subElements>
+  </elements>
+  <elements xsi:type="notation:Composite" id="workParameterNotation">
+    <subElements xsi:type="notation:AttributeValue" id="paramDirection">
+      <attribute href="ModiscoWorkflow.ecore#//WorkParameter/direction"/>
+    </subElements>
+    <subElements xsi:type="notation:AttributeValue" id="paramName">
+      <attribute href="ModiscoWorkflow.ecore#//WorkParameter/name"/>
+    </subElements>
+    <subElements xsi:type="notation:Keyword" id="required" fill="red"/>
+    <subElements xsi:type="notation:AttributeValue" id="required">
+      <attribute href="ModiscoWorkflow.ecore#//modiscoworkflow/WorkParameter/required"/>
+    </subElements>
+    <subElements xsi:type="notation:AttributeValue" id="description">
+      <attribute href="ModiscoWorkflow.ecore#//modiscoworkflow/WorkParameter/description"/>
+    </subElements>
+  </elements>
+</notation:Definition>

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -28,10 +24,38 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ModelChange extends EObject {
 	/**
+	 * Returns the value of the '<em><b>Solution</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link fr.inria.atlanmod.collaboro.history.Solution#getChanges <em>Changes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Solution</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Solution</em>' container reference.
+	 * @see #setSolution(Solution)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getModelChange_Solution()
+	 * @see fr.inria.atlanmod.collaboro.history.Solution#getChanges
+	 * @model opposite="changes" transient="false"
+	 * @generated
+	 */
+	Solution getSolution();
+
+	/**
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Solution</em>' container reference.
+	 * @see #getSolution()
+	 * @generated
+	 */
+	void setSolution(Solution value);
+
+	/**
 	 * Returns the value of the '<em><b>Referred Element</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Referred Element</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Referred Element</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
@@ -78,33 +102,5 @@ public interface ModelChange extends EObject {
 	 * @generated
 	 */
 	void setTarget(SyntaxElement value);
-
-	/**
-	 * Returns the value of the '<em><b>Solution</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link fr.inria.atlanmod.collaboro.history.Solution#getChanges <em>Changes</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Solution</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Solution</em>' container reference.
-	 * @see #setSolution(Solution)
-	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getModelChange_Solution()
-	 * @see fr.inria.atlanmod.collaboro.history.Solution#getChanges
-	 * @model opposite="changes" transient="false"
-	 * @generated
-	 */
-	Solution getSolution();
-
-	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.ModelChange#getSolution <em>Solution</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Solution</em>' container reference.
-	 * @see #getSolution()
-	 * @generated
-	 */
-	void setSolution(Solution value);
 
 } // ModelChange

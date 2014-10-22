@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package fr.inria.atlanmod.collaboro.history;
 
@@ -25,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface MetaInfo extends EObject {
-
 	/**
 	 * Returns the value of the '<em><b>Proposal</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link fr.inria.atlanmod.collaboro.history.Proposal#getMeta <em>Meta</em>}'.
@@ -53,4 +48,5 @@ public interface MetaInfo extends EObject {
 	 * @generated
 	 */
 	void setProposal(Proposal value);
+
 } // MetaInfo
