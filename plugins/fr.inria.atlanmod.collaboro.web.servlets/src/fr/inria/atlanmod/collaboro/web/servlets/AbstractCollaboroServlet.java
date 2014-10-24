@@ -8,10 +8,13 @@ import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.backend.CollaboroLanguageConfig;
+import fr.inria.atlanmod.collaboro.history.User;
 
 /**
  * This class contains common features for all the servlets
@@ -20,7 +23,6 @@ public class AbstractCollaboroServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	Properties properties = null;
-	
 	String serverURL = "";
 
 	@Override
@@ -91,6 +93,20 @@ public class AbstractCollaboroServlet extends HttpServlet {
 			}
 			CollaboroBackendFactory.init(languageConfigs);
 		}
+	}
+	
+	public boolean isLogged(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session == null) 
+			return false;
+		else {
+			User historyUser = (User) session.getAttribute("user");
+			String dsl = (String) session.getAttribute("dsl");
+			if(historyUser == null || dsl == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**

@@ -28,38 +28,36 @@ public class ElementsToReferServlet extends AbstractCollaboroServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
-		HttpSession session = request.getSession(false);
-		if(session == null) 
+
+		// Checking the user is logged
+		if(!isLogged(request)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else {
-			User historyUser = (User) session.getAttribute("user");
-			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null){
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			} else {
-				EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel();
-				EList<EClassifier> classifiers = metamodelPackage.getEClassifiers();
-				ArrayList<String> metamodelElements = new ArrayList<String>();
-				for (EClassifier eClassifier : classifiers) {
-					metamodelElements.add(eClassifier.getName());
-					if(eClassifier instanceof EClass) {
-						EClass eClass=(EClass)eClassifier;
-						for(EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures()) {
-							metamodelElements.add(eClassifier.getName()+"."+eStructuralFeature.getName());
-						}
-					}
+			return;
+		}
+		HttpSession session = request.getSession(false);
+		String dsl = (String) session.getAttribute("dsl");
+
+		EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel();
+		EList<EClassifier> classifiers = metamodelPackage.getEClassifiers();
+		ArrayList<String> metamodelElements = new ArrayList<String>();
+		for (EClassifier eClassifier : classifiers) {
+			metamodelElements.add(eClassifier.getName());
+			if(eClassifier instanceof EClass) {
+				EClass eClass=(EClass)eClassifier;
+				for(EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures()) {
+					metamodelElements.add(eClassifier.getName()+"."+eStructuralFeature.getName());
 				}
-				
-				// Building the response
-				Gson gson = new Gson();
-				String result = gson.toJson(metamodelElements);
-				response.setContentType("application/json");
-				PrintWriter out = response.getWriter();
-				out.print(result); 
 			}
 		}
+
+		// Building the response
+		Gson gson = new Gson();
+		String result = gson.toJson(metamodelElements);
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+		out.print(result); 
 	}
-	
+
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);

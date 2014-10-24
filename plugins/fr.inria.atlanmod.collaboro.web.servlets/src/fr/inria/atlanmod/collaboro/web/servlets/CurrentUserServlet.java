@@ -20,22 +20,20 @@ public class CurrentUserServlet extends AbstractSecurityServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
 
-		HttpSession session = request.getSession(false);
-		if(session == null) 
+		// Checking the user is logged
+		if(!isLogged(request)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else {
-			User historyUser = (User) session.getAttribute("user");
-			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			} else {
-				response.setContentType("application/json");
-				PrintWriter out = response.getWriter();
-
-				JsonObject jsonResponse = buildJsonUserResponse(historyUser, dsl);
-				out.print(jsonResponse.toString());
-			}
+			return;
 		}
+		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
+		String dsl = (String) session.getAttribute("dsl");
+
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+
+		JsonObject jsonResponse = buildJsonUserResponse(historyUser, dsl);
+		out.print(jsonResponse.toString());
 	}
 
 	@Override

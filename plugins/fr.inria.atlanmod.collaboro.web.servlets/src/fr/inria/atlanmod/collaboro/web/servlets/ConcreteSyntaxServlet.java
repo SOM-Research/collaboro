@@ -1,6 +1,17 @@
+/*******************************************************************************
+ * Copyright (c) 2014 INRIA.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Juan David Villa Calle - (juan-david.villa_calle@inria.fr)
+ *******************************************************************************/
 package fr.inria.atlanmod.collaboro.web.servlets;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -10,19 +21,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.history.User;
 
-@WebServlet(description = "Exposes the current version being used", urlPatterns = { "/versionManagement" })
-public class VersionManagementServlet extends AbstractCollaboroServlet {
-	private static final long serialVersionUID = 52L;
+/**
+ * Service to render the notation images
+ * 
+ */
+@WebServlet(description = "Provides access to the concrete syntax", urlPatterns = { "/concreteSyntax" })
+public class ConcreteSyntaxServlet extends AbstractRendererServlet {
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);
 
 		// Checking the user is logged
@@ -31,31 +45,27 @@ public class VersionManagementServlet extends AbstractCollaboroServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
-		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
+
+		int numOfNotModelImages = CollaboroBackendFactory.getBackend(dsl).getNumOfNotModelImages();
+		JsonObject responseObject = new JsonObject();
+		responseObject.addProperty("numImages", numOfNotModelImages);
 
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
-
-		JsonObject jsonResponse = new JsonObject();
-		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl).getVersionTracked());
-		jsonResponse.addProperty("version", version);
-
-		out.print(jsonResponse.toString());
+		out.print(responseObject.toString()); 
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
 
-
 		// Checking the user is logged
 		if(!isLogged(request)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			return;
 		}
 		HttpSession session = request.getSession(false);
-		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
 		// Getting the parameters from the request
@@ -69,33 +79,29 @@ public class VersionManagementServlet extends AbstractCollaboroServlet {
 			throw new ServletException("There was an error reading the parameters");
 		}
 
-		// Parsing the parameters
-		Gson gson = new Gson();
 		JsonParser parser = new JsonParser();
 		JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
-		String action = actionJsonObject.get("action").getAsString();
+		int num = actionJsonObject.get("numImage").getAsInt();
+		File pictureFile = CollaboroBackendFactory.getBackend(dsl).getModel(num);
 
-		if(action.equals("next")) {
-			CollaboroBackendFactory.getBackend(dsl).nextVersion();
-		} else if (action.equals("previous")) {
-			CollaboroBackendFactory.getBackend(dsl).previousVersion();
-		} else if (action.equals("create")) {
-			CollaboroBackendFactory.getBackend(dsl).createVersion();
+		if(pictureFile == null) 
+			pictureFile = new File(workingDir.getAbsolutePath() + "/error.jpg");
+
+		String resultImage;
+		try {
+			resultImage = encodeToString(pictureFile);
+		} catch (IOException e) {
+			throw new ServletException("Not possible to encode");
 		}
 
-		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
+		out.print(resultImage);
 
-		JsonObject jsonResponse = new JsonObject();
-		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl).getVersionTracked());
-		jsonResponse.addProperty("version", version);
-
-		out.print(jsonResponse.toString());
 	}
 
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		addResponseOptions(response);
+		super.doOptions(request, response);
 	}
-
 }

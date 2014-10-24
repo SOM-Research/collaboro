@@ -36,25 +36,22 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		addResponseOptions(response);
-		
-		HttpSession session = request.getSession();
-		if(session == null) 
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else {
-			User historyUser = (User) session.getAttribute("user");
-			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			} else {
-				response.setContentType("application/json");
-				PrintWriter out = response.getWriter();
 
-				CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
-				List<Proposal> proposals = backend.getProposals();
-				JsonArray proposalsJson = toJson(proposals);
-				out.print(proposalsJson.toString());  
-			}
+		// Checking the user is logged
+		if(!isLogged(request)) {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
 		}
+		HttpSession session = request.getSession(false);
+		String dsl = (String) session.getAttribute("dsl");
+
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+
+		CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
+		List<Proposal> proposals = backend.getProposals();
+		JsonArray proposalsJson = toJson(proposals);
+		out.print(proposalsJson.toString());  
 	}
 
 	@Override
@@ -62,125 +59,122 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 		addResponseOptions(response);
 		PrintWriter out = response.getWriter();
 
-		HttpSession session = request.getSession();
-		if(session == null) 
+		// Checking the user is logged
+		if(!isLogged(request)) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		else {
-			User historyUser = (User) session.getAttribute("user");
-			String dsl = (String) session.getAttribute("dsl");
-			if(historyUser == null || dsl == null) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
+		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
+		String dsl = (String) session.getAttribute("dsl");
+
+		// Getting the parameters from the request
+		StringBuffer jb = new StringBuffer();
+		String line = null;
+		try {
+			BufferedReader reader = request.getReader();
+			while ((line = reader.readLine()) != null)
+				jb.append(line);
+		} catch (Exception e) {
+			throw new ServletException("There was an error reading the parameters");
+		}
+		
+		// Parsing the parameters
+		JsonParser parser = new JsonParser();
+		JsonObject jsonObject = (JsonObject) parser.parse(jb.toString()).getAsJsonObject();
+
+		String action = jsonObject.get("action").getAsString();
+		if(action.equals("save")) {
+			JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
+
+			String type = data.get("type").getAsString();
+			String rationale = "";
+			if(data.has("rationale"))
+				rationale = data.get("rationale").getAsString();
+			String referredElements = "";
+			if(data.has("referredElements"))
+				referredElements = data.get("referredElements").getAsString();
+			String parentId = "";
+			if(data.has("parent_id"))
+				parentId = data.get("parent_id").getAsString();
+
+			String collaborationId = null;
+			if(type.equals("Proposal")) {
+				collaborationId = CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), rationale, referredElements);
+			} else if(type.equals("Comment")) {
+				collaborationId = CollaboroBackendFactory.getBackend(dsl).createCommentPlain(parentId, historyUser.getId(), rationale, referredElements);
+			} else if(type.equals("Solution")) {
+				collaborationId = CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(parentId, historyUser.getId(), rationale, "", referredElements);
+			}
+
+			if(collaborationId != null) {
+				response.setContentType("application/json");
+				Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+				JsonObject collaborationJSON = toJson(collaboration);
+				out.print(collaborationJSON);
 			} else {
-				// Getting the parameters from the request
-				StringBuffer jb = new StringBuffer();
-				String line = null;
-				try {
-					BufferedReader reader = request.getReader();
-					while ((line = reader.readLine()) != null)
-						jb.append(line);
-				} catch (Exception e) {
-					throw new ServletException("There was an error reading the parameters");
+				throw new ServletException("Problem saving the collaboration");
+			}
+		} else if (action.equals("edit")) { 
+			JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
+
+			String id = data.get("id").getAsString();
+			String rationale = "";
+			if(data.has("rationale"))
+				rationale = data.get("rationale").getAsString();
+			String referredElements = "";
+			if(data.has("referreElements"))
+				referredElements = data.get("referredElements").getAsString();
+			String parentId = "";
+			if(data.has("parent_id") && !data.get("parent_id").equals(""))
+				parentId = data.get("parent_id").getAsString();
+
+			String collaborationId = CollaboroBackendFactory.getBackend(dsl).editCollaborationPlain(parentId, id, historyUser.getId(), rationale, referredElements);
+
+			if(collaborationId != null) {
+				response.setContentType("application/json");
+				Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+				JsonObject collaborationJSON = toJson(collaboration);
+				out.print(collaborationJSON);
+			} else {
+				throw new ServletException("Problem editing the collaboration");
+			}
+		} else if (action.equals("delete")) {
+			JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+			String collaborationId = data.get("id").getAsString();
+			CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(collaborationId);
+			response.setContentType("application/json");
+			out.print("{\"result\": \"success\" }");
+		} else if (action.equals("vote")) {
+			JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+			String collaborationId = data.get("id").getAsString();
+
+			String vote = jsonObject.get("data").getAsJsonObject().get("vote").getAsString();
+			if(vote != null) {
+				if(vote.equals("yes")) {
+					CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), true);
+				} else if (vote.equals("no")) {
+					CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), false);
 				}
-				// Parsing the parameters
-				Gson gson = new Gson();
-				JsonParser parser = new JsonParser();
-				JsonObject jsonObject = (JsonObject) parser.parse(jb.toString()).getAsJsonObject();
 
-				System.out.println(jsonObject);
-				String action = jsonObject.get("action").getAsString();
-				if(action.equals("save")) {
-					JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
+				response.setContentType("application/json");
+				Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
+				JsonObject collaborationJSON = toJson(collaboration);
+				out.print(collaborationJSON);
+			}
+		} else if (action.equals("disagreementComment")) {
+			JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
+			String collaborationId = data.get("id").getAsString();
 
-					String type = data.get("type").getAsString();
-					String rationale = "";
-					if(data.has("rationale"))
-						rationale = data.get("rationale").getAsString();
-					String referredElements = "";
-					if(data.has("referreElements"))
-						referredElements = data.get("referredElements").getAsString();
-					String parentId = "";
-					if(data.has("parent_id"))
-						parentId = data.get("parent_id").getAsString();
+			String comment = jsonObject.get("data").getAsJsonObject().get("comment").getAsString();
 
-					String collaborationId = null;
-					if(type.equals("Proposal")) {
-						collaborationId = CollaboroBackendFactory.getBackend(dsl).createProposalPlain(historyUser.getId(), rationale, referredElements);
-					} else if(type.equals("Comment")) {
-						collaborationId = CollaboroBackendFactory.getBackend(dsl).createCommentPlain(parentId, historyUser.getId(), rationale, referredElements);
-					} else if(type.equals("Solution")) {
-						collaborationId = CollaboroBackendFactory.getBackend(dsl).createSolutionPlain(parentId, historyUser.getId(), rationale, "", referredElements);
-					}
+			if(comment != null) {
+				String commentId = CollaboroBackendFactory.getBackend(dsl).createDisagreementVote(collaborationId, historyUser.getId(), comment);
 
-					if(collaborationId != null) {
-						response.setContentType("application/json");
-						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
-						JsonObject collaborationJSON = toJson(collaboration);
-						out.print(collaborationJSON);
-					} else {
-						throw new ServletException("Problem saving the collaboration");
-					}
-				} else if (action.equals("edit")) { 
-					JsonObject data = jsonObject.get("collaboration").getAsJsonObject();
-
-					String id = data.get("id").getAsString();
-					String rationale = "";
-					if(data.has("rationale"))
-						rationale = data.get("rationale").getAsString();
-					String referredElements = "";
-					if(data.has("referreElements"))
-						referredElements = data.get("referredElements").getAsString();
-					String parentId = "";
-					if(data.has("parent_id") && !data.get("parent_id").equals(""))
-						parentId = data.get("parent_id").getAsString();
-
-					String collaborationId = CollaboroBackendFactory.getBackend(dsl).editCollaborationPlain(parentId, id, historyUser.getId(), rationale, referredElements);
-
-					if(collaborationId != null) {
-						response.setContentType("application/json");
-						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
-						JsonObject collaborationJSON = toJson(collaboration);
-						out.print(collaborationJSON);
-					} else {
-						throw new ServletException("Problem editing the collaboration");
-					}
-				} else if (action.equals("delete")) {
-					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
-					String collaborationId = data.get("id").getAsString();
-					CollaboroBackendFactory.getBackend(dsl).deleteCollaborationPlain(collaborationId);
-					response.setContentType("application/json");
-					out.print("{\"result\": \"success\" }");
-				} else if (action.equals("vote")) {
-					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
-					String collaborationId = data.get("id").getAsString();
-
-					String vote = jsonObject.get("data").getAsJsonObject().get("vote").getAsString();
-					if(vote != null) {
-						if(vote.equals("yes")) {
-							CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), true);
-						} else if (vote.equals("no")) {
-							CollaboroBackendFactory.getBackend(dsl).createVotePlain(collaborationId, historyUser.getId(), false);
-						}
-
-						response.setContentType("application/json");
-						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, collaborationId);
-						JsonObject collaborationJSON = toJson(collaboration);
-						out.print(collaborationJSON);
-					}
-				} else if (action.equals("disagreementComment")) {
-					JsonObject data = jsonObject.get("collaboration").getAsJsonObject().get("data").getAsJsonObject();
-					String collaborationId = data.get("id").getAsString();
-
-					String comment = jsonObject.get("data").getAsJsonObject().get("comment").getAsString();
-					
-					if(comment != null) {
-						String commentId = CollaboroBackendFactory.getBackend(dsl).createDisagreementVote(collaborationId, historyUser.getId(), comment);
-						
-						response.setContentType("application/json");
-						Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, commentId);
-						JsonObject collaborationJSON = toJson(collaboration);
-						out.print(collaborationJSON);
-					}
-				}
+				response.setContentType("application/json");
+				Collaboration collaboration = CollaboroBackendFactory.getBackend(dsl).locateCollaborationById(null, commentId);
+				JsonObject collaborationJSON = toJson(collaboration);
+				out.print(collaborationJSON);
 			}
 		}
 	}

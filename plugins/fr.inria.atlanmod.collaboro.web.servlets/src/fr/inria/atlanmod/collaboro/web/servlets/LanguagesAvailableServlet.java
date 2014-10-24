@@ -15,7 +15,7 @@ import com.google.gson.JsonPrimitive;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 
-@WebServlet(description = "Exposes the available langues to collaborate", urlPatterns = { "/languages" })
+@WebServlet(description = "Exposes the available languages to collaborate", urlPatterns = { "/languages" })
 public class LanguagesAvailableServlet extends AbstractCollaboroServlet {
 	private static final long serialVersionUID = 82L;
 
