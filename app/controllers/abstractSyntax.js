@@ -4,11 +4,22 @@ angular.module('collaboroControllers').controller('AbstractSyntaxController', ['
 		$scope.totalAbstractSyntaxImages = 1;
 		$scope.currentAbstractSyntaxIndex = -1;
 
-		syntax.getTotalAbstractSyntaxImages(
-			function(response) {
-				$scope.totalAbstractSyntaxImages = response.data.numImages;
-			}
-		);
+		$scope.updateTotalNumber = function() {
+			syntax.getTotalAbstractSyntaxImages(
+				function(response) {
+					$scope.totalAbstractSyntaxImages = response.data.numImages;
+				}
+			);
+		};
+
+		$scope.updateTotalNumber();
+
+		$scope.$on('dslVersionChanged', function() {
+			$scope.abstractSyntaxImage = "assets/img/loading.gif";
+			$scope.currentAbstractSyntaxIndex = -1;
+	    	$scope.updateTotalNumber();
+			$scope.nextAbstractSyntaxImage();
+	    });
 
 		$scope.nextAbstractSyntaxImage = function() {
 			var nextImageIndex = 0;
