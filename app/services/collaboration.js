@@ -2,7 +2,7 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
 	function($location, $modal, $http, $q) {
 		var collaborationDialog = null;
 
-		function openCollaborationDialog(collaborationtoedit) {
+		function openCollaborationDialog(selectedCollaboration, collaborationtoedit) {
 			collaborationDialog = $modal.open(
 				{
 					templateUrl : 'app/partials/modal/collaboration.html',
@@ -11,10 +11,18 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
             // Setting the title of the window
             if(collaborationtoedit) {
               $scope.collaboration = collaborationtoedit;
-              //$scope.collaboration.data.referredElements = collaborationtoedit.data.referredElements;
               $scope.dialogtitle = 'Edit Collaboration';
+              $scope.mode = 'Edit';
             } else {
               $scope.dialogtitle = 'New Collaboration';
+              $scope.mode = 'Add';
+              $scope.collaboration = {};
+              $scope.collaboration.data = {};
+              if(selectedCollaboration) {
+                $scope.collaboration.data.type = 'Comment';
+              } else {
+                $scope.collaboration.data.type = 'Proposal';
+              }
             };
 
             // Setting the referred elements
@@ -88,11 +96,11 @@ angular.module('collaboroServices').factory('collaborationService', ['$location'
           });
         return deferred.promise;
       },
-			showCollaboration : function() {
-				return openCollaborationDialog();
+			showCollaboration : function(selectedCollaboration) {
+				return openCollaborationDialog(selectedCollaboration, null);
 			},
       editCollaboration : function(collaborationtoedit) {
-        return openCollaborationDialog(collaborationtoedit);
+        return openCollaborationDialog(null, collaborationtoedit);
       },
 			cancelCollaboration: function() {
   			closeCollaborationDialog(false);

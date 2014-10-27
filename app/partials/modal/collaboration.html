@@ -6,9 +6,9 @@
     	<div class="form-group">
     		<label>Type of collaboration</label>
     		<select  class="form-control" ng-model="collaboration.data.type" >
-				<option value="Proposal" ng-selected="false">Proposal</option>
-				<option value="Solution" ng-selected="false">Solution</option>
-				<option value="Comment" ng-selected="false">Comment</option>
+				<option value="Proposal">Proposal</option>
+				<option value="Solution">Solution</option>
+				<option value="Comment">Comment</option>
 			</select>
 		</div>	
 		<div class="form-group">	
@@ -38,7 +38,7 @@
 	<!-- <pre ng-bind="collaboration | json"></pre> -->
 
     <div class="modal-footer">
-        <button class="btn btn-success" ng-click="add(collaboration)">Add</button>
+        <button class="btn btn-success" ng-click="add(collaboration)">{{mode}}</button>
         <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
     </div>
 	

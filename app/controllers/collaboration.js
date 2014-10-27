@@ -14,7 +14,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Adds a new collaboration
     $scope.addcollaboration = function() {
-      collaborationService.showCollaboration().result.then(
+      collaborationService.showCollaboration($scope.collaborationTreeControl.get_selected_branch()).result.then(
         function(result) {
           var newCollaboration = {
               "type": result.data['type'],
@@ -56,6 +56,7 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
           // We send the new collaboration to the server and the update the tree
           collaborationService.modifyCollaboration(newCollaboration).then(
             function(response) {
+              console.log(response);
               $scope.collaborationSelected(response);
               $scope.connError = "";
             },
