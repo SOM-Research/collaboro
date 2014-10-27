@@ -129,6 +129,12 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       }
     };
 
+    $scope.hasVoted = function() {
+      var builtName = securityService.currentUser.firstName + " " + securityService.currentUser.lastName;
+      return ($scope.collaborationSelectedAgreeVotes != undefined && $scope.collaborationSelectedAgreeVotes.indexOf(builtName) > -1) || 
+             ($scope.collaborationSelectedDisagreeVotes != undefined && $scope.collaborationSelectedDisagreeVotes.indexOf(builtName) > -1)
+    }
+
     $scope.hasVotedAgree = function() {
       var builtName = securityService.currentUser.firstName + " " + securityService.currentUser.lastName;
       return $scope.collaborationSelectedAgreeVotes != undefined && $scope.collaborationSelectedAgreeVotes.indexOf(builtName) > -1
