@@ -67,8 +67,6 @@ public class LocalModelManager extends ModelManager {
 	}
 	
 	public boolean initialize(File modelBeingTracked) {
-		
-		System.out.println("El archivo que esta llegando del modelo ecore: "+modelBeingTracked.getAbsolutePath());
 		if(!modelBeingTracked.getName().endsWith(".ecore")) 
 			return false;
 

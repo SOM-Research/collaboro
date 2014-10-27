@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -92,8 +93,17 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 			if(data.has("rationale"))
 				rationale = data.get("rationale").getAsString();
 			String referredElements = "";
-			if(data.has("referredElements"))
-				referredElements = data.get("referredElements").getAsString();
+			if(data.has("referredElements")) {
+				JsonArray referredElementsArray = data.get("referredElements").getAsJsonArray();
+				for(JsonElement referredElement : referredElementsArray) {
+					if (referredElement instanceof JsonPrimitive) {
+						JsonPrimitive jsonPrimitive = (JsonPrimitive) referredElement;
+						referredElements += jsonPrimitive.getAsString() + ",";
+					}
+				}
+				if(referredElementsArray.size() > 0)
+					referredElements = referredElements.substring(0, referredElements.length()-1);
+			}
 			String parentId = "";
 			if(data.has("parent_id"))
 				parentId = data.get("parent_id").getAsString();
@@ -123,8 +133,17 @@ public class CollaborationsServlet extends AbstractCollaboroServlet {
 			if(data.has("rationale"))
 				rationale = data.get("rationale").getAsString();
 			String referredElements = "";
-			if(data.has("referreElements"))
-				referredElements = data.get("referredElements").getAsString();
+			if(data.has("referredElements")){
+				JsonArray referredElementsArray = data.get("referredElements").getAsJsonArray();
+				for(JsonElement referredElement : referredElementsArray) {
+					if (referredElement instanceof JsonPrimitive) {
+						JsonPrimitive jsonPrimitive = (JsonPrimitive) referredElement;
+						referredElements += jsonPrimitive.getAsString() + ",";
+					}
+				}
+				if(referredElementsArray.size() > 0)
+					referredElements = referredElements.substring(0, referredElements.length()-1);
+			}
 			String parentId = "";
 			if(data.has("parent_id") && !data.get("parent_id").equals(""))
 				parentId = data.get("parent_id").getAsString();
