@@ -82,14 +82,17 @@
                       </div>
                       <hr>
                       <p class="text-center">
-                        <button ng-click="addcollaboration()" class="btn btn-default btn-sm">Add</button>
+                        <button ng-click="addCollaboration('Proposal')" class="btn btn-default btn-sm">Add Proposal</button>
+                        <button ng-disabled="collaborationTreeControl.get_selected_branch() == undefined" ng-click="addCollaboration('Comment')" class="btn btn-default btn-sm">Add Comment</button>
+                        <button ng-disabled="collaborationTreeControl.get_selected_branch() == undefined || collaborationTreeControl.get_selected_branch().data.type != 'Proposal'" ng-click="addCollaboration('Solution')" class="btn btn-default btn-sm">Add Solution</button>
+                      </p>
+                      <p class="text-center">
                         <button ng-click="editcollaboration()" class="btn btn-default btn-sm">Edit</button>
                         <button ng-click="deletecollaboration()" class="btn btn-default btn-sm">Delete</button>
                         <button ng-click="refreshcollaborations(); collaborationTreeControl.expand_all()" class="btn btn-default btn-sm">Refresh</button>
                         <button ng-click="collaborationTreeControl.expand_all()" class="btn btn-default btn-sm">Expand All</button>
                         <button ng-click="collaborationTreeControl.collapse_all()" class="btn btn-default btn-sm">Collapse All</button>
                       </p>
-
                       <div class="alert bg-danger" ng-show="connError">
                           {{connError}}
                       </div>

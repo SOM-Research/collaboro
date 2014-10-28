@@ -13,8 +13,8 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     $scope.disagreement = false;
 
     // Adds a new collaboration
-    $scope.addcollaboration = function() {
-      collaborationService.showCollaboration($scope.collaborationTreeControl.get_selected_branch()).result.then(
+    $scope.addCollaboration = function(collaborationType) {
+      collaborationService.addCollaboration(collaborationType).result.then(
         function(result) {
           var newCollaboration = {
               "type": result.data['type'],
@@ -103,13 +103,6 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
 
     // Tree initialization
     $scope.refreshcollaborations();
-
-    /*$scope.$watch('collaborationTreeControl',
-      function(newVal, oldVal) {
-        console.log(newVal);
-        console.log(oldVal);
-      }
-    );*/
 
     $scope.add_collaboration = function(newbranch) {
       var b;
