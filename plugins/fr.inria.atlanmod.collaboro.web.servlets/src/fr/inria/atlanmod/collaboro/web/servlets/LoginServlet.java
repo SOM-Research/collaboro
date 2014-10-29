@@ -45,9 +45,10 @@ public class LoginServlet extends AbstractSecurityServlet {
 		String dsl = jsonObject.get("dsl").getAsString();
 		
 		// Accesing the backend to validate the user
-		CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl);
-		User historyUser = backend.loginUser(email, password, dsl);  
+		User historyUser = CollaboroBackendFactory.loginUser(email, password, dsl);  
 		if(historyUser != null) {
+			CollaboroBackend backend = CollaboroBackendFactory.getBackend(dsl, historyUser.getId());
+			
 			String userId = historyUser.getId();
 
 			// Setting session and cookies

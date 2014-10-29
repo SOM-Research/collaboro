@@ -35,9 +35,10 @@ public class ElementsToReferServlet extends AbstractCollaboroServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
-		EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl).getEcoreModel();
+		EPackage metamodelPackage = CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getEcoreModel();
 		EList<EClassifier> classifiers = metamodelPackage.getEClassifiers();
 		ArrayList<String> metamodelElements = new ArrayList<String>();
 		for (EClassifier eClassifier : classifiers) {

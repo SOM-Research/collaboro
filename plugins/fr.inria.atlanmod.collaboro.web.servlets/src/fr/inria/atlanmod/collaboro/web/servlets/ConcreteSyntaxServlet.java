@@ -45,9 +45,10 @@ public class ConcreteSyntaxServlet extends AbstractRendererServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
-		int numOfNotModelImages = CollaboroBackendFactory.getBackend(dsl).getNumOfNotModelImages();
+		int numOfNotModelImages = CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getNumOfNotModelImages();
 		JsonObject responseObject = new JsonObject();
 		responseObject.addProperty("numImages", numOfNotModelImages);
 
@@ -66,6 +67,7 @@ public class ConcreteSyntaxServlet extends AbstractRendererServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
 		// Getting the parameters from the request
@@ -82,7 +84,7 @@ public class ConcreteSyntaxServlet extends AbstractRendererServlet {
 		JsonParser parser = new JsonParser();
 		JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
 		int num = actionJsonObject.get("numImage").getAsInt();
-		File pictureFile = CollaboroBackendFactory.getBackend(dsl).getModel(num);
+		File pictureFile = CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getModel(num);
 
 		if(pictureFile == null) 
 			pictureFile = new File(workingDir.getAbsolutePath() + "/error.jpg");

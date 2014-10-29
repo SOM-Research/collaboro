@@ -26,12 +26,13 @@ public class DecisionEngineServlet extends AbstractCollaboroServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 
-		CollaboroBackendFactory.getBackend(dsl).launchDecision();
+		CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).launchDecision();
 
 		out.print("{\"result\": \"success\" }");
 	}

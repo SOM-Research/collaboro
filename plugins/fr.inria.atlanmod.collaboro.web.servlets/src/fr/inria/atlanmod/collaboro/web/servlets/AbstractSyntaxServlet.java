@@ -52,9 +52,10 @@ public class AbstractSyntaxServlet extends AbstractRendererServlet {
 			return;
 		}
 		HttpSession session = request.getSession(false);
+		User historyUser = (User) session.getAttribute("user");
 		String dsl = (String) session.getAttribute("dsl");
 
-		int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl).getNumOfAbsModelImages();
+		int numOfAbsModelImages=CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getNumOfAbsModelImages();
 		JsonObject responseObject = new JsonObject();
 		responseObject.addProperty("numImages", numOfAbsModelImages);
 
@@ -90,7 +91,7 @@ public class AbstractSyntaxServlet extends AbstractRendererServlet {
 		JsonParser parser = new JsonParser();
 		JsonObject actionJsonObject = (JsonObject) parser.parse(jb.toString());
 		int num = actionJsonObject.get("numImage").getAsInt();
-		File pictureFile = CollaboroBackendFactory.getBackend(dsl).getEcoreModel(num);
+		File pictureFile = CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getEcoreModel(num);
 
 		if(pictureFile == null) 
 			pictureFile = new File(workingDir.getAbsolutePath() + "/error.jpg");

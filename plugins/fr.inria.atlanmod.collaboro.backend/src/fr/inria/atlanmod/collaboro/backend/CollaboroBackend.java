@@ -43,8 +43,8 @@ public class CollaboroBackend {
 	 */
 	private HashMap<String, List<File>> previousModels;
 
-	public CollaboroBackend(File historyFile, File ecoreFile) {
-		modelManager = ModelManagerFactory.createModelManager(ecoreFile);
+	public CollaboroBackend(ModelManager modelManager) {
+		this.modelManager = modelManager;
 
 		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
 		maxVersionTracked = versionHistory.getVersions().size() - 1;
@@ -143,6 +143,12 @@ public class CollaboroBackend {
 		if(versionTracked > 0) {
 			versionTracked--;
 		}
+	}
+	
+	public void moveToLastVersion() {
+		VersionHistory versionHistory = getHistory().getHistories().get(getHistoryTracked());
+		Version version = versionHistory.getVersions().get(versionHistory.getVersions().size() - 1);
+		versionTracked = Integer.valueOf(version.getId());		
 	}
 
 	public void createVersion() {

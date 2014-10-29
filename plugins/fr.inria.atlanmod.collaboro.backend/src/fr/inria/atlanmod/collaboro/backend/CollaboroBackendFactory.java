@@ -4,16 +4,20 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.inria.atlanmod.collaboro.history.User;
+
 public class CollaboroBackendFactory {
 	private static CollaboroBackendFactory instance;
 
 	private HashMap<String, CollaboroLanguageConfig> configs;
 	private HashMap<String, CollaboroBackend> backends;
+	private HashMap<String, ModelManager> modelManagers;
 	private CollaboroBackend lastBackendCreated;
 
 	private CollaboroBackendFactory() {
 		this.backends = new HashMap<>();
 		this.configs = new HashMap<>();
+		this.modelManagers = new HashMap<String, ModelManager>();
 	}
 
 	public static boolean isActive() {
@@ -27,19 +31,51 @@ public class CollaboroBackendFactory {
 		}
 	}
 
-	public static CollaboroBackend getBackend(String dsl) {
+	private ModelManager getModelManager(String dsl) {
+		ModelManager modelManager = modelManagers.get(dsl);
+		if(modelManager == null) {
+			CollaboroLanguageConfig config = configs.get(dsl.toLowerCase());
+			if(config == null)
+				throw new IllegalArgumentException("There is no config for such DSL");
+
+			File ecoreFile = config.getEcoreFile();
+			modelManager = ModelManagerFactory.createModelManager(ecoreFile);
+			modelManagers.put(dsl, modelManager);
+		}
+		return modelManager;
+	}
+	
+	public static User loginUser(String email, String password, String dsl) {
+		if(email == null || password == null || dsl == null)
+			throw new IllegalArgumentException("Parameters cannot be null");
+
+		User found = null;
+		ModelManager modelManager = instance.getModelManager(dsl);
+		
+		if(modelManager.getHistory() != null) 
+			for (User user : modelManager.getHistory().getUsers()) 
+				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPasword() != null && user.getPasword().equals(password))
+					return user;
+
+		return found;
+	}
+	
+	public static CollaboroBackend getBackend(String dsl, String user) {
 		if(instance == null) 
 			instance = new CollaboroBackendFactory();
 
-		CollaboroBackend backend = instance.backends.get(dsl.toLowerCase());
+		String dslUser = dsl + "-" + user;		
+		CollaboroBackend backend = instance.backends.get(dslUser.toLowerCase());
 		CollaboroLanguageConfig config = instance.configs.get(dsl.toLowerCase());
 		if(backend == null && config != null) {
 			File historyFile = config.getHistoryFile();
 			File ecoreFile = config.getEcoreFile();
-			backend = new CollaboroBackend(historyFile, ecoreFile);
+			ModelManager modelManager = instance.getModelManager(dsl);
+			backend = new CollaboroBackend(modelManager);
 			backend.setPreviousEcores(config.getPreviousEcores());
 			backend.setPreviousModels(config.getPreviousModels());
-			instance.backends.put(dsl.toLowerCase(), backend);
+			backend.moveToLastVersion();
+			instance.backends.put(dslUser, backend);
 			instance.lastBackendCreated = backend;
 		} 
 		return backend;

@@ -38,7 +38,7 @@ public class VersionManagementServlet extends AbstractCollaboroServlet {
 		PrintWriter out = response.getWriter();
 
 		JsonObject jsonResponse = new JsonObject();
-		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl).getVersionTracked());
+		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getVersionTracked());
 		jsonResponse.addProperty("version", version);
 
 		out.print(jsonResponse.toString());
@@ -76,18 +76,18 @@ public class VersionManagementServlet extends AbstractCollaboroServlet {
 		String action = actionJsonObject.get("action").getAsString();
 
 		if(action.equals("next")) {
-			CollaboroBackendFactory.getBackend(dsl).nextVersion();
+			CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).nextVersion();
 		} else if (action.equals("previous")) {
-			CollaboroBackendFactory.getBackend(dsl).previousVersion();
+			CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).previousVersion();
 		} else if (action.equals("create")) {
-			CollaboroBackendFactory.getBackend(dsl).createVersion();
+			CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).createVersion();
 		}
 
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
 
 		JsonObject jsonResponse = new JsonObject();
-		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl).getVersionTracked());
+		String version = String.valueOf(CollaboroBackendFactory.getBackend(dsl, historyUser.getId()).getVersionTracked());
 		jsonResponse.addProperty("version", version);
 
 		out.print(jsonResponse.toString());
