@@ -12,21 +12,11 @@ import fr.inria.atlanmod.collaboro.notation.Definition;
 public class MetricsFactoryImpl implements MetricsFactory {
 	
 	private EPackage abstractSyntaxModel;
-	private Definition concreteSyntaxModel;
-	
-	private MetricsFactoryImpl() {	
-	}
-	
-	public static MetricsFactory init() {
-		if (MetricsFactory.metricsFactoryInstance != null) {
-			return MetricsFactory.metricsFactoryInstance;
-		}
-		return new MetricsFactoryImpl();
-	}
-	
+	private Definition concreteSyntaxModel;	
 	
 	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
-		
+		this.abstractSyntaxModel = abstractSyntaxModel;
+		this.concreteSyntaxModel = concreteSyntaxModel;
 	}
 	
 	@Override
@@ -41,17 +31,4 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public void setAbstractSyntaxModel(EPackage abstractSyntaxModel) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setConcreteSyntaxModel(Definition concreteSyntaxModel) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

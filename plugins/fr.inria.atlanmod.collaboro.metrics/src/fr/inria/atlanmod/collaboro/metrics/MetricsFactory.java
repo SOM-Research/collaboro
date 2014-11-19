@@ -9,11 +9,6 @@ import fr.inria.atlanmod.collaboro.notation.Definition;
 
 public interface MetricsFactory {
 	
-	MetricsFactory metricsFactoryInstance = MetricsFactoryImpl.init();
-	
-	public void setAbstractSyntaxModel(EPackage abstractSyntaxModel);
-	public void setConcreteSyntaxModel(Definition concreteSyntaxModel);
-	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics();
 	public List<ConcreteSyntaxMetric> getConcreteSyntaxMetrics();
 	
