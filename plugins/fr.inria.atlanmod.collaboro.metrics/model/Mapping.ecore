@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mapping" nsURI="http://inria.fr/collaboro/mapping" nsPrefix="mapping">
+  <eClassifiers xsi:type="ecore:EClass" name="Concept">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="symbols" upperBound="-1"
+        eType="#//Symbol"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassConcept" eSuperTypes="#//Concept">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="abstract" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="interface" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeConcept" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="references" upperBound="-1"
+        eType="#//ReferenceConcept" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="superTypes" upperBound="-1"
+        eType="#//ClassConcept"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeConcept" eSuperTypes="#//Concept"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceConcept" eSuperTypes="#//Concept">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="opposite" eType="#//ReferenceConcept"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="concepts" eType="#//Concept"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VisualVariable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PlanarVariable" eSuperTypes="#//VisualVariable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RetinalVariable" eSuperTypes="#//VisualVariable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="HorizontalPosition" eSuperTypes="#//PlanarVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VerticalPosition" eSuperTypes="#//PlanarVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Shape" eSuperTypes="#//RetinalVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ShapeType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Size" eSuperTypes="#//RetinalVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="height" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Colour" eSuperTypes="#//RetinalVariable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fill" eType="#//Color"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stroke" eType="#//Color"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Symbol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="planarVariables" eType="#//PlanarVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="retinalVariables" eType="#//RetinalVariable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="concepts" upperBound="-1"
+        eType="#//Concept"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ShapeType">
+    <eLiterals name="Rectangle"/>
+    <eLiterals name="Line"/>
+    <eLiterals name="Undefined"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color">
+    <eLiterals name="BLACK" literal="black"/>
+    <eLiterals name="WHITE" literal="white"/>
+    <eLiterals name="RED" literal="red"/>
+    <eLiterals name="GREEN" literal="green"/>
+    <eLiterals name="YELLOW" literal="yellow"/>
+    <eLiterals name="ORANGE" literal="orange"/>
+  </eClassifiers>
+</ecore:EPackage>

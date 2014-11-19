@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fr.inria.atlanmod.collaboro.metrics/src" modelPluginID="fr.inria.atlanmod.collaboro.metrics"
+    modelName="Mapping" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore" operationReflection="true"
+    importOrganizing="true">
+  <foreignModel>Mapping.ecore</foreignModel>
+  <genPackages prefix="Mapping" disposableProviderFactory="true" ecorePackage="Mapping.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Mapping.ecore#//ShapeType">
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//ShapeType/Rectangle"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//ShapeType/Line"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//ShapeType/Undefined"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Mapping.ecore#//Color">
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/BLACK"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/WHITE"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/RED"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/GREEN"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/YELLOW"/>
+      <genEnumLiterals ecoreEnumLiteral="Mapping.ecore#//Color/ORANGE"/>
+    </genEnums>
+    <genClasses ecoreClass="Mapping.ecore#//Concept">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Concept/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Concept/symbols"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//ClassConcept">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//ClassConcept/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//ClassConcept/interface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Mapping.ecore#//ClassConcept/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Mapping.ecore#//ClassConcept/references"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//ClassConcept/superTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//AttributeConcept"/>
+    <genClasses ecoreClass="Mapping.ecore#//ReferenceConcept">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//ReferenceConcept/to"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//ReferenceConcept/opposite"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//ConceptSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Mapping.ecore#//ConceptSet/concepts"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//VisualVariable"/>
+    <genClasses ecoreClass="Mapping.ecore#//PlanarVariable"/>
+    <genClasses ecoreClass="Mapping.ecore#//RetinalVariable"/>
+    <genClasses ecoreClass="Mapping.ecore#//HorizontalPosition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//HorizontalPosition/x"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//VerticalPosition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//VerticalPosition/y"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Shape">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Shape/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Size">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Size/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Size/height"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Colour">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colour/fill"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Colour/stroke"/>
+    </genClasses>
+    <genClasses ecoreClass="Mapping.ecore#//Symbol">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Symbol/planarVariables"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Symbol/retinalVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Mapping.ecore#//Symbol/id"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Mapping.ecore#//Symbol/concepts"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
