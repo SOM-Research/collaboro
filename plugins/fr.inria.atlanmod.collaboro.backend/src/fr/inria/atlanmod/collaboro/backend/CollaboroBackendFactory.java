@@ -6,6 +6,9 @@ import java.util.List;
 
 import fr.inria.atlanmod.collaboro.history.User;
 
+/**
+ * Creates Collaboro backends for DSLs 
+ */
 public class CollaboroBackendFactory {
 	private static CollaboroBackendFactory instance;
 
@@ -60,6 +63,17 @@ public class CollaboroBackendFactory {
 		return found;
 	}
 	
+	public static CollaboroRecommenderBackend getRecommenderBackend(String dsl) {
+		if(instance == null) 
+			instance = new CollaboroBackendFactory();
+		
+		String userId = "recommender";
+		ModelManager modelManager = instance.getModelManager(dsl);
+		
+		CollaboroRecommenderBackend recommenderBackend = new CollaboroRecommenderBackend(modelManager, userId);
+		return recommenderBackend;
+	}
+	
 	public static CollaboroBackend getBackend(String dsl, String user) {
 		if(instance == null) 
 			instance = new CollaboroBackendFactory();
@@ -68,8 +82,6 @@ public class CollaboroBackendFactory {
 		CollaboroBackend backend = instance.backends.get(dslUser.toLowerCase());
 		CollaboroLanguageConfig config = instance.configs.get(dsl.toLowerCase());
 		if(backend == null && config != null) {
-			File historyFile = config.getHistoryFile();
-			File ecoreFile = config.getEcoreFile();
 			ModelManager modelManager = instance.getModelManager(dsl);
 			backend = new CollaboroBackend(modelManager);
 			backend.setPreviousEcores(config.getPreviousEcores());

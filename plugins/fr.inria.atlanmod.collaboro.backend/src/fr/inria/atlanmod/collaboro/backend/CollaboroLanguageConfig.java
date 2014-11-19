@@ -13,7 +13,14 @@ public class CollaboroLanguageConfig {
 	private File historyFile;
 	private File ecoreFile;
 	
+	/**
+	 * Stores the ecores for previous versions. The key corresponds to the version
+	 */
 	private HashMap<String, List<File>> previousEcores;
+	
+	/**
+	 * Stores the example models for previous versions. The key corresponds to the version
+	 */
 	private HashMap<String, List<File>> previousModels;
 	
 	public CollaboroLanguageConfig(String languageName, File historyFile, File ecoreFile) {
@@ -21,6 +28,7 @@ public class CollaboroLanguageConfig {
 			throw new IllegalArgumentException("The files must exist");
 		if(languageName == null || languageName.equals("")) 
 			throw new IllegalArgumentException("The name cannot be null or empty");
+		
 		this.languageName = languageName;
 		this.historyFile = historyFile;
 		this.ecoreFile = ecoreFile;
