@@ -7,29 +7,46 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 
 public class MetricResultImpl implements MetricResult{
+	
+	private String reason;
+	private float ratio;
+	private MetricResultStatus status;
+	private List<ReferredElement> referredElements;
 
 	@Override
 	public String getReason() {
-		// TODO Auto-generated method stub
-		return null;
+		return reason;
 	}
 
 	@Override
 	public float getRatio() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ratio;
 	}
 
 	@Override
 	public MetricResultStatus getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		return status;
 	}
 
 	@Override
 	public List<ReferredElement> getReferredElements() {
-		// TODO Auto-generated method stub
-		return null;
+		return referredElements;
+	}
+	
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
+	public void setRatio(float ratio) {
+		this.ratio = ratio;
+	}
+	
+	public void setStatus(MetricResultStatus status) {
+		this.status = status;
+	}
+	
+	public void setReferredElements(List<ReferredElement> referredElements) {
+		this.referredElements = referredElements;
 	}
 
 }

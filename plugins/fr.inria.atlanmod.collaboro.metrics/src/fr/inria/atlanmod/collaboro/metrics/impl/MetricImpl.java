@@ -6,6 +6,10 @@ import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 
 public class MetricImpl implements Metric {
+	
+	protected String name;
+	protected String dimension;
+	protected String description;
 
 	@Override
 	public List<MetricResult> execute() {
@@ -13,22 +17,16 @@ public class MetricImpl implements Metric {
 		return null;
 	}
 
-	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
-	@Override
 	public String getDimension() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.dimension;
 	}
 
-	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.description;
 	}
 
 }
