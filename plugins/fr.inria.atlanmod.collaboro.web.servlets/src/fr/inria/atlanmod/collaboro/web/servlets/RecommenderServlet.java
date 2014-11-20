@@ -32,6 +32,7 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 
 		CollaboroRecommenderBackend recommender = CollaboroBackendFactory.getRecommenderBackend(dsl);
 		recommender.launchRecommender();
+		recommender.applyRecommendations();
 		
 		JsonObject responseObject = new JsonObject();
 		responseObject.addProperty("status", "ok");

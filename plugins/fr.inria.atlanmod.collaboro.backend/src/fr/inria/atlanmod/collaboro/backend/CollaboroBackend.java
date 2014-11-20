@@ -241,7 +241,7 @@ public class CollaboroBackend {
 		return userProposing;
 	}
 
-	private Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
+	Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
 
