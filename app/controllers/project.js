@@ -1,5 +1,5 @@
-angular.module('collaboroControllers').controller('ProjectController', ['$scope', '$rootScope', 'securityService', '$http',
-  function($scope, $rootScope, securityService, $http) {
+angular.module('collaboroControllers').controller('ProjectController', ['$scope', '$rootScope', 'securityService', 'recommenderService', '$http',
+  function($scope, $rootScope, securityService, recommenderService, $http) {
   	$scope.dslVersion = "";
 
   	$scope.checkVersion = function() {
@@ -55,6 +55,12 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
         });
 
   	};
+
+    $scope.launchRecommender = function() {
+      recommenderService.launchRecommender.then(
+        $scope.$broadcast('dslRecommendationsMade');
+      );
+    }
 
   	// First call to update the version
   	$scope.checkVersion();
