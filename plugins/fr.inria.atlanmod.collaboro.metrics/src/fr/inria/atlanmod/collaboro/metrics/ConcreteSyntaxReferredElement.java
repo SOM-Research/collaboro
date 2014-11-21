@@ -1,5 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
-public interface ConcreteSyntaxReferredElement {
+import fr.inria.atlanmod.collaboro.notation.NotationElement;
+
+public interface ConcreteSyntaxReferredElement extends ReferredElement{
+	
+	public NotationElement getConcreteSyntaxElement();
 
 }

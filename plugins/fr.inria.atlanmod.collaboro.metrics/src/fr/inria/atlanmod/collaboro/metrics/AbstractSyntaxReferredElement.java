@@ -1,5 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
-public interface AbstractSyntaxReferredElement {
+import org.eclipse.emf.ecore.EObject;
+
+public interface AbstractSyntaxReferredElement extends ReferredElement{
+	
+	public EObject getAbstractSyntaxElement();
 
 }

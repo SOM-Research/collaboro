@@ -203,11 +203,11 @@ public class ModelElementExtractor {
 	
 	public ModelMapping getModelMapping(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
 		Map<String,EObject> abstractConcepts = discoverAbstractConcepts(abstractSyntaxModel);
-		System.out.println(abstractConcepts);
+		//System.out.println(abstractConcepts);
 		List<Symbol> concreteSymbols = discoverConcreteConcepts(concreteSyntaxModel);
-		System.out.println(concreteSymbols);
+		//System.out.println(concreteSymbols);
 		ModelMapping modelMapping = new ModelMapping(abstractConcepts, concreteSymbols);
-		System.out.println(modelMapping);
+		//System.out.println(modelMapping);
 		return modelMapping;
 	}
 }

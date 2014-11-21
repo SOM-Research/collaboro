@@ -1,35 +1,19 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
-import fr.inria.atlanmod.collaboro.metrics.impl.MetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricsFactoryImpl;
-import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolDeficit;
-import fr.inria.atlanmod.collaboro.notation.AttributeValue;
-import fr.inria.atlanmod.collaboro.notation.Composite;
 import fr.inria.atlanmod.collaboro.notation.Definition;
-import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
-import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
-import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
 
 public class Test {
 	
@@ -68,7 +52,10 @@ public class Test {
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax);
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
 		for(ConcreteSyntaxMetric metric : metrics) {
-			metric.execute();
+			List<MetricResult> metricResults = metric.execute();
+			for(MetricResult metricResult : metricResults) {
+				digestMetricResult(metric,metricResult);
+			}
 		}
 		
 		
@@ -296,9 +283,24 @@ public class Test {
 //			// Validate concrete syntax
 //			
 //		}
+		
+		
 				
 	}
 	
+	private static void digestMetricResult(Metric metric, MetricResult metricResult) {
+		String rationale = "Metric: " + metric.getName() + "\n"
+				+ "Description: " + metric.getDescription() + "\n"
+				+ "Reason: " + metricResult.getReason();
+		String referredElements = "";
+		for(ReferredElement referredElement : metricResult.getReferredElements()) {
+			referredElements += referredElement.getName() + ",";
+		}
+		if(!referredElements.equals(""))
+			referredElements = referredElements.substring(0, referredElements.length() - 1);
+		
+		System.out.println(rationale + "\n " + referredElements);
 	
+	}
 	
 }

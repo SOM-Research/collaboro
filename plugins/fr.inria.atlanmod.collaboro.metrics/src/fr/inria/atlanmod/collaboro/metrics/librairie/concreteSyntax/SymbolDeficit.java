@@ -7,6 +7,9 @@ import org.eclipse.emf.ecore.EObject;
 
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
+import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
+import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
+import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
@@ -26,10 +29,11 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	public List<MetricResult> execute() {
 		List<MetricResult> results = new ArrayList<MetricResult>();
 		List<Relationship> mapping = modelMapping.getMapping();
-		List<EObject> noRepresentationElements = new ArrayList<EObject>();
+		List<ReferredElement> noRepresentationElements = new ArrayList<ReferredElement>();
 		int count = 0;
-		for(EObject abstractSyntaxElement : modelMapping.getAbstractConcepts().values()) {
-			System.out.println(abstractSyntaxElement);
+		
+		for(String abstractSyntaxElementName : modelMapping.getAbstractConcepts().keySet()) {
+			EObject abstractSyntaxElement = modelMapping.getAbstractConcepts().get(abstractSyntaxElementName);
 			boolean found = false;
 			for(Relationship relationship : mapping) {
 				if(relationship.getRelationshipFrom().equals(abstractSyntaxElement)) {
@@ -37,17 +41,19 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 				}
 			}
 			if(!found) {
-				noRepresentationElements.add(abstractSyntaxElement);
+				ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(abstractSyntaxElementName, ReferredElementReason.MISSING, abstractSyntaxElement);
+				noRepresentationElements.add(referredElement);
 				count++;
 			}
 		}
+		
 		if(count > 0) {
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setReason("There are semantic constructs not represented by any graphical symbol (" + count + ")");
 			float ratio = (float)(count*100/modelMapping.getAbstractConcepts().size());
 			metricResult.setRatio(ratio);
 			metricResult.setStatus(MetricResultStatus.BAD);
-			//metricResult.setReferredElements(noRepresentationElements);
+			metricResult.setReferredElements(noRepresentationElements);
 		}
 		return results;
 	}
