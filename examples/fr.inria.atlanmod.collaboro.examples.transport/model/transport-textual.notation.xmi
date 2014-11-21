@@ -3,7 +3,8 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:notation="http://atlanmod.fr/collaboro/notation">
+    xmlns:notation="http://atlanmod.fr/collaboro/notation"
+    type="textual">
   <elements
       xsi:type="notation:Composite"
       id="Network">
@@ -44,7 +45,7 @@
           id="route"/>
       <subElements
           xsi:type="notation:ReferenceValue"
-          id="Tram.follows"/>
+          id="Tram.follows.id"/>
     </subElements>
   </elements>
   <elements

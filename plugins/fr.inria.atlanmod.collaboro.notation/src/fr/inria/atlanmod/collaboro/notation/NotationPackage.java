@@ -1015,13 +1015,22 @@ public interface NotationPackage extends EPackage {
 	int DEFINITION__ELEMENTS = 0;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEFINITION__TYPE = 1;
+
+	/**
 	 * The number of structural features of the '<em>Definition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEFINITION_FEATURE_COUNT = 1;
+	int DEFINITION_FEATURE_COUNT = 2;
 
 
 	/**
@@ -1033,6 +1042,17 @@ public interface NotationPackage extends EPackage {
 	 * @generated
 	 */
 	int COLOR = 17;
+
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.NotationType <em>Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.notation.NotationType
+	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getNotationType()
+	 * @generated
+	 */
+	int NOTATION_TYPE = 18;
 
 
 	/**
@@ -1393,6 +1413,17 @@ public interface NotationPackage extends EPackage {
 	EReference getDefinition_Elements();
 
 	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.notation.Definition#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see fr.inria.atlanmod.collaboro.notation.Definition#getType()
+	 * @see #getDefinition()
+	 * @generated
+	 */
+	EAttribute getDefinition_Type();
+
+	/**
 	 * Returns the meta object for enum '{@link fr.inria.atlanmod.collaboro.notation.Color <em>Color</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1401,6 +1432,16 @@ public interface NotationPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getColor();
+
+	/**
+	 * Returns the meta object for enum '{@link fr.inria.atlanmod.collaboro.notation.NotationType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>Type</em>'.
+	 * @see fr.inria.atlanmod.collaboro.notation.NotationType
+	 * @generated
+	 */
+	EEnum getNotationType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1731,6 +1772,14 @@ public interface NotationPackage extends EPackage {
 		EReference DEFINITION__ELEMENTS = eINSTANCE.getDefinition_Elements();
 
 		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute DEFINITION__TYPE = eINSTANCE.getDefinition_Type();
+
+		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.Color <em>Color</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1739,6 +1788,16 @@ public interface NotationPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum COLOR = eINSTANCE.getColor();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.NotationType <em>Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.notation.NotationType
+		 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getNotationType()
+		 * @generated
+		 */
+		EEnum NOTATION_TYPE = eINSTANCE.getNotationType();
 
 	}
 

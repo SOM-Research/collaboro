@@ -51,6 +51,7 @@ public class Test {
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax);
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
+		System.out.println(metrics);
 		for(ConcreteSyntaxMetric metric : metrics) {
 			List<MetricResult> metricResults = metric.execute();
 			for(MetricResult metricResult : metricResults) {

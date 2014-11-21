@@ -9,6 +9,7 @@ public class ReferredElementImpl implements ReferredElement{
 	private String name;
 	
 	public ReferredElementImpl(String name, ReferredElementReason reason) {
+		this.name = name;
 		this.reason = reason;
 	}
 	
@@ -16,7 +17,6 @@ public class ReferredElementImpl implements ReferredElement{
 		return this.reason;
 	}
 
-	@Override
 	public String getName() {
 		return this.name;
 	}

@@ -9,9 +9,7 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- fr.inria.atlanmod.collaboro.backend,
  org.eclipse.emf.ecore.xmi,
- fr.inria.atlanmod.collaboro.notation.cdo,
  org.eclipse.emf.common,
  fr.inria.atlanmod.collaboro.notation
 Bundle-ActivationPolicy: lazy

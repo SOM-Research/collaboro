@@ -13,6 +13,7 @@ import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolDefici
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelElementExtractor;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 import fr.inria.atlanmod.collaboro.notation.Definition;
+import fr.inria.atlanmod.collaboro.notation.NotationType;
 
 public class MetricsFactoryImpl implements MetricsFactory {
 	
@@ -52,14 +53,11 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	}
 	
 	private boolean isConcreteSyntaxGraphical() {
+		NotationType concreteSyntaxModelType = concreteSyntaxModel.getType();
+		if(concreteSyntaxModelType.equals(NotationType.TEXTUAL)) {
+			return false;
+		}
 		return true;
-//		List<NotationElement> concreteSyntaxElements = concreteSyntaxModel.getElements();
-//		for(NotationElement concreteSyntaxElement : concreteSyntaxElements) {
-//			if(concreteSyntaxElement instanceof GraphicalElement) {
-//				return true;
-//			}
-//		}
-//		return false;
 	}
 	
 	private void loadMetrics() {

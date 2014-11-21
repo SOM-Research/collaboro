@@ -7,10 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: Atlanmod
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: 
- fr.inria.atlanmod.collaboro.notation,
+Export-Package: fr.inria.atlanmod.collaboro.notation,
  fr.inria.atlanmod.collaboro.notation.impl,
  fr.inria.atlanmod.collaboro.notation.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore
+ org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy

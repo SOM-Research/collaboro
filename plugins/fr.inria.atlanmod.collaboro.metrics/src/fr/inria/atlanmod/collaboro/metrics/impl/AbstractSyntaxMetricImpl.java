@@ -7,6 +7,12 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 
 public class AbstractSyntaxMetricImpl extends MetricImpl implements AbstractSyntaxMetric {
 
+	public AbstractSyntaxMetricImpl(String name, String dimension,
+			String description) {
+		super(name, dimension, description);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public List<MetricResult> execute() {
 		// TODO Auto-generated method stub

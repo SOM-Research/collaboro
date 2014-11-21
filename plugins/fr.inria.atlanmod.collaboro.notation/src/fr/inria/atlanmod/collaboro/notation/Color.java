@@ -40,7 +40,7 @@ public enum Color implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	WHITE(0, "WHITE", "white"),
+	WHITE(1, "WHITE", "white"),
 
 	/**
 	 * The '<em><b>RED</b></em>' literal object.
@@ -50,7 +50,7 @@ public enum Color implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	RED(0, "RED", "red"),
+	RED(2, "RED", "red"),
 
 	/**
 	 * The '<em><b>BLUE</b></em>' literal object.
@@ -120,7 +120,7 @@ public enum Color implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int WHITE_VALUE = 0;
+	public static final int WHITE_VALUE = 1;
 
 	/**
 	 * The '<em><b>RED</b></em>' literal value.
@@ -135,7 +135,7 @@ public enum Color implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RED_VALUE = 0;
+	public static final int RED_VALUE = 2;
 
 	/**
 	 * The '<em><b>BLUE</b></em>' literal value.
@@ -263,6 +263,8 @@ public enum Color implements Enumerator {
 	public static Color get(int value) {
 		switch (value) {
 			case BLACK_VALUE: return BLACK;
+			case WHITE_VALUE: return WHITE;
+			case RED_VALUE: return RED;
 		}
 		return null;
 	}

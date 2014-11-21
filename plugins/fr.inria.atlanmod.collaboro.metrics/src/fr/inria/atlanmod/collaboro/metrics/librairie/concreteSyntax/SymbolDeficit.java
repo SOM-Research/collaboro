@@ -20,9 +20,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	ModelMapping modelMapping;
 	
 	public SymbolDeficit(ModelMapping modelMapping) {
-		this.name = "symbol deficit";
-		this.description = "Symbol deficit occurs when there are semantic constructs that are not represented by any graphical symbol";
-		this.dimension = "Ontological";
+		super("symbol deficit", "Ontological", "Symbol deficit occurs when there are semantic constructs that are not represented by any graphical symbol");
 		this.modelMapping = modelMapping;
 	}
 	
@@ -42,6 +40,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			}
 			if(!found) {
 				ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(abstractSyntaxElementName, ReferredElementReason.MISSING, abstractSyntaxElement);
+				System.out.println(referredElement.getName());
 				noRepresentationElements.add(referredElement);
 				count++;
 			}
@@ -54,6 +53,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			metricResult.setRatio(ratio);
 			metricResult.setStatus(MetricResultStatus.BAD);
 			metricResult.setReferredElements(noRepresentationElements);
+			results.add(metricResult);
 		}
 		return results;
 	}

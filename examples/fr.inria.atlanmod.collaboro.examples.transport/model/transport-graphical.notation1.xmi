@@ -24,98 +24,104 @@
     <subElements
         xsi:type="notation:Image"
         id="ImageTram"
+        height="10"
+        width="20"
         fill="blue"/>
     <subElements
         xsi:type="notation:Label"
         id="LabelTramId"
-        y="20"
-        width="100">
+        x="20"
+        y="100">
       <text
           xsi:type="notation:AttributeValue"
-          id="Tram.id"
-          separator=""/>
+          id="Tram.id"/>
     </subElements>
     <subElements
-        xsi:type="notation:Line"
-        id="Tram.follows"
-        fill="black"/>
+        xsi:type="notation:SyntaxOf"
+        id="Vehicle.follows"/>
+  </elements>
+    <elements
+      xsi:type="notation:Composite"
+      id="Tram">
+    <subElements
+        xsi:type="notation:Image"
+        id="ImageTram"
+        height="10"
+        width="20"
+        fill="blue"/>
+    <subElements
+        xsi:type="notation:Label"
+        id="LabelTramId"
+        x="20"
+        y="100">
+      <text
+          xsi:type="notation:AttributeValue"
+          id="Tram.id"/>
+    </subElements>
+    <subElements
+        xsi:type="notation:SyntaxOf"
+        id="Vehicle.follows"/>
   </elements>
   <elements
       xsi:type="notation:Composite"
       id="Bus">
     <subElements
-        xsi:type="notation:Image"
-        id="ImageBus"
-        fill="blue"/>
+        xsi:type="notation:Rectangle"
+        id="SymbolBus"/>
     <subElements
         xsi:type="notation:Label"
-        id="LabelBusId"
-        y="20"
-        width="100">
+        id="LabelBusId">
       <text
           xsi:type="notation:AttributeValue"
           id="Bus.id"/>
     </subElements>
     <subElements
-        xsi:type="notation:Line"
-        id="Bus.follows"
-        fill="black"/>
+        xsi:type="notation:SyntaxOf"
+        id="Vehicle.follows"/>
   </elements>
   <elements
       xsi:type="notation:Composite"
       id="Route">
     <subElements
-        xsi:type="notation:SyntaxOf"
-        id="Route"/>
-    <subElements
         xsi:type="notation:Line"
-        id="Route.stops"/>
+        id="SymbolRoute"/>
+    <subElements
+        xsi:type="notation:Label"
+        id="LabelRouteId">
+      <text
+          xsi:type="notation:AttributeValue"
+          id="Route.id"/>
+    </subElements>
     <subElements
         xsi:type="notation:SyntaxOf"
-        id="Stop"/>
+        id="Route.contains"/>
   </elements>
   <elements
       xsi:type="notation:Composite"
       id="Stop">
     <subElements
         xsi:type="notation:Image"
-        id="ImageStop"
-        fill="yellow"/>
+        id="ImageStop"/>
     <subElements
         xsi:type="notation:Label"
-        id=""
-        y="20"
-        width="100">
+        id="LabelStopId">
       <text
           xsi:type="notation:AttributeValue"
           id="Stop.id"/>
     </subElements>
+  </elements>
+  <elements
+      xsi:type="notation:Composite"
+      id="Route.contains">
     <subElements
-        xsi:type="notation:Label"
-        id=""
-        y="40"
-        width="100">
-      <text
-          xsi:type="notation:AttributeValue"
-          id="Stop.lat"/>
-    </subElements>
+        xsi:type="notation:Line"
+        id="Route.contains"/>
+  </elements>
+  <elements
+      xsi:type="notation:Composite"
+      id="Vehicle.follows">
     <subElements
-        xsi:type="notation:Label"
-        id=""
-        y="60"
-        width="100">
-      <text
-          xsi:type="notation:AttributeValue"
-          id="Stop.lon"/>
-    </subElements>
-    <subElements
-        xsi:type="notation:Label"
-        id=""
-        y="70"
-        width="100">
-      <text
-          xsi:type="notation:AttributeValue"
-          id="Stop.handicap"/>
-    </subElements>
+        xsi:type="notation:Line"
+        id="Vehicle.follows"/>
   </elements>
 </notation:Definition>

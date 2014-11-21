@@ -20,6 +20,7 @@ import fr.inria.atlanmod.collaboro.notation.Line;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.NotationFactory;
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
+import fr.inria.atlanmod.collaboro.notation.NotationType;
 import fr.inria.atlanmod.collaboro.notation.Rectangle;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
 import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
@@ -168,6 +169,13 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * @generated
 	 */
 	private EEnum colorEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum notationTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -544,8 +552,26 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getDefinition_Type() {
+		return (EAttribute)definitionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getColor() {
 		return colorEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getNotationType() {
+		return notationTypeEEnum;
 	}
 
 	/**
@@ -626,9 +652,11 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 
 		definitionEClass = createEClass(DEFINITION);
 		createEReference(definitionEClass, DEFINITION__ELEMENTS);
+		createEAttribute(definitionEClass, DEFINITION__TYPE);
 
 		// Create enums
 		colorEEnum = createEEnum(COLOR);
+		notationTypeEEnum = createEEnum(NOTATION_TYPE);
 	}
 
 	/**
@@ -729,6 +757,7 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 
 		initEClass(definitionEClass, Definition.class, "Definition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefinition_Elements(), this.getNotationElement(), null, "elements", null, 0, -1, Definition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDefinition_Type(), this.getNotationType(), "type", null, 1, 1, Definition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(colorEEnum, Color.class, "Color");
@@ -739,6 +768,11 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		addEEnumLiteral(colorEEnum, Color.GREEN);
 		addEEnumLiteral(colorEEnum, Color.YELLOW);
 		addEEnumLiteral(colorEEnum, Color.ORANGE);
+
+		initEEnum(notationTypeEEnum, NotationType.class, "NotationType");
+		addEEnumLiteral(notationTypeEEnum, NotationType.GRAPHICAL);
+		addEEnumLiteral(notationTypeEEnum, NotationType.TEXTUAL);
+		addEEnumLiteral(notationTypeEEnum, NotationType.MIXED);
 
 		// Create resource
 		createResource(eNS_URI);

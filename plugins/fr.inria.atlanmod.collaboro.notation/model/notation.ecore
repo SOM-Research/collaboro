@@ -53,14 +53,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="Definition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="#//NotationElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//NotationType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Color">
     <eLiterals name="BLACK" literal="black"/>
-    <eLiterals name="WHITE" literal="white"/>
-    <eLiterals name="RED" literal="red"/>
+    <eLiterals name="WHITE" value="1" literal="white"/>
+    <eLiterals name="RED" value="2" literal="red"/>
     <eLiterals name="BLUE" literal="blue"/>
     <eLiterals name="GREEN" literal="green"/>
     <eLiterals name="YELLOW" literal="yellow"/>
     <eLiterals name="ORANGE" literal="orange"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="NotationType">
+    <eLiterals name="GRAPHICAL" literal="graphical"/>
+    <eLiterals name="TEXTUAL" literal="textual"/>
+    <eLiterals name="MIXED" literal="mixed"/>
   </eClassifiers>
 </ecore:EPackage>

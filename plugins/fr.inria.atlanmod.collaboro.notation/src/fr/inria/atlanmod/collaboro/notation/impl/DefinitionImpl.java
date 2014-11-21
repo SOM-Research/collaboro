@@ -10,8 +10,10 @@ import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
 
+import fr.inria.atlanmod.collaboro.notation.NotationType;
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -19,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -32,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.notation.impl.DefinitionImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.notation.impl.DefinitionImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +51,25 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 	 * @ordered
 	 */
 	protected EList<NotationElement> elements;
+
+	/**
+	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final NotationType TYPE_EDEFAULT = NotationType.GRAPHICAL;
+	/**
+	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getType()
+	 * @generated
+	 * @ordered
+	 */
+	protected NotationType type = TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -84,6 +107,27 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NotationType getType() {
+		return type;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setType(NotationType newType) {
+		NotationType oldType = type;
+		type = newType == null ? TYPE_EDEFAULT : newType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.DEFINITION__TYPE, oldType, type));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -103,6 +147,8 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 		switch (featureID) {
 			case NotationPackage.DEFINITION__ELEMENTS:
 				return getElements();
+			case NotationPackage.DEFINITION__TYPE:
+				return getType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -120,6 +166,9 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 				getElements().clear();
 				getElements().addAll((Collection<? extends NotationElement>)newValue);
 				return;
+			case NotationPackage.DEFINITION__TYPE:
+				setType((NotationType)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -135,6 +184,9 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 			case NotationPackage.DEFINITION__ELEMENTS:
 				getElements().clear();
 				return;
+			case NotationPackage.DEFINITION__TYPE:
+				setType(TYPE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -149,8 +201,26 @@ public class DefinitionImpl extends EObjectImpl implements Definition {
 		switch (featureID) {
 			case NotationPackage.DEFINITION__ELEMENTS:
 				return elements != null && !elements.isEmpty();
+			case NotationPackage.DEFINITION__TYPE:
+				return type != TYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (type: ");
+		result.append(type);
+		result.append(')');
+		return result.toString();
 	}
 
 } //DefinitionImpl
