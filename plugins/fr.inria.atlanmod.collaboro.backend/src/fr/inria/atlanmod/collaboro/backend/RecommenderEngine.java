@@ -60,7 +60,7 @@ public class RecommenderEngine {
 				+ "Reason: " + metricResult.getReason();
 		String referredElements = "";
 		for(ReferredElement referredElement : metricResult.getReferredElements()) {
-			referredElements += referredElement + ",";
+			referredElements += referredElement.getName() + ",";
 		}
 		if(!referredElements.equals(""))
 			referredElements = referredElements.substring(0, referredElements.length() - 1);

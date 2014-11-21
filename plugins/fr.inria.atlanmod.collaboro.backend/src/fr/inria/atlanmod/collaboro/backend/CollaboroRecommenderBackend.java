@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.inria.atlanmod.collaboro.history.HistoryFactory;
 import fr.inria.atlanmod.collaboro.history.Proposal;
+import fr.inria.atlanmod.collaboro.history.User;
 
 public class CollaboroRecommenderBackend extends CollaboroBackend {
 	private RecommenderEngine recommender;
@@ -15,6 +16,29 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 		super(modelManager);
 		this.userId = userId;
 		this.recommender = new RecommenderEngine(userId, this);
+		checkRecommenderUser();
+	}
+	
+	public void checkRecommenderUser() {
+		boolean found = false;
+		for(User user : getHistory().getUsers()) {
+			if(user.getId().equals(this.userId)) {
+				found = true;
+				break;
+			}
+		}
+		
+		if(!found) {
+			User recommenderUser = HistoryFactory.eINSTANCE.createUser();
+			recommenderUser.setId(userId);
+			recommenderUser.setFirstName("Recommender");
+			recommenderUser.setLastName("System");
+			recommenderUser.setEmail("recommender@collaboro.com");
+			recommenderUser.setPasword("");
+			
+			getHistory().getUsers().add(recommenderUser);
+			saveHistory();
+		}
 	}
 	
 	@Override
