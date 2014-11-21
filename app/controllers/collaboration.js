@@ -101,6 +101,10 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
       $scope.refreshcollaborations();
     });
 
+    $scope.$on('dslRecommendationsMade', function() {
+      $scope.refreshcollaborations();
+    });
+
     // Tree initialization
     $scope.refreshcollaborations();
 

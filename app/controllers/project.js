@@ -57,10 +57,12 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
   	};
 
     $scope.launchRecommender = function() {
-      recommenderService.launchRecommender.then(
-        $scope.$broadcast('dslRecommendationsMade');
+      recommenderService.launchRecommender().then(
+        function(response) {
+          $scope.$broadcast('dslRecommendationsMade');
+        }
       );
-    }
+    };
 
   	// First call to update the version
   	$scope.checkVersion();
