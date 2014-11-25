@@ -16,6 +16,10 @@ public class Symbol {
 		return this.name;
 	}
 	
+	public NotationElement getConcreteSyntaxElement() {
+		return this.concreteSyntaxElement;
+	}
+	
 	public String toString() {
 		return "Symbol " + name;
 	}

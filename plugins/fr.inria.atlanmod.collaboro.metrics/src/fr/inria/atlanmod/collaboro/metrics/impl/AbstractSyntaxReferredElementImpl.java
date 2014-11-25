@@ -18,7 +18,4 @@ public class AbstractSyntaxReferredElementImpl extends ReferredElementImpl imple
 	public EObject getAbstractSyntaxElement() {
 		return this.abstractSyntaxElement;
 	}
-	
-	
-
 }

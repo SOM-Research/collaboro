@@ -10,11 +10,13 @@ public class MetricImpl implements Metric {
 	protected String name;
 	protected String dimension;
 	protected String description;
+	protected Integer acceptanceRatio;
 	
-	public MetricImpl(String name,String dimension, String description) {
+	public MetricImpl(String name,String dimension, String description, Integer acceptanceRatio) {
 		this.name = name;
 		this.dimension = dimension;
 		this.description = description;
+		this.acceptanceRatio = acceptanceRatio;
 	}
 
 	@Override
@@ -33,6 +35,10 @@ public class MetricImpl implements Metric {
 
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public Integer getAcceptanceRatio() {
+		return this.acceptanceRatio;
 	}
 
 }

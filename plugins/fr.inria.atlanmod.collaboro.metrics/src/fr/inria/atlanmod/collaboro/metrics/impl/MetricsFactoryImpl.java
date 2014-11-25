@@ -8,8 +8,12 @@ import org.eclipse.emf.ecore.EPackage;
 import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
+import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
 import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolDeficit;
+import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolExcess;
+import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolOverload;
+import fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax.SymbolRedundancy;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelElementExtractor;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 import fr.inria.atlanmod.collaboro.notation.Definition;
@@ -26,8 +30,11 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		this.isGraphical = isConcreteSyntaxGraphical();
-		System.out.println("isGraph : " + isGraphical);
 		this.modelElementExtractor = new ModelElementExtractor();
+	}
+	
+	public static void registerMetric(String metricName, Class<? extends Metric> metricClass) {
+		System.out.println(metricName + " : registered");
 	}
 	
 	@Override
@@ -44,8 +51,14 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		List<ConcreteSyntaxMetric> concreteSyntaxMetrics = new ArrayList<ConcreteSyntaxMetric>();
 		if(this.isGraphical) {
 			// Find all metrics instance of ConcreteSyntaxGraphicalMetrics
-			ConcreteSyntaxGraphicalMetric metric = new SymbolDeficit(modelMapping);
-			concreteSyntaxMetrics.add(metric);
+			ConcreteSyntaxGraphicalMetric symbolDeficit = new SymbolDeficit(modelMapping);
+			ConcreteSyntaxGraphicalMetric symbolRedundancy = new SymbolRedundancy(modelMapping);
+			ConcreteSyntaxGraphicalMetric symbolOverload = new SymbolOverload(modelMapping);
+			ConcreteSyntaxGraphicalMetric symbolExcess = new SymbolExcess(modelMapping);
+			concreteSyntaxMetrics.add(symbolDeficit);
+			concreteSyntaxMetrics.add(symbolRedundancy);
+			concreteSyntaxMetrics.add(symbolOverload);
+			concreteSyntaxMetrics.add(symbolExcess);
 		} else {
 			// Find all metrics instance of ConcreteSyntaxTextualMetrics
 		}

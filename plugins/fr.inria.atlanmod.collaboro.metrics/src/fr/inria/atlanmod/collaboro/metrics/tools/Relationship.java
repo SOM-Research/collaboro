@@ -1,29 +1,28 @@
 package fr.inria.atlanmod.collaboro.metrics.tools;
 
-import org.eclipse.emf.ecore.EObject;
-
+import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
 import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
 
 public class Relationship {
 	
-	private EObject relationshipFrom;
-	private Symbol relationshopTo;
+	private Concept relationshipFrom;
+	private Symbol relationshipTo;
 	
-	public Relationship(EObject from, Symbol to) {
+	public Relationship(Concept from, Symbol to) {
 		this.relationshipFrom = from;
-		this.relationshopTo = to;
+		this.relationshipTo = to;
 	}
 
-	public EObject getRelationshipFrom() {
+	public Concept getRelationshipFrom() {
 		return relationshipFrom;
 	}
 
-	public Symbol getRelationshopTo() {
-		return relationshopTo;
+	public Symbol getRelationshipTo() {
+		return relationshipTo;
 	}
 	
 	public String toString() {
-		return relationshipFrom + " -> " + relationshopTo;
+		return relationshipFrom + " -> " + relationshipTo;
 	}
 	
 

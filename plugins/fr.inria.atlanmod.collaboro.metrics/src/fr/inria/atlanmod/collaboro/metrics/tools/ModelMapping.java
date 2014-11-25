@@ -2,19 +2,25 @@ package fr.inria.atlanmod.collaboro.metrics.tools;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
+import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeSymbol;
+import fr.inria.atlanmod.collaboro.metrics.symbol.ClassSymbol;
+import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
+import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceSymbol;
 import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
 
 public class ModelMapping {
 	
-	private Map<String,EObject> abstractConcepts;
+	/**
+	 * Map<conceptName, conceptObject>
+	 */
+	private List<Concept> abstractConcepts;
 	private List<Symbol> concreteSymbols;
 	private List<Relationship> mapping;
 	
-	public ModelMapping(Map<String,EObject> abstractConcepts, List<Symbol> concreteSymbols) {
+	public ModelMapping(List<Concept> abstractConcepts, List<Symbol> concreteSymbols) {
 		this.abstractConcepts = abstractConcepts;
 		this.concreteSymbols = concreteSymbols;
 		this.mapping = mapModel();
@@ -23,19 +29,32 @@ public class ModelMapping {
 	private List<Relationship> mapModel() {
 		List<Relationship> mapping = new ArrayList<Relationship>();
 		for(Symbol concreteSymbol : concreteSymbols) {
-			String concreteSymbolName = concreteSymbol.getName();
-			if(abstractConcepts.containsKey(concreteSymbolName)) {
-				EObject abstractConcept = abstractConcepts.get(concreteSymbolName);
-				Relationship relationship = new Relationship(abstractConcept, concreteSymbol);
-				mapping.add(relationship);
+			String symbolName = "";
+			if(concreteSymbol instanceof ClassSymbol) {
+				ClassSymbol classSymbol = (ClassSymbol) concreteSymbol;
+				symbolName = classSymbol.getClassName();
+			} else if(concreteSymbol instanceof AttributeSymbol) {
+				AttributeSymbol attributeSymbol = (AttributeSymbol) concreteSymbol;
+				symbolName = attributeSymbol.getClassName() + "." + attributeSymbol.getAttributeName();
+			} else if(concreteSymbol instanceof ReferenceSymbol) {
+				ReferenceSymbol referenceSymbol = (ReferenceSymbol) concreteSymbol;
+				symbolName = referenceSymbol.getClassName() + "." + referenceSymbol.getReferenceName();
 			}
+			
+			for(Concept abstractConcept : abstractConcepts) {
+				if(abstractConcept.getName().equals(symbolName)) {
+					Relationship relationship = new Relationship(abstractConcept, concreteSymbol);
+					mapping.add(relationship);
+				}
+			}
+		
 		}
 		return mapping;
 	}
 	
 	
 	
-	public Map<String, EObject> getAbstractConcepts() {
+	public List<Concept> getAbstractConcepts() {
 		return abstractConcepts;
 	}
 
@@ -51,6 +70,25 @@ public class ModelMapping {
 		return mapping.toString();
 	}
 	
+	public Concept getConceptByName(String conceptName) {
+		List<Concept> conceptList = this.abstractConcepts;
+		for(Concept concept : conceptList) {
+			if(concept.getName().equals(conceptName)) {
+				return concept;
+			}
+		}
+		return null;
+	}
+	
+	public Concept getConceptByAbstractSyntaxElement(EObject abstractSyntaxElement) {
+		List<Concept> conceptList = this.abstractConcepts;
+		for(Concept concept : conceptList) {
+			if(concept.getAbstractSyntaxElement().equals(abstractSyntaxElement)) {
+				return concept;
+			}
+		}
+		return null;
+	}
 	
 	
 

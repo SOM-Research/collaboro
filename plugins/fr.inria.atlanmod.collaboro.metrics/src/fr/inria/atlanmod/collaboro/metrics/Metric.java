@@ -12,4 +12,6 @@ public interface Metric {
 	
 	public String getDescription();
 	
+	public Integer getAcceptanceRatio();
+	
 }
