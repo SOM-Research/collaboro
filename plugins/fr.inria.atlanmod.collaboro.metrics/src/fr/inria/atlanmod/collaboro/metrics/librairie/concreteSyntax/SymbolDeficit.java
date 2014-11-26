@@ -22,15 +22,10 @@ import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
 
 public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	
-	static {
-		MetricsFactoryImpl.registerMetric("symbol deficit",SymbolDeficit.class);
-	}
-	
 	ModelMapping modelMapping;
 	
 	public SymbolDeficit(ModelMapping modelMapping) {
 		super("symbol deficit", "Ontological", "Symbol deficit occurs when there are semantic constructs that are not represented by any graphical symbol", 0);
-		
 		this.modelMapping = modelMapping;
 	}
 	
@@ -65,14 +60,12 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 						Concept referenceConceptOpposite = modelMapping.getConceptByAbstractSyntaxElement(eReferenceOpposite);
 						if(isAbstractElementRepresentedMap.get(referenceConceptOpposite) == false) {
 							ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(abstractSyntaxElementName, ReferredElementReason.MISSING, abstractSyntaxElementObject);
-							System.out.println(referredElement.getName());
 							noRepresentationElements.add(referredElement);
 							count++;
 						}
 					}
 				} else {
 					ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(abstractSyntaxElementName, ReferredElementReason.MISSING, abstractSyntaxElementObject);
-					System.out.println(referredElement.getName());
 					noRepresentationElements.add(referredElement);
 					count++;
 				}

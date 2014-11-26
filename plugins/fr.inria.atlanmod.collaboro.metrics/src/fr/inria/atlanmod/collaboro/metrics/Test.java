@@ -1,7 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -51,11 +53,12 @@ public class Test {
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax);
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
-		System.out.println(metrics);
+		System.out.println("-------------------------");
 		for(ConcreteSyntaxMetric metric : metrics) {
 			List<MetricResult> metricResults = metric.execute();
 			for(MetricResult metricResult : metricResults) {
 				digestMetricResult(metric,metricResult);
+				System.out.println("-------------------------");
 			}
 		}
 		
@@ -303,5 +306,6 @@ public class Test {
 		System.out.println(rationale + "\n " + referredElements);
 	
 	}
+
 	
 }

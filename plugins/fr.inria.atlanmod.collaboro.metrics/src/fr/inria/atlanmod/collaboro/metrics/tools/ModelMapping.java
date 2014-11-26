@@ -47,7 +47,6 @@ public class ModelMapping {
 					mapping.add(relationship);
 				}
 			}
-		
 		}
 		return mapping;
 	}
