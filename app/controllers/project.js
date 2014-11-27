@@ -1,6 +1,9 @@
 angular.module('collaboroControllers').controller('ProjectController', ['$scope', '$rootScope', 'securityService', 'recommenderService', '$http',
   function($scope, $rootScope, securityService, recommenderService, $http) {
   	$scope.dslVersion = "";
+    $scope.recommenderMessage = {};
+    $scope.recommenderMessage.text = "Everything looks right!";
+    $scope.recommenderMessage.type = "alert alert-success text-center";
 
   	$scope.checkVersion = function() {
   		$http.get(collaboroServletURL + '/versionManagement').then(
@@ -56,6 +59,17 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
 
   	};
 
+    $scope.queryRecommender = function() {
+      recommenderService.queryRecommender().then(
+        function(response) {
+          if(response.status == "ok") $scope.recommenderMessage.type = "alert alert-success text-center";
+          else if(response.status == "warning") $scope.recommenderMessage.type = "alert alert-warning text-center";
+          else if(response.status == "error") $scope.recommenderMessage.type = "alert alert-danger text-center";
+          $scope.recommenderMessage.text = response.message;
+        }
+      );
+    }
+
     $scope.launchRecommender = function() {
       recommenderService.launchRecommender().then(
         function(response) {
@@ -66,6 +80,7 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
 
   	// First call to update the version
   	$scope.checkVersion();
+    $scope.queryRecommender();
 
     $scope.isAuthenticated = securityService.isAuthenticated;
   }
