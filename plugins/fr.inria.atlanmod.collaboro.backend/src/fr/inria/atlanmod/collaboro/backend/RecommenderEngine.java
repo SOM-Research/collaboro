@@ -1,5 +1,7 @@
 package fr.inria.atlanmod.collaboro.backend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -18,11 +20,13 @@ public class RecommenderEngine {
 	private CollaboroBackend backend;
 	private MetricsFactory factory;
 	private String userId;
+	private HashMap<Metric, List<MetricResult>> results;
 	
 	public RecommenderEngine(String userId, CollaboroBackend backend) {
 		this.userId = userId;
 		this.backend = backend;
 		this.modelManager = backend.getModelManager();
+		this.results = new HashMap<Metric, List<MetricResult>>();
 		
 		EPackage abstractSyntaxModel = modelManager.getEcoreModel();
 		Definition concreteSyntaxModel = modelManager.getNotation();
@@ -31,32 +35,34 @@ public class RecommenderEngine {
 	
 	public void checkMetrics() {
 		checkAbstractSyntaxMetrics();
-		checkConcretSyntaxMetrics();
+		checkConcreteSyntaxMetrics();
 	}
 	
-	public void checkAbstractSyntaxMetrics() {
+	private void checkAbstractSyntaxMetrics() {
 		List<AbstractSyntaxMetric> metrics = factory.getAbstractSyntaxMetrics();
 		for(AbstractSyntaxMetric metric : metrics) {
 			List<MetricResult> results = metric.execute();
 			for(MetricResult result : results) {
-				digestMetricResult(metric, result);
+				createProposal(metric, result);
+				registerResult(metric, result);
 			}
 		}
 	}
 	
-	public void checkConcretSyntaxMetrics() {
+	private void checkConcreteSyntaxMetrics() {
 		List<ConcreteSyntaxMetric> metrics = factory.getConcreteSyntaxMetrics();
 		for(ConcreteSyntaxMetric metric : metrics) {
 			List<MetricResult> results = metric.execute();
 			for(MetricResult result : results) {
-				digestMetricResult(metric, result);
+				createProposal(metric, result);
+				registerResult(metric, result);
 			}
 		}
 	}
-	
-	private void digestMetricResult(Metric metric, MetricResult metricResult) {
-		String rationale = "Metric: " + metric.getName() + "\n"
-				+ "Description: " + metric.getDescription() + "\n"
+
+	private void createProposal(Metric metric, MetricResult metricResult) {
+		String rationale = "Metric: " + metric.getName() + " - "
+				+ "Description: " + metric.getDescription() + " - "
 				+ "Reason: " + metricResult.getReason();
 		String referredElements = "";
 		for(ReferredElement referredElement : metricResult.getReferredElements()) {
@@ -66,4 +72,17 @@ public class RecommenderEngine {
 			referredElements = referredElements.substring(0, referredElements.length() - 1);
 		backend.createProposalPlain(userId, rationale, referredElements);
 	}
+	
+	public void registerResult(Metric metric, MetricResult metricResult) {
+		List<MetricResult> metricResults = results.get(metric);
+		if(metricResults == null) {
+			metricResults = new ArrayList<MetricResult>();
+			results.put(metric, metricResults);
+		}
+		metricResults.add(metricResult);		
+	}
+
+	public HashMap<Metric, List<MetricResult>> getResults() {
+		return results;
+	}	
 }

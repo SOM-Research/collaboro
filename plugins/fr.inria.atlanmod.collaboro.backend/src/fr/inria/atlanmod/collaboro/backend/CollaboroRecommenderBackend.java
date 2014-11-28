@@ -1,11 +1,14 @@
 package fr.inria.atlanmod.collaboro.backend;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.inria.atlanmod.collaboro.history.HistoryFactory;
 import fr.inria.atlanmod.collaboro.history.Proposal;
 import fr.inria.atlanmod.collaboro.history.User;
+import fr.inria.atlanmod.collaboro.metrics.Metric;
+import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 
 public class CollaboroRecommenderBackend extends CollaboroBackend {
 	private RecommenderEngine recommender;
@@ -15,7 +18,6 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 	public CollaboroRecommenderBackend(ModelManager modelManager, String userId) {
 		super(modelManager);
 		this.userId = userId;
-		this.recommender = new RecommenderEngine(userId, this);
 		checkRecommenderUser();
 	}
 	
@@ -51,6 +53,8 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 	}
 	
 	public void launchRecommender() {
+		recommendations = new ArrayList<Proposal>();
+		this.recommender = new RecommenderEngine(userId, this);
 		recommender.checkMetrics();
 	}
 	
@@ -60,5 +64,10 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 		}
 	}
 	
+	public HashMap<Metric, List<MetricResult>> getResults() {
+		if(recommender == null) 
+			throw new IllegalStateException("There is no recommender yet. Please, call launcheRecommender before");
+		return recommender.getResults();
+	}	
 
 }

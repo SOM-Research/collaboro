@@ -68,9 +68,15 @@ public class CollaboroBackendFactory {
 			instance = new CollaboroBackendFactory();
 		
 		String userId = "recommender";
-		ModelManager modelManager = instance.getModelManager(dsl);
+
+		String dslUser = dsl + "-" + userId;		
+		CollaboroRecommenderBackend recommenderBackend = (CollaboroRecommenderBackend) instance.backends.get(dslUser.toLowerCase());
+		if(recommenderBackend == null) {
+			ModelManager modelManager = instance.getModelManager(dsl);
+			recommenderBackend = new CollaboroRecommenderBackend(modelManager, userId);
+			instance.backends.put(dslUser.toLowerCase(), recommenderBackend);
+		}
 		
-		CollaboroRecommenderBackend recommenderBackend = new CollaboroRecommenderBackend(modelManager, userId);
 		return recommenderBackend;
 	}
 	
