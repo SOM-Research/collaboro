@@ -2,7 +2,7 @@
     <div class="row-fluid">
       <!--The vertical menu-->    
       <div class="col-sm-2 col-md-1 sidebar">
-        <p class="text-center">Current Version</p>
+        <p class="text-center"><strong>Current Version</strong></p>
         <div class="alert alert-info text-center"><strong>{{dslVersion}}</strong></div>  
         <div class="btn-group-vertical">
         <button ng-click="previousVersion()" class="btn btn-default btn-sm">Previous Version</button>
@@ -13,7 +13,7 @@
         <!--<button ng-click="launchDecision()" class="btn btn-default btn-sm">Run Decisions</button>-->
         <p></p>
         <hr>
-        <p class="text-center">Recommender</p>
+        <p class="text-center"><strong>Recommender report</strong></p>
         <div ng-class="recommenderMessage.type">{{recommenderMessage.text}}</div>
         <button ng-click="launchRecommender()" class="btn btn-default btn-sm btn-block">Recommend!</button>
       </div>
@@ -127,13 +127,13 @@
                 <div class="panel-heading">
                   <h3 class="panel-title">Rationale</h3>
                 </div>
-                <div class="panel-body">{{collaborationSelectedRationale}}</div>
+                <div class="panel-body" ng-bind-html="collaborationSelectedRationale"></div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title">Referred Elements</h3>
                 </div>
-                <div class="panel-body">{{collaborationSelectedReferredElements}}</div>
+                <div class="panel-body" ng-bind-html="collaborationSelectedReferredElements"></div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">

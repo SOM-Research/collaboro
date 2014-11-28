@@ -62,9 +62,9 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
     $scope.queryRecommender = function() {
       recommenderService.queryRecommender().then(
         function(response) {
-          if(response.status == "ok") $scope.recommenderMessage.type = "alert alert-success text-center";
+          if(response.status == "success") $scope.recommenderMessage.type = "alert alert-success text-center";
           else if(response.status == "warning") $scope.recommenderMessage.type = "alert alert-warning text-center";
-          else if(response.status == "error") $scope.recommenderMessage.type = "alert alert-danger text-center";
+          else if(response.status == "danger") $scope.recommenderMessage.type = "alert alert-danger text-center";
           $scope.recommenderMessage.text = response.message;
         }
       );

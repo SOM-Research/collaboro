@@ -120,8 +120,8 @@ angular.module('collaboroControllers').controller('collaborationController', ['$
     $scope.collaborationSelected = function(element) {
       if (element.data) {
         $scope.collaborationSelectedProposedBy = element.data.username;
-        $scope.collaborationSelectedRationale = element.data.rationale;
-        $scope.collaborationSelectedReferredElements = $scope.convert(element.data.referredElements, 'referred elements');
+        $scope.collaborationSelectedRationale = "<p><strong>" + element.data.rationale.replace(/:/g, ":</strong>").replace(/-/g, "</p><p><strong>") + "</p>";
+        $scope.collaborationSelectedReferredElements = "<span class='refElem'>" + $scope.convert(element.data.referredElements, 'referred elements').replace(/,/g, "</span><span class='refElem'>") + "</span>";
         $scope.collaborationSelectedAgreeVotes = $scope.convert(element.data.agree, 'agreement votes');
         $scope.collaborationSelectedDisagreeVotes = $scope.convert(element.data.disagree, 'disagreement votes');
       }
