@@ -14,4 +14,5 @@ public interface Metric {
 	
 	public Integer getAcceptanceRatio();
 	
+	public MetricPriority getPriority();
 }

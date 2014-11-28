@@ -7,5 +7,12 @@ public interface MetricsFactory {
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics();
 	public List<ConcreteSyntaxMetric> getConcreteSyntaxMetrics();
 	
+	public void saveConfiguration();
+	public void loadConfiguration();
+	
+	public void activate(String metricName);
+	public void deactivate(String metricName);
+	
+	
 
 }
