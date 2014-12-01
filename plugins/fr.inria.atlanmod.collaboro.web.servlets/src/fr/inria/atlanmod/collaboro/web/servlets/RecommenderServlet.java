@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import fr.inria.atlanmod.collaboro.backend.CollaboroBackendFactory;
 import fr.inria.atlanmod.collaboro.backend.CollaboroRecommenderBackend;
 import fr.inria.atlanmod.collaboro.history.User;
+import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
+import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
@@ -116,13 +119,47 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 			responseObject.addProperty("status", "ok");
 			response.setContentType("application/json");
 		} else if(action.equals("list")) {
+			List<Metric> metrics = recommender.getMetrics();
+			responseObject = toJson(metrics);
 			
 		}
 
 		PrintWriter out = response.getWriter();
 		out.print(responseObject.toString()); 
 	}
-	
+
+	private JsonObject toJson(List<Metric> metrics) {
+		JsonArray jsonMetrics = new JsonArray();
+		
+		for(Metric metric : metrics) {
+			JsonObject jsonMetric = toJson(metric);
+			jsonMetrics.add(jsonMetric);
+		}
+
+		JsonObject result = new JsonObject();
+		result.add("metrics", jsonMetrics);
+		
+		return result;
+	}
+
+	private JsonObject toJson(Metric metric) {
+		JsonObject result = new JsonObject();
+		
+		if (metric instanceof AbstractSyntaxMetric) {
+			AbstractSyntaxMetric asMetric = (AbstractSyntaxMetric) metric;
+			result.addProperty("type", "AS");
+		} else if(metric instanceof ConcreteSyntaxMetric) {
+			ConcreteSyntaxMetric csMetric = (ConcreteSyntaxMetric) metric;
+			result.addProperty("type", "CS");
+		}
+		
+		result.addProperty("name", metric.getName());
+		result.addProperty("description", metric.getDescription());
+		result.addProperty("dimension", metric.getDimension());
+		result.addProperty("active", true);
+		
+		return result;
+	}
 
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

@@ -33,6 +33,23 @@ public class RecommenderEngine {
 		factory = new MetricsFactoryImpl(abstractSyntaxModel, concreteSyntaxModel);
 	}
 	
+	public List<Metric> getMetrics() {
+		List<Metric> result = new ArrayList<Metric>();
+		List<AbstractSyntaxMetric> ASmetrics = factory.getAbstractSyntaxMetrics();
+		result.addAll(ASmetrics);
+		List<ConcreteSyntaxMetric> CSmetrics = factory.getConcreteSyntaxMetrics();
+		result.addAll(CSmetrics);
+		return result;
+	}
+	
+	public List<AbstractSyntaxMetric> getAbstractSyntaMetrics() {
+		return factory.getAbstractSyntaxMetrics();
+	}
+	
+	public List<ConcreteSyntaxMetric> getConcreteSyntaxMetrics() {
+		return factory.getConcreteSyntaxMetrics();
+	}
+	
 	public void checkMetrics() {
 		checkAbstractSyntaxMetrics();
 		checkConcreteSyntaxMetrics();

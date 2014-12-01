@@ -68,6 +68,12 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 		if(recommender == null) 
 			throw new IllegalStateException("There is no recommender yet. Please, call launcheRecommender before");
 		return recommender.getResults();
+	}
+
+	public List<Metric> getMetrics() {
+		return recommender.getMetrics();
 	}	
+	
+	
 
 }
