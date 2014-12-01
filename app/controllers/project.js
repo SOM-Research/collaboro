@@ -59,8 +59,8 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
 
   	};
 
-    $scope.queryRecommender = function() {
-      recommenderService.queryRecommender().then(
+    $scope.statusRecommender = function() {
+      recommenderService.statusRecommender().then(
         function(response) {
           if(response.status == "success") $scope.recommenderMessage.type = "alert alert-success text-center";
           else if(response.status == "warning") $scope.recommenderMessage.type = "alert alert-warning text-center";
@@ -78,9 +78,17 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
       );
     };
 
+    $scope.configRecommender = function() {
+      recommenderService.configRecommender().result.then(
+        function(response) {
+          console.log("all right");
+        }
+      );
+    };
+
   	// First call to update the version
   	$scope.checkVersion();
-    $scope.queryRecommender();
+    $scope.statusRecommender();
 
     $scope.isAuthenticated = securityService.isAuthenticated;
   }

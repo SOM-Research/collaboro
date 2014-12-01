@@ -1,0 +1,20 @@
+<form name="newCollaboration" novalidate>
+	<div class="modal-header">
+        <h4>Recommender Configuration</h4>
+    </div>
+    <div class="modal-body">
+    	<div class="panel panel-default" ng-repeat="metric in metrics">
+            <div class="panel-heading">
+                <div class="panel-title"><strong>{{metric.name}}</strong><button type="button" style="float:right;" ng-click="toggleMetric(metric)" ng-class="status(metric)" ng-bind-html="statusText(metric)"></button></div>
+            </div>
+            <div class="panel-body">{{metric.description}}</div>
+        </div>
+    </div>
+
+    </label>
+	
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">OK</button>
+        <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
+    </div>
+</form>
