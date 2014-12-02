@@ -81,13 +81,16 @@ angular.module('collaboroControllers').controller('ProjectController', ['$scope'
     $scope.configRecommender = function() {
       recommenderService.configRecommender().result.then(
         function(response) {
-          console.log("all right");
+          if(response.changed) {
+            $scope.statusRecommender();
+          }
         }
       );
     };
 
   	// First call to update the version
   	$scope.checkVersion();
+    // Now update the recommender
     $scope.statusRecommender();
 
     $scope.isAuthenticated = securityService.isAuthenticated;

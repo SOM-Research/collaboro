@@ -7,6 +7,7 @@ angular.module('collaboroServices').factory('recommenderService', ['$http', '$q'
           templateUrl : 'app/partials/modal/recommender.html',
           controller : function($scope, $modalInstance) {
             $scope.metrics = [];
+            $scope.changed = false;
 
             // Getting the metrics
             $scope.obtainMetrics = function() {
@@ -35,12 +36,21 @@ angular.module('collaboroServices').factory('recommenderService', ['$http', '$q'
             }
 
             $scope.toggleMetric = function(metric) {
+              $scope.changed = true;
+
               metric.active = !metric.active;
+              var action = 'deactivate';
+
+              if(metric.active) {
+                action = 'activate';
+              } 
+
+              performRecommendation(action, { metricName : metric.name });
             }
 
             // When clicking on ADD
             $scope.ok = function() {
-              $modalInstance.close();
+              $modalInstance.close({changed : $scope.changed });
             };
 
             // When clicking on CANCEL
@@ -53,8 +63,12 @@ angular.module('collaboroServices').factory('recommenderService', ['$http', '$q'
       return configDialog;
     }
 
-    function performRecommendation(action) {
-      var data = { action: action };
+    function performRecommendation(action, payload) {
+
+      if(payload) 
+        data = { action: action, data: payload };
+      else 
+        data = { action: action };
 
       var deferred = $q.defer();
       $http.post(collaboroServletURL + '/recommender', data)
@@ -85,6 +99,12 @@ angular.module('collaboroServices').factory('recommenderService', ['$http', '$q'
       configRecommender : function() {
         return openConfigDialog();
       },
+      activateMetric : function(metricName) {
+        return performRecommendation('activate', { metricName : metricName })
+      },
+      deactivateMetric : function(metricName) {
+        return performRecommendation('deactivate', { metricName : metricName })
+      }
     };
     return service;
   }
