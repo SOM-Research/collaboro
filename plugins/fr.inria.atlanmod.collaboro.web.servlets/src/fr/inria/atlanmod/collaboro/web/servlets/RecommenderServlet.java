@@ -124,7 +124,14 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		} else if(action.equals("list")) {
 			List<Metric> metrics = recommender.getMetrics();
 			responseObject = toJson(recommender, metrics);
-			
+		} else if(action.equals("activate")) {
+			String metricName = jsonObject.get("data").getAsJsonObject().get("metricName").getAsString();
+			System.out.println("activate " + metricName);
+			recommender.activateMetric(metricName);
+		} else if(action.equals("deactivate")) {
+			String metricName = jsonObject.get("data").getAsJsonObject().get("metricName").getAsString();
+			System.out.println("deactivate " + metricName);
+			recommender.deactivateMetric(metricName);
 		}
 
 		PrintWriter out = response.getWriter();

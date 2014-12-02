@@ -117,5 +117,13 @@ public class RecommenderEngine {
 		return metric2proposalId;
 	}	
 	
+	public void deactivateMetric(String metricId) {
+		factory.deactivate(metricId);
+	}
+	
+	public void activateMetric(String metricId) {
+		factory.activate(metricId);
+	}
+	
 	
 }

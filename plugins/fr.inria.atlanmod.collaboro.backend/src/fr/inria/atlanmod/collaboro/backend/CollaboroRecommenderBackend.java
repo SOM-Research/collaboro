@@ -93,6 +93,14 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 
 	public List<Metric> getMetrics() {
 		return recommender.getMetrics();
+	}
+
+	public void deactivateMetric(String metricId) {
+		recommender.deactivateMetric(metricId);
+	}
+
+	public void activateMetric(String metricId) {
+		recommender.activateMetric(metricId);
 	}	
 	
 	
