@@ -52,6 +52,7 @@ public class Test {
 		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax);
+		metricFactory.loadConfiguration();
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
 		System.out.println("-------------------------");
 		for(ConcreteSyntaxMetric metric : metrics) {

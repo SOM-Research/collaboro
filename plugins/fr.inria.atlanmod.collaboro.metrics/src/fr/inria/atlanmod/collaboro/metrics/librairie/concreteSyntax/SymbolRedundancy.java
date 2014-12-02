@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
+import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
@@ -18,7 +19,12 @@ import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
 
 public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	
-	private ModelMapping modelMapping;
+	private static String dimension = "Ontological";
+	private static String description = "Symbol redundancy occurs when multiple notation constructs can be used to represent a single ontological concept";
+	
+	public SymbolRedundancy(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
+		super(name,dimension,description,acceptanceRatio,priority,isActive);
+	}
 	
 	public SymbolRedundancy(ModelMapping modelMapping) {
 		super("symbol redundancy", "Ontological", "Symbol redundancy occurs when multiple notation constructs can be used to represent a single ontological concept.",0);
@@ -26,6 +32,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	}
 	
 	public List<MetricResult> execute() {
+		System.out.println("Execute SymbolRedundancy");
 		List<MetricResult> metricResults = new ArrayList<MetricResult>();
 		List<ReferredElement> redundantSymbols = new ArrayList<ReferredElement>();
 		
@@ -49,6 +56,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 		}
 		
 		if(redundantSymbols.size() > this.acceptanceRatio) {
+			System.out.println("Fail");
 			int count = redundantSymbols.size();
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setReason("There are semantic constructs that are represented by more than one notation construct (" + count + ")");
@@ -58,7 +66,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 			metricResult.setReferredElements(redundantSymbols);
 			metricResults.add(metricResult);
 		} else {
-			
+			System.out.println("Success");
 		}
 		
 		return metricResults;

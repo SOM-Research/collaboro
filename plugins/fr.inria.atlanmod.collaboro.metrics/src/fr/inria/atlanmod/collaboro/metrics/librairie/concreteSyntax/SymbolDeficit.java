@@ -8,6 +8,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
+import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
@@ -22,7 +23,12 @@ import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
 
 public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	
-	ModelMapping modelMapping;
+	private static String description = "Symbol deficit occurs when there are semantic constructs that are not represented by any graphical symbol";
+	private static String dimension = "Ontological";
+	
+	public SymbolDeficit(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
+		super(name,dimension,description,acceptanceRatio,priority,isActive);
+	}
 	
 	public SymbolDeficit(ModelMapping modelMapping) {
 		super("symbol deficit", "Ontological", "Symbol deficit occurs when there are semantic constructs that are not represented by any graphical symbol", 0);
@@ -30,6 +36,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	}
 	
 	public List<MetricResult> execute() {
+		System.out.println("Execute : SymbolDeficit");
 		List<MetricResult> results = new ArrayList<MetricResult>();
 		List<ReferredElement> noRepresentationElements = new ArrayList<ReferredElement>();
 		
@@ -74,6 +81,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		
 		
 		if(count > this.acceptanceRatio) {
+			System.out.println("Fail");
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setReason("There are semantic constructs not represented by any graphical symbol (" + count + ")");
 			float ratio = (float)(count*100/modelMapping.getAbstractConcepts().size());
@@ -81,6 +89,8 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			metricResult.setStatus(MetricResultStatus.BAD);
 			metricResult.setReferredElements(noRepresentationElements);
 			results.add(metricResult);
+		} else {
+			System.out.println("Success");
 		}
 		return results;
 	}

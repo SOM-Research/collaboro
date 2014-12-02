@@ -1,13 +1,7 @@
 package fr.inria.atlanmod.collaboro.metrics.impl;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -15,7 +9,8 @@ import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
-import fr.inria.atlanmod.collaboro.metrics.tools.ClassFinder;
+import fr.inria.atlanmod.collaboro.metrics.tools.MetricConfigurationHandler;
+import fr.inria.atlanmod.collaboro.metrics.tools.MetricInstanciator;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelElementExtractor;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 import fr.inria.atlanmod.collaboro.notation.Definition;
@@ -27,29 +22,19 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	private Definition concreteSyntaxModel;
 	private boolean isGraphical;
 	private ModelElementExtractor modelElementExtractor;
-	private ClassFinder classFinder;
-	private Properties metricsProperties;
+	private List<ConcreteSyntaxGraphicalMetric> concreteSyntaxGraphicalMetrics;
+	private MetricConfigurationHandler configurationHandler;
 	
 	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		this.isGraphical = isConcreteSyntaxGraphical();
 		this.modelElementExtractor = new ModelElementExtractor();
-		this.classFinder = new ClassFinder();
-		this.metricsProperties = loadProrperties();
-	}
-	
-	public Properties loadProrperties() {
-		Properties prop = new Properties();
-		InputStream input = null;
-		System.out.println("here");
-		try {
-			input = new FileInputStream("resources/metrics.properties");
-			prop.load(input);			
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		return prop;
+		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
+		this.configurationHandler = new MetricConfigurationHandler();
+		//FIXME 
+		loadConfiguration();
+		//this.configurationHandler = new MetricConfigurationHandler("metrics.properties");
 	}
 	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics() {
@@ -63,17 +48,12 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		ModelMapping modelMapping = modelElementExtractor.getModelMapping(abstractSyntaxModel,concreteSyntaxModel);
 		List<ConcreteSyntaxMetric> concreteSyntaxMetrics = new ArrayList<ConcreteSyntaxMetric>();
 		if(this.isGraphical) {
-			try {
-				List<Class<?>> concreteSyntaxGraphicalMetrics = classFinder.getClassesFromPackage(ConcreteSyntaxGraphicalMetricImpl.class, metricsProperties.getProperty("concreteGraphicalSyntaxMetricsPath"));
-				for(int i=0 ; i < concreteSyntaxGraphicalMetrics.size() ; i++) {
-					Class<?> metricImpl = (Class<?>) concreteSyntaxGraphicalMetrics.get(i);
-					Constructor<?> metricConstructor = metricImpl.getConstructor(ModelMapping.class);
-					ConcreteSyntaxGraphicalMetric metric = (ConcreteSyntaxGraphicalMetric) metricConstructor.newInstance(modelMapping);
-					concreteSyntaxMetrics.add(metric);
-				}
-			} catch (IOException | ClassNotFoundException | SecurityException | IllegalArgumentException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			for(ConcreteSyntaxGraphicalMetric graphicalMetric : this.concreteSyntaxGraphicalMetrics) {
+				graphicalMetric.setModelMapping(modelMapping);
+				System.out.println("early execute");
+				System.out.println(graphicalMetric.execute());
+				
+				concreteSyntaxMetrics.add(graphicalMetric);
 			}
 		} else {
 			// Find all metrics instance of ConcreteSyntaxTextualMetrics
@@ -87,6 +67,37 @@ public class MetricsFactoryImpl implements MetricsFactory {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void saveConfiguration() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void loadConfiguration() {
+		boolean isLoaded = this.configurationHandler.load("metrics.properties");
+		if(isLoaded) {
+			MetricInstanciator metricInstanciator = new MetricInstanciator(this.configurationHandler);
+			List<ConcreteSyntaxGraphicalMetric> graphicalMetrics = metricInstanciator.loadConcreteGraphicalMetric();
+			concreteSyntaxGraphicalMetrics.addAll(graphicalMetrics);
+			System.out.println(concreteSyntaxGraphicalMetrics);
+			System.out.println("Configuration file is loaded");
+		} else {
+			System.out.println("Configuration file is not loaded");
+		}
+	}
+
+	@Override
+	public void activate(String metricName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deactivate(String metricName) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -3,6 +3,7 @@ package fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
@@ -17,14 +18,20 @@ import fr.inria.atlanmod.collaboro.notation.NotationElement;
 
 public class SymbolOverload extends ConcreteSyntaxGraphicalMetricImpl {
 
-	private ModelMapping modelMapping;
+	private static String dimension = "Ontological";
+	private static String description = "Symbol overload occurs when a single notation construct can represent multiple ontological concepts";
+	
+	public SymbolOverload(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
+		super(name,dimension,description,acceptanceRatio,priority,isActive);
+	}
 	
 	public SymbolOverload(ModelMapping modelMapping) {
-		super("symbol overload", "Ontological", "Symbol overload occurs when a single notation construct can represent multiple ontological concepts.", 10);
+		super("symbol overload", "Ontological", "Symbol overload occurs when a single notation construct can represent multiple ontological concepts.", 0);
 		this.modelMapping = modelMapping;
 	}
 	
 	public List<MetricResult> execute() {
+		System.out.println("Execute SymbolOverload");
 		List<MetricResult> metricResults = new ArrayList<MetricResult>();
 		List<ReferredElement> overloadSymbols = new ArrayList<ReferredElement>();
 		
@@ -46,6 +53,7 @@ public class SymbolOverload extends ConcreteSyntaxGraphicalMetricImpl {
 			}
 		}
 		if(overloadSymbols.size() > this.acceptanceRatio) {
+			System.out.println("Fail");
 			int count = overloadSymbols.size();
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setReason("There are notation constructs that representes more than one semantic construct (" + count + ")");
@@ -55,7 +63,7 @@ public class SymbolOverload extends ConcreteSyntaxGraphicalMetricImpl {
 			metricResult.setReferredElements(overloadSymbols);
 			metricResults.add(metricResult);
 		} else {
-			
+			System.out.println("Success");
 		}
 		
 		return metricResults;
