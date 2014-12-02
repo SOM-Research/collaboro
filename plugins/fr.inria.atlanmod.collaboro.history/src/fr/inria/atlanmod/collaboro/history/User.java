@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getVotes <em>Votes</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getCollaborations <em>Collaborations</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getEmail <em>Email</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getPasword <em>Pasword</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getPassword <em>Password</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getFirstName <em>First Name</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.User#getLastName <em>Last Name</em>}</li>
  * </ul>
@@ -89,30 +89,30 @@ public interface User extends IdElement {
 	void setEmail(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Pasword</b></em>' attribute.
+	 * Returns the value of the '<em><b>Password</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Pasword</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Password</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Pasword</em>' attribute.
-	 * @see #setPasword(String)
-	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getUser_Pasword()
+	 * @return the value of the '<em>Password</em>' attribute.
+	 * @see #setPassword(String)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getUser_Password()
 	 * @model
 	 * @generated
 	 */
-	String getPasword();
+	String getPassword();
 
 	/**
-	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.User#getPasword <em>Pasword</em>}' attribute.
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.User#getPassword <em>Password</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Pasword</em>' attribute.
-	 * @see #getPasword()
+	 * @param value the new value of the '<em>Password</em>' attribute.
+	 * @see #getPassword()
 	 * @generated
 	 */
-	void setPasword(String value);
+	void setPassword(String value);
 
 	/**
 	 * Returns the value of the '<em><b>First Name</b></em>' attribute.

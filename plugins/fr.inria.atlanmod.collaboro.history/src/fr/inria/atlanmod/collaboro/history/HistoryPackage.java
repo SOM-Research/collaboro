@@ -215,13 +215,13 @@ public interface HistoryPackage extends EPackage {
 	int USER__EMAIL = ID_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Pasword</b></em>' attribute.
+	 * The feature id for the '<em><b>Password</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER__PASWORD = ID_ELEMENT_FEATURE_COUNT + 3;
+	int USER__PASSWORD = ID_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>First Name</b></em>' attribute.
@@ -288,13 +288,22 @@ public interface HistoryPackage extends EPackage {
 	int VERSION__PREVIOUS = ID_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Recommended</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION__RECOMMENDED = ID_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Version</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VERSION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 2;
+	int VERSION_FEATURE_COUNT = ID_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.history.impl.VoteImpl <em>Vote</em>}' class.
@@ -1392,15 +1401,15 @@ public interface HistoryPackage extends EPackage {
 	EAttribute getUser_Email();
 
 	/**
-	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getPasword <em>Pasword</em>}'.
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getPassword <em>Password</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Pasword</em>'.
-	 * @see fr.inria.atlanmod.collaboro.history.User#getPasword()
+	 * @return the meta object for the attribute '<em>Password</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.User#getPassword()
 	 * @see #getUser()
 	 * @generated
 	 */
-	EAttribute getUser_Pasword();
+	EAttribute getUser_Password();
 
 	/**
 	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.User#getFirstName <em>First Name</em>}'.
@@ -1455,6 +1464,17 @@ public interface HistoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getVersion_Previous();
+
+	/**
+	 * Returns the meta object for the attribute '{@link fr.inria.atlanmod.collaboro.history.Version#isRecommended <em>Recommended</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Recommended</em>'.
+	 * @see fr.inria.atlanmod.collaboro.history.Version#isRecommended()
+	 * @see #getVersion()
+	 * @generated
+	 */
+	EAttribute getVersion_Recommended();
 
 	/**
 	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.history.Vote <em>Vote</em>}'.
@@ -2134,12 +2154,12 @@ public interface HistoryPackage extends EPackage {
 		EAttribute USER__EMAIL = eINSTANCE.getUser_Email();
 
 		/**
-		 * The meta object literal for the '<em><b>Pasword</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Password</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute USER__PASWORD = eINSTANCE.getUser_Pasword();
+		EAttribute USER__PASSWORD = eINSTANCE.getUser_Password();
 
 		/**
 		 * The meta object literal for the '<em><b>First Name</b></em>' attribute feature.
@@ -2182,6 +2202,14 @@ public interface HistoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VERSION__PREVIOUS = eINSTANCE.getVersion_Previous();
+
+		/**
+		 * The meta object literal for the '<em><b>Recommended</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION__RECOMMENDED = eINSTANCE.getVersion_Recommended();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.history.impl.VoteImpl <em>Vote</em>}' class.

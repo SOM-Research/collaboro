@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getVotes <em>Votes</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getCollaborations <em>Collaborations</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getEmail <em>Email</em>}</li>
- *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getPasword <em>Pasword</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getFirstName <em>First Name</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.UserImpl#getLastName <em>Last Name</em>}</li>
  * </ul>
@@ -78,24 +78,24 @@ public class UserImpl extends IdElementImpl implements User {
 	protected String email = EMAIL_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPasword() <em>Pasword</em>}' attribute.
+	 * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPasword()
+	 * @see #getPassword()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PASWORD_EDEFAULT = null;
+	protected static final String PASSWORD_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPasword() <em>Pasword</em>}' attribute.
+	 * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPasword()
+	 * @see #getPassword()
 	 * @generated
 	 * @ordered
 	 */
-	protected String pasword = PASWORD_EDEFAULT;
+	protected String password = PASSWORD_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
@@ -206,8 +206,8 @@ public class UserImpl extends IdElementImpl implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPasword() {
-		return pasword;
+	public String getPassword() {
+		return password;
 	}
 
 	/**
@@ -215,11 +215,11 @@ public class UserImpl extends IdElementImpl implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPasword(String newPasword) {
-		String oldPasword = pasword;
-		pasword = newPasword;
+	public void setPassword(String newPassword) {
+		String oldPassword = password;
+		password = newPassword;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.USER__PASWORD, oldPasword, pasword));
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.USER__PASSWORD, oldPassword, password));
 	}
 
 	/**
@@ -311,8 +311,8 @@ public class UserImpl extends IdElementImpl implements User {
 				return getCollaborations();
 			case HistoryPackage.USER__EMAIL:
 				return getEmail();
-			case HistoryPackage.USER__PASWORD:
-				return getPasword();
+			case HistoryPackage.USER__PASSWORD:
+				return getPassword();
 			case HistoryPackage.USER__FIRST_NAME:
 				return getFirstName();
 			case HistoryPackage.USER__LAST_NAME:
@@ -341,8 +341,8 @@ public class UserImpl extends IdElementImpl implements User {
 			case HistoryPackage.USER__EMAIL:
 				setEmail((String)newValue);
 				return;
-			case HistoryPackage.USER__PASWORD:
-				setPasword((String)newValue);
+			case HistoryPackage.USER__PASSWORD:
+				setPassword((String)newValue);
 				return;
 			case HistoryPackage.USER__FIRST_NAME:
 				setFirstName((String)newValue);
@@ -371,8 +371,8 @@ public class UserImpl extends IdElementImpl implements User {
 			case HistoryPackage.USER__EMAIL:
 				setEmail(EMAIL_EDEFAULT);
 				return;
-			case HistoryPackage.USER__PASWORD:
-				setPasword(PASWORD_EDEFAULT);
+			case HistoryPackage.USER__PASSWORD:
+				setPassword(PASSWORD_EDEFAULT);
 				return;
 			case HistoryPackage.USER__FIRST_NAME:
 				setFirstName(FIRST_NAME_EDEFAULT);
@@ -398,8 +398,8 @@ public class UserImpl extends IdElementImpl implements User {
 				return collaborations != null && !collaborations.isEmpty();
 			case HistoryPackage.USER__EMAIL:
 				return EMAIL_EDEFAULT == null ? email != null : !EMAIL_EDEFAULT.equals(email);
-			case HistoryPackage.USER__PASWORD:
-				return PASWORD_EDEFAULT == null ? pasword != null : !PASWORD_EDEFAULT.equals(pasword);
+			case HistoryPackage.USER__PASSWORD:
+				return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
 			case HistoryPackage.USER__FIRST_NAME:
 				return FIRST_NAME_EDEFAULT == null ? firstName != null : !FIRST_NAME_EDEFAULT.equals(firstName);
 			case HistoryPackage.USER__LAST_NAME:
@@ -420,8 +420,8 @@ public class UserImpl extends IdElementImpl implements User {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (email: ");
 		result.append(email);
-		result.append(", pasword: ");
-		result.append(pasword);
+		result.append(", password: ");
+		result.append(password);
 		result.append(", firstName: ");
 		result.append(firstName);
 		result.append(", lastName: ");

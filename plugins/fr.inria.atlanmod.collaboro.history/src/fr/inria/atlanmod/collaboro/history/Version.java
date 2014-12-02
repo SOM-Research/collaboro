@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Version#getProposals <em>Proposals</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.Version#getPrevious <em>Previous</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.Version#isRecommended <em>Recommended</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,5 +56,31 @@ public interface Version extends IdElement {
 	 * @generated
 	 */
 	EList<Version> getPrevious();
+
+	/**
+	 * Returns the value of the '<em><b>Recommended</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Recommended</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Recommended</em>' attribute.
+	 * @see #setRecommended(boolean)
+	 * @see fr.inria.atlanmod.collaboro.history.HistoryPackage#getVersion_Recommended()
+	 * @model
+	 * @generated
+	 */
+	boolean isRecommended();
+
+	/**
+	 * Sets the value of the '{@link fr.inria.atlanmod.collaboro.history.Version#isRecommended <em>Recommended</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Recommended</em>' attribute.
+	 * @see #isRecommended()
+	 * @generated
+	 */
+	void setRecommended(boolean value);
 
 } // Version

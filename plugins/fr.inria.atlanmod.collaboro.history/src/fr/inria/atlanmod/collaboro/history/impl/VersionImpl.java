@@ -8,10 +8,12 @@ import fr.inria.atlanmod.collaboro.history.Version;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -25,6 +27,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl#getProposals <em>Proposals</em>}</li>
  *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl#getPrevious <em>Previous</em>}</li>
+ *   <li>{@link fr.inria.atlanmod.collaboro.history.impl.VersionImpl#isRecommended <em>Recommended</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,6 +53,26 @@ public class VersionImpl extends IdElementImpl implements Version {
 	 * @ordered
 	 */
 	protected EList<Version> previous;
+
+	/**
+	 * The default value of the '{@link #isRecommended() <em>Recommended</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecommended()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean RECOMMENDED_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isRecommended() <em>Recommended</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isRecommended()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean recommended = RECOMMENDED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,6 +122,27 @@ public class VersionImpl extends IdElementImpl implements Version {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isRecommended() {
+		return recommended;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRecommended(boolean newRecommended) {
+		boolean oldRecommended = recommended;
+		recommended = newRecommended;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HistoryPackage.VERSION__RECOMMENDED, oldRecommended, recommended));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -135,6 +179,8 @@ public class VersionImpl extends IdElementImpl implements Version {
 				return getProposals();
 			case HistoryPackage.VERSION__PREVIOUS:
 				return getPrevious();
+			case HistoryPackage.VERSION__RECOMMENDED:
+				return isRecommended();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -156,6 +202,9 @@ public class VersionImpl extends IdElementImpl implements Version {
 				getPrevious().clear();
 				getPrevious().addAll((Collection<? extends Version>)newValue);
 				return;
+			case HistoryPackage.VERSION__RECOMMENDED:
+				setRecommended((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -174,6 +223,9 @@ public class VersionImpl extends IdElementImpl implements Version {
 			case HistoryPackage.VERSION__PREVIOUS:
 				getPrevious().clear();
 				return;
+			case HistoryPackage.VERSION__RECOMMENDED:
+				setRecommended(RECOMMENDED_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -190,8 +242,26 @@ public class VersionImpl extends IdElementImpl implements Version {
 				return proposals != null && !proposals.isEmpty();
 			case HistoryPackage.VERSION__PREVIOUS:
 				return previous != null && !previous.isEmpty();
+			case HistoryPackage.VERSION__RECOMMENDED:
+				return recommended != RECOMMENDED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (recommended: ");
+		result.append(recommended);
+		result.append(')');
+		return result.toString();
 	}
 
 } //VersionImpl

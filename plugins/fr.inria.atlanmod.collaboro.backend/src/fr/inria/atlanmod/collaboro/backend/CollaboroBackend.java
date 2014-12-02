@@ -71,7 +71,7 @@ public class CollaboroBackend {
 		User found = null;
 		if(getHistory() != null) 
 			for (User user : getHistory().getUsers()) 
-				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPasword() != null && user.getPasword().equals(password))
+				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPassword() != null && user.getPassword().equals(password))
 					return user;
 
 		return found;
@@ -244,7 +244,6 @@ public class CollaboroBackend {
 	Collaboration initCollaborationPlain(Collaboration collaboration, String userId, String rationale, String referredElements) {
 		// Locating the user
 		User userProposing = locateUser(userId);
-
 		if(userProposing != null) {
 			collaboration.setProposedBy(userProposing);
 			collaboration.setRationale(rationale);
