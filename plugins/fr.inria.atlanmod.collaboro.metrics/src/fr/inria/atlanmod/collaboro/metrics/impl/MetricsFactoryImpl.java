@@ -8,6 +8,8 @@ import org.eclipse.emf.ecore.EPackage;
 import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
+import fr.inria.atlanmod.collaboro.metrics.Metric;
+import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
 import fr.inria.atlanmod.collaboro.metrics.tools.MetricConfigurationHandler;
 import fr.inria.atlanmod.collaboro.metrics.tools.MetricInstanciator;
@@ -88,16 +90,46 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		}
 	}
 
-	@Override
 	public void activate(String metricName) {
-		// TODO Auto-generated method stub
+		ConcreteSyntaxGraphicalMetricImpl metric = null;
+		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
+			if(metricTmp.getName().equals(metricName)) {
+				metric = (ConcreteSyntaxGraphicalMetricImpl) metricTmp;
+			}
+		}
+		if(metric != null) {
+			metric.setIsActive(true);
+			this.configurationHandler.saveMetric(metric);
+		}
 		
 	}
 
-	@Override
 	public void deactivate(String metricName) {
-		// TODO Auto-generated method stub
+		MetricImpl metric = getMetricByName(metricName);
+		if(metric != null) {
+			metric.setIsActive(false);
+			this.configurationHandler.saveMetric(metric);
+		}
 		
 	}
+	
+	public void setMetricPriority(String metricName, MetricPriority priority) {
+		MetricImpl metric = getMetricByName(metricName);
+		if(metric != null) {
+			metric.setPriority(priority);
+			this.configurationHandler.saveMetric(metric);
+		}
+	}
+	
+	private MetricImpl getMetricByName(String metricName) {
+		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
+			if(metricTmp.getName().equals(metricName)) {
+				return (MetricImpl)metricTmp;
+			}
+		}
+		return null;
+	}
+	
+	
 	
 }

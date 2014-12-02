@@ -48,6 +48,10 @@ public enum MetricPriority {
 	  return literal;
 	}
 	
+	public String toString() {
+		return literal;
+	}
+	
 	
 	
 }

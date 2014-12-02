@@ -8,6 +8,7 @@ import java.util.List;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
+import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 
 public class MetricInstanciator {
 	
@@ -44,7 +45,7 @@ public class MetricInstanciator {
 			try {
 				Class<?> metricClass = classFinder.getClassByName(metricName, metricPackage);
 				Constructor<?> metricConstructor = metricClass.getConstructor(String.class, Integer.class, MetricPriority.class, boolean.class);
-				ConcreteSyntaxGraphicalMetric metric = (ConcreteSyntaxGraphicalMetric) metricConstructor.newInstance(metricId,metricAcceptanceRatio,metricPriority, metricIsActive );
+				ConcreteSyntaxGraphicalMetric metric = (ConcreteSyntaxGraphicalMetricImpl) metricConstructor.newInstance(metricId,metricAcceptanceRatio,metricPriority, metricIsActive );
 				metrics.add(metric);
 			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// TODO Auto-generated catch block
