@@ -54,5 +54,17 @@ public abstract class MetricImpl implements Metric {
 	public MetricPriority getPriority() {
 		return priority;
 	}
+	
+	public boolean isActive() {
+		return this.isActive;
+	}
+	
+	public void setPriority(MetricPriority priority) {
+		this.priority = priority;
+	}
+	
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 }

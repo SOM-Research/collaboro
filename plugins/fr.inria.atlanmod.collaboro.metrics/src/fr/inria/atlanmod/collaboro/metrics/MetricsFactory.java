@@ -13,6 +13,8 @@ public interface MetricsFactory {
 	public void activate(String metricName);
 	public void deactivate(String metricName);
 	
+	public void setMetricPriority(String metricName, MetricPriority priority);
+	
 	
 
 }
