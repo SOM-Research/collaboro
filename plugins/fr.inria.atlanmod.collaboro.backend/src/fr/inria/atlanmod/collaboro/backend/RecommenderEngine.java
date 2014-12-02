@@ -21,12 +21,14 @@ public class RecommenderEngine {
 	private MetricsFactory factory;
 	private String userId;
 	private HashMap<Metric, List<MetricResult>> results;
+	private HashMap<Metric, List<String>> metric2proposalId;
 	
 	public RecommenderEngine(String userId, CollaboroBackend backend) {
 		this.userId = userId;
 		this.backend = backend;
 		this.modelManager = backend.getModelManager();
 		this.results = new HashMap<Metric, List<MetricResult>>();
+		this.metric2proposalId = new HashMap<Metric, List<String>>();
 		
 		EPackage abstractSyntaxModel = modelManager.getEcoreModel();
 		Definition concreteSyntaxModel = modelManager.getNotation();
@@ -60,8 +62,8 @@ public class RecommenderEngine {
 		for(AbstractSyntaxMetric metric : metrics) {
 			List<MetricResult> results = metric.execute();
 			for(MetricResult result : results) {
-				createProposal(metric, result);
-				registerResult(metric, result);
+				String proposalId = createProposal(metric, result);
+				registerResult(metric, result, proposalId);
 			}
 		}
 	}
@@ -71,13 +73,13 @@ public class RecommenderEngine {
 		for(ConcreteSyntaxMetric metric : metrics) {
 			List<MetricResult> results = metric.execute();
 			for(MetricResult result : results) {
-				createProposal(metric, result);
-				registerResult(metric, result);
+				String proposalId = createProposal(metric, result);
+				registerResult(metric, result, proposalId);
 			}
 		}
 	}
 
-	private void createProposal(Metric metric, MetricResult metricResult) {
+	private String createProposal(Metric metric, MetricResult metricResult) {
 		String rationale = "Metric: " + metric.getName() + " - "
 				+ "Description: " + metric.getDescription() + " - "
 				+ "Reason: " + metricResult.getReason();
@@ -87,19 +89,33 @@ public class RecommenderEngine {
 		}
 		if(!referredElements.equals(""))
 			referredElements = referredElements.substring(0, referredElements.length() - 1);
-		backend.createProposalPlain(userId, rationale, referredElements);
+		return backend.createProposalPlain(userId, rationale, referredElements);
+		
 	}
 	
-	public void registerResult(Metric metric, MetricResult metricResult) {
+	public void registerResult(Metric metric, MetricResult metricResult, String proposalId) {
 		List<MetricResult> metricResults = results.get(metric);
 		if(metricResults == null) {
 			metricResults = new ArrayList<MetricResult>();
 			results.put(metric, metricResults);
 		}
-		metricResults.add(metricResult);		
+		metricResults.add(metricResult);
+		
+		List<String> metricProposals = metric2proposalId.get(metric);
+		if(metricProposals == null) {
+			metricProposals = new ArrayList<String>();
+			metric2proposalId.put(metric, metricProposals);
+		}
+		metricProposals.add(proposalId);
 	}
 
 	public HashMap<Metric, List<MetricResult>> getResults() {
 		return results;
+	}
+
+	public HashMap<Metric, List<String>> getMetric2proposalId() {
+		return metric2proposalId;
 	}	
+	
+	
 }

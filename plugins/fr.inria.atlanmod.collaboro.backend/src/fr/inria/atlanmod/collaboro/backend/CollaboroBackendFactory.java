@@ -57,7 +57,7 @@ public class CollaboroBackendFactory {
 		
 		if(modelManager.getHistory() != null) 
 			for (User user : modelManager.getHistory().getUsers()) 
-				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPasword() != null && user.getPasword().equals(password))
+				if(user.getEmail() != null && user.getEmail().equals(email) && user.getPassword() != null && user.getPassword().equals(password))
 					return user;
 
 		return found;

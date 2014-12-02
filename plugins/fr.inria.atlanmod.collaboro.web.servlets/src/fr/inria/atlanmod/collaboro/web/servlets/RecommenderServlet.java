@@ -40,43 +40,46 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		}
 		HttpSession session = request.getSession(false);
 		String dsl = (String) session.getAttribute("dsl");
-		
-		CollaboroRecommenderBackend recommenderBackend = CollaboroBackendFactory.getRecommenderBackend(dsl);
-		recommenderBackend.launchRecommender();
-		
-		HashMap<Metric, List<MetricResult>> results = recommenderBackend.getResults();
-		MetricResultStatus finalStatus = MetricResultStatus.GOOD;
-		int problemCounter = 0;
-		for(Metric metric : results.keySet()) {
-			System.out.println("--> " + metric.getName());
-			List<MetricResult> metricResults = results.get(metric);
-			for(MetricResult metricResult : metricResults) {
-				if(metricResult.getStatus() == MetricResultStatus.MIDDLE && finalStatus == MetricResultStatus.GOOD)
-					finalStatus = MetricResultStatus.MIDDLE;
-				else if(metricResult.getStatus() == MetricResultStatus.BAD && finalStatus == MetricResultStatus.GOOD)
-					finalStatus = MetricResultStatus.BAD;
-				else if(metricResult.getStatus() == MetricResultStatus.BAD && finalStatus == MetricResultStatus.MIDDLE)
-					finalStatus = MetricResultStatus.BAD;
-				
-				if(metricResult.getStatus() == MetricResultStatus.MIDDLE || metricResult.getStatus() == MetricResultStatus.BAD)
-					problemCounter++;
-			}
-		}
-		
-		JsonObject responseObject = new JsonObject();
-		
-		if(finalStatus == MetricResultStatus.GOOD)
-			responseObject.addProperty("status", "success");
-		else if(finalStatus == MetricResultStatus.MIDDLE)
-			responseObject.addProperty("status", "warning");
-		else if(finalStatus == MetricResultStatus.BAD)
-			responseObject.addProperty("status", "danger");
-		
 
-		if(finalStatus == MetricResultStatus.GOOD)
-			responseObject.addProperty("message", "Everything looks fine!");
-		else if(finalStatus == MetricResultStatus.MIDDLE || finalStatus == MetricResultStatus.BAD)
-			responseObject.addProperty("message", problemCounter + " issue" + ((problemCounter > 1) ? "s were" : " was") +" detected");
+		JsonObject responseObject = new JsonObject();
+		CollaboroRecommenderBackend recommenderBackend = CollaboroBackendFactory.getRecommenderBackend(dsl);
+		if(recommenderBackend.checkAlreadyRecommended()) {
+			responseObject.addProperty("status", "success");
+			responseObject.addProperty("message", "Version already checked!");
+		} else {
+			recommenderBackend.launchRecommender();
+			
+			HashMap<Metric, List<MetricResult>> results = recommenderBackend.getResults();
+			MetricResultStatus finalStatus = MetricResultStatus.GOOD;
+			int problemCounter = 0;
+			for(Metric metric : results.keySet()) {
+				System.out.println("--> " + metric.getName());
+				List<MetricResult> metricResults = results.get(metric);
+				for(MetricResult metricResult : metricResults) {
+					if(metricResult.getStatus() == MetricResultStatus.MIDDLE && finalStatus == MetricResultStatus.GOOD)
+						finalStatus = MetricResultStatus.MIDDLE;
+					else if(metricResult.getStatus() == MetricResultStatus.BAD && finalStatus == MetricResultStatus.GOOD)
+						finalStatus = MetricResultStatus.BAD;
+					else if(metricResult.getStatus() == MetricResultStatus.BAD && finalStatus == MetricResultStatus.MIDDLE)
+						finalStatus = MetricResultStatus.BAD;
+					
+					if(metricResult.getStatus() == MetricResultStatus.MIDDLE || metricResult.getStatus() == MetricResultStatus.BAD)
+						problemCounter++;
+				}
+			}
+			
+			if(finalStatus == MetricResultStatus.GOOD)
+				responseObject.addProperty("status", "success");
+			else if(finalStatus == MetricResultStatus.MIDDLE)
+				responseObject.addProperty("status", "warning");
+			else if(finalStatus == MetricResultStatus.BAD)
+				responseObject.addProperty("status", "danger");
+			
+			if(finalStatus == MetricResultStatus.GOOD)
+				responseObject.addProperty("message", "Everything looks fine!");
+			else if(finalStatus == MetricResultStatus.MIDDLE || finalStatus == MetricResultStatus.BAD)
+				responseObject.addProperty("message", problemCounter + " issue" + ((problemCounter > 1) ? "s were" : " was") +" detected");
+		}
 		
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
@@ -120,7 +123,7 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 			response.setContentType("application/json");
 		} else if(action.equals("list")) {
 			List<Metric> metrics = recommender.getMetrics();
-			responseObject = toJson(metrics);
+			responseObject = toJson(recommender, metrics);
 			
 		}
 
@@ -128,11 +131,11 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		out.print(responseObject.toString()); 
 	}
 
-	private JsonObject toJson(List<Metric> metrics) {
+	private JsonObject toJson(CollaboroRecommenderBackend recommender, List<Metric> metrics) {
 		JsonArray jsonMetrics = new JsonArray();
 		
 		for(Metric metric : metrics) {
-			JsonObject jsonMetric = toJson(metric);
+			JsonObject jsonMetric = toJson(recommender, metric);
 			jsonMetrics.add(jsonMetric);
 		}
 
@@ -142,7 +145,7 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		return result;
 	}
 
-	private JsonObject toJson(Metric metric) {
+	private JsonObject toJson(CollaboroRecommenderBackend recommender, Metric metric) {
 		JsonObject result = new JsonObject();
 		
 		if (metric instanceof AbstractSyntaxMetric) {
@@ -153,9 +156,13 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 			result.addProperty("type", "CS");
 		}
 		
+		List<String> metricProposals = recommender.getMetric2proposalId().get(metric);
+		int detected = (metricProposals == null) ? 0 : metricProposals.size();
+		
 		result.addProperty("name", metric.getName());
 		result.addProperty("description", metric.getDescription());
 		result.addProperty("dimension", metric.getDimension());
+		result.addProperty("detected", detected);
 		result.addProperty("active", true);
 		
 		return result;

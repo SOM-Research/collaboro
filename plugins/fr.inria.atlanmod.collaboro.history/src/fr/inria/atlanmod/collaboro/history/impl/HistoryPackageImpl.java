@@ -399,7 +399,7 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUser_Pasword() {
+	public EAttribute getUser_Password() {
 		return (EAttribute)userEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -446,6 +446,15 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 	 */
 	public EReference getVersion_Previous() {
 		return (EReference)versionEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersion_Recommended() {
+		return (EAttribute)versionEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -951,13 +960,14 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		createEReference(userEClass, USER__VOTES);
 		createEReference(userEClass, USER__COLLABORATIONS);
 		createEAttribute(userEClass, USER__EMAIL);
-		createEAttribute(userEClass, USER__PASWORD);
+		createEAttribute(userEClass, USER__PASSWORD);
 		createEAttribute(userEClass, USER__FIRST_NAME);
 		createEAttribute(userEClass, USER__LAST_NAME);
 
 		versionEClass = createEClass(VERSION);
 		createEReference(versionEClass, VERSION__PROPOSALS);
 		createEReference(versionEClass, VERSION__PREVIOUS);
+		createEAttribute(versionEClass, VERSION__RECOMMENDED);
 
 		voteEClass = createEClass(VOTE);
 		createEAttribute(voteEClass, VOTE__AGREEMENT);
@@ -1097,13 +1107,14 @@ public class HistoryPackageImpl extends EPackageImpl implements HistoryPackage {
 		initEReference(getUser_Votes(), this.getVote(), this.getVote_User(), "votes", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUser_Collaborations(), this.getCollaboration(), this.getCollaboration_ProposedBy(), "collaborations", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_Email(), ecorePackage.getEString(), "email", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUser_Pasword(), ecorePackage.getEString(), "pasword", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_Password(), ecorePackage.getEString(), "password", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_FirstName(), ecorePackage.getEString(), "firstName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_LastName(), ecorePackage.getEString(), "lastName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(versionEClass, Version.class, "Version", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getVersion_Proposals(), this.getProposal(), this.getProposal_Version(), "proposals", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getVersion_Previous(), this.getVersion(), null, "previous", null, 0, -1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersion_Recommended(), ecorePackage.getEBoolean(), "recommended", null, 0, 1, Version.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(voteEClass, Vote.class, "Vote", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getVote_Agreement(), ecorePackage.getEBoolean(), "agreement", null, 0, 1, Vote.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
