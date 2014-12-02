@@ -8,6 +8,7 @@
                 <div class="panel-title"><strong>{{metric.name}}</strong><button type="button" style="float:right;" ng-click="toggleMetric(metric)" ng-class="status(metric)" ng-bind-html="statusText(metric)"></button></div>
             </div>
             <div class="panel-body">{{metric.description}}</div>
+            <div class="panel-footer">{{metric.detected}} issue/s detected in the current version</div>
         </div>
     </div>
 
