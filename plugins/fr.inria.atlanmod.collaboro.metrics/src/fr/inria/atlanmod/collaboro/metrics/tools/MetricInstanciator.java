@@ -33,7 +33,7 @@ public class MetricInstanciator {
 		for(String metricName : metricList) {
 			String metricId = configurationHandler.getMetricProperty(metricType, metricName, "id");
 			String metricIsActiveString = configurationHandler.getMetricProperty(metricType, metricName, "active");
-			boolean metricIsActive = Boolean.getBoolean(metricIsActiveString);
+			boolean metricIsActive = Boolean.valueOf(metricIsActiveString);
 			String metricAcceptanceRatioString = configurationHandler.getMetricProperty(metricType, metricName, "acceptanceRatio");
 			Integer metricAcceptanceRatio = Integer.decode(metricAcceptanceRatioString);
 			String metricPriorityString = configurationHandler.getMetricProperty(metricType, metricName, "priority");
