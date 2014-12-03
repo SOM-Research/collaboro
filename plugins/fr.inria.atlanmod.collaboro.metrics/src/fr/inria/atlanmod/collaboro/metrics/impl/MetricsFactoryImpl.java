@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EPackage;
 import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
+import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxTextualMetric;
 import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
@@ -25,19 +26,33 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	private boolean isGraphical;
 	private ModelElementExtractor modelElementExtractor;
 	private List<ConcreteSyntaxGraphicalMetric> concreteSyntaxGraphicalMetrics;
+	private List<ConcreteSyntaxTextualMetric> concreteSyntaxTextualMetrics;
+	private List<AbstractSyntaxMetric> abstractSyntaxMetrics;
 	private MetricConfigurationHandler configurationHandler;
 	
-	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
+	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, String configurationFilePath) {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		this.isGraphical = isConcreteSyntaxGraphical();
 		this.modelElementExtractor = new ModelElementExtractor();
+		this.configurationHandler = new MetricConfigurationHandler(configurationFilePath);
 		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
-		this.configurationHandler = new MetricConfigurationHandler();
-		//FIXME 
-		loadConfiguration();
-		//this.configurationHandler = new MetricConfigurationHandler("metrics.properties");
+		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
+		this.abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
+		initialize();
+		System.out.println("MetricFactory initialised");
 	}
+	
+	public void initialize() {
+		MetricInstanciator metricInstanciator = new MetricInstanciator(this.configurationHandler);
+		List<ConcreteSyntaxGraphicalMetric> graphicalMetrics = metricInstanciator.loadConcreteGraphicalMetrics();
+		List<ConcreteSyntaxTextualMetric> textualMetrics = metricInstanciator.loadConcreteTextualMetrics();
+		List<AbstractSyntaxMetric> abstractMetrics = metricInstanciator.loadAbstractMetrics();
+		concreteSyntaxGraphicalMetrics.addAll(graphicalMetrics);
+		concreteSyntaxTextualMetrics.addAll(textualMetrics);
+		abstractSyntaxMetrics.addAll(abstractMetrics);
+	}
+	
 	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics() {
 		List<AbstractSyntaxMetric> abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
@@ -52,9 +67,6 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		if(this.isGraphical) {
 			for(ConcreteSyntaxGraphicalMetric graphicalMetric : this.concreteSyntaxGraphicalMetrics) {
 				graphicalMetric.setModelMapping(modelMapping);
-				System.out.println("early execute");
-				System.out.println(graphicalMetric.execute());
-				
 				concreteSyntaxMetrics.add(graphicalMetric);
 			}
 		} else {
@@ -62,41 +74,10 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		}
 		return concreteSyntaxMetrics;
 	}
-	
-	private boolean isConcreteSyntaxGraphical() {
-		NotationType concreteSyntaxModelType = concreteSyntaxModel.getType();
-		if(concreteSyntaxModelType.equals(NotationType.TEXTUAL)) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public void saveConfiguration() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void loadConfiguration() {
-		boolean isLoaded = this.configurationHandler.load("metrics.properties");
-		if(isLoaded) {
-			MetricInstanciator metricInstanciator = new MetricInstanciator(this.configurationHandler);
-			List<ConcreteSyntaxGraphicalMetric> graphicalMetrics = metricInstanciator.loadConcreteGraphicalMetric();
-			concreteSyntaxGraphicalMetrics.addAll(graphicalMetrics);
-			System.out.println(concreteSyntaxGraphicalMetrics);
-			System.out.println("Configuration file is loaded");
-		} else {
-			System.out.println("Configuration file is not loaded");
-		}
-	}
 
 	public void activate(String metricName) {
-		ConcreteSyntaxGraphicalMetricImpl metric = null;
-		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
-			if(metricTmp.getName().equals(metricName)) {
-				metric = (ConcreteSyntaxGraphicalMetricImpl) metricTmp;
-			}
-		}
+		System.out.println("In MetricFactory.activate : " + metricName);
+		MetricImpl metric = getMetricByName(metricName);
 		if(metric != null) {
 			metric.setIsActive(true);
 			this.configurationHandler.saveMetric(metric);
@@ -105,6 +86,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	}
 
 	public void deactivate(String metricName) {
+		System.out.println("In MetricFactory.deactivate : " + metricName);
 		MetricImpl metric = getMetricByName(metricName);
 		if(metric != null) {
 			metric.setIsActive(false);
@@ -114,6 +96,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	}
 	
 	public void setMetricPriority(String metricName, MetricPriority priority) {
+		System.out.println("In MetricFactory.setPriority : " + metricName + " , " + priority);
 		MetricImpl metric = getMetricByName(metricName);
 		if(metric != null) {
 			metric.setPriority(priority);
@@ -121,15 +104,36 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		}
 	}
 	
-	private MetricImpl getMetricByName(String metricName) {
-		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
-			if(metricTmp.getName().equals(metricName)) {
-				return (MetricImpl)metricTmp;
-			}
+	private boolean isConcreteSyntaxGraphical() {
+		NotationType concreteSyntaxModelType = concreteSyntaxModel.getType();
+		if(concreteSyntaxModelType.equals(NotationType.TEXTUAL)) {
+			return false;
 		}
-		return null;
+		return true;
 	}
 	
-	
-	
+	private MetricImpl getMetricByName(String metricName) {
+		System.out.println("\tIn MetricFactory.getMetricByName : " + metricName);
+		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
+			if(metricTmp.getName().equals(metricName)) {
+				System.out.println("\t\tFound graphical metric");
+				return ((ConcreteSyntaxGraphicalMetricImpl) metricTmp);
+			}
+		}
+		for(ConcreteSyntaxTextualMetric metricTmp : concreteSyntaxTextualMetrics) {
+			if(metricTmp.getName().equals(metricName)) {
+				System.out.println("\t\tFound textual metric");
+				return ((ConcreteSyntaxTextualMetricImpl) metricTmp);
+			}
+		}
+		for(AbstractSyntaxMetric metricTmp : abstractSyntaxMetrics) {
+			if(metricTmp.getName().equals(metricName)) {
+				System.out.println("\t\tFound abstract metric");
+				return ((AbstractSyntaxMetricImpl) metricTmp);
+			}
+		}
+		System.out.println("\t\tNo metric found");
+		return null;
+	}
+
 }

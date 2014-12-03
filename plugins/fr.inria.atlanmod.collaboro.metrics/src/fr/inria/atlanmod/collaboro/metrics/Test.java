@@ -51,9 +51,10 @@ public class Test {
 		
 		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
-		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax);
-		metricFactory.loadConfiguration();
-		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
+		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
+		//metricFactory.loadConfiguration();
+		metricFactory.activate("Symbol Deficit");
+		/*List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
 		System.out.println("-------------------------");
 		for(ConcreteSyntaxMetric metric : metrics) {
 			List<MetricResult> metricResults = metric.execute();
@@ -61,7 +62,7 @@ public class Test {
 				digestMetricResult(metric,metricResult);
 				System.out.println("-------------------------");
 			}
-		}
+		}*/
 		
 		
 		// Retrieve all concepts from Abstract Syntax
