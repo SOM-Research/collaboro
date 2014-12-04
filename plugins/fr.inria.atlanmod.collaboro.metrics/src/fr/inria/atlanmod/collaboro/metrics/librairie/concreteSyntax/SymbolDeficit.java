@@ -16,7 +16,6 @@ import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
 import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
-import fr.inria.atlanmod.collaboro.metrics.impl.MetricsFactoryImpl;
 import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
@@ -57,7 +56,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		for(Concept abstractSyntaxElement : modelMapping.getAbstractConcepts()) {
 			Boolean isAbstractSyntaxElementRepresented = isAbstractElementRepresentedMap.get(abstractSyntaxElement);
 			String abstractSyntaxElementName = abstractSyntaxElement.getName();
-			EObject abstractSyntaxElementObject = abstractSyntaxElement.getAbstractSyntaxElement();
+			EObject abstractSyntaxElementObject = abstractSyntaxElement.getAbstractModelElement();
 			if(!isAbstractSyntaxElementRepresented) {
 				// Check for Eopposite (if EOpposite is represented, this reference does not need to be represented)
 				if(abstractSyntaxElementObject instanceof EReference) {

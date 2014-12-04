@@ -40,7 +40,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 		
 		for(Concept abstractSyntaxElement : modelMapping.getAbstractConcepts()) {
 			String abstractSyntaxElementName = abstractSyntaxElement.getName();
-			EObject abstractSyntaxElementObject = abstractSyntaxElement.getAbstractSyntaxElement();
+			EObject abstractSyntaxElementObject = abstractSyntaxElement.getAbstractModelElement();
 			int relationshipCount = 0;
 			for(Relationship relationship : mapping) {
 				if(relationship.getRelationshipFrom().equals(abstractSyntaxElement)) {

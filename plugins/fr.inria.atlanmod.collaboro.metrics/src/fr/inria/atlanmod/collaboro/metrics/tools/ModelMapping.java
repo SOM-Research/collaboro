@@ -82,7 +82,7 @@ public class ModelMapping {
 	public Concept getConceptByAbstractSyntaxElement(EObject abstractSyntaxElement) {
 		List<Concept> conceptList = this.abstractConcepts;
 		for(Concept concept : conceptList) {
-			if(concept.getAbstractSyntaxElement().equals(abstractSyntaxElement)) {
+			if(concept.getAbstractModelElement().equals(abstractSyntaxElement)) {
 				return concept;
 			}
 		}

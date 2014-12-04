@@ -53,7 +53,6 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		abstractSyntaxMetrics.addAll(abstractMetrics);
 	}
 	
-	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics() {
 		List<AbstractSyntaxMetric> abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
 		// TODO
@@ -65,6 +64,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		ModelMapping modelMapping = modelElementExtractor.getModelMapping(abstractSyntaxModel,concreteSyntaxModel);
 		List<ConcreteSyntaxMetric> concreteSyntaxMetrics = new ArrayList<ConcreteSyntaxMetric>();
 		if(this.isGraphical) {
+			System.out.println(concreteSyntaxGraphicalMetrics);
 			for(ConcreteSyntaxGraphicalMetric graphicalMetric : this.concreteSyntaxGraphicalMetrics) {
 				graphicalMetric.setModelMapping(modelMapping);
 				concreteSyntaxMetrics.add(graphicalMetric);
