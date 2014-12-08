@@ -30,13 +30,18 @@ import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
 
 public class ModelElementExtractor {
 	
-	private List<EObject> abstractSyntaxElements;
-	private List<NotationElement> concreteSyntaxElements;
-	private List<Symbol> concreteSymbols;
+	private EPackage abstractSyntaxModel;
+	private Definition concreteSyntaxModel;
 	
 	private List<ClassConcept> classConcepts;
 	private List<AttributeConcept> attributeConcepts;
 	private List<ReferenceConcept> referenceConcepts;
+	
+	private List<ClassSymbol> classSymbols;
+	private List<AttributeSymbol> attributeSymbols;
+	private List<ReferenceSymbol> referenceSymbols;
+	
+	private ModelMapping modelMapping;
 	
 	public ModelElementExtractor() {
 		this.classConcepts = new ArrayList<ClassConcept>();
@@ -44,21 +49,45 @@ public class ModelElementExtractor {
 		this.referenceConcepts = new ArrayList<ReferenceConcept>();
 	}
 	
-	public List<Concept> discoverAbstractConcepts(EPackage abstractSyntaxModel) {
-		List<Concept> abstractConcepts = new ArrayList<Concept>();
-		discoverAbstractClasses(abstractSyntaxModel);
-		discoverAbstractAttribute(abstractSyntaxModel);
-		discoverAbstractReference(abstractSyntaxModel);
+	public ModelElementExtractor(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
+		this.abstractSyntaxModel = abstractSyntaxModel;
+		this.concreteSyntaxModel = concreteSyntaxModel;
+		this.classConcepts = new ArrayList<ClassConcept>();
+		this.attributeConcepts = new ArrayList<AttributeConcept>();
+		this.referenceConcepts = new ArrayList<ReferenceConcept>();
+		this.classSymbols = new ArrayList<ClassSymbol>();
+		this.attributeSymbols = new ArrayList<AttributeSymbol>();
+		this.referenceSymbols = new ArrayList<ReferenceSymbol>();
+		this.modelMapping = new ModelMapping();
+		initialize();
+	}
+	
+	private void initialize() {
+		// Abstract Syntax discovery
+		discoverAbstractClasses();
+		discoverAbstractAttribute();
+		discoverAbstractReference();
 		
-		abstractConcepts.addAll(classConcepts);
-		abstractConcepts.addAll(attributeConcepts);
-		abstractConcepts.addAll(referenceConcepts);
+		// Concrete Syntax discovery
+		discoverConcreteConcepts();
 		
-		return abstractConcepts;
+		this.modelMapping.mapClassConceptsToClassSymbols(classConcepts, classSymbols);
+		this.modelMapping.mapAttributeConceptsToAttributeSymbols(attributeConcepts, attributeSymbols);
+		this.modelMapping.mapReferenceConceptsToReferenceSymbols(referenceConcepts, referenceSymbols);
+		
 		
 	}
 	
-	private void discoverAbstractClasses(EPackage abstractSyntaxModel) {
+	public ModelMapping getModelMapping() {
+		return modelMapping;
+	}
+	
+	/* 
+	 *  ================================================================
+	 * 			Abstract Syntax Concept Extraction Methods
+	 *  ================================================================
+	*/
+	private void discoverAbstractClasses() {
 		List<EObject> abstractSyntaxContents = abstractSyntaxModel.eContents();
 		for(EObject abstractSyntaxElement : abstractSyntaxContents) {
 			if(abstractSyntaxElement instanceof EClass) {
@@ -86,7 +115,7 @@ public class ModelElementExtractor {
 		}
 	}
 	
-	private void discoverAbstractAttribute(EPackage abstractSyntaxModel) {
+	private void discoverAbstractAttribute() {
 		for(ClassConcept classConcept : classConcepts) {
 			EClass eClass = (EClass) classConcept.getAbstractModelElement();
 			List<EAttribute> eClassAttributes = eClass.getEAllAttributes();
@@ -144,7 +173,7 @@ public class ModelElementExtractor {
 	
 
 	
-	private void discoverAbstractReference(EPackage abstractSyntaxModel) {
+	private void discoverAbstractReference() {
 		for(ClassConcept classConcept : classConcepts) {
 			EClass eClass = (EClass) classConcept.getAbstractModelElement();
 			List<EReference> eClassReferences = eClass.getEAllReferences();
@@ -282,29 +311,92 @@ public class ModelElementExtractor {
 			}
 		}
 		return null;
-	}
+	}	
 	
-	public void resolveHeritage(Map<String,EObject> abstractConcepts) {
-		Set<String> abstractConceptsKeySet = abstractConcepts.keySet();
-		for(String abstractConceptId : abstractConceptsKeySet) {
-			EObject abstractConcept = abstractConcepts.get(abstractConceptId);
+	/* 
+	 *  ================================================================
+	 * 			Concrete Syntax Symbol Extraction Methods
+	 *  ================================================================
+	*/
+	
+	private void resolvePrimaryComposite(Composite composite) {
+		String compositeId = composite.getId();
+		String[] splitCompositeId = compositeId.split("\\.");
+		String compositeAttachedConceptName = "";
+		if(splitCompositeId.length == 3) {
+			String referenceClassName = splitCompositeId[0];
+			String referenceReferenceName = splitCompositeId[1];
+			String referenceAttributeName = splitCompositeId[2];
+			compositeAttachedConceptName = referenceClassName + "." + referenceReferenceName;
+			ReferenceConcept correspondingReferenceConcept = checkExistingReferenceConcept(compositeAttachedConceptName);
+			if(correspondingReferenceConcept != null) {
+				
+			}
+			
+		} else if(splitCompositeId.length == 2) {
+			String attributeClassName = splitCompositeId[0];
+			String attributeAttributeName = splitCompositeId[1];
+			compositeAttachedConceptName = attributeClassName + "." + attributeAttributeName;
+			AttributeConcept correspondingAttributeConcept = checkExistingAttributeConcept(compositeAttachedConceptName);
+			if(correspondingAttributeConcept != null) {
+				
+			}
+			
+		} else if(splitCompositeId.length == 1) {
+			compositeAttachedConceptName = compositeId;
+			ClassConcept correspondingClassConcept = checkExistingClassConcept(compositeAttachedConceptName);
+			if(correspondingClassConcept != null) {
+				
+			}
+		} else {
 			
 		}
 		
-		Collection<EObject> abstractSyntaxContents = abstractConcepts.values();
-		for(EObject abstractSyntaxElement : abstractSyntaxContents) {
-			if(abstractSyntaxElement instanceof EClass) {
-				EClass eClass = (EClass) abstractSyntaxElement;
-				List<EClass> eClassSuperClasses = eClass.getEAllSuperTypes();
-				System.out.println("Class : " + eClass.getName());
-				System.out.println(eClassSuperClasses);
-			}
-		}
 	}
 	
+	private ClassConcept checkExistingClassConcept(String symbolName) {
+		for(ClassConcept classConcept : classConcepts) {
+			if(classConcept.getName().equals(symbolName)) {
+				return classConcept;
+			}
+		}
+		return null;
+	}
 	
-	public List<Symbol> discoverConcreteConcepts(Definition concreteSyntaxModel) {
-		List<Symbol> concreteSymbols = new ArrayList<Symbol>();
+	private AttributeConcept checkExistingAttributeConcept(String symbolName) {
+		for(AttributeConcept attributeConcept : attributeConcepts) {
+			if(attributeConcept.getName().equals(symbolName)) {
+				return attributeConcept;
+			}
+		}
+		return null;
+	}
+	
+	private ReferenceConcept checkExistingReferenceConcept(String symbolName) {
+		for(ReferenceConcept referenceConcept : referenceConcepts) {
+			if(referenceConcept.getName().equals(symbolName)) {
+				return referenceConcept;
+			}
+		}
+		return null;
+	}
+	
+
+	
+	private void resolveSyntaxOf(SyntaxOf syntaxOf) {
+		
+	}
+	
+	private void resolveReferenceValue(ReferenceValue referenceValue) {
+		
+	}
+	
+	private void resolveAttributeValue(AttributeValue attributeValue) {
+		
+	}
+
+	
+	public void discoverConcreteConcepts() {
 		
 		System.out.println("Discovery of Concrete Symbols : ");
 		List<NotationElement> concreteSyntaxElements = concreteSyntaxModel.getElements();
@@ -342,8 +434,8 @@ public class ModelElementExtractor {
 					isClassComposite = true;
 					String className = compositeElementId;
 					
-					Symbol classSymbol = new ClassSymbol(compositeElementId, compositeElementId, compositeElement);
-					concreteSymbols.add(classSymbol);
+					ClassSymbol classSymbol = new ClassSymbol(compositeElementId, compositeElementId, compositeElement);
+					classSymbols.add(classSymbol);
 					System.out.println("Found Class : " + compositeElementId + " -> " + compositeElement);
 				}
 				
@@ -366,8 +458,8 @@ public class ModelElementExtractor {
 							attributeValueClassName = splitAttributeValueId[0];
 							attributeValueAttributeName = splitAttributeValueId[1];
 						}
-						Symbol attributeSymbol = new AttributeSymbol(attributeValueId, attributeValueClassName, attributeValueAttributeName, compositeAttributeValue);
-						concreteSymbols.add(attributeSymbol);
+						AttributeSymbol attributeSymbol = new AttributeSymbol(attributeValueId, attributeValueClassName, attributeValueAttributeName, compositeAttributeValue);
+						attributeSymbols.add(attributeSymbol);
 						System.out.println("Found Attribute : " + attributeValueId + " -> " + compositeAttributeValue);
 						
 						
@@ -395,8 +487,8 @@ public class ModelElementExtractor {
 							}
 						}
 						
-						Symbol referenceSymbol = new ReferenceSymbol(referenceValueId, referenceValueClassName, referenceValueReferenceName, referenceValueAttributeName, compositeReferenceValue);
-						concreteSymbols.add(referenceSymbol);
+						ReferenceSymbol referenceSymbol = new ReferenceSymbol(referenceValueId, referenceValueClassName, referenceValueReferenceName, referenceValueAttributeName, compositeReferenceValue);
+						referenceSymbols.add(referenceSymbol);
 						System.out.println("Found Reference : " + referenceValueId + " -> " + compositeReferenceValue);
 						
 						
@@ -417,8 +509,8 @@ public class ModelElementExtractor {
 								String syntaxOfReferenceName = splitSyntaxOfId[1];
 								String syntaxOfAttributeName = splitSyntaxOfId[2];
 								String syntaxOfName = syntaxOfClassName + "." + syntaxOfReferenceName + "." + syntaxOfAttributeName;
-								Symbol referenceSymbol = new ReferenceSymbol(syntaxOfName, syntaxOfClassName, syntaxOfReferenceName, syntaxOfAttributeName, compositeSyntaxOf);
-								concreteSymbols.add(referenceSymbol);
+								ReferenceSymbol referenceSymbol = new ReferenceSymbol(syntaxOfName, syntaxOfClassName, syntaxOfReferenceName, syntaxOfAttributeName, compositeSyntaxOf);
+								referenceSymbols.add(referenceSymbol);
 								System.out.println("Found Reference : " + syntaxOfName + " -> " + compositeSyntaxOf);
 								
 							} else if(splitSyntaxOfId.length == 2) {
@@ -430,8 +522,8 @@ public class ModelElementExtractor {
 									syntaxOfClassName = compositeElementId;
 								}
 								String syntaxOfName = syntaxOfClassName + "." + syntaxOfAttributeName;
-								Symbol attributeSymbol = new AttributeSymbol(syntaxOfName, syntaxOfClassName, syntaxOfAttributeName, compositeSyntaxOf);
-								concreteSymbols.add(attributeSymbol);
+								AttributeSymbol attributeSymbol = new AttributeSymbol(syntaxOfName, syntaxOfClassName, syntaxOfAttributeName, compositeSyntaxOf);
+								attributeSymbols.add(attributeSymbol);
 								System.out.println("Found Attribute : " + syntaxOfName + " -> " + compositeSyntaxOf);
 								
 							} else if(splitSyntaxOfId.length == 1) {
@@ -443,13 +535,10 @@ public class ModelElementExtractor {
 				}
 			}
 		}
-		
-		return concreteSymbols;
 	}
+
 	
-	private List<Symbol> primarySymbols;
-	
-	private void resolveComposite(Composite composite) {
+/*	private void resolveComposite(Composite composite) {
 		String compositeElementId = composite.getId();
 		boolean isClassComposite = false;
 		boolean isAttributeComposite = false;
@@ -483,40 +572,9 @@ public class ModelElementExtractor {
 			concreteSymbols.add(classSymbol);
 			System.out.println("Found Class : " + compositeElementId + " -> " + composite);
 		}
-	}
-	
-	private boolean checkExistingAttributeConcept(String attributeName) {
-		
-		return false;
-	}
-	
-	private void resolveAttribute() {
-		
-	}
-	
-	private void resolveReference() {
-		
-	}
+	}*/
 	
 	
-	
-	
-	
-	private void resolveSyntaxOf() {
-		
-	}
-	
-	public ModelMapping getModelMapping(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
-		List<Concept> abstractConcepts = discoverAbstractConcepts(abstractSyntaxModel);
-		//Map<String,EObject> abstractConcepts = discoverAbstractConcepts(abstractSyntaxModel);
-		//resolveHeritage(abstractConcepts);
-		//System.out.println(abstractConcepts);
-		this.concreteSymbols = discoverConcreteConcepts(concreteSyntaxModel);
-		//System.out.println(concreteSymbols);
-		ModelMapping modelMapping = new ModelMapping(abstractConcepts, concreteSymbols);
-		//System.out.println(modelMapping);
-		return modelMapping;
-	}
 	
 	//TODO debug
 	public void printResult() {

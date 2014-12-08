@@ -34,7 +34,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		this.isGraphical = isConcreteSyntaxGraphical();
-		this.modelElementExtractor = new ModelElementExtractor();
+		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
 		this.configurationHandler = new MetricConfigurationHandler(configurationFilePath);
 		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
 		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
@@ -61,7 +61,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 
 	public List<ConcreteSyntaxMetric> getConcreteSyntaxMetrics() {
 		// TODO
-		ModelMapping modelMapping = modelElementExtractor.getModelMapping(abstractSyntaxModel,concreteSyntaxModel);
+		ModelMapping modelMapping = modelElementExtractor.getModelMapping();
 		List<ConcreteSyntaxMetric> concreteSyntaxMetrics = new ArrayList<ConcreteSyntaxMetric>();
 		if(this.isGraphical) {
 			System.out.println(concreteSyntaxGraphicalMetrics);

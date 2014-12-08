@@ -30,7 +30,7 @@ public class GraphicEconomy extends ConcreteSyntaxGraphicalMetricImpl {
 	public List<MetricResult> execute() {
 		System.out.println("Excecute GraphicEconomy");
 		List<MetricResult> metricResults = new ArrayList<MetricResult>();
-		List<Symbol> symbols = modelMapping.getConcreteSymbols();
+		/*List<Symbol> symbols = modelMapping.getConcreteSymbols();
 		
 		if(symbols.size() > this.acceptanceRatio) {
 			System.out.println("Fail");
@@ -52,6 +52,7 @@ public class GraphicEconomy extends ConcreteSyntaxGraphicalMetricImpl {
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
 			metricResults.add(metricResult);
 		}
+		*/
 		return metricResults;
 	}
 

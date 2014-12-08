@@ -54,7 +54,7 @@ public class Test {
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
 		//metricFactory.loadConfiguration();
-		metricFactory.activate("Symbol Deficit");
+		//metricFactory.activate("Symbol Deficit");
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
 		System.out.println("-------------------------");
 		for(ConcreteSyntaxMetric metric : metrics) {
