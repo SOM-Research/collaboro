@@ -126,8 +126,9 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			if(!isClassRepresented) {
 				System.out.println("class Concept " + classConcept);
 				boolean alreadyRepresentedByHeritage = isClassRepresentedBySubType(classConcept);
+				boolean alreadyRepresentedBySuperType = isClassRepresentedBySuperType(classConcept);
 				System.out.println("does not need rep : " + alreadyRepresentedByHeritage);
-				if(alreadyRepresentedByHeritage) {
+				if(alreadyRepresentedByHeritage || alreadyRepresentedBySuperType) {
 					isClassConceptRepresentedMap.put(classConcept, true);
 				}
 			}
@@ -147,7 +148,8 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			Boolean isAttributeRepresented = isAttributeConceptRepresentedMap.get(attributeConcept);
 			if(!isAttributeRepresented) {
 				boolean alreadyRepresentedByHeritage = isAttributeRepresentedBySubType(attributeConcept);
-				if(alreadyRepresentedByHeritage) {
+				boolean alreadyRepresentedBySuperType = isAttributeRepresentedBySuperType(attributeConcept);
+				if(alreadyRepresentedByHeritage || alreadyRepresentedBySuperType) {
 					isAttributeConceptRepresentedMap.put(attributeConcept, true);
 				}
 			}
@@ -167,7 +169,8 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			Boolean isReferenceRepresented = isReferenceConceptRepresentedMap.get(referenceConcept);
 			if(!isReferenceRepresented) {
 				boolean alreadyRepresentedByHeritage = isReferenceRepresentedBySubType(referenceConcept);
-				if(alreadyRepresentedByHeritage) {
+				boolean alreadyRepresentedBySuperType = isReferenceRepresentedBySuperType(referenceConcept);
+				if(alreadyRepresentedByHeritage || alreadyRepresentedBySuperType) {
 					isReferenceConceptRepresentedMap.put(referenceConcept, true);
 				}
 			}
@@ -207,6 +210,25 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		}
 	}
 	
+	private boolean isClassRepresentedBySuperType(ClassConcept classConcept) {
+		boolean classIsRepresented = isClassConceptRepresentedMap.get(classConcept);
+		if(classIsRepresented) {
+			return true;
+		} else {
+			List<ClassConcept> superClassConcepts = classConcept.getSuperType();
+			if(superClassConcepts.isEmpty()) {
+				return classIsRepresented;
+			} else {
+				boolean classIsRepresentedBySuperType = true;
+				for(ClassConcept superClassConcept : superClassConcepts) {
+					boolean superClassRepresentedBySuperClass = isClassRepresentedBySuperType(superClassConcept);
+					classIsRepresentedBySuperType = classIsRepresentedBySuperType && superClassRepresentedBySuperClass;
+				}
+				return classIsRepresentedBySuperType;
+			}
+		}
+	}
+	
 	private boolean isAttributeRepresentedBySubType(AttributeConcept attributeConcept) {
 		boolean attributeIsRepresented = isAttributeConceptRepresentedMap.get(attributeConcept);
 		if(attributeIsRepresented) {
@@ -226,6 +248,25 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		}
 	}
 	
+	private boolean isAttributeRepresentedBySuperType(AttributeConcept attributeConcept) {
+		boolean attributeIsRepresented = isAttributeConceptRepresentedMap.get(attributeConcept);
+		if(attributeIsRepresented) {
+			return true;
+		} else {
+			List<AttributeConcept> superAttributeConcepts = attributeConcept.getSuperAttributes();
+			if(superAttributeConcepts.isEmpty()) {
+				return attributeIsRepresented;
+			} else {
+				boolean attributeIsRepresentedBySuperType = true;
+				for(AttributeConcept superAttributeConcept : superAttributeConcepts) {
+					boolean superAttributeRepresentedBySuperType = isAttributeRepresentedBySuperType(superAttributeConcept);
+					attributeIsRepresentedBySuperType = attributeIsRepresentedBySuperType && superAttributeRepresentedBySuperType;
+				}
+				return attributeIsRepresentedBySuperType;
+			}
+		}
+	}
+	
 	private boolean isReferenceRepresentedBySubType(ReferenceConcept referenceConcept) {
 		boolean referenceIsRepresented = isReferenceConceptRepresentedMap.get(referenceConcept);
 		if(referenceIsRepresented) {
@@ -241,6 +282,25 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 					referenceIsRepresentedByHeritage = referenceIsRepresentedByHeritage && subReferenceRepresentedByHeritage;
 				}
 				return referenceIsRepresentedByHeritage;
+			}
+		}
+	}
+	
+	private boolean isReferenceRepresentedBySuperType(ReferenceConcept referenceConcept) {
+		boolean referenceIsRepresented = isReferenceConceptRepresentedMap.get(referenceConcept);
+		if(referenceIsRepresented) {
+			return true;
+		} else {
+			List<ReferenceConcept> superReferenceConcepts = referenceConcept.getSuperReferences();
+			if(superReferenceConcepts.isEmpty()) {
+				return referenceIsRepresented;
+			} else {
+				boolean referenceIsRepresentedBySuperType = true;
+				for(ReferenceConcept superReferenceConcept : superReferenceConcepts) {
+					boolean superReferenceRepresentedByHeritage = isReferenceRepresentedBySubType(superReferenceConcept);
+					referenceIsRepresentedBySuperType = referenceIsRepresentedBySuperType && superReferenceRepresentedByHeritage;
+				}
+				return referenceIsRepresentedBySuperType;
 			}
 		}
 	}
