@@ -1,10 +1,7 @@
 package fr.inria.atlanmod.collaboro.metrics.tools;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
@@ -13,17 +10,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.VisualRepresentation;
 import fr.inria.atlanmod.collaboro.notation.AttributeValue;
 import fr.inria.atlanmod.collaboro.notation.Composite;
 import fr.inria.atlanmod.collaboro.notation.Definition;
+import fr.inria.atlanmod.collaboro.notation.GraphicalElement;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
 import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
@@ -37,16 +32,17 @@ public class ModelElementExtractor {
 	private List<AttributeConcept> attributeConcepts;
 	private List<ReferenceConcept> referenceConcepts;
 	
-	private List<ClassSymbol> classSymbols;
-	private List<AttributeSymbol> attributeSymbols;
-	private List<ReferenceSymbol> referenceSymbols;
+	private List<Symbol> symbols;
 	
 	private ModelMapping modelMapping;
+	
+	private ConcreteSyntaxElementExtractor concreteSyntaxElementExtractor;
 	
 	public ModelElementExtractor() {
 		this.classConcepts = new ArrayList<ClassConcept>();
 		this.attributeConcepts = new ArrayList<AttributeConcept>();
 		this.referenceConcepts = new ArrayList<ReferenceConcept>();
+		this.symbols = new ArrayList<Symbol>();
 	}
 	
 	public ModelElementExtractor(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
@@ -55,26 +51,37 @@ public class ModelElementExtractor {
 		this.classConcepts = new ArrayList<ClassConcept>();
 		this.attributeConcepts = new ArrayList<AttributeConcept>();
 		this.referenceConcepts = new ArrayList<ReferenceConcept>();
-		this.classSymbols = new ArrayList<ClassSymbol>();
-		this.attributeSymbols = new ArrayList<AttributeSymbol>();
-		this.referenceSymbols = new ArrayList<ReferenceSymbol>();
-		this.modelMapping = new ModelMapping();
+		this.symbols = new ArrayList<Symbol>();
+		
+		
+		this.concreteSyntaxElementExtractor = new ConcreteSyntaxElementExtractor(concreteSyntaxModel);
+		
 		initialize();
 	}
 	
 	private void initialize() {
+		System.out.println(" ------------ Initializing model element extractor ------------");
+		System.out.println(" ******* Concept extraction *******");
+		System.out.println("");
 		// Abstract Syntax discovery
 		discoverAbstractClasses();
 		discoverAbstractAttribute();
 		discoverAbstractReference();
 		
+		System.out.println("");
+		System.out.println(" ******* Symbol extraction *******");
+		System.out.println("");
 		// Concrete Syntax discovery
-		discoverConcreteConcepts();
+		//discoverConcreteConcepts();
+		//concreteConcepts();
+		this.symbols = this.concreteSyntaxElementExtractor.discoverConcreteSyntax();
+		//System.out.println(concreteSymbols);
 		
-		this.modelMapping.mapClassConceptsToClassSymbols(classConcepts, classSymbols);
-		this.modelMapping.mapAttributeConceptsToAttributeSymbols(attributeConcepts, attributeSymbols);
-		this.modelMapping.mapReferenceConceptsToReferenceSymbols(referenceConcepts, referenceSymbols);
+		this.modelMapping = new ModelMapping(classConcepts,attributeConcepts,referenceConcepts, symbols);
 		
+		printResult();
+		System.out.println("---------- ");
+		printConcreteSymbols();
 		
 	}
 	
@@ -88,12 +95,14 @@ public class ModelElementExtractor {
 	 *  ================================================================
 	*/
 	private void discoverAbstractClasses() {
+		System.out.println("* Discover Abstract Class");
 		List<EObject> abstractSyntaxContents = abstractSyntaxModel.eContents();
 		for(EObject abstractSyntaxElement : abstractSyntaxContents) {
 			if(abstractSyntaxElement instanceof EClass) {
 				EClass eClassElement = (EClass) abstractSyntaxElement;
 				ClassConcept classConcept = new ClassConcept(eClassElement.getName(), eClassElement.getName(), eClassElement);
 				classConcepts.add(classConcept);
+				System.out.println("\t Found Class : " + classConcept.getName());
 			}
 		}
 		
@@ -102,6 +111,7 @@ public class ModelElementExtractor {
 	}
 	
 	private void resolveClassHeritage() {
+		System.out.println("* Resolve class heritage");
 		for(ClassConcept classConcept : classConcepts) {
 			EClass eClass = (EClass) classConcept.getAbstractModelElement();
 			List<EClass> eClassSuperTypes = eClass.getESuperTypes();
@@ -109,13 +119,16 @@ public class ModelElementExtractor {
 				ClassConcept classConceptSuperType = getClassConceptById(eClassSuperType.getName());
 				if(classConceptSuperType != null) {
 					classConceptSuperType.addSubType(classConcept);
+					System.out.println("\t Class " + classConceptSuperType.getName() + " subType : " + classConcept.getName());
 					classConcept.addSuperType(classConceptSuperType);
+					System.out.println("\t Class " + classConcept.getName() + " superType : " + classConceptSuperType.getName());
 				}
 			}
 		}
 	}
 	
 	private void discoverAbstractAttribute() {
+		System.out.println("* Discover Abstract Attribute");
 		for(ClassConcept classConcept : classConcepts) {
 			EClass eClass = (EClass) classConcept.getAbstractModelElement();
 			List<EAttribute> eClassAttributes = eClass.getEAllAttributes();
@@ -123,12 +136,14 @@ public class ModelElementExtractor {
 				String attributeName = eClass.getName() + "." + eClassAttribute.getName();
 				AttributeConcept attributeConcept = new AttributeConcept(eClassAttribute.getName(), attributeName, eClassAttribute);
 				attributeConcept.setClassConcept(classConcept);
+				System.out.println("\t Found Attribute : " + attributeConcept.getName() + " in Class : " + classConcept.getName());
 
 				EClass eContainingClass = eClassAttribute.getEContainingClass();
 				if(!eContainingClass.equals(eClass)) {
 					ClassConcept containingClassConcept = getClassConceptById(eContainingClass.getName());
 					if(containingClassConcept != null) {
 						attributeConcept.setContainingSuperClass(containingClassConcept);
+						System.out.println("\t\t From superClass : " + containingClassConcept.getName());
 					}
 				}
 				this.attributeConcepts.add(attributeConcept);
@@ -147,6 +162,7 @@ public class ModelElementExtractor {
 	}
 	
 	private void resolveAttributeHeritage(AttributeConcept attributeConcept) {
+		System.out.println("* Resolve attribute heritage : " + attributeConcept.getName());
 		EObject modelAttribute = attributeConcept.getAbstractModelElement();
 		ClassConcept containingClass = attributeConcept.getClassConcept();
 		List<ClassConcept> containingClassSubClasses = containingClass.getSubTypes();
@@ -155,6 +171,7 @@ public class ModelElementExtractor {
 			if(subAttributeConcept != null) {
 				attributeConcept.addSubAttribute(subAttributeConcept);
 				subAttributeConcept.addSuperAttribute(attributeConcept);
+				System.out.println("\t " + attributeConcept.getName() + " is superType of " + subAttributeConcept.getName());
 				resolveAttributeHeritage(subAttributeConcept);
 			}
 		}
@@ -171,9 +188,8 @@ public class ModelElementExtractor {
 		return null;
 	}
 	
-
-	
 	private void discoverAbstractReference() {
+		System.out.println("* Discover Abstract Reference");
 		for(ClassConcept classConcept : classConcepts) {
 			EClass eClass = (EClass) classConcept.getAbstractModelElement();
 			List<EReference> eClassReferences = eClass.getEAllReferences();
@@ -195,6 +211,7 @@ public class ModelElementExtractor {
 				
 				referenceConcepts.add(referenceConcept);
 				classConcept.addReference(referenceConcept);
+				System.out.println("\t Found Reference : " + referenceConcept.getName() + " in Class : " + classConcept.getName());
 			}
 		}
 		
@@ -209,11 +226,13 @@ public class ModelElementExtractor {
 	}
 	
 	private List<ReferenceConcept> resolveReferenceConceptOpposite() {
+		System.out.println("* Resolve Reference Opposite");
 		List<ReferenceConcept> oppositeReferenceConcepts = new ArrayList<ReferenceConcept>();
 		for(ReferenceConcept referenceConcept : referenceConcepts) {
 			EReference eReference = (EReference) referenceConcept.getAbstractModelElement();
 			EReference eOppositeReference = eReference.getEOpposite();
 			if(eOppositeReference != null) {
+				System.out.println("\t Found opposite for " + referenceConcept.getName());
 				//To
 				ClassConcept referenceContainingClass = referenceConcept.getContainingClass();
 				EClass eOppositeReferenceToEClass = eOppositeReference.getEReferenceType();
@@ -225,6 +244,7 @@ public class ModelElementExtractor {
 				ReferenceConcept oppositeReferenceConcept = getExistingReferenceConcept(oppositeReferenceContainingClass,referenceContainingClass,eOppositeReference);
 				
 				if(oppositeReferenceConcept == null) {
+					
 					String oppositeReferenceName = eOppositeReferenceContainingClass.getName() + "." + eOppositeReference.getName();
 					oppositeReferenceConcept = new ReferenceConcept(eOppositeReference.getName(), oppositeReferenceName, eOppositeReference);
 					oppositeReferenceConcept.setContainingClass(oppositeReferenceContainingClass);
@@ -235,8 +255,10 @@ public class ModelElementExtractor {
 					referenceConcept.setReferenceOpposite(oppositeReferenceConcept);
 					oppositeReferenceConcepts.add(oppositeReferenceConcept);
 					oppositeReferenceContainingClass.addReference(oppositeReferenceConcept);
+					System.out.println("\t\t non existing opposite : " + oppositeReferenceConcept.getName());
 				} else {
 					referenceConcept.setReferenceOpposite(oppositeReferenceConcept);
+					System.out.println("\t\t existing opposite " + oppositeReferenceConcept.getName());
 				}
 			}
 		}
@@ -244,6 +266,7 @@ public class ModelElementExtractor {
 	}
 	
 	private void resolveReferenceHeritage() {
+		System.out.println("* Resolve reference heritage");
 		for(ReferenceConcept referenceConcept : referenceConcepts) {
 			ClassConcept referenceContainingClass = referenceConcept.getContainingClass();
 			ClassConcept referenceSuperContainingClass = referenceConcept.getSuperClassConceptFrom();
@@ -319,203 +342,219 @@ public class ModelElementExtractor {
 	 *  ================================================================
 	*/
 	
-	private void resolvePrimaryComposite(Composite composite) {
-		System.out.println("In resolvePrimaryComposite : " + composite.getId());
-		String compositeId = composite.getId();
-		String[] splitCompositeId = compositeId.split("\\.");
-		String compositeAttachedConceptName = "";
-		if(splitCompositeId.length == 3) {
-			String referenceClassName = splitCompositeId[0];
-			String referenceReferenceName = splitCompositeId[1];
-			String referenceAttributeName = splitCompositeId[2];
-			compositeAttachedConceptName = referenceClassName + "." + referenceReferenceName;
-			ReferenceConcept correspondingReferenceConcept = getReferenceConcept(compositeAttachedConceptName);
-//			if(correspondingReferenceConcept != null) {
-				ReferenceSymbol referenceSymbol = new ReferenceSymbol(compositeId, referenceClassName, referenceReferenceName, referenceAttributeName, composite);
-				referenceSymbols.add(referenceSymbol);
-				System.out.println("\t Found Reference : " + compositeAttachedConceptName);
+//	private void resolvePrimaryComposite(Composite composite) {
+//		System.out.println("In resolvePrimaryComposite : " + composite.getId());
+//		String compositeId = composite.getId();
+//		String[] splitCompositeId = compositeId.split("\\.");
+//		String compositeAttachedConceptName = "";
+//		if(splitCompositeId.length == 3) {
+//			String referenceClassName = splitCompositeId[0];
+//			String referenceReferenceName = splitCompositeId[1];
+//			String referenceAttributeName = splitCompositeId[2];
+//			compositeAttachedConceptName = referenceClassName + "." + referenceReferenceName;
+//			ReferenceConcept correspondingReferenceConcept = getReferenceConcept(compositeAttachedConceptName);
+////			if(correspondingReferenceConcept != null) {
+//				ReferenceSymbol referenceSymbol = new ReferenceSymbol(compositeId, referenceClassName, referenceReferenceName, referenceAttributeName, composite);
+//				referenceSymbols.add(referenceSymbol);
+//				System.out.println("\t Found Reference : " + compositeAttachedConceptName);
+////			}
+//			
+//		} else if(splitCompositeId.length == 2) {
+//			String attributeClassName = splitCompositeId[0];
+//			String attributeAttributeName = splitCompositeId[1];
+//			compositeAttachedConceptName = attributeClassName + "." + attributeAttributeName;
+//			AttributeConcept correspondingAttributeConcept = getAttributeConcept(compositeAttachedConceptName);
+////			if(correspondingAttributeConcept != null) {
+//				AttributeSymbol attributeSymbol = new AttributeSymbol(compositeId,attributeClassName, attributeAttributeName,composite);
+//				attributeSymbols.add(attributeSymbol);
+//				System.out.println("\t Found Attribute : " + compositeAttachedConceptName);
+////			}
+//			
+//		} else if(splitCompositeId.length == 1) {
+//			compositeAttachedConceptName = compositeId;
+//			ClassConcept correspondingClassConcept = getClassConcept(compositeAttachedConceptName);
+////			if(correspondingClassConcept != null) {
+//				ClassSymbol classSymbol = new ClassSymbol(compositeId, compositeAttachedConceptName, composite);
+//				classSymbols.add(classSymbol);
+//				System.out.println("\t Found Class : " + compositeAttachedConceptName);
+////			}
+//		} else {
+//			
+//		}
+//		
+//	}
+//	
+//	private void resolveSyntaxOf(SyntaxOf syntaxOf, Composite containingComposite) {
+//		if(containingComposite != null) {
+//			String containingCompositeName = containingComposite.getId();
+//			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
+//			if(containingCompositeClassSymbol != null) {
+//				
 //			}
-			
-		} else if(splitCompositeId.length == 2) {
-			String attributeClassName = splitCompositeId[0];
-			String attributeAttributeName = splitCompositeId[1];
-			compositeAttachedConceptName = attributeClassName + "." + attributeAttributeName;
-			AttributeConcept correspondingAttributeConcept = getAttributeConcept(compositeAttachedConceptName);
-//			if(correspondingAttributeConcept != null) {
-				AttributeSymbol attributeSymbol = new AttributeSymbol(compositeId,attributeClassName, attributeAttributeName,composite);
-				attributeSymbols.add(attributeSymbol);
-				System.out.println("\t Found Attribute : " + compositeAttachedConceptName);
-				
+//		} else {
+//			
+//		}
+//		System.out.println("In resolveSyntaxOf : " + syntaxOf.getId() + " , " + containingComposite.getId());
+//		EReference reference = syntaxOf.getReference();
+//		if(reference != null) {
+//			String syntaxOfName = syntaxOf.getId();
+//			String[] splitSyntaxOfName = syntaxOfName.split("\\.");
+//			String syntaxOfAttachedConceptName = "";
+//			if(splitSyntaxOfName.length == 3) {
+//				String referenceClassName = splitSyntaxOfName[0];
+//				String referenceReferenceName = splitSyntaxOfName[1];
+//				String referenceAttributeName = splitSyntaxOfName[2];
+//				syntaxOfAttachedConceptName = referenceClassName + "." + referenceReferenceName;
+//				ReferenceSymbol existingReferenceSymbol = getReferenceSymbol(syntaxOfName);
+//				if(existingReferenceSymbol != null) {
+//					//symbol already exists
+//				}
 //			}
-			
-		} else if(splitCompositeId.length == 1) {
-			compositeAttachedConceptName = compositeId;
-			ClassConcept correspondingClassConcept = getClassConcept(compositeAttachedConceptName);
-//			if(correspondingClassConcept != null) {
-				ClassSymbol classSymbol = new ClassSymbol(compositeId, compositeAttachedConceptName, composite);
-				classSymbols.add(classSymbol);
-				System.out.println("\t Found Class : " + compositeAttachedConceptName);
+//		} else {
+//			
+//		}
+//	}
+//	
+//	private void resolveReferenceValue(ReferenceValue referenceValue, Composite containingComposite) {
+//		
+//		if(containingComposite != null) {
+//			System.out.println("In resolveReferenceValue : " + referenceValue.getId() + " , " + containingComposite.getId());
+//			String containingCompositeName = containingComposite.getId();
+//			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
+//			if(containingCompositeClassSymbol != null) {
+//				//Reference in Class
+//				// need to be registered
+//				EReference referenceEReference = referenceValue.getReference();
+//				EAttribute referenceEAttribute = referenceValue.getAttribute();
+//				if((referenceEReference == null) && (referenceEAttribute == null)) {
+//					String referenceName = referenceValue.getId();
+//					String[] splitReferenceName = referenceName.split("\\.");
+//					if(splitReferenceName.length == 3) {
+//						ReferenceSymbol referenceSymbol = new ReferenceSymbol(referenceName, splitReferenceName[0], splitReferenceName[1], splitReferenceName[2], referenceValue);
+//						referenceSymbols.add(referenceSymbol);
+//						System.out.println("\t Found Reference in Class " + containingCompositeName + " : " + referenceName);
+//					}
+//				}
+//			} else {
+//				
 //			}
-		} else {
-			
-		}
-		
-	}
-	
-	private void resolveSyntaxOf(SyntaxOf syntaxOf, Composite containingComposite) {
-		if(containingComposite != null) {
-			String containingCompositeName = containingComposite.getId();
-			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
-		} else {
-			
-		}
-		System.out.println("In resolveSyntaxOf : " + syntaxOf.getId() + " , " + containingComposite.getId());
-		EReference reference = syntaxOf.getReference();
-		if(reference != null) {
-			String syntaxOfName = syntaxOf.getId();
-			String[] splitSyntaxOfName = syntaxOfName.split("\\.");
-			String syntaxOfAttachedConceptName = "";
-			if(splitSyntaxOfName.length == 3) {
-				String referenceClassName = splitSyntaxOfName[0];
-				String referenceReferenceName = splitSyntaxOfName[1];
-				String referenceAttributeName = splitSyntaxOfName[2];
-				syntaxOfAttachedConceptName = referenceClassName + "." + referenceReferenceName;
-				ReferenceSymbol existingReferenceSymbol = getReferenceSymbol(syntaxOfName);
-				if(existingReferenceSymbol != null) {
-					//symbol already exists
-				}
-			}
-		} else {
-			
-		}
-	}
-	
-	private void resolveReferenceValue(ReferenceValue referenceValue, Composite containingComposite) {
-		
-		if(containingComposite != null) {
-			System.out.println("In resolveReferenceValue : " + referenceValue.getId() + " , " + containingComposite.getId());
-			String containingCompositeName = containingComposite.getId();
-			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
-			if(containingCompositeClassSymbol != null) {
-				//Reference in Class
-				// need to be registered
-				EReference referenceEReference = referenceValue.getReference();
-				EAttribute referenceEAttribute = referenceValue.getAttribute();
-				if((referenceEReference == null) && (referenceEAttribute == null)) {
-					String referenceName = referenceValue.getId();
-					String[] splitReferenceName = referenceName.split("\\.");
-					if(splitReferenceName.length == 3) {
-						ReferenceSymbol referenceSymbol = new ReferenceSymbol(referenceName, splitReferenceName[0], splitReferenceName[1], splitReferenceName[2], referenceValue);
-						referenceSymbols.add(referenceSymbol);
-						System.out.println("\t Found Reference in Class " + containingCompositeName + " : " + referenceName);
-					}
-				}
-			} else {
-				
-			}
-			ReferenceSymbol containingCompositeReferenceSymbol = getReferenceSymbol(containingCompositeName);
-			if(containingCompositeReferenceSymbol != null) {
-				//ReferenceValue in reference
-				// containing composite is already the reference symbol
-			}
-			
-		} else {
-			System.out.println("In resolveReferenceValue : " + referenceValue.getId() + " , null" );
-			EReference referenceEReference = referenceValue.getReference();
-			EAttribute referenceEAttribute = referenceValue.getAttribute();
-			if((referenceEReference == null) && (referenceEAttribute == null)) {
-				String referenceName = referenceValue.getId();
-				String[] splitReferenceName = referenceName.split("\\.");
-				if(splitReferenceName.length == 3) {
-					ReferenceSymbol referenceSymbol = new ReferenceSymbol(referenceName, splitReferenceName[0], splitReferenceName[1], splitReferenceName[2], referenceValue);
-					referenceSymbols.add(referenceSymbol);
-					System.out.println("\t Found Reference : " + referenceName);
-				}
-			}
-		}
-	}
-	
-	
-	private void resolveAttributeValue(AttributeValue attributeValue, Composite containingComposite) {
-		
-		if(containingComposite != null) {
-			System.out.println("In resolveAttributeValue : " + attributeValue.getId() + " , " + containingComposite.getId());
-			String containingCompositeName = containingComposite.getId();
-			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
-			if(containingCompositeClassSymbol != null) {
-				//Attribute in Class
-				// need to be registered
-				EAttribute attributeEAttribute = attributeValue.getAttribute();
-				if(attributeEAttribute == null) {
-					String attributeName = attributeValue.getId();
-					String[] splitAttributeName = attributeName.split("\\.");
-					if(splitAttributeName.length == 2) {
-						AttributeSymbol attributeSymbol = new AttributeSymbol(attributeName, splitAttributeName[0], splitAttributeName[1], attributeValue);
-						attributeSymbols.add(attributeSymbol);
-						System.out.println("\t Found Attribute in Class " + containingCompositeName + " : " + attributeName);
-					}
-				}
-			} else {
-				
-			}
-			AttributeSymbol containingCompositeAttributeSymbol = getAttributeSymbol(containingCompositeName);
-			if(containingCompositeAttributeSymbol != null) {
-				//AttributeValue in attribute symbol
-				// containing composite is already the attribute symbol
-			}
-			
-		} else {
-			System.out.println("In resolveAttributeValue : " + attributeValue.getId() + " , null");
-			EAttribute attributeEAttribute = attributeValue.getAttribute();
-			if(attributeEAttribute == null) {
-				String attributeName = attributeValue.getId();
-				String[] splitAttributeName = attributeName.split("\\.");
-				if(splitAttributeName.length == 2) {
-					AttributeSymbol attributeSymbol = new AttributeSymbol(attributeName, splitAttributeName[0], splitAttributeName[1], attributeValue);
-					attributeSymbols.add(attributeSymbol);
-					System.out.println("\t Found Attribute : " + attributeName);
-				}
-			}
-		}
-	}
-
-	public void discoverConcreteConcepts() {
-		List<NotationElement> concreteSyntaxElements = concreteSyntaxModel.getElements();
-		for(NotationElement concreteSyntaxElement : concreteSyntaxElements) {
-			if(concreteSyntaxElement instanceof Composite) {
-				Composite compositeElement = (Composite) concreteSyntaxElement;
-				resolvePrimaryComposite(compositeElement);
-				
-				// check Elements in composite
-				TreeIterator<EObject> compositeContents = compositeElement.eAllContents();
-				while(compositeContents.hasNext()) {
-					EObject compositeContent = compositeContents.next();
-					if( compositeContent instanceof Composite) {
-						
-					} else if(compositeContent instanceof AttributeValue) {
-						AttributeValue attributeElement = (AttributeValue) compositeContent;
-						resolveAttributeValue(attributeElement, compositeElement);
-					} else if(compositeContent instanceof ReferenceValue) {
-						ReferenceValue referenceElement = (ReferenceValue) compositeContent;
-						resolveReferenceValue(referenceElement, compositeElement);
-					} else if(compositeContent instanceof SyntaxOf) {
-						SyntaxOf syntaxOfElement = (SyntaxOf) compositeContent;
-						resolveSyntaxOf(syntaxOfElement, compositeElement);
-					}
-				}
-				
-			} else if(concreteSyntaxElement instanceof AttributeValue) {
-				AttributeValue attributeElement = (AttributeValue) concreteSyntaxElement;
-				resolveAttributeValue(attributeElement, null);
-			} else if(concreteSyntaxElement instanceof ReferenceValue) {
-				ReferenceValue referenceElement = (ReferenceValue) concreteSyntaxElement;
-				resolveReferenceValue(referenceElement, null);
-			} else if(concreteSyntaxElement instanceof SyntaxOf) {
-				SyntaxOf syntaxOfElement = (SyntaxOf) concreteSyntaxElement;
-				resolveSyntaxOf(syntaxOfElement, null);
-			}
-		}
-	}
+//			ReferenceSymbol containingCompositeReferenceSymbol = getReferenceSymbol(containingCompositeName);
+//			if(containingCompositeReferenceSymbol != null) {
+//				//ReferenceValue in reference
+//				// containing composite is already the reference symbol
+//			}
+//			
+//		} else {
+//			System.out.println("In resolveReferenceValue : " + referenceValue.getId() + " , null" );
+//			EReference referenceEReference = referenceValue.getReference();
+//			EAttribute referenceEAttribute = referenceValue.getAttribute();
+//			if((referenceEReference == null) && (referenceEAttribute == null)) {
+//				String referenceName = referenceValue.getId();
+//				String[] splitReferenceName = referenceName.split("\\.");
+//				if(splitReferenceName.length == 3) {
+//					ReferenceSymbol referenceSymbol = new ReferenceSymbol(referenceName, splitReferenceName[0], splitReferenceName[1], splitReferenceName[2], referenceValue);
+//					referenceSymbols.add(referenceSymbol);
+//					System.out.println("\t Found Reference : " + referenceName);
+//				}
+//			}
+//		}
+//	}
+//	
+//	
+//	private void resolveAttributeValue(AttributeValue attributeValue, Composite containingComposite) {
+//		
+//		if(containingComposite != null) {
+//			System.out.println("In resolveAttributeValue : " + attributeValue.getId() + " , " + containingComposite.getId());
+//			String containingCompositeName = containingComposite.getId();
+//			ClassSymbol containingCompositeClassSymbol = getClassSymbol(containingCompositeName);
+//			if(containingCompositeClassSymbol != null) {
+//				//Attribute in Class
+//				// need to be registered
+//				EAttribute attributeEAttribute = attributeValue.getAttribute();
+//				if(attributeEAttribute == null) {
+//					String attributeName = attributeValue.getId();
+//					String[] splitAttributeName = attributeName.split("\\.");
+//					if(splitAttributeName.length == 2) {
+//						AttributeSymbol attributeSymbol = new AttributeSymbol(attributeName, splitAttributeName[0], splitAttributeName[1], attributeValue);
+//						attributeSymbols.add(attributeSymbol);
+//						System.out.println("\t Found Attribute in Class " + containingCompositeName + " : " + attributeName);
+//					}
+//				}
+//			} else {
+//				
+//			}
+//			AttributeSymbol containingCompositeAttributeSymbol = getAttributeSymbol(containingCompositeName);
+//			if(containingCompositeAttributeSymbol != null) {
+//				//AttributeValue in attribute symbol
+//				// containing composite is already the attribute symbol
+//			}
+//			
+//		} else {
+//			System.out.println("In resolveAttributeValue : " + attributeValue.getId() + " , null");
+//			EAttribute attributeEAttribute = attributeValue.getAttribute();
+//			if(attributeEAttribute == null) {
+//				String attributeName = attributeValue.getId();
+//				String[] splitAttributeName = attributeName.split("\\.");
+//				if(splitAttributeName.length == 2) {
+//					AttributeSymbol attributeSymbol = new AttributeSymbol(attributeName, splitAttributeName[0], splitAttributeName[1], attributeValue);
+//					attributeSymbols.add(attributeSymbol);
+//					System.out.println("\t Found Attribute : " + attributeName);
+//				}
+//			}
+//		}
+//	}
+//	
+//	private void resolveGraphicalElement(GraphicalElement graphicalElement, Composite containingComposite) {
+//		
+//	}
+//	
+//	private void resolveSubComposite(Composite subComposite, Composite parentComposite) {
+//		
+//	}
+//	
+//
+//	public void discoverConcreteConcepts() {
+//		System.out.println("* Discover Conrete Concepts");
+//		List<NotationElement> concreteSyntaxElements = concreteSyntaxModel.getElements();
+//		for(NotationElement concreteSyntaxElement : concreteSyntaxElements) {
+//			if(concreteSyntaxElement instanceof Composite) {
+//				Composite compositeElement = (Composite) concreteSyntaxElement;
+//				resolvePrimaryComposite(compositeElement);
+//				
+//				// check Elements in composite
+//				TreeIterator<EObject> compositeContents = compositeElement.eAllContents();
+//				while(compositeContents.hasNext()) {
+//					EObject compositeContent = compositeContents.next();
+//					if( compositeContent instanceof Composite) {
+//						Composite subComposite = (Composite) compositeContent;
+//						resolveSubComposite(subComposite, compositeElement);
+//					} else if(compositeContent instanceof AttributeValue) {
+//						AttributeValue attributeElement = (AttributeValue) compositeContent;
+//						resolveAttributeValue(attributeElement, compositeElement);
+//					} else if(compositeContent instanceof ReferenceValue) {
+//						ReferenceValue referenceElement = (ReferenceValue) compositeContent;
+//						resolveReferenceValue(referenceElement, compositeElement);
+//					} else if(compositeContent instanceof SyntaxOf) {
+//						SyntaxOf syntaxOfElement = (SyntaxOf) compositeContent;
+//						resolveSyntaxOf(syntaxOfElement, compositeElement);
+//					} else if(compositeContent instanceof GraphicalElement) {
+//						GraphicalElement graphicalElement = (GraphicalElement) compositeContent;
+//						resolveGraphicalElement(graphicalElement,compositeElement);
+//					}
+//				}
+//				
+//			} else if(concreteSyntaxElement instanceof AttributeValue) {
+//				AttributeValue attributeElement = (AttributeValue) concreteSyntaxElement;
+//				resolveAttributeValue(attributeElement, null);
+//			} else if(concreteSyntaxElement instanceof ReferenceValue) {
+//				ReferenceValue referenceElement = (ReferenceValue) concreteSyntaxElement;
+//				resolveReferenceValue(referenceElement, null);
+//			} else if(concreteSyntaxElement instanceof SyntaxOf) {
+//				SyntaxOf syntaxOfElement = (SyntaxOf) concreteSyntaxElement;
+//				resolveSyntaxOf(syntaxOfElement, null);
+//			}
+//		}
+//	}
 	
 //	public void discoverConcreteConcepts() {
 //		
@@ -722,32 +761,32 @@ public class ModelElementExtractor {
 		return null;
 	}
 	
-	private ClassSymbol getClassSymbol(String symbolName) {
-		for(ClassSymbol classSymbol : classSymbols) {
-			if(classSymbol.getName().equals(symbolName)) {
-				return classSymbol;
-			}
-		}
-		return null;
-	}
-	
-	private AttributeSymbol getAttributeSymbol(String symbolName) {
-		for(AttributeSymbol attributeSymbol : attributeSymbols) {
-			if(attributeSymbol.getName().equals(symbolName)) {
-				return attributeSymbol;
-			}
-		}
-		return null;
-	}
-	
-	private ReferenceSymbol getReferenceSymbol(String symbolName) {
-		for(ReferenceSymbol referenceSymbol : referenceSymbols) {
-			if(referenceSymbol.getName().equals(symbolName)) {
-				return referenceSymbol;
-			}
-		}
-		return null;
-	}
+//	private ClassSymbol getClassSymbol(String symbolName) {
+//		for(ClassSymbol classSymbol : classSymbols) {
+//			if(classSymbol.getName().equals(symbolName)) {
+//				return classSymbol;
+//			}
+//		}
+//		return null;
+//	}
+//	
+//	private AttributeSymbol getAttributeSymbol(String symbolName) {
+//		for(AttributeSymbol attributeSymbol : attributeSymbols) {
+//			if(attributeSymbol.getName().equals(symbolName)) {
+//				return attributeSymbol;
+//			}
+//		}
+//		return null;
+//	}
+//	
+//	private ReferenceSymbol getReferenceSymbol(String symbolName) {
+//		for(ReferenceSymbol referenceSymbol : referenceSymbols) {
+//			if(referenceSymbol.getName().equals(symbolName)) {
+//				return referenceSymbol;
+//			}
+//		}
+//		return null;
+//	}
 	
 	//TODO debug
 	public void printResult() {
@@ -781,6 +820,21 @@ public class ModelElementExtractor {
 			System.out.println("\tsuperReferences : " + reference.getSuperReferences());
 		}
 		
+	}
+	
+	public void printConcreteSymbols() {
+		for(Symbol symbol : symbols) {
+			System.out.println( symbol.getType() + " symbol : " + symbol.getFullName());
+			List<VisualRepresentation> visualRepresentations = symbol.getVisualRepresentations();
+			System.out.println("Visual Representation : ");
+			for(VisualRepresentation visualRepresentation : visualRepresentations) {
+				System.out.println(" --------------- ");
+				System.out.println("\t " + visualRepresentation.getShape());
+				System.out.println("\t " + visualRepresentation.getSize());
+				System.out.println("\t " + visualRepresentation.getPosition());
+				System.out.println("\t " + visualRepresentation.getColour());
+			}
+		}
 	}
 	
 }
