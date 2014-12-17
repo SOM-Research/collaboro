@@ -33,12 +33,15 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, String configurationFilePath) {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
-		this.isGraphical = isConcreteSyntaxGraphical();
-		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
-		this.configurationHandler = new MetricConfigurationHandler(configurationFilePath);
+		
 		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
 		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
 		this.abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
+		
+		this.isGraphical = isConcreteSyntaxGraphical();
+		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
+		this.configurationHandler = new MetricConfigurationHandler(configurationFilePath);
+		
 		initialize();
 		System.out.println("MetricFactory initialised");
 	}

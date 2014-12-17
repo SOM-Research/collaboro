@@ -1,4 +1,4 @@
-package fr.inria.atlanmod.collaboro.metrics.symbol;
+package fr.inria.atlanmod.collaboro.metrics.model;
 
 import java.util.ArrayList;
 import java.util.List;
