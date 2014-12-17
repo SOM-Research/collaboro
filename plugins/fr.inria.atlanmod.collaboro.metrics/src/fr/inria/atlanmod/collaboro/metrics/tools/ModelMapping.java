@@ -3,16 +3,13 @@ package fr.inria.atlanmod.collaboro.metrics.tools;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.Concept;
+import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.SymbolType;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.Relationship;
 
 public class ModelMapping {
 
@@ -22,62 +19,56 @@ public class ModelMapping {
 	private List<AttributeConcept> abstractAttributeConcepts;
 	private List<ReferenceConcept> abstractReferenceConcepts;
 	
-	private List<ClassSymbol> concreteClassSymbols;
-	private List<AttributeSymbol> concreteAttributeSymbols;
-	private List<ReferenceSymbol> concreteReferenceSymbols;
+	private List<Symbol> concreteSymbols;
 	
 	public ModelMapping() {
 		this.mapping = new ArrayList<Relationship>();
 		this.abstractClassConcepts = new ArrayList<ClassConcept>();
 		this.abstractAttributeConcepts = new ArrayList<AttributeConcept>();
 		this.abstractReferenceConcepts = new ArrayList<ReferenceConcept>();
-		this.concreteClassSymbols = new ArrayList<ClassSymbol>();
-		this.concreteAttributeSymbols = new ArrayList<AttributeSymbol>();
-		this.concreteReferenceSymbols = new ArrayList<ReferenceSymbol>();
+		this.concreteSymbols = new ArrayList<Symbol>();
 	}
 	
-	public void mapClassConceptsToClassSymbols(List<ClassConcept> classConcepts, List<ClassSymbol> classSymbols) {
-		this.abstractClassConcepts.addAll(classConcepts);
-		this.concreteClassSymbols.addAll(classSymbols);
-		for(ClassSymbol classSymbol : classSymbols) {
-			String classSymbolName = classSymbol.getClassName();
-			for(ClassConcept classConcept : classConcepts) {
-				if(classConcept.getName().equals(classSymbolName)) {
-					Relationship relationship = new Relationship(classConcept, classSymbol);
-					mapping.add(relationship);
+	public ModelMapping(List<ClassConcept> classConcepts, List<AttributeConcept> attributeConcepts, List<ReferenceConcept> referenceConcepts, List<Symbol> symbols) {
+		this.abstractClassConcepts = classConcepts;
+		this.abstractAttributeConcepts = attributeConcepts;
+		this.abstractReferenceConcepts = referenceConcepts;
+		this.concreteSymbols = symbols;
+		this.mapping = new ArrayList<Relationship>();
+		initialize();
+	}
+	
+	private void initialize() {
+		mapConceptsToSymbols();
+		System.out.println(mapping);
+	}
+	
+	private void mapConceptsToSymbols() {
+		for(Symbol symbol : this.concreteSymbols) {
+			if(symbol.getType() == SymbolType.CLASS) {
+				for(ClassConcept classConcept : abstractClassConcepts) {
+					if(symbol.getMappingName().equals(classConcept.getName())) {
+						Relationship relationship = new Relationship(classConcept, symbol);
+						mapping.add(relationship);
+					}
+				}
+			} else if(symbol.getType() == SymbolType.ATTRIBUTE){
+				for(AttributeConcept attributeConcept : abstractAttributeConcepts) {
+					if(symbol.getMappingName().equals(attributeConcept.getName())) {
+						Relationship relationship = new Relationship(attributeConcept, symbol);
+						mapping.add(relationship);
+					}
+				}
+			} else if(symbol.getType() == SymbolType.REFERENCE) {
+				for(ReferenceConcept referenceConcept : abstractReferenceConcepts) {
+					if(symbol.getMappingName().equals(referenceConcept.getName())) {
+						Relationship relationship = new Relationship(referenceConcept, symbol);
+						mapping.add(relationship);
+					}
 				}
 			}
 		}
-	}
-	
-	public void mapAttributeConceptsToAttributeSymbols(List<AttributeConcept> attributeConcepts, List<AttributeSymbol> attributeSymbols) {
-		this.abstractAttributeConcepts.addAll(attributeConcepts);
-		this.concreteAttributeSymbols.addAll(attributeSymbols);
-		for(AttributeSymbol attributeSymbol : attributeSymbols) {
-			String attributeSymbolName = attributeSymbol.getClassName() + "." + attributeSymbol.getAttributeName();
-			for(AttributeConcept attributeConcept : attributeConcepts) {
-				if(attributeConcept.getName().equals(attributeSymbolName)) {
-					Relationship relationship = new Relationship(attributeConcept, attributeSymbol);
-					mapping.add(relationship);
-				}
-			}
-		}
-	}
-	
-	public void mapReferenceConceptsToReferenceSymbols(List<ReferenceConcept> referenceConcepts, List<ReferenceSymbol> referenceSymbols) {
-		this.abstractReferenceConcepts.addAll(referenceConcepts);
-		this.concreteReferenceSymbols.addAll(referenceSymbols);
-		for(ReferenceSymbol referenceSymbol : referenceSymbols) {
-			String referenceSymbolName = referenceSymbol.getClassName() + "." + referenceSymbol.getReferenceName();
-			for(ReferenceConcept referenceConcept : referenceConcepts) {
-				if(referenceConcept.getName().equals(referenceSymbolName)) {
-					Relationship relationship = new Relationship(referenceConcept, referenceSymbol);
-					mapping.add(relationship);
-				}
-			}
-		}
-	}
-	
+	}	
 
 	public List<Relationship> getMapping() {
 		return mapping;
@@ -95,20 +86,52 @@ public class ModelMapping {
 		return abstractReferenceConcepts;
 	}
 
-	public List<ClassSymbol> getConcreteClassSymbols() {
-		return concreteClassSymbols;
-	}
-
-	public List<AttributeSymbol> getConcreteAttributeSymbols() {
-		return concreteAttributeSymbols;
-	}
-
-	public List<ReferenceSymbol> getConcreteReferenceSymbols() {
-		return concreteReferenceSymbols;
+	public List<Symbol> getConcreteSymbols() {
+		return concreteSymbols;
 	}
 
 	public String toString() {
 		return mapping.toString();
+	}
+	
+	public boolean isSymbolMapped(Symbol symbol) {
+		for(Relationship relationship : this.mapping) {
+			Symbol concreteSymbol = relationship.getRelationshipTo();
+			if(concreteSymbol.equals(symbol)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int countSymbolOccurence(Symbol symbol) {
+		int count = 0;
+		for(Relationship relationship : this.mapping) {
+			if(relationship.getRelationshipTo().equals(symbol)) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public boolean isConceptMapped(Concept concept) {
+		for(Relationship relationship : this.mapping) {
+			Concept abstractConcept = relationship.getRelationshipFrom();
+			if(abstractConcept.equals(concept)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int countConceptOccurence(Concept concept) {
+		int count = 0;
+		for(Relationship relationship : this.mapping) {
+			if(relationship.getRelationshipFrom().equals(concept)) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
 	/*public Concept getConceptByName(String conceptName) {

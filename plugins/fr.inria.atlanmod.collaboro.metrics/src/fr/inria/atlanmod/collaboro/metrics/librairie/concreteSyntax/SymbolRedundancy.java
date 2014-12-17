@@ -12,17 +12,13 @@ import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
 import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
-import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceSymbol;
+import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.Concept;
+import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
-import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.Relationship;
 
 public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	
@@ -111,7 +107,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	private void checkClassConcepts() {
 		List<ClassConcept> classConcepts = this.modelMapping.getAbstractClassConcepts();
 		for(ClassConcept classConcept : classConcepts) {
-			countClassConceptRepresentedMap.put(classConcept, containsInFromCount(classConcept));
+			countClassConceptRepresentedMap.put(classConcept, this.modelMapping.countConceptOccurence(classConcept));
 		}
 		
 		// check heritage
@@ -158,7 +154,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	private void checkAttributeConcept() {
 		List<AttributeConcept> attributeConcepts = this.modelMapping.getAbstractAttributeConcepts();
 		for(AttributeConcept attributeConcept : attributeConcepts) {
-			countAttributeConceptRepresentedMap.put(attributeConcept, containsInFromCount(attributeConcept));
+			countAttributeConceptRepresentedMap.put(attributeConcept, this.modelMapping.countConceptOccurence(attributeConcept));
 		}
 		
 		// check heritage
@@ -206,7 +202,7 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	private void checkReferenceConcept() {
 		List<ReferenceConcept> referenceConcepts = this.modelMapping.getAbstractReferenceConcepts();
 		for(ReferenceConcept referenceConcept : referenceConcepts) {
-			countReferenceConceptRepresentedMap.put(referenceConcept, containsInFromCount(referenceConcept));
+			countReferenceConceptRepresentedMap.put(referenceConcept, this.modelMapping.countConceptOccurence(referenceConcept));
 		}
 		
 		// check heritage
@@ -249,17 +245,5 @@ public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 			return referenceIsRepresentedByHeritage;
 		}
 	}
-	
-	private int containsInFromCount(Concept concept) {
-		List<Relationship> relationships = this.modelMapping.getMapping();
-		int count = 0;
-		for(Relationship relationship : relationships) {
-			if(relationship.getRelationshipFrom().equals(concept)) {
-				count++;
-			}
-		}
-		return count;
-	}
-
 
 }

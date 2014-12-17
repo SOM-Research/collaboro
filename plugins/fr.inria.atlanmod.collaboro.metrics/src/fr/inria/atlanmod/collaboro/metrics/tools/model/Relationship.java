@@ -1,7 +1,7 @@
-package fr.inria.atlanmod.collaboro.metrics.tools;
+package fr.inria.atlanmod.collaboro.metrics.tools.model;
 
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.Concept;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 
 public class Relationship {
 	

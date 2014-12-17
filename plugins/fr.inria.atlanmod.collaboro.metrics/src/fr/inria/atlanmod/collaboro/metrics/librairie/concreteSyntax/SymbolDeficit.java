@@ -17,12 +17,12 @@ import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImp
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ReferredElementImpl;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
+import fr.inria.atlanmod.collaboro.metrics.model.Concept;
+import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
-import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.Relationship;
 
 public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 	
@@ -116,7 +116,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		List<ClassConcept> abstractClassConcepts = this.modelMapping.getAbstractClassConcepts();
 		//initialise map 
 		for(ClassConcept classConcept : abstractClassConcepts) {
-			isClassConceptRepresentedMap.put(classConcept, containsInFrom(classConcept));
+			isClassConceptRepresentedMap.put(classConcept, this.modelMapping.isConceptMapped(classConcept));
 		}
 		System.out.println(isClassConceptRepresentedMap);
 		
@@ -139,7 +139,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		List<AttributeConcept> abstractAttributeConcepts = this.modelMapping.getAbstractAttributeConcepts();
 		//initialise map
 		for(AttributeConcept attributeConcept : abstractAttributeConcepts) {
-			isAttributeConceptRepresentedMap.put(attributeConcept, containsInFrom(attributeConcept));
+			isAttributeConceptRepresentedMap.put(attributeConcept, this.modelMapping.isConceptMapped(attributeConcept));
 		}
 		System.out.println(isAttributeConceptRepresentedMap);
 		
@@ -160,7 +160,7 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 		List<ReferenceConcept> abstractReferenceConcepts = this.modelMapping.getAbstractReferenceConcepts();
 		//initialise map
 		for(ReferenceConcept referenceConcept : abstractReferenceConcepts) {
-			isReferenceConceptRepresentedMap.put(referenceConcept, containsInFrom(referenceConcept));
+			isReferenceConceptRepresentedMap.put(referenceConcept, this.modelMapping.isConceptMapped(referenceConcept));
 		}
 		System.out.println(isReferenceConceptRepresentedMap);
 		
@@ -304,19 +304,5 @@ public class SymbolDeficit extends ConcreteSyntaxGraphicalMetricImpl {
 			}
 		}
 	}
-	
-	private boolean containsInFrom(Concept concept) {
-		List<Relationship> relationships = this.modelMapping.getMapping();
-		for(Relationship relationship : relationships) {
-			Concept abstractConcept = relationship.getRelationshipFrom();
-			if(abstractConcept.equals(concept)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	
-
-	
+		
 }

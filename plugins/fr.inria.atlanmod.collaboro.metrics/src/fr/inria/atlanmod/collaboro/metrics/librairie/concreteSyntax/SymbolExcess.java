@@ -10,20 +10,11 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
-import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.AttributeSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ClassSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Concept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceConcept;
-import fr.inria.atlanmod.collaboro.metrics.symbol.ReferenceSymbol;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
-import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 
 public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
@@ -31,23 +22,13 @@ public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
 	private static String dimension = "Ontological";
 	private static String description = "Symbol excess occurs when a concrete symbols does not correspond to any abstract concept";
 	
-	private Map<ClassSymbol,Boolean> isClassSymbolRepresentedMap;
-	private Map<AttributeSymbol,Boolean> isAttributeSymbolRepresentedMap;
-	private Map<ReferenceSymbol,Boolean> isReferenceSymbolRepresentedMap;
-	
 	public SymbolExcess(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
 		super(name,dimension,description,acceptanceRatio,priority,isActive);
-		this.isClassSymbolRepresentedMap = new HashMap<ClassSymbol, Boolean>();
-		this.isAttributeSymbolRepresentedMap = new HashMap<AttributeSymbol, Boolean>();
-		this.isReferenceSymbolRepresentedMap = new HashMap<ReferenceSymbol, Boolean>();
 	}
 	
 	public SymbolExcess(ModelMapping modelMapping) {
 		super("symbol excess","Ontological", "Symbol excess occurs when a concrete symbols does not correspond to any abstract concept",0);
 		this.modelMapping = modelMapping;
-		this.isClassSymbolRepresentedMap = new HashMap<ClassSymbol, Boolean>();
-		this.isAttributeSymbolRepresentedMap = new HashMap<AttributeSymbol, Boolean>();
-		this.isReferenceSymbolRepresentedMap = new HashMap<ReferenceSymbol, Boolean>();
 	}
 	
 	public List<MetricResult> execute() {
@@ -55,35 +36,19 @@ public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
 		List<MetricResult> results = new ArrayList<MetricResult>();
 		List<ReferredElement> excessSymbol = new ArrayList<ReferredElement>();
 		
-		checkClassSymbols();
-		checkAttributeSymbols();
-		checkReferenceSymbols();
 		
-		int totalElements = 0;
-		for(ClassSymbol classSymbol : this.modelMapping.getConcreteClassSymbols()) {
-			totalElements++;
-			if((isClassSymbolRepresentedMap.get(classSymbol) != null) && (!isClassSymbolRepresentedMap.get(classSymbol))) {
-				ReferredElement classReferredElement = new ConcreteSyntaxReferredElementImpl(classSymbol.getName(), ReferredElementReason.MISSING, classSymbol.getConcreteSyntaxElement());
-				excessSymbol.add(classReferredElement);
+		Map<Symbol,Boolean> isSymbolRepresentedMap = checkSymbols();
+		
+		for(Symbol concreteSymbol : isSymbolRepresentedMap.keySet()) {
+			if(!(isSymbolRepresentedMap.get(concreteSymbol))) {
+				String concreteSymbolName = concreteSymbol.getFullName();
+				NotationElement concreteSymbolNotationElement = concreteSymbol.getNotationElement();
+				ReferredElement symbolReferredElement = new ConcreteSyntaxReferredElementImpl(concreteSymbolName, ReferredElementReason.MISSING, concreteSymbolNotationElement);
+				excessSymbol.add(symbolReferredElement);
 			}
 		}
 		
-		for(AttributeSymbol attributeSymbol : this.modelMapping.getConcreteAttributeSymbols()) {
-			totalElements++;
-			if((isAttributeSymbolRepresentedMap.get(attributeSymbol) != null) && (!isAttributeSymbolRepresentedMap.get(attributeSymbol))) {
-				ReferredElement attributeReferredElement = new ConcreteSyntaxReferredElementImpl(attributeSymbol.getName(), ReferredElementReason.MISSING, attributeSymbol.getConcreteSyntaxElement());
-				excessSymbol.add(attributeReferredElement);
-			}
-		}
-		
-		for(ReferenceSymbol referenceSymbol : this.modelMapping.getConcreteReferenceSymbols()) {
-			totalElements++;
-			if((isReferenceSymbolRepresentedMap.get(referenceSymbol) != null) && (!isReferenceSymbolRepresentedMap.get(referenceSymbol))) {
-				ReferredElement referenceReferredElement = new ConcreteSyntaxReferredElementImpl(referenceSymbol.getName(), ReferredElementReason.MISSING, referenceSymbol.getConcreteSyntaxElement());
-				excessSymbol.add(referenceReferredElement);
-			}
-		}
-		
+		int totalElements = isSymbolRepresentedMap.size();
 		MetricResultImpl metricResult = new MetricResultImpl();
 		int excessElements = excessSymbol.size();
 		if(excessElements > this.acceptanceRatio) {
@@ -111,36 +76,15 @@ public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
 		return results;
 	}
 	
-	private void checkClassSymbols() {
-		List<ClassSymbol> concreteClassSymbols = this.modelMapping.getConcreteClassSymbols();
-		for(ClassSymbol classSymbol : concreteClassSymbols) {
-			isClassSymbolRepresentedMap.put(classSymbol, containsInTo(classSymbol));
+	private Map<Symbol,Boolean> checkSymbols() {
+		Map<Symbol,Boolean> isSymbolRepresentedMap = new HashMap<Symbol, Boolean>();
+		
+		List<Symbol> concreteSymbols = this.modelMapping.getConcreteSymbols();
+		for(Symbol symbol : concreteSymbols) {
+			isSymbolRepresentedMap.put(symbol, this.modelMapping.isSymbolMapped(symbol));
 		}
-	}
-	
-	private void checkAttributeSymbols() {
-		List<AttributeSymbol> concreteAttributeSymbols = this.modelMapping.getConcreteAttributeSymbols();
-		for(AttributeSymbol attributeSymbol : concreteAttributeSymbols) {
-			isAttributeSymbolRepresentedMap.put(attributeSymbol, containsInTo(attributeSymbol));
-		}
-	}
-	
-	private void checkReferenceSymbols() {
-		List<ReferenceSymbol> concreteReferenceSymbols = this.modelMapping.getConcreteReferenceSymbols();
-		for(ReferenceSymbol referenceSymbol : concreteReferenceSymbols) {
-			isReferenceSymbolRepresentedMap.put(referenceSymbol, containsInTo(referenceSymbol));
-		}
-	}
-	
-	private boolean containsInTo(Symbol symbol) {
-		List<Relationship> relationships = this.modelMapping.getMapping();
-		for(Relationship relationship : relationships) {
-			Symbol concreteSymbol = relationship.getRelationshipTo();
-			if(concreteSymbol.equals(symbol)) {
-				return true;
-			}
-		}
-		return false;
+		
+		return isSymbolRepresentedMap;
 	}
 
 }
