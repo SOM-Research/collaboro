@@ -29,7 +29,7 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 	public List<MetricResult> execute() {
 		// if they are different values for a visual variable -> visualExpressiveness + 1
 		
-		System.out.println("Execute PerceptualDiscriminability");
+		System.out.println("Execute Visual Expressiveness");
 		List<MetricResult> results = new ArrayList<MetricResult>();
 		
 		List<Symbol> concreteSymbols = this.modelMapping.getConcreteSymbols();
@@ -38,6 +38,7 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 		List<Size> sizeUsed = new ArrayList<Size>();
 		List<Position> positionUsed = new ArrayList<Position>();
 		List<Colour> colourUsed = new ArrayList<Colour>();
+		
 		for(Symbol concreteSymbol : concreteSymbols) {
 			List<VisualRepresentation> visualRepresentations = concreteSymbol.getVisualRepresentations();
 			if(visualRepresentations.size() > 1) {
@@ -68,12 +69,21 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 		}
 		
 		int visualVariation = 0;
+		int count = 0;
 		String visualVariationOn = "";
 		if(shapeTypeUsed.size() > 1) {
 			visualVariation++;
 			visualVariationOn += "Shape,";
 		} else if (shapeTypeUsed.size() == 1 ){
-
+			// shape is used but only one type
+			MetricResultImpl metricResult = new MetricResultImpl();
+			metricResult.setStatus(MetricResultStatus.BAD);
+			
+			metricResult.setReason("The concrete syntax should use more Shapes (only shape used : " + shapeTypeUsed.get(0).getName() + ")");
+			metricResult.setRatio(1);
+			metricResult.setReferredElements(new ArrayList<ReferredElement>());
+			results.add(metricResult);
+			count++;
 		} else {
 			
 		}
@@ -105,10 +115,19 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 			
 		}
 		
+		if(!visualVariationOn.equals("")) {
+			visualVariationOn = visualVariationOn.substring(0, visualVariationOn.length() - 1);
+		}
+		
 		if(visualVariation < this.acceptanceRatio) {
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setStatus(MetricResultStatus.BAD);
-			metricResult.setReason("The concrete syntax doesn't use enough visual variables (" + visualVariation + ")" );
+			String visualVariatonMessage = String.valueOf(visualVariation);
+			if(visualVariation != 0) {
+				visualVariatonMessage += " : " + visualVariationOn;
+			}
+			
+			metricResult.setReason("The concrete syntax doesn't use enough visual variables (" + visualVariatonMessage + ")");
 			metricResult.setRatio(visualVariation);
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
 			results.add(metricResult);

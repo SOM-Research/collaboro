@@ -50,9 +50,6 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 		
 		for(int i = 0 ; i < concreteSymbols.size() ; i++) {
 			
-			if(i == concreteSymbols.size() - 1) {
-				
-			}
 			Symbol currentSymbol = concreteSymbols.get(i);
 			
 			ShapeType currentShape = null;
@@ -118,23 +115,28 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 					boolean isPositionSame = currentPosition.equals(comparePosition);
 					boolean isColourSame = currentColour.equals(compareColour);
 					
-					if(j != i) {
-						if(j > i) {
-							SymbolComparison symbolComparison = new SymbolComparison(currentSymbol, compareSymbol);
-							symbolComparison.setShapeSame(isShapeSame);
-							symbolComparison.setSizeSame(isSizeSame);
-							symbolComparison.setPositionSame(isPositionSame);
-							symbolComparison.setColourSame(isColourSame);
-							symbolComparisonList.add(symbolComparison);
+					if(compareShape != null) {
+						if(j != i) {
+							if(j > i) {
+								SymbolComparison symbolComparison = new SymbolComparison(currentSymbol, compareSymbol);
+								symbolComparison.setShapeSame(isShapeSame);
+								symbolComparison.setSizeSame(isSizeSame);
+								symbolComparison.setPositionSame(isPositionSame);
+								symbolComparison.setColourSame(isColourSame);
+								symbolComparisonList.add(symbolComparison);
+							}
+							shapeUnique &=  !isShapeSame;
+							colourUnique &= !isColourSame;
+							positionUnique &= !isPositionSame;
+							sizeUnique &= !isSizeSame;
 						}
-						shapeUnique &=  !isShapeSame;
-						colourUnique &= !isColourSame;
-						positionUnique &= !isPositionSame;
-						sizeUnique &= !isSizeSame;
 					}
 					
 					
 				}
+				
+				
+				// count number of unique visual variable
 				System.out.println(" ---------- ");
 				System.out.println("symbol ref : " + currentSymbol.getFullName());
 				int numberOfUniqueVisualVariable = 0;
@@ -163,6 +165,8 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 				System.out.println("number of unique visual variable : " + numberOfUniqueVisualVariable);
 			}
 		}
+		
+		// 1 to 1 comparison of symbopl visual representation
 		
 		for(SymbolComparison symbolComparison : symbolComparisonList) {
 			boolean isShapeSame = symbolComparison.isShapeSame();
