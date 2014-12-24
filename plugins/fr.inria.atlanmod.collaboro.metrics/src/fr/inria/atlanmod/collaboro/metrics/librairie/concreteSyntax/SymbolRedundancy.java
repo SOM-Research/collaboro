@@ -15,10 +15,8 @@ import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImp
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
 import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
 import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
-import fr.inria.atlanmod.collaboro.metrics.model.Concept;
 import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
-import fr.inria.atlanmod.collaboro.metrics.tools.model.Relationship;
 
 public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
 	

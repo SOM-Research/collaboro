@@ -1,6 +1,5 @@
 package fr.inria.atlanmod.collaboro.metrics.tools;
 
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +129,10 @@ private Symbol resolveComposite(Composite composite, Composite parentComposite) 
 					//TODO
 				} else if (compositeElement instanceof SyntaxOf) {
 					SyntaxOf syntaxOf = (SyntaxOf) compositeElement;
+					List<VisualRepresentation> visualRepresentations = resolveSyntaxOf(syntaxOf, composite);
+					for(VisualRepresentation visualRepresentation : visualRepresentations) {
+						compositeSymbol.addVisualRepresentation(visualRepresentation);
+					}
 				} else {
 					//error
 				}
@@ -240,10 +243,97 @@ private Symbol resolveComposite(Composite composite, Composite parentComposite) 
 		}
 	}
 	
-	private void resolveSyntaxOf(SyntaxOf syntaxOf, NotationElement parentElement) {
+	private List<VisualRepresentation> resolveSyntaxOf(SyntaxOf syntaxOf, Composite parentComposite) {
+		List<VisualRepresentation> visualRepresentationList = new ArrayList<VisualRepresentation>();
+		
 		String elementId = syntaxOf.getId();
 		EReference elementReference = syntaxOf.getReference();
 		NotationElement elementSeparator = syntaxOf.getSeparator();
+		
+		if(elementReference != null) {
+			
+		} else {
+			NotationElement notationElement = findNotationElementByName(elementId);
+			if(notationElement != null) {
+				if(notationElement instanceof Composite)  {
+					Composite composite = (Composite) notationElement;
+					Symbol symbol = resolveComposite(composite, null);
+					if(symbol.getType().equals(SymbolType.REFERENCE)) {
+						// Do not include representation for reference syntaxOf
+					} else {
+						visualRepresentationList.addAll(symbol.getVisualRepresentations());
+					}
+//					visualRepresentationList.addAll(symbol.getVisualRepresentations());
+					//this.symbols.add(symbol);
+				} else if(notationElement instanceof GraphicalElement) {
+					GraphicalElement graphicalElement = (GraphicalElement) notationElement;
+					VisualRepresentation visualRepresentation = resolveGraphicalElement(graphicalElement, parentComposite);
+					visualRepresentationList.add(visualRepresentation);
+				} else if(notationElement instanceof TextualElement) {
+					TextualElement textualElement = (TextualElement) notationElement;
+					//TODO
+				} else if(notationElement instanceof SyntaxOf) {
+					SyntaxOf syntaxOfElement = (SyntaxOf) notationElement;
+					List<VisualRepresentation> syntaxOfVisualRepresentations = resolveSyntaxOf(syntaxOfElement, parentComposite);
+					visualRepresentationList.addAll(syntaxOfVisualRepresentations);
+				} else {
+					//error
+				}
+			}
+		}
+		return visualRepresentationList;
+	}
+	
+	private NotationElement findNotationElementByName(String elementNameSearch) {
+		System.out.println("find notation element by name  : " + elementNameSearch);
+		List<NotationElement> concreteSyntaxElements = this.concreteSyntaxModel.getElements();
+		for(NotationElement concreteSyntaxElement : concreteSyntaxElements) {
+			if(!(concreteSyntaxElement instanceof SyntaxOf)) {
+				String elementName = concreteSyntaxElement.getId();
+				System.out.println("looking at element : " + elementName);
+				if(elementName != null) {
+					if(elementName.equals(elementNameSearch)) {
+						System.out.println("Found element");
+						return concreteSyntaxElement;
+					} else {
+						if(concreteSyntaxElement instanceof Composite) {
+							System.out.println("element is composite");
+							Composite composite = (Composite) concreteSyntaxElement;
+							NotationElement notationElement = findNotationElementByNameInComposite(composite, elementNameSearch);
+							if(notationElement != null) {
+								return notationElement;
+							}
+						}
+					}
+				}
+			}
+		}
+		return null;
+		
+	}
+	
+	private NotationElement findNotationElementByNameInComposite(Composite composite, String elementNameSearch) {
+		NotationElement notationElement = null;
+		List<NotationElement> compositeSubElements = composite.getSubElements();
+		for(NotationElement compositeSubElement : compositeSubElements) {
+			if(!(compositeSubElement instanceof SyntaxOf)) {
+				String elementName = compositeSubElement.getId();
+				if(elementName != null) {
+					if(elementName.equals(elementNameSearch)) {
+						return compositeSubElement;
+					} else {
+						if(compositeSubElement instanceof Composite) {
+							Composite subElementComposite = (Composite) compositeSubElement;
+							notationElement = findNotationElementByNameInComposite(subElementComposite, elementNameSearch);
+							if(notationElement != null) {
+								return notationElement;
+							}
+						}
+					}
+				}
+			}
+		}
+		return notationElement;
 	}
 	
 	private Symbol resolveAttributeValue(AttributeValue attributeValue, NotationElement parentElement) {

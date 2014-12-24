@@ -42,7 +42,26 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 		for(Symbol concreteSymbol : concreteSymbols) {
 			List<VisualRepresentation> visualRepresentations = concreteSymbol.getVisualRepresentations();
 			if(visualRepresentations.size() > 1) {
-				
+				for(VisualRepresentation visualRepresentation : visualRepresentations) {
+					//Add visual variable used
+					ShapeType shapeType = visualRepresentation.getShape();
+					Size size = visualRepresentation.getSize();
+					Position position = visualRepresentation.getPosition();
+					Colour colour = visualRepresentation.getColour();
+					
+					if(!shapeTypeUsed.contains(shapeType)) {
+						shapeTypeUsed.add(shapeType);
+					}
+					if(!sizeUsed.contains(size)) {
+						sizeUsed.add(size);
+					}
+					if(!positionUsed.contains(position)) {
+						positionUsed.add(position);
+					}
+					if(!colourUsed.contains(colour)) {
+						colourUsed.add(colour);
+					}
+				}
 			} else if(visualRepresentations.size() < 1) {
 				
 			} else {

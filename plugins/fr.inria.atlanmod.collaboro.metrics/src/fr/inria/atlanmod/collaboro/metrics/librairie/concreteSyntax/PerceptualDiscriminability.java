@@ -62,14 +62,31 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 			boolean positionUnique = true;
 			boolean colourUnique = true;
 			
+			boolean useText = false;
+			
 			List<VisualRepresentation> currentSymbolVisualRepresentations = currentSymbol.getVisualRepresentations();
 			if(currentSymbolVisualRepresentations.size() > 1) {
+				List<VisualRepresentation> computableRepresentations = new ArrayList<VisualRepresentation>();
 				for(VisualRepresentation visualRepresentation : currentSymbolVisualRepresentations) {
 					ShapeType shape = visualRepresentation.getShape();
 					Size size = visualRepresentation.getSize();
 					Position position = visualRepresentation.getPosition();
 					Colour colour = visualRepresentation.getColour();
+					
+					if(shape.equals(ShapeType.LABEL)) {
+						useText = true;
+					} else {
+						computableRepresentations.add(visualRepresentation);
+					}
 					//TODO aggreagate
+				}
+				
+				if(computableRepresentations.size() == 1) {
+					VisualRepresentation visualRepresentation = computableRepresentations.get(0);
+					currentShape = visualRepresentation.getShape();
+					currentSize = visualRepresentation.getSize();
+					currentPosition = visualRepresentation.getPosition();
+					currentColour = visualRepresentation.getColour();
 				}
 			} else if(currentSymbolVisualRepresentations.size() < 1) {
 				// error
@@ -92,6 +109,7 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 					
 					List<VisualRepresentation> compareSymbolVisualRepresentations = compareSymbol.getVisualRepresentations();
 					if(compareSymbolVisualRepresentations.size() > 1) {
+						List<VisualRepresentation> computableRepresentations = new ArrayList<VisualRepresentation>();
 						for(VisualRepresentation visualRepresentation : compareSymbolVisualRepresentations) {
 							ShapeType shape = visualRepresentation.getShape();
 							Size size = visualRepresentation.getSize();
@@ -99,7 +117,21 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 							Colour colour = visualRepresentation.getColour();
 							//TODO aggregate
 							
+							if(shape.equals(ShapeType.LABEL)) {
+								useText = true;
+							} else {
+								computableRepresentations.add(visualRepresentation);
+							}
+							
 						}
+						if(computableRepresentations.size() == 1) {
+							VisualRepresentation visualRepresentation = computableRepresentations.get(0);
+							compareShape = visualRepresentation.getShape();
+							compareSize = visualRepresentation.getSize();
+							comparePosition = visualRepresentation.getPosition();
+							compareColour = visualRepresentation.getColour();
+						}
+						
 					} else if(compareSymbolVisualRepresentations.size() < 1) {
 						// error
 					} else {
@@ -166,7 +198,7 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 			}
 		}
 		
-		// 1 to 1 comparison of symbopl visual representation
+		// 1 to 1 comparison of symbol visual representation
 		
 		for(SymbolComparison symbolComparison : symbolComparisonList) {
 			boolean isShapeSame = symbolComparison.isShapeSame();
@@ -223,5 +255,19 @@ public class PerceptualDiscriminability extends ConcreteSyntaxGraphicalMetricImp
 		
 		return results;
 	}
-
+	
+	public void computeVisualRepresentation(Symbol symbol) {
+		List<VisualRepresentation> visualRepresentations = symbol.getVisualRepresentations();
+		for(VisualRepresentation visualRepresentation : visualRepresentations) {
+			ShapeType shape = visualRepresentation.getShape();
+			Size size = visualRepresentation.getSize();
+			Position position = visualRepresentation.getPosition();
+			Colour colour = visualRepresentation.getColour();
+			
+			if(shape.equals(ShapeType.LABEL)) {
+				// Don't take into account textual element 
+			}
+			
+		}
+	}
 }

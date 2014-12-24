@@ -40,7 +40,7 @@ public class Test {
 			e1.printStackTrace();
 		}
 		
-		Resource concreteSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport-graphical1.notation.xmi"), true);
+		Resource concreteSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport-graphical2.notation.xmi"), true);
 		try {
 			
 			concreteSyntaxModel.load(null);
