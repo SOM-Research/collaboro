@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.backend;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class RecommenderEngine {
 	private HashMap<Metric, List<MetricResult>> results;
 	private HashMap<Metric, List<String>> metric2proposalId;
 	
-	public RecommenderEngine(String userId, CollaboroBackend backend) {
+	public RecommenderEngine(String userId, CollaboroBackend backend,InputStream metricPropertyStream) {
 		this.userId = userId;
 		this.backend = backend;
 		this.modelManager = backend.getModelManager();
@@ -32,7 +33,7 @@ public class RecommenderEngine {
 		
 		EPackage abstractSyntaxModel = modelManager.getEcoreModel();
 		Definition concreteSyntaxModel = modelManager.getNotation();
-		factory = new MetricsFactoryImpl(abstractSyntaxModel, concreteSyntaxModel);
+		factory = new MetricsFactoryImpl(abstractSyntaxModel, concreteSyntaxModel,metricPropertyStream);
 	}
 	
 	public List<Metric> getMetrics() {

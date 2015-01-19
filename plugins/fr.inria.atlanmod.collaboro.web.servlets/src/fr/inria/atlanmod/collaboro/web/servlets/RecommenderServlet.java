@@ -42,12 +42,13 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		String dsl = (String) session.getAttribute("dsl");
 
 		JsonObject responseObject = new JsonObject();
+		properties.load(getServletContext().getResourceAsStream("/WEB-INF/config.properties"));
 		CollaboroRecommenderBackend recommenderBackend = CollaboroBackendFactory.getRecommenderBackend(dsl);
 		if(recommenderBackend.checkAlreadyRecommended()) {
 			responseObject.addProperty("status", "success");
 			responseObject.addProperty("message", "Version already checked!");
 		} else {
-			recommenderBackend.launchRecommender();
+			recommenderBackend.launchRecommender(getServletContext().getResourceAsStream("/WEB-INF/metrics.properties"));
 			
 			HashMap<Metric, List<MetricResult>> results = recommenderBackend.getResults();
 			MetricResultStatus finalStatus = MetricResultStatus.GOOD;

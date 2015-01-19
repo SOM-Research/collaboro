@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.backend;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 		super(modelManager);
 		this.userId = userId;
 		checkRecommenderUser();
-		this.recommender = new RecommenderEngine(userId, this);
+		//this.recommender = new RecommenderEngine(userId, this);
 	}
 	
 	public void checkRecommenderUser() {
@@ -64,9 +65,9 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 		return newProposal.getId();
 	}
 	
-	public void launchRecommender() {
+	public void launchRecommender(InputStream metricPropertyStream) {
 		recommendations = new ArrayList<Proposal>();
-		this.recommender = new RecommenderEngine(userId, this);
+		this.recommender = new RecommenderEngine(userId, this, metricPropertyStream);
 		recommender.checkMetrics();
 	}
 	

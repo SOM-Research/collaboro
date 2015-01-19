@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.metrics.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxGraphicalMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxTextualMetric;
-import fr.inria.atlanmod.collaboro.metrics.Metric;
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
 import fr.inria.atlanmod.collaboro.metrics.tools.MetricConfigurationHandler;
@@ -30,7 +30,8 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	private List<AbstractSyntaxMetric> abstractSyntaxMetrics;
 	private MetricConfigurationHandler configurationHandler;
 	
-	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, String configurationFilePath) {
+	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
+		//TEST METHOD
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		
@@ -40,7 +41,23 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		
 		this.isGraphical = isConcreteSyntaxGraphical();
 		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
-		this.configurationHandler = new MetricConfigurationHandler(configurationFilePath);
+		this.configurationHandler = new MetricConfigurationHandler();
+		
+		initialize();
+		System.out.println("MetricFactory initialised");
+	}
+	
+	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, InputStream configurationFileStream) {
+		this.abstractSyntaxModel = abstractSyntaxModel;
+		this.concreteSyntaxModel = concreteSyntaxModel;
+		
+		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
+		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
+		this.abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
+		
+		this.isGraphical = isConcreteSyntaxGraphical();
+		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
+		this.configurationHandler = new MetricConfigurationHandler(configurationFileStream);
 		
 		initialize();
 		System.out.println("MetricFactory initialised");
