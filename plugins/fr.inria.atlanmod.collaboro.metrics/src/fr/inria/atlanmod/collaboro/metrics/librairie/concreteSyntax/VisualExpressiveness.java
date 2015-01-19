@@ -18,7 +18,7 @@ import fr.inria.atlanmod.collaboro.metrics.model.VisualRepresentation;
 
 public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 	
-	private static String description = "";
+	private static String description = "The visual notation should use full range and capacities of visual variables";
 	private static String dimension = "Ontological";
 
 	public VisualExpressiveness(String name, Integer acceptanceRatio,

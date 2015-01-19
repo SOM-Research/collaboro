@@ -52,7 +52,7 @@ public class Test {
 		
 		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
-		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
+		/*MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
 		//metricFactory.loadConfiguration();
 		//metricFactory.activate("Symbol Deficit");
 		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
@@ -65,6 +65,8 @@ public class Test {
 				System.out.println("-------------------------");
 			}
 		}
+		
+		*/
 		
 		// Debug
 //		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);

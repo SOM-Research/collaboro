@@ -49,6 +49,7 @@ public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
 		}
 		
 		int totalElements = isSymbolRepresentedMap.size();
+		System.out.println(totalElements);
 		MetricResultImpl metricResult = new MetricResultImpl();
 		int excessElements = excessSymbol.size();
 		if(excessElements > this.acceptanceRatio) {
