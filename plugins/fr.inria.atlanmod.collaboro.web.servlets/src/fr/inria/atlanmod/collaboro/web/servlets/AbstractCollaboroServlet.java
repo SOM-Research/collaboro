@@ -24,6 +24,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 
 	Properties properties = null;
 	String serverURL = "";
+	File metricsConfig;
 
 	@Override
 	public void init() throws ServletException {
@@ -36,6 +37,15 @@ public class AbstractCollaboroServlet extends HttpServlet {
 		}
 		
 		serverURL = properties.getProperty("serverURL");
+		
+		String metricsConfigPath = properties.getProperty("metricsConfigPath");
+		if(metricsConfigPath == null)
+			throw new IllegalArgumentException("There is no metricsConfigPath property in the configuration file");
+	
+		metricsConfig = new File(metricsConfigPath);
+		if(!metricsConfig.exists() || metricsConfig.isDirectory())
+			throw new IllegalArgumentException("The metricsConfig path does not exist or is not a file");		
+		
 		if(serverURL == null) 
 			serverURL = "http://localhost:8001";
 
@@ -91,7 +101,7 @@ public class AbstractCollaboroServlet extends HttpServlet {
 					}
 				}
 			}
-			CollaboroBackendFactory.init(languageConfigs);
+			CollaboroBackendFactory.init(languageConfigs, metricsConfig);
 		}
 	}
 	

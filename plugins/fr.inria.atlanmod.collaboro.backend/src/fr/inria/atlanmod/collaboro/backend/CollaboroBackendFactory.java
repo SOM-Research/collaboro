@@ -13,6 +13,7 @@ public class CollaboroBackendFactory {
 	private static CollaboroBackendFactory instance;
 
 	private HashMap<String, CollaboroLanguageConfig> configs;
+	private File metricsConfig;
 	private HashMap<String, CollaboroBackend> backends;
 	private HashMap<String, ModelManager> modelManagers;
 	private CollaboroBackend lastBackendCreated;
@@ -27,10 +28,11 @@ public class CollaboroBackendFactory {
 		return !(instance == null);
 	}
 
-	public static void init(List<CollaboroLanguageConfig> languages) {
+	public static void init(List<CollaboroLanguageConfig> languages, File metricsConfig) {
 		instance = new CollaboroBackendFactory();
 		for(CollaboroLanguageConfig language : languages) {
 			instance.configs.put(language.getLanguageName().toLowerCase(), language);
+			instance.metricsConfig = metricsConfig;
 		}
 	}
 
@@ -73,7 +75,7 @@ public class CollaboroBackendFactory {
 		CollaboroRecommenderBackend recommenderBackend = (CollaboroRecommenderBackend) instance.backends.get(dslUser.toLowerCase());
 		if(recommenderBackend == null) {
 			ModelManager modelManager = instance.getModelManager(dsl);
-			recommenderBackend = new CollaboroRecommenderBackend(modelManager, userId);
+			recommenderBackend = new CollaboroRecommenderBackend(modelManager, userId, instance.metricsConfig);
 			instance.backends.put(dslUser.toLowerCase(), recommenderBackend);
 		}
 		

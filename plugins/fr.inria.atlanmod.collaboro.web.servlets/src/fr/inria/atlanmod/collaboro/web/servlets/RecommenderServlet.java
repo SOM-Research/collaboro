@@ -170,7 +170,7 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 		result.addProperty("description", metric.getDescription());
 		result.addProperty("dimension", metric.getDimension());
 		result.addProperty("detected", detected);
-		result.addProperty("active", true);
+		result.addProperty("active", metric.isActive());
 		
 		return result;
 	}

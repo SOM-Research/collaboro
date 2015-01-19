@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.backend;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +15,16 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 public class CollaboroRecommenderBackend extends CollaboroBackend {
 	private RecommenderEngine recommender;
 	private String userId;
+	private File metricsConfig;
 	private List<Proposal> recommendations = new ArrayList<Proposal>();
 	
 	
-	public CollaboroRecommenderBackend(ModelManager modelManager, String userId) {
+	public CollaboroRecommenderBackend(ModelManager modelManager, String userId, File metricsConfig) {
 		super(modelManager);
 		this.userId = userId;
+		this.metricsConfig = metricsConfig;
 		checkRecommenderUser();
-		this.recommender = new RecommenderEngine(userId, this);
+		this.recommender = new RecommenderEngine(userId, metricsConfig, this);
 	}
 	
 	public void checkRecommenderUser() {
@@ -66,7 +69,7 @@ public class CollaboroRecommenderBackend extends CollaboroBackend {
 	
 	public void launchRecommender() {
 		recommendations = new ArrayList<Proposal>();
-		this.recommender = new RecommenderEngine(userId, this);
+		this.recommender = new RecommenderEngine(userId, metricsConfig, this);
 		recommender.checkMetrics();
 	}
 	
