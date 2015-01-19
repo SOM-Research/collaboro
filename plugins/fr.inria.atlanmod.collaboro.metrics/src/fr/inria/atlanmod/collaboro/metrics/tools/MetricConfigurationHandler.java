@@ -1,7 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics.tools;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,7 +19,7 @@ import fr.inria.atlanmod.collaboro.metrics.Metric;
 public class MetricConfigurationHandler {
 	
 	private Properties metricProperties;
-	private InputStream configurationFilePath;
+	private File configurationFilePath;
 	private static String concreteGraphicalSyntaxMetricProperty = "concreteGraphicalSyntaxMetrics";
 	private static String concreteTextualSyntaxMetricProperty = "concreteTextualSyntaxMetrics";
 	private static String abstractSyntaxMetricsProperty = "abstractSyntaxMetrics";
@@ -41,15 +43,15 @@ public class MetricConfigurationHandler {
 		}
 	}
 	
-	public MetricConfigurationHandler(InputStream configurationFileStream) {
+	public MetricConfigurationHandler(File configurationFileStream) {
 		metricProperties = new Properties();
 		mapMetricId2Property = new HashMap<String,String>();
 		this.configurationFilePath = configurationFileStream;
 		
 		InputStream input = null;
 		try {
-			//input = new FileInputStream(configurationFilePath);
-			metricProperties.load(configurationFileStream);
+			input = new FileInputStream(configurationFilePath);
+			metricProperties.load(input);
 			// Instantiating all the metrics within the properties file
 			initialize();
 		} catch (IOException e) {
@@ -85,7 +87,7 @@ public class MetricConfigurationHandler {
 	}
 	
 	public void save() {
-		/*try {
+		try {
 			System.out.println("saving....");
 			OutputStream output = new FileOutputStream(this.configurationFilePath);
 			metricProperties.store(output, "");
@@ -93,7 +95,7 @@ public class MetricConfigurationHandler {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
 	}
 	

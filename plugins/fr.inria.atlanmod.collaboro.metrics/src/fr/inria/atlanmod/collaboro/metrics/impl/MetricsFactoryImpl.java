@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.metrics.impl;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class MetricsFactoryImpl implements MetricsFactory {
 		System.out.println("MetricFactory initialised");
 	}
 	
-	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, InputStream configurationFileStream) {
+	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, File configurationFileStream) {
 		this.abstractSyntaxModel = abstractSyntaxModel;
 		this.concreteSyntaxModel = concreteSyntaxModel;
 		

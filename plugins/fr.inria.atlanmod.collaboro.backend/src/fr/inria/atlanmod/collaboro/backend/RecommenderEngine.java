@@ -35,7 +35,7 @@ public class RecommenderEngine {
 
 		EPackage abstractSyntaxModel = modelManager.getEcoreModel();
 		Definition concreteSyntaxModel = modelManager.getNotation();
-		factory = new MetricsFactoryImpl(abstractSyntaxModel, concreteSyntaxModel, metricsConfig.getAbsolutePath());
+		factory = new MetricsFactoryImpl(abstractSyntaxModel, concreteSyntaxModel, metricsConfig);
 	}
 
 	public List<Metric> getMetrics() {

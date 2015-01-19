@@ -48,7 +48,7 @@ public class RecommenderServlet extends AbstractCollaboroServlet {
 			responseObject.addProperty("status", "success");
 			responseObject.addProperty("message", "Version already checked!");
 		} else {
-			recommenderBackend.launchRecommender(getServletContext().getResourceAsStream("/WEB-INF/metrics.properties"));
+			recommenderBackend.launchRecommender();
 			
 			HashMap<Metric, List<MetricResult>> results = recommenderBackend.getResults();
 			MetricResultStatus finalStatus = MetricResultStatus.GOOD;
