@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="heritage" nsURI="http://heritage" nsPrefix="heritage">
+  <eClassifiers xsi:type="ecore:EClass" name="A">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeA"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="B" eSuperTypes="#//A">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="follows" eType="#//C" eOpposite="#//C/isFollowed"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeB"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="C" eSuperTypes="#//A">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="isFollowed" eType="#//B"
+        eOpposite="#//B/follows"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="D" eSuperTypes="#//B"/>
+  <eClassifiers xsi:type="ecore:EClass" name="E" eSuperTypes="#//B"/>
+  <eClassifiers xsi:type="ecore:EClass" name="F" eSuperTypes="#//C"/>
+  <eClassifiers xsi:type="ecore:EClass" name="G" eSuperTypes="#//C"/>
+  <eClassifiers xsi:type="ecore:EClass" name="H" eSuperTypes="#//F"/>
+  <eClassifiers xsi:type="ecore:EClass" name="I" eSuperTypes="#//F"/>
+</ecore:EPackage>

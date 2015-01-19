@@ -30,6 +30,7 @@ public class Test {
 		String exampleTransportPath = "C:\\Users\\rboncorps\\Projects\\Dev\\collaboro\\examples\\fr.inria.atlanmod.collaboro.examples.transport\\model\\";
 		
 		Resource abstractSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport.ecore"), true);
+		//Resource abstractSyntaxModel = rset.getResource(URI.createFileURI("model/Heritage.ecore"), true);
 		try {
 			
 			abstractSyntaxModel.load(null);
@@ -51,19 +52,26 @@ public class Test {
 		
 		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
-		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
+		/*MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
 		//metricFactory.loadConfiguration();
-		metricFactory.activate("Symbol Deficit");
-		/*List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
+		//metricFactory.activate("Symbol Deficit");
+		List<ConcreteSyntaxMetric> metrics = metricFactory.getConcreteSyntaxMetrics();
 		System.out.println("-------------------------");
 		for(ConcreteSyntaxMetric metric : metrics) {
+			System.out.println(metric.isActive());
 			List<MetricResult> metricResults = metric.execute();
 			for(MetricResult metricResult : metricResults) {
 				digestMetricResult(metric,metricResult);
 				System.out.println("-------------------------");
 			}
-		}*/
+		}
 		
+		*/
+		
+		// Debug
+//		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
+//		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
+//		MetricsFactoryImpl metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
 		
 		// Retrieve all concepts from Abstract Syntax
 	

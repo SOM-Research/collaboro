@@ -1,11 +1,11 @@
 package fr.inria.atlanmod.collaboro.metrics.tools;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import fr.inria.atlanmod.collaboro.metrics.Metric;
 public class MetricConfigurationHandler {
 	
 	private Properties metricProperties;
-	private String configurationFilePath;
+	private InputStream configurationFilePath;
 	private static String concreteGraphicalSyntaxMetricProperty = "concreteGraphicalSyntaxMetrics";
 	private static String concreteTextualSyntaxMetricProperty = "concreteTextualSyntaxMetrics";
 	private static String abstractSyntaxMetricsProperty = "abstractSyntaxMetrics";
@@ -25,18 +25,31 @@ public class MetricConfigurationHandler {
 	
 	
 	public MetricConfigurationHandler() {
+		URL url = ClassLoader.getSystemClassLoader().getResource("metrics.properties");
+		System.out.println("Found URL : " + url);
 		
+		InputStream input;
+		try {
+			input = MetricConfigurationHandler.class.getClassLoader().getResourceAsStream("resources/metrics.properties");
+			System.out.println("Available inputSTream bytes : " +input.available());
+			if(input != null) {
+				metricProperties.load(input);
+				initialize();
+			}		
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public MetricConfigurationHandler(String configurationFilePath) {
+	public MetricConfigurationHandler(InputStream configurationFileStream) {
 		metricProperties = new Properties();
 		mapMetricId2Property = new HashMap<String,String>();
-		this.configurationFilePath = configurationFilePath;
+		this.configurationFilePath = configurationFileStream;
 		
 		InputStream input = null;
 		try {
-			input = new FileInputStream(configurationFilePath);
-			metricProperties.load(input);
+			//input = new FileInputStream(configurationFilePath);
+			metricProperties.load(configurationFileStream);
 			// Instantiating all the metrics within the properties file
 			initialize();
 		} catch (IOException e) {
@@ -72,7 +85,7 @@ public class MetricConfigurationHandler {
 	}
 	
 	public void save() {
-		try {
+		/*try {
 			System.out.println("saving....");
 			OutputStream output = new FileOutputStream(this.configurationFilePath);
 			metricProperties.store(output, "");
@@ -80,7 +93,7 @@ public class MetricConfigurationHandler {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 	

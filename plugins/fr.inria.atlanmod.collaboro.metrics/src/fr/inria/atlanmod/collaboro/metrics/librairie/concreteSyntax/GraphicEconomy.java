@@ -9,14 +9,13 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 
 public class GraphicEconomy extends ConcreteSyntaxGraphicalMetricImpl {
 	
 	private static String dimension = "Ontological";
 	private static String description = "The number of different graphical symbols should be cognitively manageable";
-	//private ModelMapping modelMapping;
 	
 	public GraphicEconomy(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
 		super(name,dimension,description,acceptanceRatio,priority,isActive);
@@ -29,30 +28,29 @@ public class GraphicEconomy extends ConcreteSyntaxGraphicalMetricImpl {
 	
 	public List<MetricResult> execute() {
 		System.out.println("Excecute GraphicEconomy");
-		List<MetricResult> metricResults = new ArrayList<MetricResult>();
-		List<Symbol> symbols = modelMapping.getConcreteSymbols();
+		List<MetricResult> results = new ArrayList<MetricResult>();
 		
-		if(symbols.size() > this.acceptanceRatio) {
-			System.out.println("Fail");
-			MetricResultImpl metricResult = new MetricResultImpl();
-			metricResult.setReason("There are too many different graphical symbols (" + symbols.size() + ")");
+		List<Symbol> symbols = this.modelMapping.getConcreteSymbols();
+		
+		int numberOfSymbols = symbols.size();
+		MetricResultImpl metricResult = new MetricResultImpl();
+		if(numberOfSymbols > this.acceptanceRatio) {
+			metricResult.setReason("There are too many different graphical symbols (" + numberOfSymbols + ")");
 			float ratio = 0;
 			metricResult.setRatio(ratio);
 			metricResult.setStatus(MetricResultStatus.BAD);
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
-			metricResults.add(metricResult);
+			results.add(metricResult);
 		} else {
-			System.out.println("Success");
-			int count = symbols.size();
-			MetricResultImpl metricResult = new MetricResultImpl();
-			metricResult.setReason("The number of symbol is cognitively manageable");
-			float ratio = count;
+			metricResult.setReason("The number of symbols is cognitively manageable (" + numberOfSymbols + ")");
+			float ratio = 0;
 			metricResult.setRatio(ratio);
-			metricResult.setStatus(MetricResultStatus.MIDDLE);
+			metricResult.setStatus(MetricResultStatus.GOOD);
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
-			metricResults.add(metricResult);
+			results.add(metricResult);
 		}
-		return metricResults;
+	
+		return results;
 	}
 
 }

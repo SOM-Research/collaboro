@@ -21,7 +21,7 @@ public abstract class MetricImpl implements Metric {
 		this.description = description;
 		this.acceptanceRatio = acceptanceRatio;
 		this.priority = priority;
-		this.isActive = isActive;
+		this.isActive = isActive; 
 	}
 	
 	public MetricImpl(String name, String dimension, String description, Integer acceptanceRatio) {

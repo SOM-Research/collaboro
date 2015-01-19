@@ -1,90 +1,91 @@
 package fr.inria.atlanmod.collaboro.metrics.librairie.concreteSyntax;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
-import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
+import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
-import fr.inria.atlanmod.collaboro.metrics.symbol.Symbol;
+import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
-import fr.inria.atlanmod.collaboro.metrics.tools.Relationship;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 
 public class SymbolExcess extends ConcreteSyntaxGraphicalMetricImpl{
 	
 	private static String dimension = "Ontological";
-	private static String description = "Symbol excess occurs when a notation construct does not correspond to any ontological concept";
+	private static String description = "Symbol excess occurs when a concrete symbols does not correspond to any abstract concept";
 	
 	public SymbolExcess(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive)  {
 		super(name,dimension,description,acceptanceRatio,priority,isActive);
 	}
 	
 	public SymbolExcess(ModelMapping modelMapping) {
-		super("symbol excess","Ontological", "Symbol excess occurs when a notation construct does not correspond to any ontological concept.",0);
+		super("symbol excess","Ontological", "Symbol excess occurs when a concrete symbols does not correspond to any abstract concept",0);
 		this.modelMapping = modelMapping;
 	}
 	
 	public List<MetricResult> execute() {
 		System.out.println("Execute SymbolExcess");
-		List<MetricResult> metricResults = new ArrayList<MetricResult>();
+		List<MetricResult> results = new ArrayList<MetricResult>();
 		List<ReferredElement> excessSymbol = new ArrayList<ReferredElement>();
 		
-		List<Relationship> mapping = modelMapping.getMapping();
-		for(Symbol concreteSyntaxElement : modelMapping.getConcreteSymbols()) {
-			String concreteSyntaxElementName = concreteSyntaxElement.getName();
-			NotationElement concreteSyntaxElementObject = concreteSyntaxElement.getConcreteSyntaxElement();
-			int count = 0;
-			for(Relationship relationship : mapping) {
-				if(relationship.getRelationshipTo().equals(concreteSyntaxElement)) {
-					count++;
-				}
-			}
-			
-			if(count == 0) {
-				// Symbol excess
-				ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(concreteSyntaxElementName, ReferredElementReason.MISSING, concreteSyntaxElementObject);
-				excessSymbol.add(referredElement);
+		
+		Map<Symbol,Boolean> isSymbolRepresentedMap = checkSymbols();
+		
+		for(Symbol concreteSymbol : isSymbolRepresentedMap.keySet()) {
+			if(!(isSymbolRepresentedMap.get(concreteSymbol))) {
+				String concreteSymbolName = concreteSymbol.getFullName();
+				NotationElement concreteSymbolNotationElement = concreteSymbol.getNotationElement();
+				ReferredElement symbolReferredElement = new ConcreteSyntaxReferredElementImpl(concreteSymbolName, ReferredElementReason.MISSING, concreteSymbolNotationElement);
+				excessSymbol.add(symbolReferredElement);
 			}
 		}
-		if(excessSymbol.size() > this.acceptanceRatio) {
-			System.out.println("Fail");
-			int count = excessSymbol.size();
-			MetricResultImpl metricResult = new MetricResultImpl();
-			metricResult.setReason("There are notation constructs that representes no semantic constructs (" + count + ")");
-			float ratio = (float)(count*100/modelMapping.getConcreteSymbols().size());
+		
+		int totalElements = isSymbolRepresentedMap.size();
+		System.out.println(totalElements);
+		MetricResultImpl metricResult = new MetricResultImpl();
+		int excessElements = excessSymbol.size();
+		if(excessElements > this.acceptanceRatio) {
+			metricResult.setReason("There are concrete symbols that representes no abstract concepts (" + excessElements + ")");
+			float ratio = (float)(excessElements*100/totalElements);
 			metricResult.setRatio(ratio);
 			metricResult.setStatus(MetricResultStatus.BAD);
 			metricResult.setReferredElements(excessSymbol);
-			metricResults.add(metricResult);
-		} else if (excessSymbol.size() < this.acceptanceRatio && excessSymbol.size() > 0){
-			System.out.println("Middle");
-			int count = excessSymbol.size();
-			MetricResultImpl metricResult = new MetricResultImpl();
-			metricResult.setReason("There are notation constructs that representes no semantic constructs (" + count + ")");
-			float ratio = (float)(count*100/modelMapping.getConcreteSymbols().size());
+			results.add(metricResult);
+		} else if (excessElements > 0) {
+			metricResult.setReason("There are concrete symbols that representes no abstract concepts (" + excessElements + ")");
+			float ratio = (float)(excessElements*100/totalElements);
 			metricResult.setRatio(ratio);
 			metricResult.setStatus(MetricResultStatus.MIDDLE);
 			metricResult.setReferredElements(excessSymbol);
-			metricResults.add(metricResult);
+			results.add(metricResult);
 		} else {
-			System.out.println("Success");
-			int count = excessSymbol.size();
-			MetricResultImpl metricResult = new MetricResultImpl();
-			metricResult.setReason("Every notation constructs represents a semantic construct");
-			float ratio = (float)(count*100/modelMapping.getConcreteSymbols().size());
+			metricResult.setReason("Every concrete symbol represents at least one abstract concept");
+			float ratio = (float)(excessElements*100/totalElements);
 			metricResult.setRatio(ratio);
-			metricResult.setStatus(MetricResultStatus.MIDDLE);
+			metricResult.setStatus(MetricResultStatus.GOOD);
 			metricResult.setReferredElements(excessSymbol);
-			metricResults.add(metricResult);
+			results.add(metricResult);
+		}
+		return results;
+	}
+	
+	private Map<Symbol,Boolean> checkSymbols() {
+		Map<Symbol,Boolean> isSymbolRepresentedMap = new HashMap<Symbol, Boolean>();
+		
+		List<Symbol> concreteSymbols = this.modelMapping.getConcreteSymbols();
+		for(Symbol symbol : concreteSymbols) {
+			isSymbolRepresentedMap.put(symbol, this.modelMapping.isSymbolMapped(symbol));
 		}
 		
-		return metricResults;
+		return isSymbolRepresentedMap;
 	}
 
 }
