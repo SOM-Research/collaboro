@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Baggage" nsURI="http://atlanmod/baggage" nsPrefix="baggage">
+  <eClassifiers xsi:type="ecore:EClass" name="IDElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Conveyor" eSuperTypes="#//IDElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reclaims" upperBound="-1"
+        eType="#//Flight" eOpposite="#//Flight/isReclaimed"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="capacity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Flight" eSuperTypes="#//IDElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="isReclaimed" eType="#//Conveyor"
+        eOpposite="#//Conveyor/reclaims"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transports" upperBound="-1"
+        eType="#//Bag" containment="true" eOpposite="#//Bag/isTransported"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrival" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalBags" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Bag" eSuperTypes="#//IDElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="isTransported" lowerBound="1"
+        eType="#//Flight" eOpposite="#//Flight/transports"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="System">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="conveyors" upperBound="-1"
+        eType="#//Conveyor" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="flights" upperBound="-1"
+        eType="#//Flight" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>
