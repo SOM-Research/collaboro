@@ -129,7 +129,14 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 			visualVariation++;
 			visualVariationOn += "Colour,";
 		} else if (colourUsed.size() == 1 ){
+			MetricResultImpl metricResult = new MetricResultImpl();
+			metricResult.setStatus(MetricResultStatus.BAD);
 			
+			metricResult.setReason("The concrete syntax should use more Color (only color used : Fill(" + colourUsed.get(0).getFill() + ") ; Stroke(" + colourUsed.get(0).getStroke()  + ") )");
+			metricResult.setRatio(1);
+			metricResult.setReferredElements(new ArrayList<ReferredElement>());
+			results.add(metricResult);
+			count++;
 		} else {
 			
 		}
@@ -147,6 +154,18 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 			}
 			
 			metricResult.setReason("The concrete syntax doesn't use enough visual variables (" + visualVariatonMessage + ")");
+			metricResult.setRatio(visualVariation);
+			metricResult.setReferredElements(new ArrayList<ReferredElement>());
+			results.add(metricResult);
+		} else {
+			MetricResultImpl metricResult = new MetricResultImpl();
+			metricResult.setStatus(MetricResultStatus.GOOD);
+			String visualVariatonMessage = String.valueOf(visualVariation);
+			if(visualVariation != 0) {
+				visualVariatonMessage += " : " + visualVariationOn;
+			}
+			
+			metricResult.setReason("The concrete syntax uses enough visual variables (" + visualVariation + ")");
 			metricResult.setRatio(visualVariation);
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
 			results.add(metricResult);
