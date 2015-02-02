@@ -160,11 +160,7 @@ public class VisualExpressiveness extends ConcreteSyntaxGraphicalMetricImpl {
 		} else {
 			MetricResultImpl metricResult = new MetricResultImpl();
 			metricResult.setStatus(MetricResultStatus.GOOD);
-			String visualVariatonMessage = String.valueOf(visualVariation);
-			if(visualVariation != 0) {
-				visualVariatonMessage += " : " + visualVariationOn;
-			}
-			
+					
 			metricResult.setReason("The concrete syntax uses enough visual variables (" + visualVariation + ")");
 			metricResult.setRatio(visualVariation);
 			metricResult.setReferredElements(new ArrayList<ReferredElement>());
