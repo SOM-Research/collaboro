@@ -76,7 +76,10 @@ public class MetricsFactoryImpl implements MetricsFactory {
 	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics() {
 		List<AbstractSyntaxMetric> abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
-		// TODO
+		for(AbstractSyntaxMetric abstractMetric : this.abstractSyntaxMetrics) {
+			abstractMetric.setAbstractModel(abstractSyntaxModel);
+			abstractSyntaxMetrics.add(abstractMetric);
+		}
 		return abstractSyntaxMetrics;
 	}
 

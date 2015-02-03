@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -28,6 +29,9 @@ public class Test {
 		rset.getPackageRegistry().put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
 		
 		String exampleTransportPath = "C:\\Users\\rboncorps\\Projects\\Dev\\collaboro\\examples\\fr.inria.atlanmod.collaboro.examples.transport\\model\\";
+		String metricPropertiesPath = "C:\\Users\\rboncorps\\Projects\\Dev\\collaboro\\plugins\\fr.inria.atlanmod.collaboro.web.servlets\\WebContent\\WEB-INF\\metrics.properties";
+		File metricPropertiesFile = new File(metricPropertiesPath);
+		
 		
 		Resource abstractSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport.ecore"), true);
 		//Resource abstractSyntaxModel = rset.getResource(URI.createFileURI("model/Heritage.ecore"), true);
@@ -52,6 +56,23 @@ public class Test {
 		
 		EPackage abstractSyntax = (EPackage)abstractSyntaxModel.getContents().get(0);
 		Definition concreteSyntax = (Definition) concreteSyntaxModel.getContents().get(0);
+		
+		//Testing abstract Syntax metrics
+		
+		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,metricPropertiesFile);
+		List<AbstractSyntaxMetric> abstractMetrics = metricFactory.getAbstractSyntaxMetrics();
+		System.out.println(" ------------------------------ ");
+		System.out.println("AbstractMetric : ");
+		System.out.println(abstractMetrics);
+		for(AbstractSyntaxMetric metric : abstractMetrics) {
+			List<MetricResult> results = metric.execute();
+			for(MetricResult metricResult : results) {
+				digestMetricResult(metric,metricResult);
+				System.out.println("-------------------------");
+			}
+		}
+		
+		
 		/*MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,"C:/Users/rboncorps/Projects/Dev/collaboro/plugins/fr.inria.atlanmod.collaboro.metrics/resources/metrics.properties");
 		//metricFactory.loadConfiguration();
 		//metricFactory.activate("Symbol Deficit");
