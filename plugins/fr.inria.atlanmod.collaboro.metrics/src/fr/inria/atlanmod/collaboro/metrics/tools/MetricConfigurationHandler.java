@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import fr.inria.atlanmod.collaboro.metrics.Metric;
+import fr.inria.atlanmod.collaboro.metrics.exceptions.MetricConfigurationFileException;
 
 public class MetricConfigurationHandler {
 	
@@ -26,7 +27,7 @@ public class MetricConfigurationHandler {
 	private Map<String,String> mapMetricId2Property;
 	
 	
-	public MetricConfigurationHandler() {
+	/*public MetricConfigurationHandler() {
 		URL url = ClassLoader.getSystemClassLoader().getResource("metrics.properties");
 		System.out.println("Found URL : " + url);
 		
@@ -41,9 +42,9 @@ public class MetricConfigurationHandler {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
-	public MetricConfigurationHandler(File configurationFileStream) {
+	public MetricConfigurationHandler(File configurationFileStream) throws MetricConfigurationFileException {
 		metricProperties = new Properties();
 		mapMetricId2Property = new HashMap<String,String>();
 		this.configurationFilePath = configurationFileStream;
@@ -55,8 +56,7 @@ public class MetricConfigurationHandler {
 			// Instantiating all the metrics within the properties file
 			initialize();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MetricConfigurationFileException("Error loading the property file : " + configurationFileStream.getAbsolutePath());
 		} finally {
 			if(input != null) {
 				try {
@@ -86,18 +86,6 @@ public class MetricConfigurationHandler {
 		}
 	}
 	
-	public void save() {
-		try {
-			System.out.println("saving....");
-			OutputStream output = new FileOutputStream(this.configurationFilePath);
-			metricProperties.store(output, "");
-			output.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 	
 	
 	public List<String> getMetricListByType(String metricType) {
@@ -122,7 +110,7 @@ public class MetricConfigurationHandler {
 		return metricProperties.getProperty(fullPropertyName);
 	}
 	
-	public void saveMetric(Metric metric) {
+	public void saveMetric(Metric metric) throws MetricConfigurationFileException {
 		System.out.println("in MetricConfigurationHandler.saveMetric : " + metric);
 		if(mapMetricId2Property.containsKey(metric.getName())) {
 			String metricName = metric.getName();
@@ -132,7 +120,13 @@ public class MetricConfigurationHandler {
 			metricProperties.setProperty(metricAcceptanceRatioProperty, metric.getAcceptanceRatio().toString());
 			String metricPriorityProperty = getMetricPropertyPath(metricName, "property");
 			metricProperties.setProperty(metricPriorityProperty, metric.getPriority().toString());
-			save();
+			try {
+				save();
+			} catch (IOException e) {
+				throw new MetricConfigurationFileException("Error saving metric \"" + metric.getName() + "\"");
+			}
+		} else {
+			throw new MetricConfigurationFileException("Error Configuration File : could not find metric \"" + metric.getName() + "\"");
 		}
 	}
 
@@ -146,6 +140,13 @@ public class MetricConfigurationHandler {
 
 	public static String getAbstractSyntaxMetricsProperty() {
 		return abstractSyntaxMetricsProperty;
+	}
+	
+	private void save() throws IOException {
+		System.out.println("saving....");
+		OutputStream output = new FileOutputStream(this.configurationFilePath);
+		metricProperties.store(output, "");
+		output.close();
 	}
 	
 	private String getMetricProperty(String metricId, String property) {

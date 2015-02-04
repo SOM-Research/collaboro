@@ -1,13 +1,12 @@
 package fr.inria.atlanmod.collaboro.metrics.impl;
 
-import org.eclipse.emf.ecore.EPackage;
-
 import fr.inria.atlanmod.collaboro.metrics.AbstractSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.AbstractConceptContainer;
 
 public abstract class AbstractSyntaxMetricImpl extends MetricImpl implements AbstractSyntaxMetric {
 	
-	protected EPackage abstractModel;
+	protected AbstractConceptContainer abstractConceptContainer;
 
 	public AbstractSyntaxMetricImpl(String name, String dimension,
 			String description, Integer acceptanceRatio,
@@ -20,8 +19,9 @@ public abstract class AbstractSyntaxMetricImpl extends MetricImpl implements Abs
 		super(name, dimension, description, acceptanceRatio);
 	}
 	
-	public void setAbstractModel(EPackage abstractModel) {
-		this.abstractModel = abstractModel;
+	public void setAbstractConcepts(AbstractConceptContainer abstractConceptContainer) {
+		this.abstractConceptContainer = abstractConceptContainer;
+		
 	}
 
 }

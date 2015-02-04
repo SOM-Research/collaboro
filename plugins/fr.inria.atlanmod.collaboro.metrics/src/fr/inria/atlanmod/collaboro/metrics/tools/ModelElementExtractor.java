@@ -15,11 +15,13 @@ import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
 import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
 import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 import fr.inria.atlanmod.collaboro.metrics.model.VisualRepresentation;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.AbstractConceptContainer;
 import fr.inria.atlanmod.collaboro.notation.AttributeValue;
 import fr.inria.atlanmod.collaboro.notation.Composite;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.GraphicalElement;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
+import fr.inria.atlanmod.collaboro.notation.NotationType;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
 import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
 
@@ -36,14 +38,10 @@ public class ModelElementExtractor {
 	
 	private ModelMapping modelMapping;
 	
+	private AbstractSyntaxElementExtractor abstractSyntaxElementExtractor;
 	private ConcreteSyntaxElementExtractor concreteSyntaxElementExtractor;
 	
-	public ModelElementExtractor() {
-		this.classConcepts = new ArrayList<ClassConcept>();
-		this.attributeConcepts = new ArrayList<AttributeConcept>();
-		this.referenceConcepts = new ArrayList<ReferenceConcept>();
-		this.symbols = new ArrayList<Symbol>();
-	}
+	private boolean isGraphical;
 	
 	public ModelElementExtractor(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
 		this.abstractSyntaxModel = abstractSyntaxModel;
@@ -53,288 +51,38 @@ public class ModelElementExtractor {
 		this.referenceConcepts = new ArrayList<ReferenceConcept>();
 		this.symbols = new ArrayList<Symbol>();
 		
+		this.abstractSyntaxElementExtractor = new AbstractSyntaxElementExtractor(abstractSyntaxModel);
+		this.isGraphical = isConcreteSyntaxGraphical();
+		if(isGraphical) {
+			this.concreteSyntaxElementExtractor = new ConcreteGraphicalSyntaxElementExtractor(concreteSyntaxModel);
+		} else {
+			this.concreteSyntaxElementExtractor = new ConcreteTextualSyntaxElementExtractor(concreteSyntaxModel);
+		}
 		
-		this.concreteSyntaxElementExtractor = new ConcreteSyntaxElementExtractor(concreteSyntaxModel);
-		
-		initialize();
+		//initialize();
 	}
 	
-	private void initialize() {
-		System.out.println(" ------------ Initializing model element extractor ------------");
-		System.out.println(" ******* Concept extraction *******");
-		System.out.println("");
-		// Abstract Syntax discovery
-		discoverAbstractClasses();
-		discoverAbstractAttribute();
-		discoverAbstractReference();
-		
-		System.out.println("");
-		System.out.println(" ******* Symbol extraction *******");
-		System.out.println("");
-		// Concrete Syntax discovery
-		//discoverConcreteConcepts();
-		//concreteConcepts();
-		this.symbols = this.concreteSyntaxElementExtractor.discoverConcreteSyntax();
-		//System.out.println(concreteSymbols);
-		
-		this.modelMapping = new ModelMapping(classConcepts,attributeConcepts,referenceConcepts, symbols);
-		
-		printResult();
-		System.out.println("---------- ");
-		printConcreteSymbols();
-		
+	public AbstractConceptContainer extractAbstractSyntaxElements() {
+		return this.abstractSyntaxElementExtractor.discoverAbstractConcepts();
 	}
 	
-	public ModelMapping getModelMapping() {
+	public ModelMapping extractModelMapping() {
+		AbstractConceptContainer abstractConcepts = this.abstractSyntaxElementExtractor.discoverAbstractConcepts();
+		
+		List<Symbol> concreteSymbols = this.concreteSyntaxElementExtractor.discoverConcreteSymbols();
+		
+		ModelMapping modelMapping = new ModelMapping(abstractConcepts.getClassConcepts(), abstractConcepts.getAttributeConcepts(), abstractConcepts.getReferenceConcepts(), concreteSymbols);
 		return modelMapping;
 	}
 	
-	/* 
-	 *  ================================================================
-	 * 			Abstract Syntax Concept Extraction Methods
-	 *  ================================================================
-	*/
-	private void discoverAbstractClasses() {
-		System.out.println("* Discover Abstract Class");
-		List<EObject> abstractSyntaxContents = abstractSyntaxModel.eContents();
-		for(EObject abstractSyntaxElement : abstractSyntaxContents) {
-			if(abstractSyntaxElement instanceof EClass) {
-				EClass eClassElement = (EClass) abstractSyntaxElement;
-				ClassConcept classConcept = new ClassConcept(eClassElement.getName(), eClassElement.getName(), eClassElement);
-				classConcepts.add(classConcept);
-				System.out.println("\t Found Class : " + classConcept.getName());
-			}
-		}
-		
-		// extracting heritage information
-		resolveClassHeritage();
+	public boolean isGraphical() {
+		return this.isGraphical;
 	}
 	
-	private void resolveClassHeritage() {
-		System.out.println("* Resolve class heritage");
-		for(ClassConcept classConcept : classConcepts) {
-			EClass eClass = (EClass) classConcept.getAbstractModelElement();
-			List<EClass> eClassSuperTypes = eClass.getESuperTypes();
-			for(EClass eClassSuperType : eClassSuperTypes) {
-				ClassConcept classConceptSuperType = getClassConceptById(eClassSuperType.getName());
-				if(classConceptSuperType != null) {
-					classConceptSuperType.addSubType(classConcept);
-					System.out.println("\t Class " + classConceptSuperType.getName() + " subType : " + classConcept.getName());
-					classConcept.addSuperType(classConceptSuperType);
-					System.out.println("\t Class " + classConcept.getName() + " superType : " + classConceptSuperType.getName());
-				}
-			}
-		}
-	}
+//	public ModelMapping getModelMapping() {
+//		return modelMapping;
+//	}
 	
-	private void discoverAbstractAttribute() {
-		System.out.println("* Discover Abstract Attribute");
-		for(ClassConcept classConcept : classConcepts) {
-			EClass eClass = (EClass) classConcept.getAbstractModelElement();
-			List<EAttribute> eClassAttributes = eClass.getEAllAttributes();
-			for(EAttribute eClassAttribute : eClassAttributes) {
-				String attributeName = eClass.getName() + "." + eClassAttribute.getName();
-				AttributeConcept attributeConcept = new AttributeConcept(eClassAttribute.getName(), attributeName, eClassAttribute);
-				attributeConcept.setClassConcept(classConcept);
-				System.out.println("\t Found Attribute : " + attributeConcept.getName() + " in Class : " + classConcept.getName());
-
-				EClass eContainingClass = eClassAttribute.getEContainingClass();
-				if(!eContainingClass.equals(eClass)) {
-					ClassConcept containingClassConcept = getClassConceptById(eContainingClass.getName());
-					if(containingClassConcept != null) {
-						attributeConcept.setContainingSuperClass(containingClassConcept);
-						System.out.println("\t\t From superClass : " + containingClassConcept.getName());
-					}
-				}
-				this.attributeConcepts.add(attributeConcept);
-				classConcept.addAttribute(attributeConcept);
-			}
-		}
-		
-		// extracting heritage information
-		for(AttributeConcept attributeConcept : attributeConcepts) {
-			ClassConcept attributeSuperClass = attributeConcept.getContainingSuperClass();
-			if(attributeSuperClass == null) {
-				// not heritated attribute
-				resolveAttributeHeritage(attributeConcept);
-			}
-		}
-	}
-	
-	private void resolveAttributeHeritage(AttributeConcept attributeConcept) {
-		System.out.println("* Resolve attribute heritage : " + attributeConcept.getName());
-		EObject modelAttribute = attributeConcept.getAbstractModelElement();
-		ClassConcept containingClass = attributeConcept.getClassConcept();
-		List<ClassConcept> containingClassSubClasses = containingClass.getSubTypes();
-		for(ClassConcept subClassConcept : containingClassSubClasses) {
-			AttributeConcept subAttributeConcept = getAttributeConceptByEObjectFromClassConcept(subClassConcept, modelAttribute);
-			if(subAttributeConcept != null) {
-				attributeConcept.addSubAttribute(subAttributeConcept);
-				subAttributeConcept.addSuperAttribute(attributeConcept);
-				System.out.println("\t " + attributeConcept.getName() + " is superType of " + subAttributeConcept.getName());
-				resolveAttributeHeritage(subAttributeConcept);
-			}
-		}
-		
-	}
-	
-	private AttributeConcept getAttributeConceptByEObjectFromClassConcept(ClassConcept classConcept, EObject modelObject) {
-		List<AttributeConcept> classAttributes = classConcept.getAttributes();
-		for(AttributeConcept classAttribute : classAttributes) {
-			if(classAttribute.getAbstractModelElement().equals(modelObject)) {
-				return classAttribute;
-			}
-		}
-		return null;
-	}
-	
-	private void discoverAbstractReference() {
-		System.out.println("* Discover Abstract Reference");
-		for(ClassConcept classConcept : classConcepts) {
-			EClass eClass = (EClass) classConcept.getAbstractModelElement();
-			List<EReference> eClassReferences = eClass.getEAllReferences();
-			for(EReference eClassReference : eClassReferences) {
-				String referenceName = eClass.getName() + "." + eClassReference.getName();
-				ReferenceConcept referenceConcept = new ReferenceConcept(eClassReference.getName(), referenceName, eClassReference);
-				
-				referenceConcept.setContainingClass(classConcept);
-				//From
-				EClass eClassReferenceFrom = eClassReference.getEContainingClass();
-				ClassConcept referenceClassConceptFrom = getClassConceptById(eClassReferenceFrom.getName());
-				referenceConcept.setSuperClassConceptFrom(referenceClassConceptFrom);
-				//To
-				EClass eClassReferenceTo = eClassReference.getEReferenceType();
-				ClassConcept referenceClassConceptTo = getClassConceptById(eClassReferenceTo.getName());
-				referenceConcept.setClassConceptTo(referenceClassConceptTo);
-				
-				referenceConcept.setSuperClassConceptTo(referenceClassConceptTo);
-				
-				referenceConcepts.add(referenceConcept);
-				classConcept.addReference(referenceConcept);
-				System.out.println("\t Found Reference : " + referenceConcept.getName() + " in Class : " + classConcept.getName());
-			}
-		}
-		
-		//Opposite Discovery
-		List<ReferenceConcept> oppositeReferenceConcepts = resolveReferenceConceptOpposite();
-		referenceConcepts.addAll(oppositeReferenceConcepts);
-		
-		//extracting heritage information
-		resolveReferenceHeritage();
-		
-		
-	}
-	
-	private List<ReferenceConcept> resolveReferenceConceptOpposite() {
-		System.out.println("* Resolve Reference Opposite");
-		List<ReferenceConcept> oppositeReferenceConcepts = new ArrayList<ReferenceConcept>();
-		for(ReferenceConcept referenceConcept : referenceConcepts) {
-			EReference eReference = (EReference) referenceConcept.getAbstractModelElement();
-			EReference eOppositeReference = eReference.getEOpposite();
-			if(eOppositeReference != null) {
-				System.out.println("\t Found opposite for " + referenceConcept.getName());
-				//To
-				ClassConcept referenceContainingClass = referenceConcept.getContainingClass();
-				EClass eOppositeReferenceToEClass = eOppositeReference.getEReferenceType();
-				ClassConcept oppositeReferenceToClassConcept = getClassConceptById(eOppositeReferenceToEClass.getName());
-				//From
-				EClass eOppositeReferenceContainingClass = eOppositeReference.getEContainingClass();
-				ClassConcept oppositeReferenceContainingClass = getClassConceptById(eOppositeReferenceContainingClass.getName());
-				
-				ReferenceConcept oppositeReferenceConcept = getExistingReferenceConcept(oppositeReferenceContainingClass,referenceContainingClass,eOppositeReference);
-				
-				if(oppositeReferenceConcept == null) {
-					
-					String oppositeReferenceName = eOppositeReferenceContainingClass.getName() + "." + eOppositeReference.getName();
-					oppositeReferenceConcept = new ReferenceConcept(eOppositeReference.getName(), oppositeReferenceName, eOppositeReference);
-					oppositeReferenceConcept.setContainingClass(oppositeReferenceContainingClass);
-					oppositeReferenceConcept.setSuperClassConceptFrom(oppositeReferenceContainingClass);
-					oppositeReferenceConcept.setSuperClassConceptTo(oppositeReferenceToClassConcept);
-					oppositeReferenceConcept.setClassConceptTo(referenceContainingClass);
-					oppositeReferenceConcept.setReferenceOpposite(referenceConcept);
-					referenceConcept.setReferenceOpposite(oppositeReferenceConcept);
-					oppositeReferenceConcepts.add(oppositeReferenceConcept);
-					oppositeReferenceContainingClass.addReference(oppositeReferenceConcept);
-					System.out.println("\t\t non existing opposite : " + oppositeReferenceConcept.getName());
-				} else {
-					referenceConcept.setReferenceOpposite(oppositeReferenceConcept);
-					System.out.println("\t\t existing opposite " + oppositeReferenceConcept.getName());
-				}
-			}
-		}
-		return oppositeReferenceConcepts;
-	}
-	
-	private void resolveReferenceHeritage() {
-		System.out.println("* Resolve reference heritage");
-		for(ReferenceConcept referenceConcept : referenceConcepts) {
-			ClassConcept referenceContainingClass = referenceConcept.getContainingClass();
-			ClassConcept referenceSuperContainingClass = referenceConcept.getSuperClassConceptFrom();
-			ClassConcept referenceToClass = referenceConcept.getClassConceptTo();
-			ClassConcept referenceSuperToClass = referenceConcept.getSuperClassConceptTo();
-			if(referenceSuperContainingClass.equals(referenceContainingClass)) {
-				if(referenceSuperToClass.equals(referenceToClass)) {
-					// not heritated Reference
-					resolveRH(referenceConcept);
-					resolveRH2(referenceConcept);
-				}	
-			}
-		}
-	}
-
-	
-	private void resolveRH(ReferenceConcept referenceConcept) {
-		EReference modelReference = (EReference) referenceConcept.getAbstractModelElement();
-		ClassConcept containingClass = referenceConcept.getContainingClass();
-		ClassConcept referenceToSuperClass = referenceConcept.getSuperClassConceptTo();
-		List<ClassConcept> containingClassSubClasses = containingClass.getSubTypes();
-		for(ClassConcept subClassConcept : containingClassSubClasses) {
-			ReferenceConcept subReferenceConcept = getExistingReferenceConcept(subClassConcept,referenceToSuperClass,modelReference);
-			if(subReferenceConcept != null) {
-				referenceConcept.addSubReference(subReferenceConcept);
-				subReferenceConcept.addSuperReference(referenceConcept);
-				resolveRH(subReferenceConcept);
-			}
-		}
-	}
-	
-	private void resolveRH2(ReferenceConcept referenceConcept) {
-		EReference modelReference = (EReference) referenceConcept.getAbstractModelElement();
-		ClassConcept referenceFromClass = referenceConcept.getSuperClassConceptFrom();
-		ClassConcept referenceToClass = referenceConcept.getClassConceptTo();
-		List<ClassConcept> referenceToClassSubClasses = referenceToClass.getSubTypes();
-		for(ClassConcept referenceToClassSubClass : referenceToClassSubClasses) {
-			ReferenceConcept subReferenceConcept = getExistingReferenceConcept(referenceFromClass,referenceToClassSubClass,modelReference);
-			if(subReferenceConcept != null) {
-				subReferenceConcept.addSuperReference(referenceConcept);
-				referenceConcept.addSubReference(subReferenceConcept);
-				resolveRH2(subReferenceConcept);
-			}
-		}
-	}
-	
-	private ReferenceConcept getExistingReferenceConcept(ClassConcept classConceptFrom,ClassConcept classConceptTo, EReference eReference) {
-		List<ReferenceConcept> classConceptReferences = classConceptFrom.getReferences();
-		for(ReferenceConcept classConceptReference : classConceptReferences) {
-			ClassConcept classConceptReferenceTo = classConceptReference.getClassConceptTo();
-			if(classConceptReferenceTo.equals(classConceptTo)) {
-				EReference classConceptReferenceEReference = (EReference) classConceptReference.getAbstractModelElement();
-				if(classConceptReferenceEReference.equals(eReference)) {
-					return classConceptReference;
-				}
-			}
-		}
-		return null;
-	}
-	
-	private ClassConcept getClassConceptById(String id) {
-		for(ClassConcept classConcept : classConcepts) {
-			if(classConcept.getAbstractModelId().equals(id)) {
-				return classConcept;
-			}
-		}
-		return null;
-	}	
 	
 	/* 
 	 *  ================================================================
@@ -835,6 +583,14 @@ public class ModelElementExtractor {
 				System.out.println("\t " + visualRepresentation.getColour());
 			}
 		}
+	}
+	
+	private boolean isConcreteSyntaxGraphical() {
+		NotationType concreteSyntaxModelType = concreteSyntaxModel.getType();
+		if(concreteSyntaxModelType.equals(NotationType.TEXTUAL)) {
+			return false;
+		}
+		return true;
 	}
 	
 }

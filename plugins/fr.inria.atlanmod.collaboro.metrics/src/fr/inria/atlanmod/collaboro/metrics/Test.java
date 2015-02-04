@@ -44,7 +44,7 @@ public class Test {
 			e1.printStackTrace();
 		}
 		
-		Resource concreteSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport-graphical2.notation.xmi"), true);
+		Resource concreteSyntaxModel = rset.getResource(URI.createFileURI(exampleTransportPath + "transport-textual1.notation.xmi"), true);
 		try {
 			
 			concreteSyntaxModel.load(null);
@@ -60,11 +60,11 @@ public class Test {
 		//Testing abstract Syntax metrics
 		
 		MetricsFactory metricFactory = new MetricsFactoryImpl(abstractSyntax, concreteSyntax,metricPropertiesFile);
-		List<AbstractSyntaxMetric> abstractMetrics = metricFactory.getAbstractSyntaxMetrics();
+		List<ConcreteSyntaxMetric> abstractMetrics = metricFactory.getConcreteSyntaxMetrics();
 		System.out.println(" ------------------------------ ");
 		System.out.println("AbstractMetric : ");
 		System.out.println(abstractMetrics);
-		for(AbstractSyntaxMetric metric : abstractMetrics) {
+		for(ConcreteSyntaxMetric metric : abstractMetrics) {
 			List<MetricResult> results = metric.execute();
 			for(MetricResult metricResult : results) {
 				digestMetricResult(metric,metricResult);

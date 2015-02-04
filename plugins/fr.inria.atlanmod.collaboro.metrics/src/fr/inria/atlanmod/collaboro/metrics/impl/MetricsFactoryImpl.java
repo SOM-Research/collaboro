@@ -1,7 +1,6 @@
 package fr.inria.atlanmod.collaboro.metrics.impl;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,151 +12,94 @@ import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxMetric;
 import fr.inria.atlanmod.collaboro.metrics.ConcreteSyntaxTextualMetric;
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricsFactory;
+import fr.inria.atlanmod.collaboro.metrics.exceptions.MetricConfigurationFileException;
+import fr.inria.atlanmod.collaboro.metrics.exceptions.MetricNotFoundException;
+import fr.inria.atlanmod.collaboro.metrics.tools.ConcreteGraphicalSyntaxElementExtractor;
 import fr.inria.atlanmod.collaboro.metrics.tools.MetricConfigurationHandler;
+import fr.inria.atlanmod.collaboro.metrics.tools.MetricHandler;
 import fr.inria.atlanmod.collaboro.metrics.tools.MetricInstanciator;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelElementExtractor;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.AbstractConceptContainer;
 import fr.inria.atlanmod.collaboro.notation.Definition;
 import fr.inria.atlanmod.collaboro.notation.NotationType;
 
 public class MetricsFactoryImpl implements MetricsFactory {
 	
-	private EPackage abstractSyntaxModel;
-	private Definition concreteSyntaxModel;
-	private boolean isGraphical;
 	private ModelElementExtractor modelElementExtractor;
-	private List<ConcreteSyntaxGraphicalMetric> concreteSyntaxGraphicalMetrics;
-	private List<ConcreteSyntaxTextualMetric> concreteSyntaxTextualMetrics;
-	private List<AbstractSyntaxMetric> abstractSyntaxMetrics;
-	private MetricConfigurationHandler configurationHandler;
-	
-	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel) {
-		//TEST METHOD
-		this.abstractSyntaxModel = abstractSyntaxModel;
-		this.concreteSyntaxModel = concreteSyntaxModel;
-		
-		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
-		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
-		this.abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
-		
-		this.isGraphical = isConcreteSyntaxGraphical();
-		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
-		this.configurationHandler = new MetricConfigurationHandler();
-		
-		initialize();
-		System.out.println("MetricFactory initialised");
-	}
+	private MetricHandler metricHandler;
 	
 	public MetricsFactoryImpl(EPackage abstractSyntaxModel, Definition concreteSyntaxModel, File configurationFileStream) {
-		this.abstractSyntaxModel = abstractSyntaxModel;
-		this.concreteSyntaxModel = concreteSyntaxModel;
 		
-		this.concreteSyntaxGraphicalMetrics = new ArrayList<ConcreteSyntaxGraphicalMetric>();
-		this.concreteSyntaxTextualMetrics = new ArrayList<ConcreteSyntaxTextualMetric>();
-		this.abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
-		
-		this.isGraphical = isConcreteSyntaxGraphical();
 		this.modelElementExtractor = new ModelElementExtractor(abstractSyntaxModel, concreteSyntaxModel);
-		this.configurationHandler = new MetricConfigurationHandler(configurationFileStream);
+		this.metricHandler = new MetricHandler(configurationFileStream);
 		
-		initialize();
 		System.out.println("MetricFactory initialised");
-	}
-	
-	public void initialize() {
-		MetricInstanciator metricInstanciator = new MetricInstanciator(this.configurationHandler);
-		List<ConcreteSyntaxGraphicalMetric> graphicalMetrics = metricInstanciator.loadConcreteGraphicalMetrics();
-		List<ConcreteSyntaxTextualMetric> textualMetrics = metricInstanciator.loadConcreteTextualMetrics();
-		List<AbstractSyntaxMetric> abstractMetrics = metricInstanciator.loadAbstractMetrics();
-		concreteSyntaxGraphicalMetrics.addAll(graphicalMetrics);
-		concreteSyntaxTextualMetrics.addAll(textualMetrics);
-		abstractSyntaxMetrics.addAll(abstractMetrics);
 	}
 	
 	public List<AbstractSyntaxMetric> getAbstractSyntaxMetrics() {
-		List<AbstractSyntaxMetric> abstractSyntaxMetrics = new ArrayList<AbstractSyntaxMetric>();
-		for(AbstractSyntaxMetric abstractMetric : this.abstractSyntaxMetrics) {
-			abstractMetric.setAbstractModel(abstractSyntaxModel);
-			abstractSyntaxMetrics.add(abstractMetric);
+		AbstractConceptContainer abstractConcepts = this.modelElementExtractor.extractAbstractSyntaxElements();
+		
+		List<AbstractSyntaxMetric> abstractSyntaxMetrics = this.metricHandler.getAbstractSyntaxMetrics();
+		for(AbstractSyntaxMetric abstractMetric : abstractSyntaxMetrics) {
+			abstractMetric.setAbstractConcepts(abstractConcepts);
 		}
 		return abstractSyntaxMetrics;
 	}
 
 	public List<ConcreteSyntaxMetric> getConcreteSyntaxMetrics() {
 		// TODO
-		ModelMapping modelMapping = modelElementExtractor.getModelMapping();
+		ModelMapping modelMapping = this.modelElementExtractor.extractModelMapping();
 		List<ConcreteSyntaxMetric> concreteSyntaxMetrics = new ArrayList<ConcreteSyntaxMetric>();
-		if(this.isGraphical) {
-			System.out.println(concreteSyntaxGraphicalMetrics);
-			for(ConcreteSyntaxGraphicalMetric graphicalMetric : this.concreteSyntaxGraphicalMetrics) {
-				graphicalMetric.setModelMapping(modelMapping);
-				concreteSyntaxMetrics.add(graphicalMetric);
+		
+		if(this.modelElementExtractor.isGraphical()) {
+			for(ConcreteSyntaxMetric concreteMetric : this.metricHandler.getConcreteSyntaxGraphicalMetrics()) {
+				concreteMetric.setModelMapping(modelMapping);
+				concreteSyntaxMetrics.add(concreteMetric);
 			}
+			return concreteSyntaxMetrics;
 		} else {
-			// Find all metrics instance of ConcreteSyntaxTextualMetrics
+			for(ConcreteSyntaxMetric concreteMetric : this.metricHandler.getConcreteSyntaxTextualMetrics()) {
+				concreteMetric.setModelMapping(modelMapping);
+				concreteSyntaxMetrics.add(concreteMetric);
+			}
 		}
 		return concreteSyntaxMetrics;
 	}
 
 	public void activate(String metricName) {
-		System.out.println("In MetricFactory.activate : " + metricName);
-		MetricImpl metric = getMetricByName(metricName);
-		if(metric != null) {
-			metric.setIsActive(true);
-			this.configurationHandler.saveMetric(metric);
+		try {
+			this.metricHandler.activateMetric(metricName);
+		} catch (MetricConfigurationFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MetricNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 
 	public void deactivate(String metricName) {
-		System.out.println("In MetricFactory.deactivate : " + metricName);
-		MetricImpl metric = getMetricByName(metricName);
-		if(metric != null) {
-			metric.setIsActive(false);
-			this.configurationHandler.saveMetric(metric);
+		try {
+			this.metricHandler.deactivateMetric(metricName);
+		} catch (MetricConfigurationFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MetricNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 	}
 	
 	public void setMetricPriority(String metricName, MetricPriority priority) {
-		System.out.println("In MetricFactory.setPriority : " + metricName + " , " + priority);
-		MetricImpl metric = getMetricByName(metricName);
-		if(metric != null) {
-			metric.setPriority(priority);
-			this.configurationHandler.saveMetric(metric);
+		try {
+			this.metricHandler.setMetricPriority(metricName, priority);
+		} catch (MetricConfigurationFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MetricNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
-	private boolean isConcreteSyntaxGraphical() {
-		NotationType concreteSyntaxModelType = concreteSyntaxModel.getType();
-		if(concreteSyntaxModelType.equals(NotationType.TEXTUAL)) {
-			return false;
-		}
-		return true;
-	}
-	
-	private MetricImpl getMetricByName(String metricName) {
-		System.out.println("\tIn MetricFactory.getMetricByName : " + metricName);
-		for(ConcreteSyntaxGraphicalMetric metricTmp : concreteSyntaxGraphicalMetrics) {
-			if(metricTmp.getName().equals(metricName)) {
-				System.out.println("\t\tFound graphical metric");
-				return ((ConcreteSyntaxGraphicalMetricImpl) metricTmp);
-			}
-		}
-		for(ConcreteSyntaxTextualMetric metricTmp : concreteSyntaxTextualMetrics) {
-			if(metricTmp.getName().equals(metricName)) {
-				System.out.println("\t\tFound textual metric");
-				return ((ConcreteSyntaxTextualMetricImpl) metricTmp);
-			}
-		}
-		for(AbstractSyntaxMetric metricTmp : abstractSyntaxMetrics) {
-			if(metricTmp.getName().equals(metricName)) {
-				System.out.println("\t\tFound abstract metric");
-				return ((AbstractSyntaxMetricImpl) metricTmp);
-			}
-		}
-		System.out.println("\t\tNo metric found");
-		return null;
-	}
-
 }

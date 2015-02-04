@@ -1,9 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics;
 
-import org.eclipse.emf.ecore.EPackage;
+import fr.inria.atlanmod.collaboro.metrics.tools.model.AbstractConceptContainer;
 
 public interface AbstractSyntaxMetric extends Metric {
 	
-	public void setAbstractModel(EPackage abstractModel);
+	public void setAbstractConcepts(AbstractConceptContainer abstractConceptContainer);
 
 }
