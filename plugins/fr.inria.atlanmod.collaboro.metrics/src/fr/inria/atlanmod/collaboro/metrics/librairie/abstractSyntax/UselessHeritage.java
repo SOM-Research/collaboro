@@ -15,8 +15,8 @@ import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
 import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
-import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxReferredElementImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
+import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
 
 public class UselessHeritage extends AbstractSyntaxMetricImpl {
 	
@@ -33,46 +33,22 @@ public class UselessHeritage extends AbstractSyntaxMetricImpl {
 		
 		System.out.println("Excecute Useless Heritage");
 		List<MetricResult> results = new ArrayList<MetricResult>();
-		List<ReferredElement> referredElements = new ArrayList<ReferredElement>();
+
+		List<ClassConcept> abstractClassConcepts = this.abstractConceptContainer.getClassConcepts();
 		
-		//Find all instance of heritage
-		Map<EClass,List<EClass>> classSubTypeMap = new HashMap<EClass,List<EClass>>();
-		List<EObject> abstractSyntaxElements = this.abstractModel.eContents();
-		
-		//initialize subTypeMap 
-		for(EObject element : abstractSyntaxElements) {
-			if(element instanceof EClass) {
-				EClass classElement = (EClass) element;
-				classSubTypeMap.put(classElement, new ArrayList<EClass>());
-			}
-		}
-		
-		for(EObject element : abstractSyntaxElements) {
-			if(element instanceof EClass) {
-				EClass classElement = (EClass) element;
-				List<EClass> classSuperType = classElement.getESuperTypes();
-				for(EClass superClass : classSuperType) {
-					List<EClass> subTypes = classSubTypeMap.get(superClass);
-					subTypes.add(classElement);
-				}
-				
-				//System.out.println("class : " + classElement.getName() + " -> " + classSuperType);
-			}
-		}
-		
-		for(EClass eClass : classSubTypeMap.keySet()) {
-			List<EClass> classSubTypes = classSubTypeMap.get(eClass);
+		for(ClassConcept classConcept : abstractClassConcepts) {
+			List<ClassConcept> classSubTypes = classConcept.getSubTypes();
 			if(classSubTypes.size() == 1) {
-				EClass subElement = classSubTypes.get(0);
+				ClassConcept subClass = classSubTypes.get(0);
 				
 				MetricResultImpl metricResult = new MetricResultImpl();
 				metricResult.setStatus(MetricResultStatus.BAD);
-				metricResult.setReason("The super type " + eClass.getName() + " should have more than one subType (" + subElement.getName() + ")");
+				metricResult.setReason("The super type " + classConcept.getName() + " should have more than one subType (" + subClass.getName() + ")");
 				
 				List<ReferredElement> elements = new ArrayList<ReferredElement>();
 				
-				ReferredElement referredSuperElement = new AbstractSyntaxReferredElementImpl(eClass.getName(), ReferredElementReason.WRONG, eClass);
-				ReferredElement referredSubElement = new AbstractSyntaxReferredElementImpl(subElement.getName(), ReferredElementReason.WRONG, subElement);
+				ReferredElement referredSuperElement = new AbstractSyntaxReferredElementImpl(classConcept.getName(), ReferredElementReason.WRONG, classConcept.getAbstractModelElement());
+				ReferredElement referredSubElement = new AbstractSyntaxReferredElementImpl(subClass.getName(), ReferredElementReason.WRONG, subClass.getAbstractModelElement());
 				elements.add(referredSubElement);
 				elements.add(referredSuperElement);
 				metricResult.setReferredElements(elements);

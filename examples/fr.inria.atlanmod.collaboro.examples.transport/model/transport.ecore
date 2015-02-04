@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="Transport" nsURI="http://atlanmod/transport" nsPrefix="transport">
-  <eClassifiers xsi:type="ecore:EClass" name="IDElement">
+  <eClassifiers xsi:type="ecore:EClass" name="IDElement" eSuperTypes="#//Test">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Vehicle" eSuperTypes="#//IDElement">
@@ -31,4 +31,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="stops" upperBound="-1"
         eType="#//Stop" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="bla"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Test"/>
 </ecore:EPackage>
