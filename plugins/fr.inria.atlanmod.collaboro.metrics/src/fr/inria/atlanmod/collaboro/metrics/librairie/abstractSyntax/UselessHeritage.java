@@ -1,12 +1,9 @@
 package fr.inria.atlanmod.collaboro.metrics.librairie.abstractSyntax;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
+import java.util.Set;
 
 import fr.inria.atlanmod.collaboro.metrics.MetricPriority;
 import fr.inria.atlanmod.collaboro.metrics.MetricResult;
@@ -21,7 +18,7 @@ import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
 public class UselessHeritage extends AbstractSyntaxMetricImpl {
 	
 	private static String dimension = "Abstract syntax";
-	private static String description = "A super class with only one sub class doesn't make sense";
+	private static String description = "Inheritage errors";
 	
 	public UselessHeritage(String name, Integer acceptanceRatio, MetricPriority priority, boolean isActive) {
 		super(name, dimension, description, acceptanceRatio, priority, isActive);
@@ -39,6 +36,7 @@ public class UselessHeritage extends AbstractSyntaxMetricImpl {
 		for(ClassConcept classConcept : abstractClassConcepts) {
 			List<ClassConcept> classSubTypes = classConcept.getSubTypes();
 			if(classSubTypes.size() == 1) {
+				// Super Class has only one subType
 				ClassConcept subClass = classSubTypes.get(0);
 				
 				MetricResultImpl metricResult = new MetricResultImpl();
@@ -55,6 +53,34 @@ public class UselessHeritage extends AbstractSyntaxMetricImpl {
 				
 				results.add(metricResult);
 			}
+			
+			
+		}
+		Set<ClassConcept> duplicateInheritageList = new HashSet<ClassConcept>();
+		for(ClassConcept classConcept : abstractClassConcepts) {
+			List<ClassConcept> allClassSubTypes = gatherSubConcepts(classConcept);
+			List<ClassConcept> duplicateClassConcept = getDuplicateClassConcept(allClassSubTypes);
+			if(duplicateClassConcept.size() > 0) {
+				duplicateInheritageList.addAll(duplicateClassConcept);
+			}
+		}
+		
+		if(duplicateInheritageList.size() > 0) {
+			for(ClassConcept duplicateConcept : duplicateInheritageList) {
+				System.out.println("found duplicate : " + duplicateInheritageList);
+				
+				MetricResultImpl metricResult = new MetricResultImpl();
+				metricResult.setStatus(MetricResultStatus.BAD);
+				metricResult.setReason("The sub-class " + duplicateConcept.getName() + " has duplicate inheritage");
+				
+				List<ReferredElement> elements = new ArrayList<ReferredElement>();
+				
+				ReferredElement referredElement = new AbstractSyntaxReferredElementImpl(duplicateConcept.getName(), ReferredElementReason.WRONG, duplicateConcept.getAbstractModelElement());
+				elements.add(referredElement);
+				metricResult.setReferredElements(elements);
+			
+				results.add(metricResult);
+			}
 		}
 		
 		if(results.size() > this.acceptanceRatio) {
@@ -66,5 +92,32 @@ public class UselessHeritage extends AbstractSyntaxMetricImpl {
 		return results;
 		
 	}
+	
+	private List<ClassConcept> gatherSubConcepts(ClassConcept classConcept) {
+		List<ClassConcept> result = new ArrayList<ClassConcept>();
+		
+		List<ClassConcept> subConcepts = classConcept.getSubTypes();
+		result.addAll(subConcepts);
+		for(ClassConcept subConcept : subConcepts) {
+			result.addAll(gatherSubConcepts(subConcept));
+		}
+		
+		return result;
+
+	}
+	
+	private List<ClassConcept> getDuplicateClassConcept(List<ClassConcept> classConcepts) {
+		List<ClassConcept> duplicateClassConcepts = new ArrayList<ClassConcept>();
+		List<ClassConcept> otherClassConcepts = new ArrayList<ClassConcept>();
+		for(ClassConcept classConcept : classConcepts) {
+			if(otherClassConcepts.contains(classConcept)) {
+				duplicateClassConcepts.add(classConcept);
+			} else {
+				otherClassConcepts.add(classConcept);
+			}
+		}
+		return duplicateClassConcepts;
+	}
+
 
 }
