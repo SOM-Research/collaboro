@@ -134,6 +134,24 @@ public interface NotationFactory extends EFactory {
 	Definition createDefinition();
 
 	/**
+	 * Returns a new object of class '<em>Oval</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Oval</em>'.
+	 * @generated
+	 */
+	Oval createOval();
+
+	/**
+	 * Returns a new object of class '<em>Polygone</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Polygone</em>'.
+	 * @generated
+	 */
+	Polygone createPolygone();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

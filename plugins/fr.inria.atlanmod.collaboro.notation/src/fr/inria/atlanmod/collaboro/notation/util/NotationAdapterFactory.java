@@ -140,6 +140,14 @@ public class NotationAdapterFactory extends AdapterFactoryImpl {
 				return createDefinitionAdapter();
 			}
 			@Override
+			public Adapter caseOval(Oval object) {
+				return createOvalAdapter();
+			}
+			@Override
+			public Adapter casePolygone(Polygone object) {
+				return createPolygoneAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -394,6 +402,34 @@ public class NotationAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDefinitionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.notation.Oval <em>Oval</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.notation.Oval
+	 * @generated
+	 */
+	public Adapter createOvalAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link fr.inria.atlanmod.collaboro.notation.Polygone <em>Polygone</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see fr.inria.atlanmod.collaboro.notation.Polygone
+	 * @generated
+	 */
+	public Adapter createPolygoneAdapter() {
 		return null;
 	}
 

@@ -73,6 +73,8 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 			case NotationPackage.SYNTAX_OF: return createSyntaxOf();
 			case NotationPackage.COMPOSITE: return createComposite();
 			case NotationPackage.DEFINITION: return createDefinition();
+			case NotationPackage.OVAL: return createOval();
+			case NotationPackage.POLYGONE: return createPolygone();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -230,6 +232,26 @@ public class NotationFactoryImpl extends EFactoryImpl implements NotationFactory
 	public Definition createDefinition() {
 		DefinitionImpl definition = new DefinitionImpl();
 		return definition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Oval createOval() {
+		OvalImpl oval = new OvalImpl();
+		return oval;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Polygone createPolygone() {
+		PolygoneImpl polygone = new PolygoneImpl();
+		return polygone;
 	}
 
 	/**

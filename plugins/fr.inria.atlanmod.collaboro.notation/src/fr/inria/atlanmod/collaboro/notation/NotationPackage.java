@@ -1034,6 +1034,179 @@ public interface NotationPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.impl.OvalImpl <em>Oval</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.notation.impl.OvalImpl
+	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getOval()
+	 * @generated
+	 */
+	int OVAL = 17;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__ID = FIGURE__ID;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__X = FIGURE__X;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__Y = FIGURE__Y;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__HEIGHT = FIGURE__HEIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__WIDTH = FIGURE__WIDTH;
+
+	/**
+	 * The feature id for the '<em><b>Fill</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__FILL = FIGURE__FILL;
+
+	/**
+	 * The feature id for the '<em><b>Stroke</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL__STROKE = FIGURE__STROKE;
+
+	/**
+	 * The number of structural features of the '<em>Oval</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int OVAL_FEATURE_COUNT = FIGURE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.impl.PolygoneImpl <em>Polygone</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see fr.inria.atlanmod.collaboro.notation.impl.PolygoneImpl
+	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getPolygone()
+	 * @generated
+	 */
+	int POLYGONE = 18;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__ID = FIGURE__ID;
+
+	/**
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__X = FIGURE__X;
+
+	/**
+	 * The feature id for the '<em><b>Y</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__Y = FIGURE__Y;
+
+	/**
+	 * The feature id for the '<em><b>Height</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__HEIGHT = FIGURE__HEIGHT;
+
+	/**
+	 * The feature id for the '<em><b>Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__WIDTH = FIGURE__WIDTH;
+
+	/**
+	 * The feature id for the '<em><b>Fill</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__FILL = FIGURE__FILL;
+
+	/**
+	 * The feature id for the '<em><b>Stroke</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__STROKE = FIGURE__STROKE;
+
+	/**
+	 * The feature id for the '<em><b>Lines</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE__LINES = FIGURE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Polygone</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POLYGONE_FEATURE_COUNT = FIGURE_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link fr.inria.atlanmod.collaboro.notation.Color <em>Color</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1041,7 +1214,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getColor()
 	 * @generated
 	 */
-	int COLOR = 17;
+	int COLOR = 19;
 
 
 	/**
@@ -1052,7 +1225,7 @@ public interface NotationPackage extends EPackage {
 	 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getNotationType()
 	 * @generated
 	 */
-	int NOTATION_TYPE = 18;
+	int NOTATION_TYPE = 20;
 
 
 	/**
@@ -1424,6 +1597,37 @@ public interface NotationPackage extends EPackage {
 	EAttribute getDefinition_Type();
 
 	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.notation.Oval <em>Oval</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Oval</em>'.
+	 * @see fr.inria.atlanmod.collaboro.notation.Oval
+	 * @generated
+	 */
+	EClass getOval();
+
+	/**
+	 * Returns the meta object for class '{@link fr.inria.atlanmod.collaboro.notation.Polygone <em>Polygone</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Polygone</em>'.
+	 * @see fr.inria.atlanmod.collaboro.notation.Polygone
+	 * @generated
+	 */
+	EClass getPolygone();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link fr.inria.atlanmod.collaboro.notation.Polygone#getLines <em>Lines</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Lines</em>'.
+	 * @see fr.inria.atlanmod.collaboro.notation.Polygone#getLines()
+	 * @see #getPolygone()
+	 * @generated
+	 */
+	EReference getPolygone_Lines();
+
+	/**
 	 * Returns the meta object for enum '{@link fr.inria.atlanmod.collaboro.notation.Color <em>Color</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1778,6 +1982,34 @@ public interface NotationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute DEFINITION__TYPE = eINSTANCE.getDefinition_Type();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.impl.OvalImpl <em>Oval</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.notation.impl.OvalImpl
+		 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getOval()
+		 * @generated
+		 */
+		EClass OVAL = eINSTANCE.getOval();
+
+		/**
+		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.impl.PolygoneImpl <em>Polygone</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see fr.inria.atlanmod.collaboro.notation.impl.PolygoneImpl
+		 * @see fr.inria.atlanmod.collaboro.notation.impl.NotationPackageImpl#getPolygone()
+		 * @generated
+		 */
+		EClass POLYGONE = eINSTANCE.getPolygone();
+
+		/**
+		 * The meta object literal for the '<em><b>Lines</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference POLYGONE__LINES = eINSTANCE.getPolygone_Lines();
 
 		/**
 		 * The meta object literal for the '{@link fr.inria.atlanmod.collaboro.notation.Color <em>Color</em>}' enum.

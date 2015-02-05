@@ -69,4 +69,9 @@
     <eLiterals name="TEXTUAL" literal="textual"/>
     <eLiterals name="MIXED" literal="mixed"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Oval" eSuperTypes="#//Figure"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Polygone" eSuperTypes="#//Figure">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lines" upperBound="-1"
+        eType="#//Line" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

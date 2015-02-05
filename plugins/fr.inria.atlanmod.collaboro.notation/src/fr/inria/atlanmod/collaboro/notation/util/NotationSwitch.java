@@ -214,6 +214,26 @@ public class NotationSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NotationPackage.OVAL: {
+				Oval oval = (Oval)theEObject;
+				T result = caseOval(oval);
+				if (result == null) result = caseFigure(oval);
+				if (result == null) result = caseGraphicalElement(oval);
+				if (result == null) result = caseNotationElement(oval);
+				if (result == null) result = caseIdElement(oval);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NotationPackage.POLYGONE: {
+				Polygone polygone = (Polygone)theEObject;
+				T result = casePolygone(polygone);
+				if (result == null) result = caseFigure(polygone);
+				if (result == null) result = caseGraphicalElement(polygone);
+				if (result == null) result = caseNotationElement(polygone);
+				if (result == null) result = caseIdElement(polygone);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -470,6 +490,36 @@ public class NotationSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDefinition(Definition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Oval</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Oval</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseOval(Oval object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Polygone</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Polygone</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePolygone(Polygone object) {
 		return null;
 	}
 

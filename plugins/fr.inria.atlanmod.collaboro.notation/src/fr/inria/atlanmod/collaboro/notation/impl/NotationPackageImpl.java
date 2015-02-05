@@ -21,6 +21,8 @@ import fr.inria.atlanmod.collaboro.notation.NotationElement;
 import fr.inria.atlanmod.collaboro.notation.NotationFactory;
 import fr.inria.atlanmod.collaboro.notation.NotationPackage;
 import fr.inria.atlanmod.collaboro.notation.NotationType;
+import fr.inria.atlanmod.collaboro.notation.Oval;
+import fr.inria.atlanmod.collaboro.notation.Polygone;
 import fr.inria.atlanmod.collaboro.notation.Rectangle;
 import fr.inria.atlanmod.collaboro.notation.ReferenceValue;
 import fr.inria.atlanmod.collaboro.notation.SyntaxOf;
@@ -162,6 +164,20 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * @generated
 	 */
 	private EClass definitionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass ovalEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass polygoneEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -561,6 +577,33 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getOval() {
+		return ovalEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPolygone() {
+		return polygoneEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPolygone_Lines() {
+		return (EReference)polygoneEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getColor() {
 		return colorEEnum;
 	}
@@ -654,6 +697,11 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		createEReference(definitionEClass, DEFINITION__ELEMENTS);
 		createEAttribute(definitionEClass, DEFINITION__TYPE);
 
+		ovalEClass = createEClass(OVAL);
+
+		polygoneEClass = createEClass(POLYGONE);
+		createEReference(polygoneEClass, POLYGONE__LINES);
+
 		// Create enums
 		colorEEnum = createEEnum(COLOR);
 		notationTypeEEnum = createEEnum(NOTATION_TYPE);
@@ -705,6 +753,8 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		referenceValueEClass.getESuperTypes().add(this.getValue());
 		syntaxOfEClass.getESuperTypes().add(this.getNotationElement());
 		compositeEClass.getESuperTypes().add(this.getNotationElement());
+		ovalEClass.getESuperTypes().add(this.getFigure());
+		polygoneEClass.getESuperTypes().add(this.getFigure());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(idElementEClass, IdElement.class, "IdElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -758,6 +808,11 @@ public class NotationPackageImpl extends EPackageImpl implements NotationPackage
 		initEClass(definitionEClass, Definition.class, "Definition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDefinition_Elements(), this.getNotationElement(), null, "elements", null, 0, -1, Definition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getDefinition_Type(), this.getNotationType(), "type", null, 1, 1, Definition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(ovalEClass, Oval.class, "Oval", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(polygoneEClass, Polygone.class, "Polygone", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPolygone_Lines(), this.getLine(), null, "lines", null, 0, -1, Polygone.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(colorEEnum, Color.class, "Color");
