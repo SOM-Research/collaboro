@@ -10,14 +10,14 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResult;
 import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
-import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxReferredElementImpl;
+import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxTextualMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
 import fr.inria.atlanmod.collaboro.metrics.model.Symbol;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 import fr.inria.atlanmod.collaboro.notation.NotationElement;
 
-public class SymbolOverload extends ConcreteSyntaxGraphicalMetricImpl {
+public class SymbolOverload extends ConcreteSyntaxTextualMetricImpl {
 
 	private static String dimension = "Ontological";
 	private static String description = "Symbol overload occurs when a single concrete symbol can represent multiple abstract concepts";

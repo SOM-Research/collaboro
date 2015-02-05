@@ -11,14 +11,14 @@ import fr.inria.atlanmod.collaboro.metrics.MetricResultStatus;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElement;
 import fr.inria.atlanmod.collaboro.metrics.ReferredElementReason;
 import fr.inria.atlanmod.collaboro.metrics.impl.AbstractSyntaxReferredElementImpl;
-import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxGraphicalMetricImpl;
+import fr.inria.atlanmod.collaboro.metrics.impl.ConcreteSyntaxTextualMetricImpl;
 import fr.inria.atlanmod.collaboro.metrics.impl.MetricResultImpl;
 import fr.inria.atlanmod.collaboro.metrics.model.AttributeConcept;
 import fr.inria.atlanmod.collaboro.metrics.model.ClassConcept;
 import fr.inria.atlanmod.collaboro.metrics.model.ReferenceConcept;
 import fr.inria.atlanmod.collaboro.metrics.tools.ModelMapping;
 
-public class SymbolRedundancy extends ConcreteSyntaxGraphicalMetricImpl{
+public class SymbolRedundancy extends ConcreteSyntaxTextualMetricImpl{
 	
 	private static String dimension = "Ontological";
 	private static String description = "Symbol redundancy occurs when multiple concrete symbols can be used to represent a single abstract concept";
