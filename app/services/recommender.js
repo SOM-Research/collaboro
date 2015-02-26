@@ -35,6 +35,24 @@ angular.module('collaboroServices').factory('recommenderService', ['$http', '$q'
                 return "Deactivated";
             }
 
+            $scope.footerText = function(metric) {
+              if(metric.totalBad > 0)
+                return "<strong>" + metric.totalBad + "</strong> issue/s detected in the current version";
+              else if (metric.totalBad == 0 && metric.totalGood > 0) 
+                return "The current version fulfills the recommendations for this metric";
+              else
+                return "No issue/s detected in the current version";
+            }
+
+            $scope.footerStyle = function(metric) {
+              if(metric.totalBad > 0)
+                return "#EBCCD1";
+              else if (metric.totalBad == 0 && metric.totalGood > 0) 
+                return "#dff0d8";
+              else
+                return "#f5f5f5";
+            }
+
             $scope.toggleMetric = function(metric) {
               $scope.changed = true;
 
