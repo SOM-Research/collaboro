@@ -49,9 +49,10 @@ Steps:
 Who is behind this project?
 ---------------------------
 * [Javier Canovas](http://github.com/jlcanovas/ "Javier Canovas")
+* [Robin Boncorps](http://github.com/rboncorps/ "Robin Boncorps")
 * [Jordi Cabot](http://github.com/jcabot/ "Jordi Cabot")
 
-Javier and Jordi work in [Atlanmod](http://www.emn.fr/z-info/atlanmod), a research team of Inria.
+Javier and Jordi are currently members of [SOM](http://som.uoc.es), a research team of IN3-UOC. Robin is member of [Atlanmod](http://www.emn.fr/z-info/atlanmod), a research team of Inria.
 
 Also participated
 * [Juan David Villa Calle](https://github.com/juandavidvillacalle "Juan David Villa Calle")
