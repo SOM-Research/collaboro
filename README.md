@@ -38,7 +38,7 @@ Requirements:
 * EMF 3.7 or above
 
 Steps:
-* Download the update site file from [here](https://github.com/SOM-Research/collaboro/tree/master/plugins/fr.inria.atlanmod.collaboro)
+* Download the update site file from [here](https://github.com/SOM-Research/collaboro/blob/751e33e323913feb6eed0126e52cd0cfe98d54c9/plugins/fr.inria.atlanmod.collaboro/fr.inria.atlanmod.collaboro.zip)
 * Open the Eclipse IDE and click on Help-->Install New Software...
 * Add a new software site by clicking on Add.
 * Select the update site file downloaded previously and accept the form.
@@ -49,12 +49,12 @@ Steps:
 Who is behind this project?
 ---------------------------
 * [Javier Canovas](http://github.com/jlcanovas/ "Javier Canovas")
-* [Robin Boncorps](http://github.com/rboncorps/ "Robin Boncorps")
 * [Jordi Cabot](http://github.com/jcabot/ "Jordi Cabot")
 
-Javier and Jordi are currently members of [SOM](http://som.uoc.es), a research team of IN3-UOC. Robin is member of [Atlanmod](http://www.emn.fr/z-info/atlanmod), a research team of Inria.
+Javier and Jordi are currently members of [SOM](http://som.uoc.es), a research team of IN3-UOC. 
 
 Also participated
+* [Robin Boncorps](http://github.com/rboncorps/ "Robin Boncorps")
 * [Juan David Villa Calle](https://github.com/juandavidvillacalle "Juan David Villa Calle")
 * [Guillaume Doux](https://github.com/scheremele "Guillaume Doux")
 
