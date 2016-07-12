@@ -38,7 +38,7 @@ Requirements:
 * EMF 3.7 or above
 
 Steps:
-* Download the update site file fr.inria.atlanmod.collaboro.zip from the Download section.
+* Download the update site file from [here](https://github.com/SOM-Research/collaboro/tree/master/plugins/fr.inria.atlanmod.collaboro)
 * Open the Eclipse IDE and click on Help-->Install New Software...
 * Add a new software site by clicking on Add.
 * Select the update site file downloaded previously and accept the form.
