@@ -39,12 +39,16 @@ Requirements:
 
 Steps:
 * Download the update site file from [here](https://github.com/SOM-Research/collaboro/blob/751e33e323913feb6eed0126e52cd0cfe98d54c9/plugins/fr.inria.atlanmod.collaboro/fr.inria.atlanmod.collaboro.zip)
-* Open the Eclipse IDE and click on Help-->Install New Software...
-* Add a new software site by clicking on Add.
-* Select the update site file downloaded previously and accept the form.
-* Select the software site in the Work with field
-* Install the two features that will appear in the list (Collaboro infrastructure and Collaboro UI). If they don’t appear, uncheck the option Group items by category.
-* Restart Eclipse
+* Open the Eclipse IDE and click on "Help-->Install New Software"
+* Add a new software site by clicking on "Add".
+* Click on "Archiv" and select the update site file downloaded previously and accept the form.
+* Select the software site in the "Work with" field.
+* Install the two features that will appear in the list ("Collaboro infrastructure" and "Collaboro UI"). If they don’t appear, uncheck the option Group items by category.
+* Restart Eclipse.
+
+You can activate the Collaboro views/editors on "Window/Show View/Other..." and then select the views for Collaboro group.
+
+You can import some of the example projects located at the "example" folder to play with the tool.
 
 Who is behind this project?
 ---------------------------
