@@ -1,5 +1,6 @@
 **/**/.class
 *.class
 plugins/fr.inria.atlanmod.collaboro.web.servlets/WebContent/workingDir/*.jpg
+plugins/fr.inria.atlanmod.collaboro.web.servlets/build/*
 plugins/fr.inria.atlanmod.collaboro.backend/fr.inria.atlanmod.collaboro.backend.jar
 model/**
