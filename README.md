@@ -66,6 +66,10 @@ To use both examples, follow these steps:
 * You can navigate through the collaboration elements.
 * To visualize a model example, open the file `example1.xmi` located in the folder `model`. Opening this file will show the model editor but also will trigger the on-the-fly renderer, which will show graphical concrete syntax in the Notation view. 
 
+This is a simple screencast showing the previous steps (just after importing the projects) for the project developing the graphical syntax:
+
+![screencast](https://github.com/SOM-Research/collaboro/blob/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageGraphical/shortDemo.gif)
+
 You can play modifying the collaboration (by using the Collaboro views), the notation definition (file `baggage.notation`) and the examples. 
 
 If you find any problem or have any suggestion, do not hesitate to contact us.
