@@ -1,5 +1,6 @@
 package fr.inria.atlanmod.collaboro.ui.views.notation.builder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -134,7 +135,8 @@ public class DotNotationBuilder extends AbstractNotationBuilder implements INota
 	public String create(SyntaxOf syntaxOf) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("label=\"").append(syntaxOf.getId());
-		sb.append("<syntax of '").append(syntaxOf.getReference().getName()).append("' reference>").append("\"");
+		String gap = (syntaxOf.getReference() == null) ? syntaxOf.getId() : syntaxOf.getReference().getName();
+		sb.append("<syntax of '").append(gap).append("' reference>").append("\"");
 		return sb.toString();
 
 	}
@@ -239,8 +241,11 @@ public class DotNotationBuilder extends AbstractNotationBuilder implements INota
 			if (eRef instanceof EReference) {
 				EReference ref = (EReference) eRef;
 				String source = this.getInstanceName(eObject);
-				String target = this.getInstanceName((EObject) eObject.eGet(ref));
-				sb.append(source).append("--").append(target).append(";\n");
+				List<EObject> refElems = (List<EObject>) eObject.eGet(ref);
+				for(EObject refElem : refElems) {
+					String target = this.getInstanceName(refElem);
+					sb.append("\"").append(source).append("\"").append("--").append("\"").append(target).append("\"").append(";\n");
+				}
 			}else {
 				sb.append("in--out;\n");
 			}
@@ -334,7 +339,7 @@ public class DotNotationBuilder extends AbstractNotationBuilder implements INota
 			imagePathBuilder.append("/");
 		}
 		imagePathBuilder.append(image.getPath());
-		sb.append(this.getInstanceName(eObject)).append(" [label=<<TABLE border=\"0\" cellborder=\"0\"><TR><TD><IMG SRC=\"")
+		sb.append("\"").append(this.getInstanceName(eObject)).append("\"").append(" [label=<<TABLE border=\"0\" cellborder=\"0\"><TR><TD><IMG SRC=\"")
 		.append(imagePathBuilder.toString()).append("\"/></TD></TR><TR><TD>").append(this.getInstanceName(eObject)).append("</TD></TR></TABLE>>, shape=none];\n");
 		sb.append(this.launchOnReferences(eObject, historyLinks));
 		return sb.toString();
@@ -371,18 +376,25 @@ public class DotNotationBuilder extends AbstractNotationBuilder implements INota
 		for (EAttribute eAttr : mElem.getEAllAttributes()) {
 			if (eAttr.getName().equals("name")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else if (eAttr.getName().equals("Name")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else if (eAttr.getName().equals("identifier")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else if (eAttr.getName().equals("Identifier")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else if (eAttr.getName().equals("id")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else if (eAttr.getName().equals("Id")) {
 				sb.append(instance.eGet(eAttr));
+				break;
 			} else {
 				sb.append(instance.eClass().getName()).append('_').append(instance.hashCode());
+				break;
 			}
 		}
 		return sb.toString();

@@ -61,6 +61,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Notation;
 import org.w3c.dom.svg.SVGDocument;
 
 import com.abstratt.graphviz.GraphViz;
@@ -265,6 +266,12 @@ public class NotationView extends ViewPart implements ISelectionListener {
 		boolean toReturn = false;
 		if (notationElement instanceof GraphicalElement) {
 			toReturn = true;
+		} else if (notationElement instanceof SyntaxOf) {
+			SyntaxOf sof = (SyntaxOf) notationElement;
+			if(sof.getReference() != null) {
+				NotationElement nElem = Controller.INSTANCE.getNotation(sof.getReference().getEType());
+				return this.checkGraphical(nElem);
+			}
 		} else if (notationElement instanceof Composite) {
 			for (NotationElement element : ((Composite)notationElement).getSubElements()) {
 				toReturn = toReturn || this.checkGraphical(element);
@@ -469,7 +476,8 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			text.setAttributeNS(null, "font-family", DEFAULT_FONT_FAMILY);
 			text.setAttributeNS(null, "fill", "blue");
 
-			String value = "<syntax of '" + syntaxOf.getReference().getName() + "' reference>";
+			String gap = (syntaxOf.getReference() == null) ? syntaxOf.getId() : syntaxOf.getReference().getName();
+			String value = "<syntax of '" + gap + "' reference>";
 			text.setTextContent(value);	
 
 			result.setWidth(value.length() * CHAR_SEP + CHAR_SEP);
@@ -644,7 +652,8 @@ public class NotationView extends ViewPart implements ISelectionListener {
 			list.put(eClass.getName(), modelChanges.get(eObj));
 		}
 		if(list.keySet().contains(instanceModelElement.eClass().getName())) {//(modelChanges.keySet().contains(instanceModelElement.eClass())){
-			dotGraph.append(dotBuilder.create(instanceModelElement, (NotationElement)list.get(instanceModelElement.eClass().getName()), modelChanges));
+			String elem = dotBuilder.create(instanceModelElement, (NotationElement)list.get(instanceModelElement.eClass().getName()), modelChanges);
+			dotGraph.append(elem);
 		}
 		dotGraph.append(" }\n");
 
@@ -655,6 +664,8 @@ public class NotationView extends ViewPart implements ISelectionListener {
 		} else {
 			svgLocation = instanceModelElement.eResource().getURI().toString() + ".svg";
 		}
+		
+		System.out.println(dotGraph.toString());
 		
 		Document doc = null;
 		try {

@@ -133,12 +133,14 @@ public class Controller {
 	 * 
 	 * @param resource to be tracked
 	 */
-	public void loadHistory(Object resource) { 
-		reset();
-		modelManager = modelManagerFactory.createModelManager(resource);
-		calculateLastIndexProposal();
-		if(getHistory() != null) 
-			versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
+	public void loadHistory(Object resource) {
+		if(modelManager.getHistory() == null) {
+			reset();
+			modelManager = modelManagerFactory.createModelManager(resource);
+			calculateLastIndexProposal();
+			if(getHistory() != null) 
+				versionTracked = getHistory().getHistories().get(historyTracked).getVersions().size() - 1;
+		}
 	}
 
 	private void calculateLastIndexProposal() {

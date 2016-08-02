@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ASCII"?>
+<notation:Definition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://atlanmod.fr/collaboro/notation">
+  <elements xsi:type="notation:Composite" id="System">
+    <subElements xsi:type="notation:SyntaxOf" id="System.flights">
+      <reference href="baggage.ecore#//System/flights"/>
+    </subElements>
+    <subElements xsi:type="notation:SyntaxOf" id="System.conveyors">
+      <reference href="baggage.ecore#//System/conveyors"/>
+    </subElements>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Flight">
+    <subElements xsi:type="notation:Image" id="ImageFllight" path="fr.inria.atlanmod.collaboro.examples.baggage/model/flight.png"/>
+    <subElements xsi:type="notation:SyntaxOf" id="Flight.transports">
+      <reference href="baggage.ecore#//Flight/transports"/>
+    </subElements>
+    <subElements xsi:type="notation:SyntaxOf" id="IDElement.id"/>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Bag">
+    <subElements xsi:type="notation:Image" id="ImageBag" path="fr.inria.atlanmod.collaboro.examples.baggage/model/bag.png"/>
+    <subElements xsi:type="notation:SyntaxOf" id="IDElement.id"/>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Conveyor">
+    <subElements xsi:type="notation:Image" id="ImageConveyor" path="fr.inria.atlanmod.collaboro.examples.baggage/model/conveyor.png"/>
+    <subElements xsi:type="notation:SyntaxOf" id="IDElement.id"/>
+  </elements>
+  <elements xsi:type="notation:Line" id="transportsLine"/>
+  <elements xsi:type="notation:Line" id="conveyorsLine"/>
+</notation:Definition>

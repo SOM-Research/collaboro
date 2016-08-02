@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://atlanmod.fr/collaboro/history"
+    xmlns:notation="http://atlanmod.fr/collaboro/notation" language="transport">
+  <users id="robin" email="robinboncorps@gmail.com" password="8ee60a2e00c90d7e00d5069188dc115b"
+      firstName="Robin" lastName="Boncorps"/>
+  <users id="javier" collaborations="#//@histories.0/@versions.0/@proposals.0 #//@histories.0/@versions.0/@proposals.0/@sols.0"
+      email="javier.canovas@inria.fr" password="3c9c03d6008a5adf42c2a55dd4a1a9f2"
+      firstName="Javier" lastName="Canovas"/>
+  <users id="jordi" email="jordi.cabot@inria.fr" password="83d53db77bff97220353e490bf373403"
+      firstName="Jordi" lastName="Cabot"/>
+  <users id="recommender" email="recommender@collaboro.com" password="" firstName="Recommender"
+      lastName="System"/>
+  <histories>
+    <versions id="0">
+      <proposals id="p1" rationale="Chaging the syntax" proposedBy="#//@users.1" referredElements="">
+        <sols id="n2" rationale="Setting a graphical notation" proposedBy="#//@users.1">
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass baggage.ecore#//Flight"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Image baggage.notation#//@elements.1/@subElements.0"/>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass baggage.ecore#//Conveyor"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Image baggage.notation#//@elements.3/@subElements.0"/>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass baggage.ecore#//Bag"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Image baggage.notation#//@elements.2/@subElements.0"/>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EClass baggage.ecore#//System"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Composite baggage.notation#//@elements.0"/>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EReference baggage.ecore#//Flight/transports"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Line baggage.notation#//@elements.11"/>
+          </changes>
+          <changes xsi:type="history:Add">
+            <referredElement xsi:type="history:ExistingAbstractSyntaxElement" element="ecore:EReference baggage.ecore#//Conveyor/reclaims"/>
+            <target xsi:type="history:ConcreteSyntaxElement" element="notation:Line baggage.notation#//@elements.12"/>
+          </changes>
+        </sols>
+      </proposals>
+    </versions>
+  </histories>
+</history:History>
