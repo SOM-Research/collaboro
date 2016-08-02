@@ -68,7 +68,11 @@ To use both examples, follow these steps:
 
 This is a simple screencast showing the previous steps (just after importing the projects) for the project developing the graphical syntax:
 
-![screencast](https://github.com/SOM-Research/collaboro/blob/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageGraphical/shortDemo.gif)
+![screencast-graphical](https://github.com/SOM-Research/collaboro/blob/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageGraphical/shortDemo.gif)
+
+And this is the screencast for the textual version of the language:
+
+![screencast-textual](https://github.com/SOM-Research/collaboro/blob/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageTextual/shortDemo.gif)
 
 You can play modifying the collaboration (by using the Collaboro views), the notation definition (file `baggage.notation`) and the examples. 
 
