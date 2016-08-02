@@ -53,15 +53,18 @@ You can activate the Collaboro views/editors on "Window/Show View/Other..." and 
 
 You can import some of the example projects located at the "example" folder to play with the tool.
 
-A graphical language example
+The baggage system example
 --
-You can find an example which illustrates the collaborative development of a graphical language [here](https://github.com/SOM-Research/collaboro/tree/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageGraphical). To use the example, follow these steps:
+You can find an example which illustrates the collaborative development of a language to facilitate the planification of the
+111 baggage claim service in airports. The language has been developed using a textual (check [this](https://github.com/SOM-Research/collaboro/tree/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageTextual)) and graphical (check [this](https://github.com/SOM-Research/collaboro/tree/dev/examples/fr.inria.atlanmod.collaboro.examples.baggageGraphical)) syntaxes. 
+
+To use both examples, follow these steps:
 
 * Download and import the project in your Eclipse
 * Activate the Collaboro views (go to "Window/Show View/Other..." and then select the views for Collaboro group).
 * Open the project and double-click on the file `baggage.ecore` located in the folder `model`. This will load the collaboration tasks and will update the Collaboro views.
-* You can navigate through the collaboration elements
-* To visualize a model example, open the file `example1.xmi`located in the folder `model`. Opening this file will show the model editor but also will trigger the on-the-fly rendered, which will show graphical concrete syntax in the Notation view. 
+* You can navigate through the collaboration elements.
+* To visualize a model example, open the file `example1.xmi` located in the folder `model`. Opening this file will show the model editor but also will trigger the on-the-fly renderer, which will show graphical concrete syntax in the Notation view. 
 
 You can play modifying the collaboration (by using the Collaboro views), the notation definition (file `baggage.notation`) and the examples. 
 
