@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ASCII"?>
+<notation:Definition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://atlanmod.fr/collaboro/notation" type="textual">
+  <elements xsi:type="notation:Composite" id="System">
+    <subElements xsi:type="notation:Composite">
+      <subElements xsi:type="notation:SyntaxOf" id="System.flights">
+        <reference href="baggage.ecore#//System/flights"/>
+      </subElements>
+    </subElements>
+    <subElements xsi:type="notation:Composite">
+      <subElements xsi:type="notation:SyntaxOf" id="System.conveyors">
+        <reference href="baggage.ecore#//System/conveyors"/>
+      </subElements>
+    </subElements>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Flight">
+    <subElements xsi:type="notation:AttributeValue" id="Flight.id" separator="">
+      <attribute href="baggage.ecore#//IDElement/id"/>
+    </subElements>
+    <subElements xsi:type="notation:Token" id=":"/>
+    <subElements xsi:type="notation:Composite">
+      <subElements xsi:type="notation:Keyword" id="Baggage"/>
+      <subElements xsi:type="notation:Token" id=":"/>
+      <subElements xsi:type="notation:AttributeValue" id="Flight.totalBags" separator="">
+        <attribute href="baggage.ecore#//Flight/totalBags"/>
+      </subElements>
+      <subElements xsi:type="notation:Keyword" id="pcs"/>
+    </subElements>
+    <subElements xsi:type="notation:Composite" id="transports">
+      <subElements xsi:type="notation:SyntaxOf" id="Flight.transports">
+        <reference href="baggage.ecore#//Flight/transports"/>
+      </subElements>
+    </subElements>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Bag">
+    <subElements xsi:type="notation:AttributeValue" id="Bag.id">
+      <attribute href="baggage.ecore#//IDElement/id"/>
+    </subElements>
+    <subElements xsi:type="notation:Token" id="-"/>
+    <subElements xsi:type="notation:AttributeValue" id="Bag.weight">
+      <attribute href="baggage.ecore#//Bag/weight"/>
+    </subElements>
+    <subElements xsi:type="notation:Keyword" id="kg"/>
+  </elements>
+  <elements xsi:type="notation:Composite" id="Conveyor">
+    <subElements xsi:type="notation:AttributeValue" id="Conveyor.id">
+      <attribute href="baggage.ecore#//IDElement/id"/>
+    </subElements>
+    <subElements xsi:type="notation:Token" id=":"/>
+    <subElements xsi:type="notation:Composite" id="reclaims">
+      <subElements xsi:type="notation:ReferenceValue" id="Conveyor.reclaims.id" separator=",">
+        <attribute href="baggage.ecore#//IDElement/id"/>
+        <reference href="baggage.ecore#//Conveyor/reclaims"/>
+      </subElements>
+    </subElements>
+  </elements>
+</notation:Definition>

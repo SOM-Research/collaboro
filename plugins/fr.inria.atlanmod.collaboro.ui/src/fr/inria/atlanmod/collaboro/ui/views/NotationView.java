@@ -770,6 +770,10 @@ public class NotationView extends ViewPart implements ISelectionListener {
 
 		if (value instanceof String) {
 			result = (String) value;
+		} else if (value instanceof Float) {
+			result = ((Float) value).toString();
+		} else if (value instanceof Integer) {
+			result = ((Integer) value).toString();
 		} else if (value instanceof EEnumLiteral) {
 			EEnumLiteral literal = (EEnumLiteral) value;
 			result = literal.toString();

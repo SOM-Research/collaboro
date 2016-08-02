@@ -370,6 +370,8 @@ public class SVGBuilder {
 
 		if (value instanceof String) {
 			result = (String) value;
+		} else if(value instanceof Float) {
+			
 		} else if (value instanceof EEnumLiteral) {
 			EEnumLiteral literal = (EEnumLiteral) value;
 			result = literal.toString();

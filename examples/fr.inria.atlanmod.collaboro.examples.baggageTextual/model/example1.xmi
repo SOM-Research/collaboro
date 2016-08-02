@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<baggage:System
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:baggage="http://atlanmod/baggage"
+    xsi:schemaLocation="http://atlanmod/baggage baggage.ecore">
+  <conveyors
+      id="C01"
+      reclaims="//@flights.0 //@flights.2"
+      capacity="20"/>
+  <conveyors
+      id="C02"
+      reclaims="//@flights.1"
+      capacity="23"/>
+  <flights id="IB8545"
+      isReclaimed="//@conveyors.0"
+      totalBags="2">
+    <transports
+        id="11B32C"
+        weight="8.0"/>
+    <transports
+        id="A92RR2"
+        weight="6.0"/>
+  </flights>
+  <flights id="A57745"
+      isReclaimed="//@conveyors.1"
+      totalBags="2">
+    <transports
+        id="622XD3"
+        weight="10.0"/>
+    <transports
+        id="UU8221"
+        weight="15.0"/>
+  </flights>
+  <flights id="IB8392"
+      isReclaimed="//@conveyors.0"
+      totalBags="2">
+    <transports
+        id="F9331C"
+        weight="12.0"/>
+    <transports
+        id="BVWL29"
+        weight="9.0"/>
+  </flights>
+</baggage:System>
