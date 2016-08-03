@@ -31,25 +31,22 @@ The Collaboro model of the Workflow case study can be downloaded from [here](htt
 
 The Notation model of the Workflow case study can be downloaded from [here](https://github.com/jlcanovas/collaboro/blob/master/examples/fr.inria.atlanmod.collaboro.examples.workflow/model/ModiscoWorkflow.notation)
 
-Installation and Usage in Eclipse
+Installation and Usage in Eclipse (dev branch)
 ---------------------------------
 Requirements:
 
 * JRE 1.6 or above
 * Eclipse 3.6 or above
-* EMF 3.7 or above
+* [EMF](https://eclipse.org/modeling/emf/) 3.7 or above
+* [Eclipse Graphviz](https://github.com/abstratt/eclipsegraphviz))
 
 Steps:
 
-* Download the update site file from [here](https://github.com/SOM-Research/collaboro/blob/751e33e323913feb6eed0126e52cd0cfe98d54c9/plugins/fr.inria.atlanmod.collaboro/fr.inria.atlanmod.collaboro.zip)
-* Open the Eclipse IDE and click on "Help-->Install New Software"
-* Add a new software site by clicking on "Add".
-* Click on "Archiv" and select the update site file downloaded previously and accept the form.
-* Select the software site in the "Work with" field.
-* Install the two features that will appear in the list ("Collaboro infrastructure" and "Collaboro UI"). If they don’t appear, uncheck the option Group items by category.
-* Restart Eclipse.
-
-You can activate the Collaboro views/editors on "Window/Show View/Other..." and then select the views for Collaboro group.
+* Clone the `dev` branch of the repository into your local machine.
+* Import all the projects into your workspace.
+* Resolve dependencies ([EMF](https://eclipse.org/modeling/emf/), [Eclipse Graphviz](https://github.com/abstratt/eclipsegraphviz))
+* Right-click on the project `fr.inria.atlanmod.collaboro.ui` and then click on "Run as/Eclipse Application". A new instance of Eclipse will be created.
+* In the new instance of Eclipse, activate the Collaboro views on "Window/Show View/Other..." and then select the views for Collaboro group.  
 
 You can import some of the example projects located at the "example" folder to play with the tool.
 
