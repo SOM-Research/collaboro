@@ -38,7 +38,7 @@ Requirements:
 * JRE 1.6 or above
 * Eclipse 3.6 or above
 * [EMF](https://eclipse.org/modeling/emf/) 3.7 or above
-* [Eclipse Graphviz](https://github.com/abstratt/eclipsegraphviz))
+* [Eclipse Graphviz](https://github.com/abstratt/eclipsegraphviz)
 
 Steps:
 
