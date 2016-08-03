@@ -18,6 +18,8 @@ The Eclipse plugin offers the following features:
 
 The web-application is located at [http://atlanmod.github.io/collaboro](http://atlanmod.github.io/collaboro). If you want to initialize a new workspace for your language, just contact us.
 
+While this branch keeps the most stable version of Collaboro, you can find the last version of our tool (i.e., including the support for graphical languages) in the [dev](https://github.com/SOM-Research/collaboro/tree/dev) branch.
+
 Publications
 ------------
 
@@ -35,7 +37,8 @@ Requirements:
 
 * JRE 1.6 or above
 * Eclipse 3.6 or above
-* EMF 3.7 or above
+* [EMF](https://eclipse.org/modeling/emf/) 3.7 or above
+* [Eclipse Graphviz](https://github.com/abstratt/eclipsegraphviz)
 
 Steps:
 * Download the update site file from [here](https://github.com/SOM-Research/collaboro/blob/751e33e323913feb6eed0126e52cd0cfe98d54c9/plugins/fr.inria.atlanmod.collaboro/fr.inria.atlanmod.collaboro.zip)
