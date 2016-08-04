@@ -18,7 +18,7 @@ The Eclipse plugin offers the following features:
 * Decision engine based on a total agreement (i.e., all the community users must vote for the collaboration). The decision engine can be launch by using the bar menu.
 * Notation engine and Notation view to render SVG snapshots of the DSL concrete syntax.
 
-The web-application is located at [http://atlanmod.github.io/collaboro](http://atlanmod.github.io/collaboro). If you want to initialize a new workspace for your language, just contact us.
+The web-application is located at [http://som-research.github.io/collaboro](http://som-research.github.io/collaboro). If you want to initialize a new workspace for your language, just contact us.
 
 Publications
 ------------
