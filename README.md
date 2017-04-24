@@ -18,7 +18,7 @@ The Eclipse plugin offers the following features:
 
 The web-application is located at [http://som-research.github.io/collaboro](http://som-research.github.io/collaboro). If you want to initialize a new workspace for your language, just contact us.   
 
-While this branch keeps the most stable version of Collaboro, you can find the last version of our tool (i.e., including the support for graphical languages) in the [dev](https://github.com/SOM-Research/collaboro/tree/dev) branch.
+While this branch keeps the most stable version of Collaboro, you can find the last version of our tool (i.e., including the support for graphical languages) in the [dev](https://github.com/SOM-Research/collaboro/tree/dev) branch.  
 
 Publications
 ------------
