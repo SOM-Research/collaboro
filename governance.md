@@ -7,4 +7,4 @@ All patches for bugs and feature requests will be accepted or rejected in 7 days
 http://atlanmod.github.io/governance/#/generate/2110000000500000070000
 
 All bugs and feature requests will be accepted or rejected for the next release in 7 days by the leader of the project unanimously
-http://atlanmod.github.io/governance/#/generate/2210000000500000070000
+http://atlanmod.github.io/governance/#/generate/2210000000500000070000 
