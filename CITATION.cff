@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Cánovas Izquierdo"
+  given-names: "Javier Luis"
+  orcid: "https://orcid.org/0000-0002-2326-1700"
+- family-names: "Cabot"
+  given-names: "Jordi"
+  orcid: "https://orcid.org/0000-0003-2418-2489"
+title: "Collaboro: a collaborative (meta) modeling tool"
+version: 1.0.0
+doi: 10.7717/peerj-cs.84
+url: "https://github.com/SOM-Research/collaboro"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Cánovas Izquierdo"
+    given-names: "Javier Luis"
+    orcid: "https://orcid.org/0000-0002-2326-1700"
+  - family-names: "Cabot"
+    given-names: "Jordi"
+    orcid: "https://orcid.org/0000-0003-2418-2489"
+  doi: "10.7717/peerj-cs.84"
+  journal: "PeerJ Comput. Sci."
+  start: e84 # First page number
+  title: "Collaboro: a collaborative (meta) modeling tool"
+  volume: 2
+  year: 2016
